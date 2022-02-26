@@ -1,7 +1,11 @@
 # Prueba para ver que funciones el ignore
 # No hay que subir: .dll, vcxprog.user, .vs, Temp, .exe, .pdb, .ilk 
 
-
+*.dll
 .vs/
-
+*.exe
+*.pbd
+*.ilk
+Dependencies/Ogre/Build
+*.vcxprog.user
 [Tt]emp/

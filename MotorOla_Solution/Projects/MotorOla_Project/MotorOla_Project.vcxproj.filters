@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Src\MotorOla\MotorOla_Project.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
