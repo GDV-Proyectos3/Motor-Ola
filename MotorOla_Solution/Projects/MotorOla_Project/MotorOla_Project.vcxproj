@@ -80,7 +80,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)(\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(ProjectName)32_d</TargetName>
   </PropertyGroup>
@@ -92,7 +92,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)(\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
@@ -107,13 +107,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreMain_d.lib;OgreMain.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreProject32.lib;OgreProject32_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,8 +131,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreMain_d.lib;OgreMain.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreProject32.lib;OgreProject32_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -141,13 +141,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreMain_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreProject32.lib;OgreProject32_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,8 +165,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreMain.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject.lib;OgreProject_d.lib;OgreProject32.lib;OgreProject32_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

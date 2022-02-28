@@ -75,8 +75,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)32_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,8 +87,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)</OutDir>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)</IntDir>
+    <OutDir>$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

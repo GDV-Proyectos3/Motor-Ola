@@ -1,6 +1,6 @@
 #include <iostream>
 
-int escribe() {
+int main() {
 	std::cout << "Hola mundo";
 	return 0;
 }

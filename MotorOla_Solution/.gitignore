@@ -9,3 +9,4 @@
 Dependencies/Ogre/Build
 *.vcxprog.user
 [Tt]emp/
+[Bb]in/
