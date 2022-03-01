@@ -113,7 +113,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject32_d.lib;OgreMain_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,7 +147,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Bin;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,7 +166,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject.lib;OgreMain.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
