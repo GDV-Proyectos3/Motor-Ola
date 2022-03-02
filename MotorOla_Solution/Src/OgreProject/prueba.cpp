@@ -12,3 +12,6 @@ void prueba::init() {
     root = new Ogre::Root();
     system("Pause");
 }
+void prueba::update() {
+    std::cout << "Update prueba" << std::endl;
+}

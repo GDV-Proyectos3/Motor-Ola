@@ -1,5 +1,5 @@
 #pragma once
-#include "prueba.h"
+class prueba;
 class Motor
 {
 private:
@@ -8,6 +8,7 @@ private:
 	//Physx
 	//FMod
 	//Cegui
+	bool stop = false;
 
 public:
 	Motor();

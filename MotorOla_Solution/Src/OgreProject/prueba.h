@@ -7,5 +7,6 @@ public:
 	prueba();
 	~prueba();
 	void init();
+	void update();
 };
 
