@@ -92,7 +92,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(ProjectName)(\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
@@ -141,7 +141,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
