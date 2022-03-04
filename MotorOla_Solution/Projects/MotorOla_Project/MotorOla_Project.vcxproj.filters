@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\..\Src\MotorOla\Vector2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -15,6 +12,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,10 +33,10 @@
     <ClInclude Include="..\..\Src\MotorOla\Motor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\Vector2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
