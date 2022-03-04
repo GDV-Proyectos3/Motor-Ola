@@ -1,9 +1,9 @@
 #include "Motor.h"
-#include "prueba.h"
+//#include "prueba.h"
 Motor::Motor()
 {
 	//Crea los diferentes singletons
-	p = new prueba();
+	//p = new prueba();
 	
 	
 	
@@ -13,14 +13,13 @@ Motor::Motor()
 Motor::~Motor()
 {
 	//Destruye los singletons
-	delete p;
-	p = nullptr;
+	
 }
 
 void Motor::initSystems()
 {
 	//Inicializa a cada uno de los singletons
-	p->init();
+	//p->init();
 }
 
 void Motor::updateSystems()
@@ -30,7 +29,7 @@ void Motor::updateSystems()
 		//Input
 		//Update
 		//Render
-		p->update();
+		
 		
 	}
 }

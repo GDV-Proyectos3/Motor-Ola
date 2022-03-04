@@ -1,9 +1,9 @@
 #pragma once
-class prueba;
+//class prueba;
 class Motor
 {
 private:
-	prueba* p;
+	
 	//Ogre
 	//Physx
 	//FMod
