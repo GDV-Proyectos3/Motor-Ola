@@ -8,9 +8,4 @@ int main()
     m->initSystems();
     m->updateSystems();
     return 0;
-   /* std::cout << "Hello Ogre!\n";
-    Ogre::Root* root;
-    root = new Ogre::Root();
-    system("Pause");
-    return 0;*/
 }

@@ -1,5 +1,5 @@
 #pragma once
-//class prueba;
+
 class Motor
 {
 private:

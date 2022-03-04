@@ -25,7 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\Componente.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
