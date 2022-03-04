@@ -25,7 +25,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Componente.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Vector2D.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
+    <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\Motor.h" />
