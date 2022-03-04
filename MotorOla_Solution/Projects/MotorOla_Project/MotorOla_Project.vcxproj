@@ -35,6 +35,7 @@
     <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
     <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>

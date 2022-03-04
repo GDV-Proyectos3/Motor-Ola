@@ -36,6 +36,9 @@
     <ClInclude Include="..\..\Src\MotorOla\Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -46,6 +49,9 @@
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{998ece47-c0ee-47c4-bb93-2fa1740290c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{2208af6b-f8e6-47b2-ad64-6812103eefff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
