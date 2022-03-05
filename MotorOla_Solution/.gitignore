@@ -1,12 +1,30 @@
-# Prueba para ver que funciones el ignore
-# No hay que subir: .dll, vcxprog.user, .vs, Temp, .exe, .pdb, .ilk 
+# Prueba para ver que funciones el .gitignore
+# No hay que subir: .dll, .vcxproj.user, .vs/, [Tt]emp/, .exe, .pdb, .ilk 
 
-*.dll
+# configuración personal visual studio
 .vs/
+
+# /exes
 *.exe
+*.dll
+*.lib
 *.pbd
+*.idb
+[Ee]xes/
+
+# /temp
 *.ilk
-Dependencies/Ogre/Build
-*.vcxprog.user
+*.obj
+*.tlog
+*.log
+*.recipe
+*.lastbuildstate
+*.vcxproj.FileListAbsolute.txt
 [Tt]emp/
-[Bb]in/
+
+# /pojects
+*.vcxproj.user
+Ogre.log
+
+# /dependecies
+/Dependencies/Ogre/Build
