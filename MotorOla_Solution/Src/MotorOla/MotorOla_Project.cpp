@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <OgreRoot.h>
 #include "Motor.h"
 
 int main()
@@ -9,3 +8,13 @@ int main()
     m->updateSystems();
     return 0;
 }
+
+
+// Hola mundo! OGRE (prueba básica)
+/*#include <OgreRoot.h>
+int main()
+{
+    Ogre::Root* root;
+    root = new Ogre::Root();
+    return 0;
+}*/
