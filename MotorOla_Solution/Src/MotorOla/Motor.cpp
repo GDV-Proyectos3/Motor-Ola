@@ -1,25 +1,24 @@
 #include "Motor.h"
-//#include "prueba.h"
+#include "OgreManager.h"
+#include "utils/Singleton.h"
+
 Motor::Motor()
 {
-	//Crea los diferentes singletons
-	//p = new prueba();
-	
-	
-	
-	
+	// Inicia los managers
+	if(!_ogreManager) _ogreManager = new OgreManager();	
 }
 
 Motor::~Motor()
 {
-	//Destruye los singletons
-	
+	// Destruye los managers
+	if (_ogreManager) delete _ogreManager;
 }
 
 void Motor::initSystems()
 {
-	//Inicializa a cada uno de los singletons
-	//p->init();
+
+	_ogreManager->init();
+	
 }
 
 void Motor::updateSystems()

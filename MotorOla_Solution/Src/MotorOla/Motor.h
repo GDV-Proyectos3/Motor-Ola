@@ -1,10 +1,15 @@
 #pragma once
 
+// Declaracion de clases necesarias
+class OgreManager;
+
 class Motor
 {
 private:
 	
 	//Ogre
+	OgreManager* _ogreManager = nullptr;
+
 	//Physx
 	//FMod
 	//Cegui
