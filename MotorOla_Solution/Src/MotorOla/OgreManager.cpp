@@ -12,6 +12,7 @@
 #include <OgreRenderWindow.h>
 #include <OgreSceneManager.h>
 
+#include <SDL.h>
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 //#include <SDLInputMapping.h>
@@ -42,7 +43,7 @@ void OgreManager::init()
     setup();
 
     // Inicia el Scene Manager
-    _sceneManager = _root->createSceneManager();
+    //_sceneManager = _root->createSceneManager();
 
     //// Crea la ventana de la aplicacion
     //_renderWindow = _root->initialise(true, "MotorOlaWindow");
@@ -51,7 +52,7 @@ void OgreManager::init()
     //// Para empezar a renderizar
     //_root->startRendering();
 
- //   _renderWindow = _root->initialise(true, "Ventana Motor");
+    //_renderWindow = _root->initialise(true, "Ventana Motor");
     std::cout << "Continua\n";
 
 }
@@ -114,16 +115,16 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
     mode >> token; // 'x' as seperator between width and height
     mode >> h; // height
 
-    miscParams["FSAA"] = ropts["FSAA"].currentValue;
-    miscParams["vsync"] = ropts["VSync"].currentValue;
-    miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
+    //miscParams["FSAA"] = ropts["FSAA"].currentValue;
+    //miscParams["vsync"] = ropts["VSync"].currentValue;
+    //miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
 
     //if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
 
-    Uint32 flags = SDL_WINDOW_RESIZABLE;
+    //Uint32 flags = SDL_WINDOW_RESIZABLE;
 
-    if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
-    //else  flags = SDL_WINDOW_RESIZABLE;
+    //if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
+    ////else  flags = SDL_WINDOW_RESIZABLE;
 
     //_window.native = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
 
