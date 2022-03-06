@@ -50,7 +50,7 @@ copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
 copy /Y zlib.dll "../../../../../Bin/zlib.dll"
 :: Copia SDL2d.dll en Bin y en Exes
 cd ..\..\SDL2-build 
-..\..\..\Src\bin\cmake.exe --build . --config release 
+..\..\..\CMake\Src\bin\cmake.exe --build . --config release 
 ..\..\..\CMake\Src\bin\cmake.exe --build . --config debug
 
 cd Debug
