@@ -29,6 +29,7 @@ copy /Y OgreRTShaderSystem_d.dll "../../../../../Bin/OgreRTShaderSystem_d.dll"
 copy /Y Plugin_ParticleFX_d.dll "../../../../../Bin/Plugin_ParticleFX_d.dll"
 copy /Y RenderSystem_GL_d.dll "../../../../../Bin/RenderSystem_GL_d.dll"
 copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
+copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
 copy /Y zlib.dll "../../../../../Bin/zlib.dll"
 
 :: Ojo que hay alguna dll más en release
@@ -45,7 +46,16 @@ copy /Y Plugin_ParticleFX.dll "../../../../../Bin/Plugin_ParticleFX.dll"
 copy /Y RenderSystem_GL.dll "../../../../../Bin/RenderSystem_GL.dll"
 :: Estas están repetidas pero por si acaso
 copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
+copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
 copy /Y zlib.dll "../../../../../Bin/zlib.dll"
+:: Copia SDL2d.dll en Bin y en Exes
+cd ..\..\SDL2-build 
+..\..\..\Src\bin\cmake.exe --build . --config release 
+..\..\..\CMake\Src\bin\cmake.exe --build . --config debug
+
+cd Debug
+copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
+copy /Y SDL2d.dll "../../../../../Exes/SDL2d.dll"
 
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
