@@ -4,7 +4,7 @@
 #include "./utils/Singleton.h"
 
 
-class AudioManager {
+class AudioManager : public Singleton<AudioManager> {
 public:
 	AudioManager() {};
 	virtual ~AudioManager() {};
