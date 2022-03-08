@@ -115,24 +115,24 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
     mode >> token; // 'x' as seperator between width and height
     mode >> h; // height
 
-    //miscParams["FSAA"] = ropts["FSAA"].currentValue;
-    //miscParams["vsync"] = ropts["VSync"].currentValue;
-    //miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
+    miscParams["FSAA"] = ropts["FSAA"].currentValue;
+    miscParams["vsync"] = ropts["VSync"].currentValue;
+    miscParams["gamma"] = ropts["sRGB Gamma Conversion"].currentValue;
 
-    //if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
+    if (!SDL_WasInit(SDL_INIT_VIDEO)) SDL_InitSubSystem(SDL_INIT_VIDEO);
 
-    //Uint32 flags = SDL_WINDOW_RESIZABLE;
+    Uint32 flags = SDL_WINDOW_RESIZABLE;
 
-    //if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
-    ////else  flags = SDL_WINDOW_RESIZABLE;
+    if (ropts["Full Screen"].currentValue == "Yes")  flags = SDL_WINDOW_FULLSCREEN;
+    //else  flags = SDL_WINDOW_RESIZABLE;
 
-    //_window.native = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+    _window.native = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
 
-    //SDL_SysWMinfo wmInfo;
-    //SDL_VERSION(&wmInfo.version);
-    //SDL_GetWindowWMInfo(_window.native, &wmInfo);
+    SDL_SysWMinfo wmInfo;
+    SDL_VERSION(&wmInfo.version);
+    SDL_GetWindowWMInfo(_window.native, &wmInfo);
 
-    //miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
+    miscParams["externalWindowHandle"] = Ogre::StringConverter::toString(size_t(wmInfo.info.win.window));
 
     _window.render = _root->createRenderWindow(name, w, h, false, &miscParams);
     return _window;

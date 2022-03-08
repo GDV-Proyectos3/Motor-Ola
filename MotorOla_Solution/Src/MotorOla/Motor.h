@@ -20,7 +20,7 @@ private:
 	//FMod
 	//Cegui
 	bool stop = false;
-	void handleEvents();
+	//void handleEvents();
 
 public:
 	Motor();
