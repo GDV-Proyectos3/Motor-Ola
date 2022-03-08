@@ -1,3 +1,6 @@
 #include <iostream>
-int main() {
+
+void main() {
+	std::cout << "Hola mundo";
+	
 }

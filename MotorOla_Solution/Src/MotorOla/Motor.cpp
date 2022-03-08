@@ -25,6 +25,7 @@ void Motor::updateSystems()
 {
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
+		handleEvents();
 		//Input
 		//Update
 		//Render
