@@ -30,7 +30,8 @@ struct NativeWindowPair
 	NativeWindowType* native = nullptr;
 };
 
-class OgreManager : public Singleton<OgreManager>, Ogre::FrameListener {
+//class OgreManager : public Singleton<OgreManager>, Ogre::FrameListener {	// Creo que esto va a ser InputManager
+class OgreManager : public Singleton<OgreManager> {
 	friend Singleton<OgreManager>;
 public:
 	/// <summary>
@@ -49,19 +50,9 @@ public:
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 
-	/// <summary>
-	/// Crea la ventana
-	/// </summary>
+
 	void init();
-
-	/// <summary>
-	/// Se encarga del renderizado con cada frame
-	/// </summary>
 	void update();
-
-	/// <summary>
-	/// Elimina los elementos de Ogre
-	/// </summary>
 	void close();
 
 	// callback interface copied from various listeners to be used by ApplicationContext
@@ -79,21 +70,12 @@ public:
 	//bool initialiseRTShaderSystem();
 	//void destroyRTShaderSystem();
 
-	/// <summary>
-	/// 
-	/// </summary>
 	void setup();
-
 	void createRoot();
-
 	bool oneTimeConfig();
-
 	void setWindowGrab(bool grab);
-
 	void locateResources();
-
 	void loadResources();
-
 	void shutdown();
 
 	//void pollEvents();
@@ -110,8 +92,7 @@ private:
 	Ogre::String _appName = "MotorOla";
 	Ogre::String _solutionPath;
 
-	Ogre::String _renderStateShaderLibPath;
-
+	//Ogre::String _renderStateShaderLibPath;
 	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
 	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };

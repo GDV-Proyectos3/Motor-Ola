@@ -59,16 +59,10 @@ void OgreManager::init()
 	Ogre::Viewport* vp = getRenderWindow()->addViewport(cam);
 	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
 
+	// Esto todavía no funciona porque falta el Resource Manager
 
-	//CAMARA SECUNDARIA
-	//Añadimos una nueva camara para el reflejo
-	//Camera* camRef = mSM->createCamera("camRef");
-	//camRef->setNearClipDistance(1);
-	//camRef->setFarClipDistance(10000);
-	//camRef->setAutoAspectRatio(true);
-
-	//Ogre::Entity* ent = _sceneManager->createEntity("sphere.mesh");
-	//Ogre::SceneNode* cuerpoNode = new Ogre::SceneNode(&);
+	//Ogre::SceneNode* cuerpoNode = _sceneManager->getRootSceneNode()->createChildSceneNode("NodoPrueba");
+	//Ogre::Entity* ent = _sceneManager->createEntity("ogrehead.mesh");
 	//cuerpoNode->createChildSceneNode();
 	//cuerpoNode->attachObject(ent);
 	//cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
@@ -153,7 +147,7 @@ void OgreManager::setup()
 	loadResources();
 
 	// adds context as listener to process context-level (above the sample level) events
-	_root->addFrameListener(this);
+	//_root->addFrameListener(this);
 }
 
 bool OgreManager::oneTimeConfig()
@@ -352,7 +346,7 @@ void OgreManager::locateResources()
 	else
 	{
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Exes\\Assets\\"),
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Exes\\Assets"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	}
 
@@ -373,56 +367,56 @@ void OgreManager::locateResources()
 		}
 	}
 
-	//sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
-	//const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
+	sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
+	const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
 
-	////OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
+	//OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
 
-	//arch = genLocs.front().archive->getName();
-	//type = genLocs.front().archive->getType();
+	arch = genLocs.front().archive->getName();
+	type = genLocs.front().archive->getType();
 
-	//// Add locations for supported shader languages
-	//if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSLES", type, sec);
-	//}
-	//else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL120", type, sec);
+	// Add locations for supported shader languages
+	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSLES", type, sec);
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL120", type, sec);
 
-	//	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl150"))
-	//	{
-	//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL150", type, sec);
-	//	}
-	//	else
-	//	{
-	//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL", type, sec);
-	//	}
+		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl150"))
+		{
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL150", type, sec);
+		}
+		else
+		{
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL", type, sec);
+		}
 
-	//	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl400"))
-	//	{
-	//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL400", type, sec);
-	//	}
-	//}
-	//else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/HLSL", type, sec);
-	//}
+		if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl400"))
+		{
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/GLSL400", type, sec);
+		}
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/HLSL", type, sec);
+	}
 
 	//mRTShaderLibPath = arch + "/RTShaderLib";
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/materials", type, sec);
-	//
-	//if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSLES", type, sec);
-	//}
-	//else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
-	//}
-	//else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/HLSL", type, sec);
-	//}
+//	
+//	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
+//	{
+//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
+//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSLES", type, sec);
+//	}
+//	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
+//	{
+//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
+//	}
+//	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
+//	{
+//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/HLSL", type, sec);
+//	}
 }
