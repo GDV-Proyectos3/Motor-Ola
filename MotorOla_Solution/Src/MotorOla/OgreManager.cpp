@@ -1,37 +1,32 @@
 #include "OgreManager.h"
 
-#include <OgreBuildSettings.h>
-#include <OgreLogManager.h>
-#include <OgrePlugin.h>
-#include <OgreFileSystemLayer.h>
-#include <OgreFrameListener.h> 
-#include <OgreString.h>
-
 #include <OgreRoot.h>
-#include <OgreRenderSystem.h>
+#include <OgreGpuProgramManager.h>
+#include <OgreConfigFile.h>
 #include <OgreRenderWindow.h>
-#include <OgreSceneManager.h>
+#include <OgreViewport.h>
+#include <OgreDataStream.h>
+#include <OgreFileSystemLayer.h>
 
-#include <SDL.h>
 #include <SDL_video.h>
 #include <SDL_syswm.h>
-//#include <SDLInputMapping.h>
 
-OgreManager::OgreManager()
+OgreManager::OgreManager(const Ogre::String& appName)
 {
-    std::cout << "CONSTRUCTOR DE OGRE MANAGER\n";
-    _fileSystemLayer = new Ogre::FileSystemLayer("MotorOla");
-    _root = nullptr;
-    //mOverlaySystem = nullptr;
-    //mFirstRun = true;
+	_appName = appName;
+	_fileSystemLayer = new Ogre::FileSystemLayer(appName);
+	_root = nullptr;
+	_overlaySystem = nullptr;
+	_firstRun = true;
 
-    //mShaderGenerator = nullptr;
-    //mMaterialMgrListener = nullptr;
+	//_shaderGenerator = nullptr;
+	//_materialMgrListener = nullptr;
 }
 
 OgreManager::~OgreManager()
 {
-    std::cout << "DESTRUCTOR DE OGRE MANAGER\n";
+	close();
+	delete _fileSystemLayer;
 }
 
 void OgreManager::init()
@@ -40,67 +35,133 @@ void OgreManager::init()
     createRoot();
 
     // Inicia la ventana
-    setup();
+	if (oneTimeConfig()) {
+		setup();
+	}
 
-    // Inicia el Scene Manager
-    //_sceneManager = _root->createSceneManager();
-
-    //// Crea la ventana de la aplicacion
-    //_renderWindow = _root->initialise(true, "MotorOlaWindow");
-    ////_renderWindow = _root->createRenderWindow("Window", 800,600,false);
-
-    //// Para empezar a renderizar
-    //_root->startRendering();
-
-    //_renderWindow = _root->initialise(true, "Ventana Motor");
-    std::cout << "Continua\n";
-
+	std::cout << "OgreManager iniciado\n";
 }
 
 void OgreManager::update()
 {
+	std::cout << "OgreManager actualizandose\n";
+}
+
+void OgreManager::close()
+{
+	if (_root != nullptr)
+	{
+		_root->saveConfig();
+	}
+	shutdown();
+	delete _root;
+	_root = nullptr;
 }
 
 void OgreManager::createRoot()
 {
-    Ogre::String pluginsPath;
-    pluginsPath = _fileSystemLayer->getConfigFilePath("plugins.cfg");
+	Ogre::String pluginsPath;
+	pluginsPath = _fileSystemLayer->getConfigFilePath("plugins.cfg");
 
-    // Se comprueba la existencia de plugins.cfg
-    if (!Ogre::FileSystemLayer::fileExists(pluginsPath))
-    {
-        OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "Error buscando el archivo plugins.cfg");
-    }
+	// Se comprueba la existencia de plugins.cfg
+	if (!Ogre::FileSystemLayer::fileExists(pluginsPath))
+	{
+		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "Error buscando el archivo plugins.cfg");
+	}
 
-    _solutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
-    _solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);
-    _fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
-    _solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   // IG2: Quito /bin
+	_solutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
+	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);
+	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
+	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   // IG2: Quito /bin
 
-    _root = new Ogre::Root(pluginsPath, _fileSystemLayer->getWritablePath("ogre.cfg"), _fileSystemLayer->getWritablePath("ogre.log"));
+	_root = new Ogre::Root(pluginsPath, _fileSystemLayer->getWritablePath("ogre.cfg"), _fileSystemLayer->getWritablePath("ogre.log"));
 
-    _root->setRenderSystem(_root->getRenderSystemByName("OpenGL Rendering Subsystem"));
+	_root->setRenderSystem(_root->getRenderSystemByName("OpenGL Rendering Subsystem"));
+}
+
+void OgreManager::shutdown()
+{
+	// Destroy the RT Shader System.
+	//destroyRTShaderSystem();
+
+	if (_window.render != nullptr)
+	{
+		_root->destroyRenderTarget(_window.render);
+		_window.render = nullptr;
+	}
+
+	delete _overlaySystem;
+	_overlaySystem = nullptr;
+
+	if (_window.native != nullptr)
+	{
+		SDL_DestroyWindow(_window.native);
+		SDL_QuitSubSystem(SDL_INIT_VIDEO);
+		_window.native = nullptr;
+	}
 }
 
 void OgreManager::setup()
 {
-    _root->initialise(false);
+	_root->initialise(false);
+	createWindow(_appName);
+	setWindowGrab(false);   // IG2: ratón libre
 
-    createWindow("MotorOla");
-    //setWindowGrab(false);
+	locateResources();
+	//initialiseRTShaderSystem();
+	loadResources();
 
-    //locateResources();
-    //initialiseRTShaderSystem();
-    //loadResources();
-
-    //_root->addFrameListener(this);
-    //_root->showConfigDialog(NULL);
-
-    _sceneManager = _root->createSceneManager();
-    //_mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-    //_mShaderGenerator->addSceneManager(_mSM);
+	// adds context as listener to process context-level (above the sample level) events
+	_root->addFrameListener(this);
 }
 
+bool OgreManager::oneTimeConfig()
+{
+	if (!_root->restoreConfig())
+	{
+		return _root->showConfigDialog(NULL);
+	}
+	else return true;
+}
+
+//bool OgreManager::initialiseRTShaderSystem()
+//{
+//	if (Ogre::RTShader::ShaderGenerator::initialize())
+//	{
+//		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
+//		// Core shader libs not found -> shader generating will fail.
+//		if (mRTShaderLibPath.empty())
+//			return false;
+//		// Create and register the material manager listener if it doesn't exist yet.
+//		if (!mMaterialMgrListener) {
+//			mMaterialMgrListener = new SGTechniqueResolverListener(mShaderGenerator);
+//			Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
+//		}
+//	}
+//
+//	return true;
+//}
+//
+//void OgreManager::destroyRTShaderSystem()
+//{
+//	// Restore default scheme.
+//	Ogre::MaterialManager::getSingleton().setActiveScheme(Ogre::MaterialManager::DEFAULT_SCHEME_NAME);
+//
+//	// Unregister the material manager listener.
+//	if (mMaterialMgrListener != nullptr)
+//	{
+//		Ogre::MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
+//		delete mMaterialMgrListener;
+//		mMaterialMgrListener = nullptr;
+//	}
+//
+//	// Destroy RTShader system.
+//	if (mShaderGenerator != nullptr)
+//	{
+//		Ogre::RTShader::ShaderGenerator::destroy();
+//		mShaderGenerator = nullptr;
+//	}
+//}
 
 NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
 {
@@ -138,13 +199,104 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
     return _window;
 }
 
-//void OgreManager::setWindowGrab(bool _grab)
+void OgreManager::setWindowGrab(bool _grab)
+{
+	SDL_bool grab = SDL_bool(_grab);
+	SDL_SetWindowGrab(_window.native, grab);
+	//SDL_SetRelativeMouseMode(grab);
+	SDL_ShowCursor(grab);
+}
+
+//void OgreManager::pollEvents()
 //{
-//    SDL_bool grab = SDL_bool(_grab);
-//    SDL_SetWindowGrab(_window.native, grab);
-//    //SDL_SetRelativeMouseMode(grab);
-//    SDL_ShowCursor(grab);
+//	if (_window.native == nullptr)
+//		return;  // SDL events not initialized
+//
+//	SDL_Event event;
+//	while (SDL_PollEvent(&event))
+//	{
+//		switch (event.type)
+//		{
+//		case SDL_QUIT:
+//			_root->queueEndRendering();
+//			break;
+//		case SDL_WINDOWEVENT:
+//			if (event.window.windowID == SDL_GetWindowID(_window.native)) {
+//				if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+//				{
+//					Ogre::RenderWindow* win = mWindow.render;
+//					//win->resize(event.window.data1, event.window.data2);  // IG2: ERROR 
+//					win->windowMovedOrResized();
+//					windowResized(win);
+//				}
+//			}
+//			break;
+//		default:
+//			_fireInputEvent(convert(event));
+//			break;
+//		}
+//	}
+//
+//	// just avoid "window not responding"
+//	WindowEventUtilities::messagePump();
 //}
+//
+//void IG2ApplicationContext::_fireInputEvent(const Event& event) const
+//{
+//	for (std::set<InputListener*>::iterator it = mInputListeners.begin(); it != mInputListeners.end(); ++it)
+//	{
+//		InputListener& l = **it;
+//
+//		switch (event.type)
+//		{
+//		case KEYDOWN:
+//			l.keyPressed(event.key);
+//			break;
+//		case KEYUP:
+//			l.keyReleased(event.key);
+//			break;
+//		case MOUSEBUTTONDOWN:
+//			l.mousePressed(event.button);
+//			break;
+//		case MOUSEBUTTONUP:
+//			l.mouseReleased(event.button);
+//			break;
+//		case MOUSEWHEEL:
+//			l.mouseWheelRolled(event.wheel);
+//			break;
+//		case MOUSEMOTION:
+//			l.mouseMoved(event.motion);
+//			break;
+//		case FINGERDOWN:
+//			// for finger down we have to move the pointer first
+//			l.touchMoved(event.tfinger);
+//			l.touchPressed(event.tfinger);
+//			break;
+//		case FINGERUP:
+//			l.touchReleased(event.tfinger);
+//			break;
+//		case FINGERMOTION:
+//			l.touchMoved(event.tfinger);
+//			break;
+//		}
+//
+//	}
+//}
+
+//bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
+//{
+//	for (std::set<InputListener*>::iterator it = mInputListeners.begin(); it != mInputListeners.end(); ++it)
+//	{
+//		(*it)->frameRendered(evt);
+//	}
+//
+//	return true;
+//}
+
+void OgreManager::loadResources()
+{
+	Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+}
 
 void OgreManager::locateResources()
 {
@@ -183,7 +335,7 @@ void OgreManager::locateResources()
 	//sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
 	//const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
 
-	//OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
+	////OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
 
 	//arch = genLocs.front().archive->getName();
 	//type = genLocs.front().archive->getType();
@@ -218,7 +370,7 @@ void OgreManager::locateResources()
 
 	//mRTShaderLibPath = arch + "/RTShaderLib";
 	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/materials", type, sec);
-
+	//
 	//if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
 	//{
 	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);

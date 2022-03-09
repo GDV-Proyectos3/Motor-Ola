@@ -5,7 +5,7 @@
 Motor::Motor()
 {
 	// Inicia los managers
-	if(!_ogreManager) _ogreManager = new OgreManager();	
+	if(!_ogreManager) _ogreManager = new OgreManager("MotorOla");	
 }
 
 Motor::~Motor()
@@ -25,6 +25,7 @@ void Motor::updateSystems()
 {
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
+		_ogreManager->update();
 		//handleEvents();
 		//Input
 		//Update
