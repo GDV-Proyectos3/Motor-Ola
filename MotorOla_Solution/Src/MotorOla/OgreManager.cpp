@@ -39,12 +39,50 @@ void OgreManager::init()
 		setup();
 	}
 
+	// Agregado una prueba
+	_sceneManager = _root->createSceneManager();
+	
+	// Create the camera
+	Ogre::Camera* cam = _sceneManager->createCamera("Cam");
+	cam->setNearClipDistance(1);
+	cam->setFarClipDistance(10000);
+	cam->setAutoAspectRatio(true);
+	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
+
+	Ogre::SceneNode* camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
+	camNode->attachObject(cam);
+	camNode->setPosition(0, 0, 1000);
+	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
+
+	// and tell it to render into the main window
+	Ogre::Viewport* vp = getRenderWindow()->addViewport(cam);
+	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
+
+
+	//CAMARA SECUNDARIA
+	//Añadimos una nueva camara para el reflejo
+	//Camera* camRef = mSM->createCamera("camRef");
+	//camRef->setNearClipDistance(1);
+	//camRef->setFarClipDistance(10000);
+	//camRef->setAutoAspectRatio(true);
+
+	//Ogre::Entity* ent = _sceneManager->createEntity("sphere.mesh");
+	//Ogre::SceneNode* cuerpoNode = new Ogre::SceneNode(&);
+	//cuerpoNode->createChildSceneNode();
+	//cuerpoNode->attachObject(ent);
+	//cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
+
+
 	std::cout << "OgreManager iniciado\n";
 }
 
 void OgreManager::update()
 {
 	std::cout << "OgreManager actualizandose\n";
+
+	// Renderiza el frame actual
+	_root->renderOneFrame();
 }
 
 void OgreManager::close()
@@ -84,14 +122,17 @@ void OgreManager::shutdown()
 	// Destroy the RT Shader System.
 	//destroyRTShaderSystem();
 
+	// Borra la ventana
 	if (_window.render != nullptr)
 	{
 		_root->destroyRenderTarget(_window.render);
 		_window.render = nullptr;
 	}
 
+	// Borra el sistema Overlay
 	delete _overlaySystem;
 	_overlaySystem = nullptr;
+
 
 	if (_window.native != nullptr)
 	{
@@ -105,7 +146,7 @@ void OgreManager::setup()
 {
 	_root->initialise(false);
 	createWindow(_appName);
-	setWindowGrab(false);   // IG2: ratón libre
+	setWindowGrab(false);
 
 	locateResources();
 	//initialiseRTShaderSystem();
@@ -300,37 +341,37 @@ void OgreManager::loadResources()
 
 void OgreManager::locateResources()
 {
-	//// load resource paths from config file
-	//Ogre::ConfigFile cf;
+	// load resource paths from config file
+	Ogre::ConfigFile cf;
 
-	//Ogre::String resourcesPath = _fileSystemLayer->getConfigFilePath("resources.cfg");
-	//if (Ogre::FileSystemLayer::fileExists(resourcesPath))
-	//{
-	//	cf.load(resourcesPath);
-	//}
-	//else
-	//{
-	//	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-	//		Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\media"),
-	//		"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//}
+	Ogre::String resourcesPath = _fileSystemLayer->getConfigFilePath("resources.cfg");
+	if (Ogre::FileSystemLayer::fileExists(resourcesPath))
+	{
+		cf.load(resourcesPath);
+	}
+	else
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Exes\\Assets\\"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	}
 
-	//Ogre::String sec, type, arch;
-	//// go through all specified resource groups
-	//Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
-	//for (seci = cf.getSettingsBySection().begin(); seci != cf.getSettingsBySection().end(); ++seci) {
-	//	sec = seci->first;
-	//	const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
-	//	Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
+	Ogre::String sec, type, arch;
+	// go through all specified resource groups
+	Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
+	for (seci = cf.getSettingsBySection().begin(); seci != cf.getSettingsBySection().end(); ++seci) {
+		sec = seci->first;
+		const Ogre::ConfigFile::SettingsMultiMap& settings = seci->second;
+		Ogre::ConfigFile::SettingsMultiMap::const_iterator i;
 
-	//	// go through all resource paths
-	//	for (i = settings.begin(); i != settings.end(); i++)
-	//	{
-	//		type = i->first;
-	//		arch = Ogre::FileSystemLayer::resolveBundlePath(i->second);
-	//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type, sec);
-	//	}
-	//}
+		// go through all resource paths
+		for (i = settings.begin(); i != settings.end(); i++)
+		{
+			type = i->first;
+			arch = Ogre::FileSystemLayer::resolveBundlePath(i->second);
+			Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch, type, sec);
+		}
+	}
 
 	//sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
 	//const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);

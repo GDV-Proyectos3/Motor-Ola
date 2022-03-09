@@ -13,7 +13,8 @@ private:
 	const int WINWIDTH = 800;
 	const int WINHEIGHT = 600;
 	SDL_Renderer* renderer;
-	//Ogre
+
+	// Managers
 	OgreManager* _ogreManager = nullptr;
 
 	//Physx

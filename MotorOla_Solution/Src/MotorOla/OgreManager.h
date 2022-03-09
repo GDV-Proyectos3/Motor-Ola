@@ -33,7 +33,15 @@ struct NativeWindowPair
 class OgreManager : public Singleton<OgreManager>, Ogre::FrameListener {
 	friend Singleton<OgreManager>;
 public:
-	OgreManager(const Ogre::String& appName = OGRE_VERSION_NAME);
+	/// <summary>
+	/// Inicia los parámetros de la clase
+	/// </summary>
+	/// <param name="appName"> Nombre que aparecerá en la ventana (el del juego) </param>
+	OgreManager(const Ogre::String& appName = "MotorOla");
+
+	/// <summary>
+	/// Destructor de la clase
+	/// </summary>
 	~OgreManager();
 
 	// Getters
@@ -41,15 +49,25 @@ public:
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 
-
+	/// <summary>
+	/// Crea la ventana
+	/// </summary>
 	void init();
-	void close();
+
+	/// <summary>
+	/// Se encarga del renderizado con cada frame
+	/// </summary>
 	void update();
+
+	/// <summary>
+	/// Elimina los elementos de Ogre
+	/// </summary>
+	void close();
 
 	// callback interface copied from various listeners to be used by ApplicationContext
 	//virtual bool frameStarted(const Ogre::FrameEvent& evt) { pollEvents(); return true; }
 	//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-	virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
+	//virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
 	virtual void windowMoved(Ogre::RenderWindow* rw) {}
 	virtual void windowResized(Ogre::RenderWindow* rw) {}
 	virtual bool windowClosing(Ogre::RenderWindow* rw) { return true; }
@@ -61,6 +79,9 @@ public:
 	//bool initialiseRTShaderSystem();
 	//void destroyRTShaderSystem();
 
+	/// <summary>
+	/// 
+	/// </summary>
 	void setup();
 
 	void createRoot();

@@ -5,7 +5,7 @@
 Motor::Motor()
 {
 	// Inicia los managers
-	if(!_ogreManager) _ogreManager = new OgreManager("MotorOla");	
+	if(!_ogreManager) _ogreManager = new OgreManager();	
 }
 
 Motor::~Motor()
