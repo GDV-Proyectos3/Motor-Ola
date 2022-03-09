@@ -26,6 +26,8 @@ void EntidadManager::refresh()
 
 }
 
+
+
 Entidad* EntidadManager::addEntidad()
 {
 	Entidad* e = new Entidad();

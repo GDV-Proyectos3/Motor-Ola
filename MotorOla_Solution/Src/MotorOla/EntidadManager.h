@@ -15,6 +15,7 @@ public:
 	void update();
 	void draw();
 	void refresh();
+	
 
 private:
 	std::vector<uptr_ent> entitys_;

@@ -6,6 +6,7 @@
 // Declaracion de clases necesarias
 class OgreManager;
 
+
 class Motor
 {
 private:
@@ -16,12 +17,13 @@ private:
 
 	// Managers
 	OgreManager* _ogreManager = nullptr;
+	
 
 	//Physx
 	//FMod
 	//Cegui
 	bool stop = false;
-	//void handleEvents();
+	void handleEvents();
 
 public:
 	Motor();
