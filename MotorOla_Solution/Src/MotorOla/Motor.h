@@ -3,6 +3,9 @@
 #include <SDL.h>
 #include <iostream>
 
+// Declaracion de clases necesarias
+class OgreManager;
+
 class Motor
 {
 private:
@@ -10,12 +13,15 @@ private:
 	const int WINWIDTH = 800;
 	const int WINHEIGHT = 600;
 	SDL_Renderer* renderer;
-	//Ogre
+
+	// Managers
+	OgreManager* _ogreManager = nullptr;
+
 	//Physx
 	//FMod
 	//Cegui
 	bool stop = false;
-	void handleEvents();
+	//void handleEvents();
 
 public:
 	Motor();
