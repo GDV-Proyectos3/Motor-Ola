@@ -7,7 +7,7 @@
 *.pbd
 *.ilk
 Dependencies/Ogre/Build
-Dependencies/PhysX-4.0.0/build
+Dependencies/PhysX-4.1/Build
 *.vcxprog.user
 [Tt]emp/
 [Bb]in/
