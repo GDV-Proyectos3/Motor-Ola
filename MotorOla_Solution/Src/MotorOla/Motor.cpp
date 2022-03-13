@@ -1,6 +1,7 @@
 #include "Motor.h"
 #include "OgreManager.h"
 #include "utils/Singleton.h"
+#include "InputManager.h"
 
 
 
@@ -10,7 +11,8 @@ Motor::Motor()
 {
 	// Inicia los managers
 	if(!_ogreManager) _ogreManager = new OgreManager();	
-	SDL_Init(SDL_INIT_EVERYTHING);
+	if (!_inputManager)_inputManager = new InputManager();
+	
 	
 }
 
@@ -18,12 +20,14 @@ Motor::~Motor()
 {
 	// Destruye los managers
 	if (_ogreManager) delete _ogreManager;
+	if (_inputManager)delete _inputManager;
 }
 
 void Motor::initSystems()
 {
 
 	_ogreManager->init();
+	_inputManager->init(this);
 	
 	
 	
@@ -36,7 +40,7 @@ void Motor::updateSystems()
 {
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
-		handleEvents();
+		_inputManager->handleEvents();
 		_ogreManager->update();
 		
 		//Input
@@ -47,24 +51,12 @@ void Motor::updateSystems()
 	}
 
 }
-void Motor::handleEvents()
+bool Motor::getStop()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event) && !stop) {
-
-		if (event.type == SDL_QUIT) {
-
-			stop = true;
-		}
-		if (event.type == SDL_KEYDOWN) {
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				stop = true;
-			}
-			else if (event.key.keysym.sym == SDLK_0) {
-				std::cout << "Input" << std::endl;
-			}
-		}
-		
-		
-	}
+	return stop;
 }
+void Motor::setStop(bool s)
+{
+	stop = s;
+}
+
