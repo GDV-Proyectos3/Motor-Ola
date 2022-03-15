@@ -1,13 +1,16 @@
-# Prueba para ver que funciones el ignore
-# No hay que subir: .dll, vcxprog.user, .vs, Temp, .exe, .pdb, .ilk 
+# Prueba para ver que funcione el ignore
+# No hay que subir: .dll, vcxprog.user, .vs, Temp, .exe, .pdb, .ilk
 
-*.dll
+[Bb]in/*.dll
 .vs/
 *.exe
 *.pbd
 *.ilk
+*.tlog
+*.log
 Dependencies/Ogre/Build
 Dependencies/PhysX-4.1/Build
 *.vcxprog.user
 [Tt]emp/
-[Bb]in/
+[Ee]xes/*.dll
+# ^^^ este no deberia tener que especificarse
