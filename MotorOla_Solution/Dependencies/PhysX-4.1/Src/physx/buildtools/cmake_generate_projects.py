@@ -358,7 +358,8 @@ def presetProvided(pName):
     if os.environ.get('PM_cmake_PATH') is not None:
         cmakeExec = os.environ['PM_cmake_PATH'] + '/bin/cmake' + cmakeExt()
     else:
-        cmakeExec = 'cmake' + cmakeExt()
+        cmakeExec = os.environ['PHYSX_ROOT_DIR'] + '/../../../CMake/Src/bin/' + 'cmake' + cmakeExt()
+        #cmakeExec = 'cmake' + cmakeExt()
     print('Cmake: ' + cmakeExec)
 
     # gather cmake parameters

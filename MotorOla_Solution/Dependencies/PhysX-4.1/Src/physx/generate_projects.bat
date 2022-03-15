@@ -12,10 +12,14 @@ SET PM_PXSHARED_PATH=%PHYSX_ROOT_DIR%/../pxshared
 SET PM_TARGA_PATH=%PHYSX_ROOT_DIR%/../externals/targa
 SET PM_PATHS=%PM_CMAKEMODULES_PATH%;%PM_TARGA_PATH%
 
-if exist "%PHYSX_ROOT_DIR%/../externals/cmake/x64/bin/cmake.exe" (
-    SET "PM_CMAKE_PATH=%PHYSX_ROOT_DIR%/../externals/cmake/x64"
-    GOTO CMAKE_EXTERNAL    
-)
+::if exist "%PHYSX_ROOT_DIR%/../externals/cmake/x64/bin/cmake.exe" (
+::    SET "PM_CMAKE_PATH=%PHYSX_ROOT_DIR%/../externals/cmake/x64"
+::    GOTO CMAKE_EXTERNAL    
+::)
+
+SET OLD_PTH=%PATH%
+::::ECHO %OLD_PTH%
+PATH=%OLD_PTH%;..\..\..\python-3.9.10-embed-amd64\src;..\..\..\CMake\Src\bin
 
 where /q cmake
 IF ERRORLEVEL 1 (    
@@ -26,12 +30,13 @@ IF ERRORLEVEL 1 (
 
 :CMAKE_EXTERNAL
 
+GOTO SETPY
+
 :: Use the Python launcher if it exists
 py --version 2>NUL
 IF ERRORLEVEL 0 (
     set PM_PYTHON=py
 )
-
 IF ERRORLEVEL 1 (
     python --version 2>NUL
     IF ERRORLEVEL 1 (
@@ -49,6 +54,10 @@ IF ERRORLEVEL 1 (
         )
     )
 )
+
+:SETPY
+:: vvv
+set PM_PYTHON="..\..\..\python-3.9.10-embed-amd64\src\python.exe"
 
 IF %1.==. GOTO ADDITIONAL_PARAMS_MISSING
 
@@ -88,7 +97,9 @@ if exist "%Install2019Dir%\VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.t
 
 :ADDITIONAL_PARAMS_MISSING
 pushd %~dp0
-%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" %1
+%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" vc16win64
+::%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" vc16win64
+::::%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" %1
 popd
 if %ERRORLEVEL% neq 0 (
     set /p DUMMY=Hit ENTER to continue...

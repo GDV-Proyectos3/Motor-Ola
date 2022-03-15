@@ -10,6 +10,7 @@
 *.log
 Dependencies/Ogre/Build
 Dependencies/PhysX-4.1/Build
+Dependencies/PhysX-4.1/Src/physx/compiler/vc16win64
 *.vcxprog.user
 [Tt]emp/
 [Ee]xes/*.dll
