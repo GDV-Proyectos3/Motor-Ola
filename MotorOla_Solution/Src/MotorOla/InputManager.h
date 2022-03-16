@@ -17,5 +17,3 @@ private:
 	Motor* m;
 
 };
-
-

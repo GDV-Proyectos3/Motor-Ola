@@ -24,6 +24,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
     <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />

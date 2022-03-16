@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\ECS.h">
@@ -43,6 +46,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
