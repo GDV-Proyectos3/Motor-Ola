@@ -9,7 +9,7 @@
 [Ee]xes/*.dll
 
 # /exes
-*.pbd
+*.pdb
 *.idb
 [Ee]xes/*.lib
 [Ee]xes/*.exe
