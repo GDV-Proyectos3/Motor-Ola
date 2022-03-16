@@ -17,6 +17,8 @@ private:
 	// Managers
 	OgreManager* _ogreManager = nullptr;
 
+	// Factoria Componentes
+
 	//Physx
 	//FMod
 	//Cegui

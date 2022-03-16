@@ -24,6 +24,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
@@ -33,6 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h" />
     <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
     <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />

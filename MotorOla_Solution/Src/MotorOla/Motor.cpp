@@ -1,6 +1,24 @@
 #include "Motor.h"
 #include "OgreManager.h"
+#include "Componente.h"
+#include "ComponenteFactoria.h"
+#include "ComponenteRegistro.h"
 #include "utils/Singleton.h"
+
+class Transform : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Transform() {}
+};
+class Rigidbody : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Rigidbody() {}
+};
 
 Motor::Motor()
 {
@@ -16,16 +34,19 @@ Motor::~Motor()
 
 void Motor::initSystems()
 {
-
 	_ogreManager->init();
 	
+
+	// Registrando Componentes
+	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
+	ComponenteRegistro::ComponenteRegistro<Rigidbody>("rigidbody");
 }
 
 void Motor::updateSystems()
 {
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
-		_ogreManager->update();
+		_ogreManager->update();	// Renderiza un frame
 		//handleEvents();
 		//Input
 		//Update
