@@ -369,33 +369,33 @@ def presetProvided(pName):
     cmakeParams = cmakeParams + ' ' + parsedPreset.getCMakeParams()
     # print(cmakeParams)
 
-    if os.path.isfile(os.environ['PHYSX_ROOT_DIR'] + '/compiler/internal/CMakeLists.txt'):
+    if os.path.isfile(os.environ['PHYSX_ROOT_DIR'] + '/../../Build/internal/CMakeLists.txt'):
         cmakeMasterDir = 'internal'
     else:
         cmakeMasterDir = 'public'
     if parsedPreset.isMultiConfigPlatform():
         # cleanup and create output directory
-        outputDir = os.path.join('compiler', parsedPreset.presetName)
+        outputDir = os.path.join('../../Build', parsedPreset.presetName)
         cleanupCompilerDir(outputDir)
 
         # run the cmake script
         #print('Cmake params:' + cmakeParams)
         os.chdir(os.path.join(os.environ['PHYSX_ROOT_DIR'], outputDir))
         os.system(cmakeExec + ' \"' +
-                  os.environ['PHYSX_ROOT_DIR'] + '/compiler/' + cmakeMasterDir + '\"' + cmakeParams)
+                  os.environ['PHYSX_ROOT_DIR'] + '/../../Build/' + cmakeMasterDir + '\"' + cmakeParams)
         os.chdir(os.environ['PHYSX_ROOT_DIR'])
     else:
         configs = ['debug', 'checked', 'profile', 'release']
         for config in configs:
             # cleanup and create output directory
-            outputDir = os.path.join('compiler', parsedPreset.presetName + '-' + config)
+            outputDir = os.path.join('../../Build', parsedPreset.presetName + '-' + config)
             cleanupCompilerDir(outputDir)
 
             # run the cmake script
             #print('Cmake params:' + cmakeParams)
             os.chdir(os.path.join(os.environ['PHYSX_ROOT_DIR'], outputDir))
-            # print(cmakeExec + ' \"' + os.environ['PHYSX_ROOT_DIR'] + '/compiler/' + cmakeMasterDir + '\"' + cmakeParams + ' -DCMAKE_BUILD_TYPE=' + config)
-            os.system(cmakeExec + ' \"' + os.environ['PHYSX_ROOT_DIR'] + '/compiler/' +
+            # print(cmakeExec + ' \"' + os.environ['PHYSX_ROOT_DIR'] + '/../../Build/' + cmakeMasterDir + '\"' + cmakeParams + ' -DCMAKE_BUILD_TYPE=' + config)
+            os.system(cmakeExec + ' \"' + os.environ['PHYSX_ROOT_DIR'] + '/../../Build/' +
                       cmakeMasterDir + '\"' + cmakeParams + ' -DCMAKE_BUILD_TYPE=' + config)
             os.chdir(os.environ['PHYSX_ROOT_DIR'])
     pass

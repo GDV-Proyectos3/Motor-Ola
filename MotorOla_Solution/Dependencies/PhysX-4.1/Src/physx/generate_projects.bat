@@ -98,7 +98,7 @@ if exist "%Install2019Dir%\VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.t
 :ADDITIONAL_PARAMS_MISSING
 pushd %~dp0
 %PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" vc16win64
-::%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" vc16win64
+::%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" vc16win64m
 ::::%PM_PYTHON% "%PHYSX_ROOT_DIR%/buildtools/cmake_generate_projects.py" %1
 popd
 if %ERRORLEVEL% neq 0 (
