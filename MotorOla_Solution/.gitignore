@@ -1,18 +1,34 @@
-# Prueba para ver que funcione el ignore
-# No hay que subir: .dll, vcxprog.user, .vs, Temp, .exe, .pdb, .ilk
+# Prueba para ver que funciones el .gitignore
+# No hay que subir: .dll, .vcxproj.user, .vs/, [Tt]emp/, .exe, .pdb, .ilk 
 
-[Bb]in/*.dll
+# configuración personal visual studio
 .vs/
-*.exe
-!Dependencies/python-3.9.10-embed-amd64/src/python.exe
+
+# /bin
+[Bb]in/*.dll
+[Ee]xes/*.dll
+
+# /exes
 *.pbd
+*.idb
+[Ee]xes/*.lib
+[Ee]xes/*.exe
+
+# /temp
 *.ilk
+*.obj
 *.tlog
 *.log
-Dependencies/Ogre/Build
-Dependencies/PhysX-4.1/Build
-Dependencies/PhysX-4.1/Src/physx/compiler/vc16win64
-*.vcxprog.user
+*.recipe
+*.lastbuildstate
+*.vcxproj.FileListAbsolute.txt
 [Tt]emp/
-[Ee]xes/*.dll
-# ^^^ este no deberia tener que especificarse
+
+# /pojects
+*.vcxproj.user
+Ogre.log
+
+# /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
+/Dependencies/Ogre/Build
+/Dependencies/PhysX-4.1/Build
+/Dependencies/PhysX-4.1/Src/physx/compiler/vc16win64
