@@ -32,3 +32,8 @@ Ogre.log
 /Dependencies/Ogre/Build
 /Dependencies/PhysX-4.1/Build
 /Dependencies/PhysX-4.1/Src/physx/compiler/vc16win64
+
+/Dependencies/PhysX-4.1/Src/physx/bin/**/*.lib
+/Dependencies/PhysX-4.1/Src/physx/bin/**/*.exe
+/Dependencies/PhysX-4.1/Src/physx/bin/**/*.map
+/Dependencies/PhysX-4.1/Src/physx/bin/**/*.exp
