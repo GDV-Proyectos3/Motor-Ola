@@ -26,15 +26,21 @@
 
 # /pojects
 *.vcxproj.user
+
+### /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
+
+## Ogre
+/Dependencies/Ogre/[Bb]uild/
 Ogre.log
 
-# /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
-/Dependencies/Ogre/Build
-/Dependencies/PhysX-4.1/Build
-/Dependencies/PhysX-4.1/Src/physx/compiler/vc16win64
+## PhysX-4.1
+/Dependencies/PhysX-4.1/[Bb]uild/
+/Dependencies/PhysX-4.1/[Ss]rc/physx/include/PxConfig.h
 
-/Dependencies/PhysX-4.1/Src/physx/bin/**/*.lib
-/Dependencies/PhysX-4.1/Src/physx/bin/**/*.exe
-/Dependencies/PhysX-4.1/Src/physx/bin/**/*.map
-/Dependencies/PhysX-4.1/Src/physx/bin/**/*.exp
-/Dependencies/PhysX-4.1/Src/physx/bin/**/*.dll
+# directorio de salida de compilación VS: ( .lib, .exe, .map, .exp )
+/Dependencies/PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/
+
+# archivos dll's imprescindibles ( x64 )
+!PhysX-4.1/[Ss]rc/physx/bin/win.x86_64.vc140.mt/**/PhysXGpu_64.dll
+!PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/glut32.dll
+!PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/PhysXDevice64.dll
