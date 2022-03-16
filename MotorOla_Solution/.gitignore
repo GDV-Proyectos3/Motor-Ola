@@ -37,3 +37,4 @@ Ogre.log
 /Dependencies/PhysX-4.1/Src/physx/bin/**/*.exe
 /Dependencies/PhysX-4.1/Src/physx/bin/**/*.map
 /Dependencies/PhysX-4.1/Src/physx/bin/**/*.exp
+/Dependencies/PhysX-4.1/Src/physx/bin/**/*.dll
