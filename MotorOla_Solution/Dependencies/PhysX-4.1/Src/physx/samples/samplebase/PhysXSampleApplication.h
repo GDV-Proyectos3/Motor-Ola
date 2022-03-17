@@ -52,8 +52,11 @@
 #include "task/PxTask.h"
 #endif
 
-#define	SAMPLE_MEDIA_PATH		"samples/media/"
-#define	SAMPLE_OUTPUT_PATH	"samples/media/user/"
+// #define	SAMPLE_MEDIA_PATH		"samples/media/"
+#define	SAMPLE_MEDIA_PATH	"build/samples/media/"
+
+// #define	SAMPLE_OUTPUT_PATH	"samples/media/user/"
+#define	SAMPLE_OUTPUT_PATH	"build/samples/media/user/"
 
 namespace physx
 {
