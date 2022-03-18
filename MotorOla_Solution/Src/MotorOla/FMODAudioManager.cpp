@@ -25,7 +25,7 @@ void FMODAudioManager::update()
 	checkError(result);
 }
 
-bool FMODAudioManager::loadMusic(int channel, const std::string& fileName)
+void FMODAudioManager::loadMusic(int channel, const char* fileName)
 {
 	result = system->createSound(
 		fileName, // path al archivo de sonido

@@ -13,7 +13,7 @@ public:
 	void init() override;
 	void update() override;
 
-	virtual bool loadMusic(int channel, const std::string& fileName)override;
+	virtual void loadMusic(int channel, const char* fileName)override;
 	virtual void playMusic(int channel, bool loops ) override;
 	virtual void stopMusic(int channel) override;
 	virtual void togglePause(int channel) override;

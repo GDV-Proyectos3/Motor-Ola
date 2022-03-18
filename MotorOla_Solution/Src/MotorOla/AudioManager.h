@@ -12,7 +12,7 @@ public:
 	virtual void init() = 0;
 	virtual void update() = 0;
 
-	virtual bool loadMusic(int channel, const std::string& fileName) = 0;
+	virtual void loadMusic(int channel, const char* fileName) = 0;
 	virtual void playMusic(int channel, bool loops) = 0;
 	virtual void stopMusic(int channel) = 0;
 	virtual void togglePause(int channel) = 0;
