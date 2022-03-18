@@ -27,6 +27,8 @@
 # /pojects
 *.vcxproj.user
 Ogre.log
+*.vcxproj
+*.vcxproj.filters
 
 # /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
 /Dependencies/Ogre/Build
