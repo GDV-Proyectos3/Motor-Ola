@@ -67,6 +67,7 @@ void OgreManager::init()
 	//cuerpoNode->createChildSceneNode();
 	//cuerpoNode->attachObject(ent);
 	//cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
+
 	
 
 	std::cout << "OgreManager iniciado\n";

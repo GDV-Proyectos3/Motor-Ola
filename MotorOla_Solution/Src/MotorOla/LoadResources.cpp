@@ -36,23 +36,14 @@ void LoadResources::search(path p)
 	//Recorre los directorios cargando los archivos en los diferentes map
 	for (const auto& it : directory_iterator(p)) {
 		size_t end = it.path().string().find_last_of(".");
-		
-		/*if (end <8) {
-			search(it.path());
-		}
-		else {
-			load(it.path(), end, p.string().length());
-		}*/
-		if (end > 6) {
+		if (end > 4) {
 			load(it.path(), end, p.string().length());
 		}
 		else {
 			search(it.path());
 		}
 	}
-	if (textures.size() == 1) {
-		std::cout << "Imagen cargada" << std::endl;
-	}
+	
 }
 
 void LoadResources::load(path p, size_t end, size_t pathLenght)

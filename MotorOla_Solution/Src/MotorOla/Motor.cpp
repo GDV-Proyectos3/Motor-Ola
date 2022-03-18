@@ -27,8 +27,11 @@ Motor::~Motor()
 void Motor::initSystems()
 {
 	_loadResources->init();
+	std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
 	_inputManager->init(this);
+	
+	
 	
 	
 	
@@ -43,7 +46,7 @@ void Motor::updateSystems()
 	while (!stop) {
 		_inputManager->handleEvents();
 		_ogreManager->update();
-		
+	
 		//Input
 		//Update
 		//Render

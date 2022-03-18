@@ -9,7 +9,7 @@ using namespace std::filesystem;
 using namespace std;
 //using namespace filesystem;
 //static const std::string ASSETS = "../../Exes/Assets/";
-static const std::string ASSETS = ".\\../../Exes/Assets";
+static const std::string ASSETS = "../../Exes/Assets";
 class LoadResources : public Singleton<LoadResources> {
 	friend Singleton<LoadResources>;
 public:
@@ -21,7 +21,7 @@ public:
 	string tex(string tex);
 
 private:
-	map<string, string>mesh;
+	map<string, string>mesh;//.mesh
 	map<string, string>audio;//.mp3,.ogg,.wav
 	map<string, string>textures;//.png,.jpg,.bmp
 	//Si hay otro tipo añadir el map
