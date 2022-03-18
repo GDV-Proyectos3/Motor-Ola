@@ -160,7 +160,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
