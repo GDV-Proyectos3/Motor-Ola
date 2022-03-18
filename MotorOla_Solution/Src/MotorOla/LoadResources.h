@@ -16,12 +16,14 @@ public:
 	LoadResources();
 	~LoadResources();
 	void init();
-	string aud(string name);
+	string mes(string m);
+    string aud(string name);
 	string tex(string tex);
 
 private:
-	std::map<std::string, std::string>audio;//.mp3,.ogg,.wav
-	std::map<std::string, std::string>textures;//.png,.jpg,.bmp
+	map<string, string>mesh;
+	map<string, string>audio;//.mp3,.ogg,.wav
+	map<string, string>textures;//.png,.jpg,.bmp
 	//Si hay otro tipo añadir el map
 	void search(path p);
 	void load(path p, size_t end, size_t pathLenght);

@@ -10,7 +10,9 @@
 *.lib
 *.pbd
 *.idb
-[Ee]xes/
+*.iobj
+*.ipbd
+
 
 # /temp
 *.ilk

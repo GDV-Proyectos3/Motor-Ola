@@ -13,6 +13,12 @@ void LoadResources::init()
 	search(ASSETS);
 }
 
+string LoadResources::mes(string m)
+{
+	auto it=mesh.find(m);
+	return it->second;
+}
+
 string LoadResources::aud(string name)
 {
 	auto s= audio.find(name);
@@ -31,11 +37,17 @@ void LoadResources::search(path p)
 	for (const auto& it : directory_iterator(p)) {
 		size_t end = it.path().string().find_last_of(".");
 		
-		if (end <8) {
+		/*if (end <8) {
 			search(it.path());
 		}
 		else {
 			load(it.path(), end, p.string().length());
+		}*/
+		if (end > 6) {
+			load(it.path(), end, p.string().length());
+		}
+		else {
+			search(it.path());
 		}
 	}
 	if (textures.size() == 1) {
@@ -54,5 +66,8 @@ void LoadResources::load(path p, size_t end, size_t pathLenght)
 	}
 	else if (extension == ".jpg" || extension == ".png" || extension == ".bmp") {
 		textures.insert(pair<string, string>(name, p.string()));
+	}
+	else if (extension == ".mesh") {
+		mesh.insert(pair<string, string>(name, p.string()));
 	}
 }
