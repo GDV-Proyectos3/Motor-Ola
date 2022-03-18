@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <Ogre.h>
 
 
 class Vector2D
@@ -58,7 +59,7 @@ public:
 	}
 	friend std::ostream& operator<<(std::ostream& os, const Vector2D& v);
 
-	//Ogre::Vector3 convertOgreVector(const Vector2D& v)const;
+	Ogre::Vector3 convertOgreVector(const Vector2D& v)const;
 
 };
 
