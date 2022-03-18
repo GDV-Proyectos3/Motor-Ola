@@ -21,7 +21,7 @@ public:
 	void setBillboard(std::string material , Vector2D pos, Vector2D scale);
 	void toggleBillboard();
 	void setParticle(std::string material);
-	void toogleParticle();
+	void toggleParticle();
 	void setLight();
 	void toggleLight();
 

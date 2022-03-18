@@ -71,7 +71,7 @@ void Mesh::setParticle(std::string material)
 	particleNode->attachObject(smokePS);
 }
 
-void Mesh::toogleParticle()
+void Mesh::toggleParticle()
 {
 	smokePS->setEmitting(true);
 }
@@ -98,7 +98,7 @@ void Mesh::toggleLight()
 
 
 
-void Mesh::init()
+void Mesh::init() //en funcion de si el eje sobre el que esta el suelo es x,y o xz comentar/descomentar algunas de estas lineas
 {
 	if (entity_->hasComponent<Transform>())
 	{
@@ -114,4 +114,13 @@ void Mesh::init()
 void Mesh::update()
 {
 
+	if (entity_->hasComponent<Transform>())
+	{
+		Transform* tr = entity_->getComponent<Transform>();
+		//mNode->setPosition(tr->getPos().getX(), tr->getPos().getY(), 0);
+		mNode->setPosition(tr->getPos().getX(), 0, tr->getPos().getY());
+		mNode->setScale(tr->getW(), tr->getH(), tr->getW());
+		//mNode->setScale(tr->getW(), tr->getW(), tr->getH());
+		mNode->yaw(Ogre::Degree(tr->getRot()));
+	}
 }
