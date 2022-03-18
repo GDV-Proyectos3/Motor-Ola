@@ -12,7 +12,7 @@ FMODAudioManager::~FMODAudioManager()
 
 void FMODAudioManager::init()
 {
-	result = FMOD::System_Create(&system);
+	result = System_Create(&system);
 	checkError(result);
 	result = system->init(128, FMOD_INIT_NORMAL, 0);
 	checkError(result);
@@ -96,10 +96,10 @@ void FMODAudioManager::fadeOut(int chan)
 	result = channel[chan]->addFadePoint(parentclock + 500000, 0.0f);
 }
 
-void FMODAudioManager::checkError(FMOD::FMOD_RESULT result)
+void FMODAudioManager::checkError(FMOD_RESULT result)
 {
-	if (result != FMOD::FMOD_OK) {
-		std::cout << FMOD::FMOD_ErrorString(result) << std::endl;
+	if (result != FMOD_OK) {
+		std::cout << FMOD_ErrorString(result) << std::endl;
 		// printf("FMOD error %d - %s", result, FMOD_ErrorString(result));
 		exit(-1);
 	}

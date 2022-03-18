@@ -21,11 +21,11 @@ public:
 	virtual void setPitch(int chan, int pitch) override;
 	virtual void fadeIn(int chan) override;
 	virtual void fadeOut(int chan)override;
-	void checkError(FMOD::FMOD_RESULT result ) ;
+	void checkError(FMOD_RESULT result ) ;
 
 private:
 	FMOD::System* system;
-	FMOD::FMOD_RESULT result;
+	FMOD_RESULT result;
 	FMOD::Channel* channel[24];
 	FMOD::Sound* sound[24];
 };
