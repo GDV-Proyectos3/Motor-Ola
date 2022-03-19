@@ -40,7 +40,7 @@
 namespace Ps = physx::shdfnd;
 
 // #define MEDIA_PATH "samples/sampleframework/media/" 
-#define MEDIA_PATH "build/sampleframework/media/" 
+#define MEDIA_PATH "Build/sampleframework/media/" 
 
 //#define RENDERER_USE_OPENGL_ON_WINDONWS	1
 

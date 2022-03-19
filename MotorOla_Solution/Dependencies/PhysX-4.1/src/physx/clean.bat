@@ -46,7 +46,7 @@ cd ..
 rmdir /s /q temporal
 cd ..\..
 
-@REM \build
-rmdir /s /q ..\..\build\vc16win64\.vs
-rmdir /s /q ..\..\build\vc16win64\x64
-rmdir /s /q ..\..\build
+@REM \Build
+rmdir /s /q ..\..\Build\vc16win64\.vs
+rmdir /s /q ..\..\Build\vc16win64\x64
+rmdir /s /q ..\..\Build
