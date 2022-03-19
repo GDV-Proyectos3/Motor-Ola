@@ -1,13 +1,16 @@
 # Prueba para ver que funciones el .gitignore
 # No hay que subir: .dll, .vcxproj.user, .vs/, [Tt]emp/, .exe, .pdb, .ilk 
 
+
 # configuración personal visual studio
 .vs/
 
 # /exes
 *.exe
 *.dll
+!*/FMOD/libreria/x64/*.dll
 *.lib
+!*/FMOD/libreria/x64/*.lib
 *.pbd
 *.idb
 [Ee]xes/
