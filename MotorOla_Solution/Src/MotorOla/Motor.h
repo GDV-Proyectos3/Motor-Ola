@@ -1,13 +1,14 @@
 #pragma once
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
-
+#include <string>
 #include <iostream>
 
 // Declaracion de clases necesarias
 class OgreManager;
 class InputManager;
 class LoadResources;
+//class FMODAudioManager;
 
 
 class Motor
@@ -22,6 +23,7 @@ private:
 	OgreManager* _ogreManager = nullptr;
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
+	//FMODAudioManager* _audioManager = nullptr;
 	
 
 	//Physx

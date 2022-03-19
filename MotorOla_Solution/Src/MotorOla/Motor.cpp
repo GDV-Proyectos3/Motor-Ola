@@ -3,6 +3,7 @@
 #include "utils/Singleton.h"
 #include "InputManager.h"
 #include "LoadResources.h"
+//#include "FMODAudioManager.h"
 
 
 
@@ -12,6 +13,7 @@ Motor::Motor()
 	if (!_loadResources)_loadResources = new LoadResources();
 	if(!_ogreManager) _ogreManager = new OgreManager();	
 	if (!_inputManager)_inputManager = new InputManager();
+	//if (!_audioManager)_audioManager = new FMODAudioManager();
 	
 	
 }
@@ -22,6 +24,7 @@ Motor::~Motor()
 	if (_ogreManager) delete _ogreManager;
 	if (_inputManager)delete _inputManager;
 	if (_loadResources)delete _loadResources;
+	//if (_audioManager)delete _audioManager;
 }
 
 void Motor::initSystems()
@@ -30,6 +33,9 @@ void Motor::initSystems()
 	std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
 	_inputManager->init(this);
+	/*_audioManager->init();
+	_audioManager->loadMusic(0, _loadResources->aud("blind_shift.mp3").c_str());
+	_audioManager->playMusic(0, true);*/
 	
 	
 	
