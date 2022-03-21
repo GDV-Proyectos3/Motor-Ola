@@ -3,17 +3,15 @@
 #include "utils/Singleton.h"
 #include "InputManager.h"
 
+#include <Windows.h>
 
-
-
+typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
 	// Inicia los managers
 	if(!_ogreManager) _ogreManager = new OgreManager();	
 	if (!_inputManager)_inputManager = new InputManager();
-	
-	
 }
 
 Motor::~Motor()
@@ -29,11 +27,14 @@ void Motor::initSystems()
 	_ogreManager->init();
 	_inputManager->init(this);
 	
-	
-	
-	
-	
-	
+	// El motor intenta cargar un juego, pero si hay algún error se arranca con la funcion loadTestMotorGame
+	try {
+		loadDLLGame();
+	}
+	catch (const char* error) {
+		std::cout << "Error: " << error << "\n";
+		loadTestMotorGame();
+	}
 }
 
 void Motor::updateSystems()
@@ -46,15 +47,42 @@ void Motor::updateSystems()
 		//Input
 		//Update
 		//Render
-		
-		
 	}
+}
+
+void Motor::loadDLLGame()
+{
+	HINSTANCE hDLL;               // Handle to DLL
+	LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
+	HRESULT hrReturnVal;
+
+	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+
+	if (NULL != hDLL)
+	{
+		lpfnDllFunc1 = (LPFNDLLFUNC1)GetProcAddress(hDLL, "LoadGame");
+		if (NULL != lpfnDllFunc1)
+		{
+			lpfnDllFunc1(NULL, NULL);
+		}
+		else throw "Function LoadGame not found in DLL";
+
+		// Libera la memoria de la DLL cargada explicitamente
+		FreeLibrary(hDLL);
+	}
+	else throw "DLL not found";
+}
+
+void Motor::loadTestMotorGame() {
 
 }
+
+
 bool Motor::getStop()
 {
 	return stop;
 }
+
 void Motor::setStop(bool s)
 {
 	stop = s;
