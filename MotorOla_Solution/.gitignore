@@ -3,6 +3,7 @@
 
 # configuración personal visual studio
 .vs/
+*.lnk
 
 # /bin
 [Bb]in/*.dll
