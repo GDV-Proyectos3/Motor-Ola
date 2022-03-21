@@ -173,7 +173,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib;SDL2d.lib;SDL2maind.lib;fmod_vc.lib;fmodL_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\Debug\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -187,7 +187,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,7 +195,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\Release;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
