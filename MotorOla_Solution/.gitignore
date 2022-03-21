@@ -1,19 +1,27 @@
 # Prueba para ver que funciones el .gitignore
 # No hay que subir: .dll, .vcxproj.user, .vs/, [Tt]emp/, .exe, .pdb, .ilk 
 
-# configuración personal visual studio
-.vs/
+# auxiliares
+*.url
 *.lnk
 
+# configuración personal visual studio
+.vs/
+
 # /bin
-[Bb]in/*.dll
-[Ee]xes/*.dll
+[Bb]in/
 
 # /exes
+*.exe
+*.dll
+*.lib
 *.pdb
 *.idb
-[Ee]xes/*.lib
 [Ee]xes/*.exe
+[Ee]xes/*.dll
+[Ee]xes/*.lib
+[Ee]xes/*.pdb
+[Ee]xes/*.idb
 
 # /temp
 *.ilk
@@ -33,6 +41,11 @@
 ## Ogre
 /Dependencies/Ogre/[Bb]uild/
 Ogre.log
+ogre.cfg
+
+## FMOD
+!*/FMOD/libreria/x64/*.dll
+!*/FMOD/libreria/x64/*.lib
 
 ## PhysX-4.1
 /Dependencies/PhysX-4.1/[Bb]uild/
