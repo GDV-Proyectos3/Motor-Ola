@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
