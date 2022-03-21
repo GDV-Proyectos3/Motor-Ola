@@ -74,7 +74,7 @@ void OgreManager::init()
 
 void OgreManager::update()
 {
-	std::cout << "OgreManager actualizandose\n";
+	//std::cout << "OgreManager actualizandose\n";
 
 	// Renderiza el frame actual
 	_root->renderOneFrame();
