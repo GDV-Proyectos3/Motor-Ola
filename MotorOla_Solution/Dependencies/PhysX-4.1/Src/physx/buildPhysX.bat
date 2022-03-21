@@ -22,4 +22,4 @@ copy /y PhysXCooking_64.dll "..\..\..\..\..\..\..\Bin\PhysXCooking_64.dll"
 copy /y PhysXGpu_64.dll "..\..\..\..\..\..\..\Bin\PhysXGpu_64.dll"
 
 set /p DUMMY=--Hecho--
-exit
+::exit

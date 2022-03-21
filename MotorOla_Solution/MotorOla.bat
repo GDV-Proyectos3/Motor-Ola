@@ -13,7 +13,7 @@ cd Build
 
 :: CMake hace la Build de Ogre
 ..\..\CMake\Src\bin\cmake.exe -DOGRE_BUILD_COMPONENT_OVERLAY=TRUE -DOGRE_BUILD_RENDERSYSTEM_D3D9=FALSE -DOGRE_BUILD_RENDERSYSTEM_D3D11=FALSE -DOGRE_BUILD_RENDERSYSTEM_GL3PLUS=FALSE -DOGRE_BUILD_RENDERSYSTEM_GL=TRUE -DOGRE_BUILD_RENDERSYSTEM_GLES2=FALSE -DOGRE_BUILD_PLUGIN_ASSIMP=FALSE -DOGRE_BUILD_PLUGIN_BSP=FALSE -DOGRE_BUILD_PLUGIN_OCTREE=FALSE -DOGRE_BUILD_PLUGIN_DOT_SCENE=FALSE -DOGRE_BUILD_PLUGIN_PCZ=FALSE -DOGRE_BUILD_COMPONENT_TERRAIN=FALSE -DOGRE_BUILD_COMPONENT_VOLUME=FALSE -DOGRE_BUILD_COMPONENT_BITES=FALSE -DOGRE_BUILD_COMPONENT_PYTHON=FALSE -DOGRE_BUILD_COMPONENT_JAVA=FALSE -DOGRE_BUILD_COMPONENT_CSHARP=FALSE -DOGRE_INSTALL_CMAKE=FALSE -DOGRE_INSTALL_SAMPLES=FALSE -DOGRE_INSTALL_DOCS=FALSE -DOGRE_INSTALL_PDB=FALSE -DOGRE_INSTALL_VSPROPS=TRUE -DOGRE_BUILD_TOOLS=FALSE ../Src
-..\..\CMake\Src\bin\cmake.exe --build . --config release 
+:: ..\..\CMake\Src\bin\cmake.exe --build . --config release 
 ..\..\CMake\Src\bin\cmake.exe --build . --config debug
 
 :: Se copian las dlls de Ogre a Bin
@@ -44,14 +44,24 @@ copy /Y OgreProperty.dll "../../../../../Bin/OgreProperty.dll"
 copy /Y OgreRTShaderSystem.dll "../../../../../Bin/OgreRTShaderSystem.dll"
 copy /Y Plugin_ParticleFX.dll "../../../../../Bin/Plugin_ParticleFX.dll"
 copy /Y RenderSystem_GL.dll "../../../../../Bin/RenderSystem_GL.dll"
+
+:: Mensaje de verificación: OGRE
+Echo ::::: BUILD [ OGRE ] COMPLETADA :::::
+@REM PAUSE >nul
+
 :: Estas están repetidas pero por si acaso
 copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
 copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
 copy /Y zlib.dll "../../../../../Bin/zlib.dll"
+
 :: Copia SDL2d.dll en Bin y en Exes
 cd ..\..\SDL2-build 
-..\..\..\CMake\Src\bin\cmake.exe --build . --config release 
+:: ..\..\..\CMake\Src\bin\cmake.exe --build . --config release 
 ..\..\..\CMake\Src\bin\cmake.exe --build . --config debug
+
+:: Mensaje de verificación: SDL
+Echo ::::: BUILD [ SDL ] COMPLETADA :::::
+@REM PAUSE >nul
 
 cd Debug
 copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
@@ -63,16 +73,23 @@ copy /Y fmod.dll "../../../../Bin/fmod.dll"
 copy /Y fmod.dll "../../../../Exes/fmod.dll"
 copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
 copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
+cd ..\..\..\..\
 
-:: Mensaje de verificación
-Echo BUILD DE OGRE COMPLETADA
+:: Mensaje de verificación: FMOD
+Echo ::::: BUILD [ FMOD ] COMPLETADA :::::
+@REM PAUSE >nul
 
 :: Build de PhysX-4.1
-cd ..\..\..\..\..\Dependencies\PhysX-4.1\Src\physx\
+cd Dependencies\PhysX-4.1\Src\physx\
 call buildPhysX.bat
-
-:: Vuelta a la carpeta root
 cd ..\..\..\..\
+
+:: Mensaje de verificación: PhysX
+Echo ::::: BUILD [ PhysX ] COMPLETADA :::::
+@REM PAUSE >nul
+
+:: Mensaje de verificación
+Echo ::::: BUILD [ MotorOla ] COMPLETADA :::::
 
 :: Pausa para ver que ha ocurrido
 PAUSE >nul
