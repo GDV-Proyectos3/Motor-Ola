@@ -26,7 +26,7 @@ public:
 
 	template<typename  T>
 	inline bool hasComponent() const {
-		return componentBitset[getComponentTypeID<T>];
+		return componentBitset[getComponentTypeID<T>()];
 	}
 
 	template<typename T>

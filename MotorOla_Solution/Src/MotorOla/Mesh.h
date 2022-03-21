@@ -4,7 +4,8 @@
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
-//#include <OgreParticleSystem.h>
+#include "utils/Vector2D.h"
+#include <OgreParticleSystem.h>
 class Mesh :   public Componente
 {
 public:

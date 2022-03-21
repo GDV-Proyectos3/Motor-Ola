@@ -57,6 +57,13 @@ cd Debug
 copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
 copy /Y SDL2d.dll "../../../../../Exes/SDL2d.dll"
 
+:: Copia fmod.dll y fmodL.dll en Bin y en Exes
+cd ..\..\..\..\FMOD\libreria\x64
+copy /Y fmod.dll "../../../../Bin/fmod.dll"
+copy /Y fmod.dll "../../../../Exes/fmod.dll"
+copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
+copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
+
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
 
