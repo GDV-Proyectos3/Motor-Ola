@@ -33,6 +33,7 @@ public:
 	~Motor();
 
 	void initSystems();
+
 	void updateSystems();
 
 	/// <summary>
