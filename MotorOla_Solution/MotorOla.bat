@@ -1,5 +1,5 @@
-:: Esto hace que use el native tools command Prompt para visual studio 2019 y gracias a esto puedo usar msbuild
-call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+::Este .bat hay que ejecutarlo desde el Developer Command Prompt de Visual Studio que se puede encontrar en la pestaña tools de visual
+::en Command Line
 
 :: Se crea la carpeta Bin para meter las dlls
 mkdir Bin
