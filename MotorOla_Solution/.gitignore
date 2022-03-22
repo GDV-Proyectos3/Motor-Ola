@@ -16,12 +16,14 @@
 *.dll
 *.lib
 *.pdb
-*.idb
+*.iobj
+*.ipdb
 [Ee]xes/*.exe
 [Ee]xes/*.dll
 [Ee]xes/*.lib
 [Ee]xes/*.pdb
-[Ee]xes/*.idb
+[Ee]xes/*.iobj
+[Ee]xes/*.ipdb
 
 # /temp
 *.ilk
