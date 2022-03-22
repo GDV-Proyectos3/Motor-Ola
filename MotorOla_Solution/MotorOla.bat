@@ -50,5 +50,12 @@ copy /Y zlib.dll "../../../../../Bin/zlib.dll"
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
 
+:: Build de PhysX-4.1
+cd ..\..\..\..\..\Dependencies\PhysX-4.1\Src\physx\
+call buildPhysX.bat
+
+:: Vuelta a la carpeta root
+cd ..\..\..\..\
+
 :: Pausa para ver que ha ocurrido
 PAUSE >nul
