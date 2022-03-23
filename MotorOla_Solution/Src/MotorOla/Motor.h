@@ -1,25 +1,30 @@
 #pragma once
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
+#include <string>
 #include <iostream>
 
 // Declaracion de clases necesarias
 class OgreManager;
 class InputManager;
+class LoadResources;
+//class FMODAudioManager;
 
 class Motor
 {
 private:
-	SDL_Window* window;
+	/*SDL_Window* window;
 	const int WINWIDTH = 800;
 	const int WINHEIGHT = 600;
-	SDL_Renderer* renderer;
+	SDL_Renderer* renderer;*/
 
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
 	// Managers
 	OgreManager* _ogreManager = nullptr;
 	InputManager* _inputManager = nullptr;
+	LoadResources* _loadResources = nullptr;
+	//FMODAudioManager* _audioManager = nullptr;
 	
 
 	// Factoria Componentes
