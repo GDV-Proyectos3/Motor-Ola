@@ -1,3 +1,6 @@
+::Este .bat hay que ejecutarlo desde el Developer Command Prompt de Visual Studio que se puede encontrar en la pestaña tools de visual
+::en Command Line
+
 :: Se crea la carpeta Bin para meter las dlls
 mkdir Bin
 
@@ -67,6 +70,23 @@ copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
 
+:: Se va al directorio de Lua que esta en Dependencies
+cd ..\..\..\Lua
+:: Uso msbuild para que se haga la build de Lua y especifico que se haga en debug y release
+msbuild -p:Configuration=Debug
+msbuild -p:Configuration=Release
+
+:: Me meto en la carpeta de Debug que se ha generado al hacer la build y copio Lua_d.dll en Bin y Exes
+cd x64/Debug
+copy /Y Lua_d.dll "../../../../Bin/Lua_d.dll"
+copy /Y Lua_d.dll "../../../../Exes/Lua_d.dll"
+:: Me muevo a la carpeta Release y copio Lua.dll en Bin y Exes
+cd ../Release
+copy /Y Lua.dll "../../../../Bin/Lua.dll"
+copy /Y Lua.dll "../../../../Exes/Lua.dll"
+
+:: Mensaje de verificacion
+Echo BUILD DE LUA COMPLETA
 
 :: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
 cd ..\..\..\..

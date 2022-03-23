@@ -18,50 +18,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OgreProject\OgreProject.vcxproj">
-      <Project>{543473c6-ef73-4d97-b2b8-adf7b93eb452}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Src\MotorOla\AudioManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
-    <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h" />
-    <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h" />
-    <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
-    <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
-    <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
-    <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
-    <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Src\MotorOla\Motor.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f6af22f4-46d3-4e02-bb0b-57f45f00230a}</ProjectGuid>
-    <RootNamespace>MotorOlaProject</RootNamespace>
+    <ProjectGuid>{8b3f57d0-d813-411c-8004-03692ac5a57c}</ProjectGuid>
+    <RootNamespace>Lua</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -79,13 +40,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -111,26 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(ProjectName)(\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Exes\</OutDir>
-    <TargetName>$(ProjectName)32_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Exes\</OutDir>
-    <TargetName>$(ProjectName)32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Exes\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(SolutionDir)Exes\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,13 +89,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject32_d.lib;OgreMain_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,35 +103,25 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject32.lib;OgreMain.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUA_BUILD_AS_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib;SDL2d.lib;SDL2maind.lib;fmod_vc.lib;fmodL_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -191,23 +129,80 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUA_BUILD_AS_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
-    <ProjectReference>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="include\lapi.c" />
+    <ClCompile Include="include\lauxlib.c" />
+    <ClCompile Include="include\lbaselib.c" />
+    <ClCompile Include="include\lcode.c" />
+    <ClCompile Include="include\lcorolib.c" />
+    <ClCompile Include="include\lctype.c" />
+    <ClCompile Include="include\ldblib.c" />
+    <ClCompile Include="include\ldebug.c" />
+    <ClCompile Include="include\ldo.c" />
+    <ClCompile Include="include\ldump.c" />
+    <ClCompile Include="include\lfunc.c" />
+    <ClCompile Include="include\lgc.c" />
+    <ClCompile Include="include\linit.c" />
+    <ClCompile Include="include\liolib.c" />
+    <ClCompile Include="include\llex.c" />
+    <ClCompile Include="include\lmathlib.c" />
+    <ClCompile Include="include\lmem.c" />
+    <ClCompile Include="include\loadlib.c" />
+    <ClCompile Include="include\lobject.c" />
+    <ClCompile Include="include\lopcodes.c" />
+    <ClCompile Include="include\loslib.c" />
+    <ClCompile Include="include\lparser.c" />
+    <ClCompile Include="include\lstate.c" />
+    <ClCompile Include="include\lstring.c" />
+    <ClCompile Include="include\lstrlib.c" />
+    <ClCompile Include="include\ltable.c" />
+    <ClCompile Include="include\ltablib.c" />
+    <ClCompile Include="include\ltm.c" />
+    <ClCompile Include="include\lundump.c" />
+    <ClCompile Include="include\lutf8lib.c" />
+    <ClCompile Include="include\lvm.c" />
+    <ClCompile Include="include\lzio.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\lapi.h" />
+    <ClInclude Include="include\lauxlib.h" />
+    <ClInclude Include="include\lcode.h" />
+    <ClInclude Include="include\lctype.h" />
+    <ClInclude Include="include\ldebug.h" />
+    <ClInclude Include="include\ldo.h" />
+    <ClInclude Include="include\lfunc.h" />
+    <ClInclude Include="include\lgc.h" />
+    <ClInclude Include="include\ljumptab.h" />
+    <ClInclude Include="include\llex.h" />
+    <ClInclude Include="include\llimits.h" />
+    <ClInclude Include="include\lmem.h" />
+    <ClInclude Include="include\lobject.h" />
+    <ClInclude Include="include\lopcodes.h" />
+    <ClInclude Include="include\lopnames.h" />
+    <ClInclude Include="include\lparser.h" />
+    <ClInclude Include="include\lprefix.h" />
+    <ClInclude Include="include\lstate.h" />
+    <ClInclude Include="include\lstring.h" />
+    <ClInclude Include="include\ltable.h" />
+    <ClInclude Include="include\ltm.h" />
+    <ClInclude Include="include\lua.h" />
+    <ClInclude Include="include\lua.hpp" />
+    <ClInclude Include="include\luaconf.h" />
+    <ClInclude Include="include\lualib.h" />
+    <ClInclude Include="include\lundump.h" />
+    <ClInclude Include="include\lvm.h" />
+    <ClInclude Include="include\lzio.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
