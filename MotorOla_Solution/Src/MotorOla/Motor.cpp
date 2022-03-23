@@ -1,11 +1,29 @@
 #include "Motor.h"
 #include "OgreManager.h"
+#include "Componente.h"
+#include "ComponenteFactoria.h"
+#include "ComponenteRegistro.h"
 #include "utils/Singleton.h"
 #include "InputManager.h"
 
 #include <Windows.h>
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
+
+class Transform : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Transform() {}
+};
+class Rigidbody : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Rigidbody() {}
+};
 
 Motor::Motor()
 {
@@ -23,11 +41,10 @@ Motor::~Motor()
 
 void Motor::initSystems()
 {
-
 	_ogreManager->init();
 	_inputManager->init(this);
 	
-	// El motor intenta cargar un juego, pero si hay algún error se arranca con la funcion loadTestMotorGame
+	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
 		loadDLLGame();
 	}
@@ -35,6 +52,10 @@ void Motor::initSystems()
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
 	}
+
+	// Registrando Componentes
+	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
+	ComponenteRegistro::ComponenteRegistro<Rigidbody>("rigidbody");
 }
 
 void Motor::updateSystems()

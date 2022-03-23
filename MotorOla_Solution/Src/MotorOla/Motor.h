@@ -22,6 +22,8 @@ private:
 	InputManager* _inputManager = nullptr;
 	
 
+	// Factoria Componentes
+
 	//Physx
 	//FMod
 	//Cegui
