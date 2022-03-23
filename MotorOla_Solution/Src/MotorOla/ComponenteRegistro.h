@@ -1,6 +1,7 @@
 #pragma once
 #include "ComponenteFactoria.h"
 #include "ECS.h"
+#include "utils/Singleton.h"
 
 /// <summary>
 /// Registro de los nuevos componentes, ejemplo:
@@ -10,11 +11,12 @@ namespace ComponenteRegistro {
 	template<typename T> class ComponenteRegistro {
 	public:
 		ComponenteRegistro(std::string compName) {
-			ComponenteFactoria::getInstance().registerGenerator(compName, []()
-				{
-					return static_cast<Component*>(new T());
-				}
-			);
+			// Dejo esto comentado que no sé por que no funciona
+			//Singleton<ComponenteFactoria>().instance()->registerGenerator(compName, []()
+			//	{
+			//		return static_cast<Componente*>(new T());
+			//	}
+			//);
 		}
 	};
 }
