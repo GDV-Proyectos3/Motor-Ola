@@ -8,8 +8,8 @@
 class OgreManager;
 class InputManager;
 class LoadResources;
-//class FMODAudioManager;
-
+class FMODAudioManager;
+class Entidad;
 class Motor
 {
 private:
@@ -24,7 +24,7 @@ private:
 	OgreManager* _ogreManager = nullptr;
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
-	//FMODAudioManager* _audioManager = nullptr;
+	FMODAudioManager* _audioManager = nullptr;
 	
 
 	// Factoria Componentes
@@ -34,6 +34,8 @@ private:
 	//Cegui
 	bool stop = false;
 	//void handleEvents();
+
+	int channel = 0;
 
 public:
 	Motor();
