@@ -1,16 +1,30 @@
 # Prueba para ver que funciones el .gitignore
 # No hay que subir: .dll, .vcxproj.user, .vs/, [Tt]emp/, .exe, .pdb, .ilk 
 
+# auxiliares
+*.url
+*.lnk
+
 # configuración personal visual studio
 .vs/
+
+# /bin
+[Bb]in/
 
 # /exes
 *.exe
 *.dll
 *.lib
-*.pbd
+*.pdb
 *.idb
-[Ee]xes/
+
+[Ee]xes/*.exe
+[Ee]xes/*.dll
+[Ee]xes/*.lib
+[Ee]xes/*.pdb
+[Ee]xes/*.idb
+
+
 
 # /temp
 *.ilk
@@ -24,7 +38,28 @@
 
 # /pojects
 *.vcxproj.user
-Ogre.log
 
-# /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
-/Dependencies/Ogre/Build
+### /dependecies (ir añadiendo los directorios de bibliotecas nuevas)
+
+## Ogre
+/Dependencies/Ogre/[Bb]uild/
+Ogre.log
+ogre.cfg
+
+## FMOD
+!*/FMOD/libreria/x64/*.dll
+!*/FMOD/libreria/x64/*.lib
+
+## PhysX-4.1
+/Dependencies/PhysX-4.1/[Bb]uild/
+/Dependencies/PhysX-4.1/[Ss]rc/physx/include/PxConfig.h
+
+# directorio de salida de compilación VS: ( .lib, .exe, .map, .exp )
+/Dependencies/PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/
+
+
+# archivos dll's imprescindibles ( x64 )
+!PhysX-4.1/[Ss]rc/physx/bin/win.x86_64.vc140.mt/**/PhysXGpu_64.dll
+!PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/glut32.dll
+!PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/PhysXDevice64.dll
+

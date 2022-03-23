@@ -74,13 +74,13 @@ Vector2D Vector2D::normalize() const {
 	return r;
 }
 
+Ogre::Vector3 Vector2D::convertOgreVector(const Vector2D& v) const
+{
+	return Ogre::Vector3(v.getX(), v.getX(), 0);
+}
+
 std::ostream& operator<<(std::ostream& os, const Vector2D& v) {
 	os << "(" << v.getX() << "," << v.getY() << ")";
 	return os;
 }
 
-//Ogre::Vector3 convertOgreVector(const Vector2D& v) const
-//{
-//	return new Ogre::Vector3(v.getX(), v.getX(), 0);
-//
-//}

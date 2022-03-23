@@ -60,6 +60,13 @@ cd Debug
 copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
 copy /Y SDL2d.dll "../../../../../Exes/SDL2d.dll"
 
+:: Copia fmod.dll y fmodL.dll en Bin y en Exes
+cd ..\..\..\..\FMOD\libreria\x64
+copy /Y fmod.dll "../../../../Bin/fmod.dll"
+copy /Y fmod.dll "../../../../Exes/fmod.dll"
+copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
+copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
+
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
 
@@ -80,6 +87,9 @@ copy /Y Lua.dll "../../../../Exes/Lua.dll"
 
 :: Mensaje de verificacion
 Echo BUILD DE LUA COMPLETA
+
+:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
+cd ..\..\..\..
 
 :: Pausa para ver que ha ocurrido
 PAUSE >nul

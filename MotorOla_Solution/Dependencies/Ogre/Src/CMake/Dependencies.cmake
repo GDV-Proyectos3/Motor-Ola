@@ -111,7 +111,7 @@ if(OGRE_BUILD_DEPENDENCIES AND NOT EXISTS ${OGREDEPS_PATH})
     if(MSVC OR MINGW OR SKBUILD) # other platforms dont need this
         message(STATUS "Building SDL2")
         file(DOWNLOAD
-            https://libsdl.org/release/SDL2-2.0.20.tar.gz
+            https://github.com/libsdl-org/SDL/archive/refs/heads/main.zip
             ${PROJECT_BINARY_DIR}/SDL2-2.0.20.tar.gz)
         execute_process(COMMAND ${CMAKE_COMMAND} 
             -E tar xf SDL2-2.0.20.tar.gz WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
@@ -119,7 +119,7 @@ if(OGRE_BUILD_DEPENDENCIES AND NOT EXISTS ${OGREDEPS_PATH})
             -E make_directory ${PROJECT_BINARY_DIR}/SDL2-build)
         execute_process(COMMAND ${BUILD_COMMAND_COMMON}
             -DSDL_STATIC=FALSE
-            ${PROJECT_BINARY_DIR}/SDL2-2.0.20
+            ${PROJECT_BINARY_DIR}/SDL-main
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/SDL2-build)
         execute_process(COMMAND ${CMAKE_COMMAND}
             --build ${PROJECT_BINARY_DIR}/SDL2-build ${BUILD_COMMAND_OPTS})
