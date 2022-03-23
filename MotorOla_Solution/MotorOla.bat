@@ -67,5 +67,9 @@ copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
 :: Mensaje de verificación
 Echo BUILD DE OGRE COMPLETADA
 
+
+:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
+cd ..\..\..\..
+
 :: Pausa para ver que ha ocurrido
 PAUSE >nul
