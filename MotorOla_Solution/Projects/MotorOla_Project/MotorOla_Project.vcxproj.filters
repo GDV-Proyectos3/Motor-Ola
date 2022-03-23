@@ -31,6 +31,10 @@
     <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
@@ -76,6 +80,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\LoadResources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

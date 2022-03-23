@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
@@ -171,6 +173,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -191,6 +194,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -71,7 +71,7 @@ copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
 Echo BUILD DE OGRE COMPLETADA
 
 :: Se va al directorio de Lua que esta en Dependencies
-cd ..\..\..\..\Lua
+cd ..\..\..\Lua
 :: Uso msbuild para que se haga la build de Lua y especifico que se haga en debug y release
 msbuild -p:Configuration=Debug
 msbuild -p:Configuration=Release
