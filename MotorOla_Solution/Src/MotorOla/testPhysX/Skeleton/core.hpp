@@ -1,9 +1,9 @@
 #ifndef __CORE_HPP__
 #define __CORE_HPP__
 
-#include "Common/Print.h"
-#include "Common/PVD.h"
-#include "Utils/Utils.h"
+#include "../common/Common/Print.h"
+#include "../common/Common/PVD.h"
+#include "../common/Utils/Utils.h"
 
 #include "Render/Render.h"
 #include "Render/Camera.h"

@@ -1,7 +1,6 @@
 #include <ctype.h>
 
-#include <PxPhysicsAPI.h>
-
+#include "mainPhysX.h"
 #include <vector>
 
 #include "core.hpp"
@@ -106,7 +105,7 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 }
 
 
-int main(int, const char*const*)
+int snippetMain(int, const char* const*)
 {
 #ifndef OFFLINE_EXECUTION 
 	extern void renderLoop();

@@ -38,19 +38,19 @@
     <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\Render\Render.cpp">
-      <Filter>testPhysX\Skeleton\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\Render\Camera.cpp">
-      <Filter>testPhysX\Skeleton\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\callbacks.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.cpp">
       <Filter>testPhysX\Skeleton</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\RenderUtils.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.cpp">
       <Filter>testPhysX\Skeleton</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\mainPhysX.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.cpp">
+      <Filter>testPhysX\Skeleton\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.cpp">
+      <Filter>testPhysX\Skeleton\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.cpp">
       <Filter>testPhysX</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,32 +106,35 @@
     <ClInclude Include="..\..\Src\MotorOla\AudioSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Utils\Utils.h">
-      <Filter>testPhysX\Utils</Filter>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Utils\Utils.h">
+      <Filter>testPhysX\common\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Render\Render.h">
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.hpp">
+      <Filter>testPhysX\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.hpp">
+      <Filter>testPhysX\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\core.hpp">
+      <Filter>testPhysX\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.h">
       <Filter>testPhysX\Skeleton\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Render\Camera.h">
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.h">
       <Filter>testPhysX\Skeleton\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Graphics\glut.h">
-      <Filter>testPhysX\Graphics</Filter>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\Print.h">
+      <Filter>testPhysX\common\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\Print.h">
-      <Filter>testPhysX\Common</Filter>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\PVD.h">
+      <Filter>testPhysX\common\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\PVD.h">
-      <Filter>testPhysX\Common</Filter>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Graphics\glut.h">
+      <Filter>testPhysX\common\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\RenderUtils.hpp">
-      <Filter>testPhysX\Skeleton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\callbacks.hpp">
-      <Filter>testPhysX\Skeleton</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\core.hpp">
-      <Filter>testPhysX\Skeleton</Filter>
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.h">
+      <Filter>testPhysX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -147,20 +150,23 @@
     <Filter Include="testPhysX">
       <UniqueIdentifier>{aec544d5-b3e1-473a-92cc-f91629b955a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="testPhysX\Utils">
-      <UniqueIdentifier>{fbdbcfd8-264a-41e2-aa57-4473d964920f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="testPhysX\Graphics">
-      <UniqueIdentifier>{515d7e2f-4c8c-4f9e-abee-ad32dde57985}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="testPhysX\Common">
-      <UniqueIdentifier>{37b3cfa6-4d72-435a-931d-6d8681d14633}</UniqueIdentifier>
-    </Filter>
     <Filter Include="testPhysX\Skeleton">
       <UniqueIdentifier>{6e559409-6367-4f08-bbfd-aa67cb82a889}</UniqueIdentifier>
     </Filter>
     <Filter Include="testPhysX\Skeleton\Render">
       <UniqueIdentifier>{e122c320-fd39-4808-b4ac-9bd9c0fb7f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="testPhysX\common">
+      <UniqueIdentifier>{f2c9c1f2-39f7-4321-a4b6-8770641c2813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="testPhysX\common\Common">
+      <UniqueIdentifier>{37b3cfa6-4d72-435a-931d-6d8681d14633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="testPhysX\common\Graphics">
+      <UniqueIdentifier>{515d7e2f-4c8c-4f9e-abee-ad32dde57985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="testPhysX\common\Utils">
+      <UniqueIdentifier>{fbdbcfd8-264a-41e2-aa57-4473d964920f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

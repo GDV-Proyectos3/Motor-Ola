@@ -37,7 +37,7 @@
 #if PX_WINDOWS
 #include <windows.h>
 #pragma warning(disable: 4505)
-#include "../Graphics/glut.h"
+#include "../../common/Graphics/glut.h"
 #elif PX_LINUX_FAMILY
 #include <GL/glut.h>
 #elif PX_OSX

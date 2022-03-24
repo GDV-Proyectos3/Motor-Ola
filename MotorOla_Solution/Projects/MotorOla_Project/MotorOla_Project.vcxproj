@@ -38,11 +38,11 @@
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\callbacks.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\mainPhysX.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\RenderUtils.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\Render\Camera.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysX\Render\Render.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
   </ItemGroup>
@@ -59,16 +59,17 @@
     <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" /> 
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\callbacks.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\Print.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\PVD.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\core.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Graphics\glut.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\RenderUtils.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Render\Camera.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Render\Render.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysX\Utils\Utils.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\Print.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\PVD.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Graphics\glut.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.hpp" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\core.hpp" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.hpp" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.h" />
+    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Utils\Utils.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
@@ -148,7 +149,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Exes\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -189,9 +190,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -210,10 +212,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
