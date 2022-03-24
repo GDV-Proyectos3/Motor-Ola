@@ -11,19 +11,23 @@
 # /bin
 [Bb]in/
 
-# /exes
+# fichero autogenerados ( temporales )
 *.exe
 *.dll
 *.lib
 *.pdb
 *.iobj
 *.ipdb
+*.idb
+
+# /exes
 [Ee]xes/*.exe
 [Ee]xes/*.dll
 [Ee]xes/*.lib
 [Ee]xes/*.pdb
 [Ee]xes/*.iobj
 [Ee]xes/*.ipdb
+[Ee]xes/*.idb
 
 # /temp
 *.ilk

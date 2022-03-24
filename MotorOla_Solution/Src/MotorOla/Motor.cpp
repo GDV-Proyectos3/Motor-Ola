@@ -1,17 +1,47 @@
 #include "Motor.h"
 #include "OgreManager.h"
+#include "Componente.h"
+#include "ComponenteFactoria.h"
+#include "ComponenteRegistro.h"
 #include "utils/Singleton.h"
 #include "InputManager.h"
-
+#include "Entidad.h"
 #include <Windows.h>
+#include "AudioSource.h"
+
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
+
+#include "LoadResources.h"
+#include "FMODAudioManager.h"
+
+
+class Transform : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Transform() {}
+};
+class Rigidbody : public Componente {
+public:
+	virtual void init() {};
+	virtual void update() {};
+	virtual void draw() {};
+	virtual ~Rigidbody() {}
+};
 
 Motor::Motor()
 {
 	// Inicia los managers
+	if (!_loadResources)_loadResources = new LoadResources();
 	if(!_ogreManager) _ogreManager = new OgreManager();	
 	if (!_inputManager)_inputManager = new InputManager();
+
+	if (!_audioManager)_audioManager = new FMODAudioManager();
+	
+	
+
 }
 
 Motor::~Motor()
@@ -19,15 +49,30 @@ Motor::~Motor()
 	// Destruye los managers
 	if (_ogreManager) delete _ogreManager;
 	if (_inputManager)delete _inputManager;
+	if (_loadResources)delete _loadResources;
+	if (_audioManager)delete _audioManager;
 }
 
 void Motor::initSystems()
 {
 
+	_loadResources->init();
+	//std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
 	_inputManager->init(this);
+	_audioManager->init();
+	Entidad* ent = new Entidad();
+	ent->addComponent<AudioSource>(channel,_audioManager,_loadResources->aud("blind_shift.mp3").c_str());
+	if (ent->hasComponent<AudioSource>()) {
+		ent->getComponent<AudioSource>()->play();
+	}
+	/*_audioManager->init();
+	_audioManager->loadMusic(0, _loadResources->aud("blind_shift.mp3").c_str());
+	_audioManager->playMusic(0, true);*/
 	
-	// El motor intenta cargar un juego, pero si hay algún error se arranca con la funcion loadTestMotorGame
+	
+	
+	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
 		loadDLLGame();
 	}
@@ -35,6 +80,10 @@ void Motor::initSystems()
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
 	}
+
+	// Registrando Componentes
+	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
+	ComponenteRegistro::ComponenteRegistro<Rigidbody>("rigidbody");
 }
 
 void Motor::updateSystems()
@@ -44,6 +93,7 @@ void Motor::updateSystems()
 		_inputManager->handleEvents();
 		_ogreManager->update();
 		
+	
 		//Input
 		//Update
 		//Render

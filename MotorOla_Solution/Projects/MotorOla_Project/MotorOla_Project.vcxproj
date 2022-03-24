@@ -27,9 +27,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Entidad.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
@@ -45,14 +48,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\AudioManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\AudioSource.h" />
     <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h" />
     <ClInclude Include="..\..\Src\MotorOla\ECS.h" />
     <ClInclude Include="..\..\Src\MotorOla\Entidad.h" />
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Mesh.h" /> 
     <ClInclude Include="..\..\Src\MotorOla\PhysX\callbacks.hpp" />
     <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\Print.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysX\Common\PVD.h" />
@@ -191,7 +198,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib;SDL2d.lib;SDL2maind.lib;fmod_vc.lib;fmodL_vc.lib;PhysXProject_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\debug;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\snippets\graphics\lib\win64\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\debug;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\snippets\graphics\lib\win64\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -205,7 +212,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(solutionDir)Bin\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -214,7 +221,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib;PhysXProject.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>S:\PROYECTO.03\PROYECTO\RAMA_MAIN\MotorOla_Solution\Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\release;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\release;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>

@@ -31,6 +31,13 @@
     <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\PhysX\Render\Render.cpp">
       <Filter>testPhysX\Skeleton\Render</Filter>
     </ClCompile>
@@ -85,6 +92,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\LoadResources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\AudioSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\PhysX\Utils\Utils.h">

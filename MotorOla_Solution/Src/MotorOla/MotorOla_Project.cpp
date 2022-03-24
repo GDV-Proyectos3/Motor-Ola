@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 #include "Motor.h"
 
 int main()
@@ -31,7 +31,7 @@ int main()
     delete m;
 
     return hayError;
-}*/
+}
 
 
 // Hola mundo! OGRE (prueba básica)
