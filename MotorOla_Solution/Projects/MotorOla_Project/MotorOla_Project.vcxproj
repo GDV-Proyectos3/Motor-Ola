@@ -38,11 +38,6 @@
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
   </ItemGroup>
@@ -60,16 +55,6 @@
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\Print.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Common\PVD.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\common\Graphics\glut.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\callbacks.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\core.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\mainPhysX.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\RenderUtils.hpp" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Camera.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Skeleton\Render\Render.h" />
-    <ClInclude Include="..\..\Src\MotorOla\testPhysX\Utils\Utils.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
@@ -194,7 +179,6 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

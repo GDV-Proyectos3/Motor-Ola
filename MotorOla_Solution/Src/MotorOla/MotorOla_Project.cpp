@@ -1,4 +1,4 @@
-/*#include <iostream>
+#include <iostream>
 #include "Motor.h"
 
 int main()
@@ -31,7 +31,7 @@ int main()
     delete m;
 
     return hayError;
-}*/
+}
 
 
 // Hola mundo! OGRE (prueba básica)
@@ -42,11 +42,3 @@ int main()
     root = new Ogre::Root();
     return 0;
 }*/
-
-#include "testPhysX/Skeleton/mainPhysX.h"
-extern int snippetMain(int, const char* const*);
-
-int main(int argc, char** argv)
-{
-    return snippetMain(argc, argv);
-}
