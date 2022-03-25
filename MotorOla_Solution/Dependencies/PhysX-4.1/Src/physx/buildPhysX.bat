@@ -16,24 +16,24 @@ if exist ..\..\Build\vc16win64\ (
 
 :: Debug -> copia de archivos .dll (falta añadir '_d' en debug para diferenciar los archivos)
 cd ..\..\Src\physx\bin\win.x86_64.vc142.mt\debug\
-copy /y glut32.dll "..\..\..\..\..\..\..\Bin\glut32.dll"
-copy /y PhysX_64.dll "..\..\..\..\..\..\..\Bin\PhysX_64.dll"
-copy /y PhysXCommon_64.dll "..\..\..\..\..\..\..\Bin\PhysXCommon_64.dll"
-copy /y PhysXCooking_64.dll "..\..\..\..\..\..\..\Bin\PhysXCooking_64.dll"
-copy /y PhysXDevice64.dll "..\..\..\..\..\..\..\Bin\PhysXDevice64.dll"
-copy /y PhysXFoundation_64.dll "..\..\..\..\..\..\..\Bin\PhysXFoundation_64.dll"
-copy /y PhysXGpu_64.dll "..\..\..\..\..\..\..\Bin\PhysXGpu_64.dll"
+copy /y glut32.dll "..\..\..\..\..\..\..\Exes\glut32.dll"
+copy /y PhysX_64.dll "..\..\..\..\..\..\..\Exes\PhysX_64.dll"
+copy /y PhysXCommon_64.dll "..\..\..\..\..\..\..\Exes\PhysXCommon_64.dll"
+copy /y PhysXCooking_64.dll "..\..\..\..\..\..\..\Exes\PhysXCooking_64.dll"
+copy /y PhysXDevice64.dll "..\..\..\..\..\..\..\Exes\PhysXDevice64.dll"
+copy /y PhysXFoundation_64.dll "..\..\..\..\..\..\..\Exes\PhysXFoundation_64.dll"
+copy /y PhysXGpu_64.dll "..\..\..\..\..\..\..\Exes\PhysXGpu_64.dll"
 cd ..\
 
 :: Release -> copia de archivos .dll
 cd release\
-@REM copy /y glut32.dll "..\..\..\..\..\..\..\Bin\glut32.dll"
-@REM copy /y PhysX_64.dll "..\..\..\..\..\..\..\Bin\PhysX_64.dll"
-@REM copy /y PhysXCommon_64.dll "..\..\..\..\..\..\..\Bin\PhysXCommon_64.dll"
-@REM copy /y PhysXCooking_64.dll "..\..\..\..\..\..\..\Bin\PhysXCooking_64.dll"
-@REM copy /y PhysXDevice64.dll "..\..\..\..\..\..\..\Bin\PhysXDevice64.dll"
-@REM copy /y PhysXFoundation_64.dll "..\..\..\..\..\..\..\Bin\PhysXFoundation_64.dll"
-@REM copy /y PhysXGpu_64.dll "..\..\..\..\..\..\..\Bin\PhysXGpu_64.dll"
+@REM copy /y glut32.dll "..\..\..\..\..\..\..\Exes\glut32.dll"
+@REM copy /y PhysX_64.dll "..\..\..\..\..\..\..\Exes\PhysX_64.dll"
+@REM copy /y PhysXCommon_64.dll "..\..\..\..\..\..\..\Exes\PhysXCommon_64.dll"
+@REM copy /y PhysXCooking_64.dll "..\..\..\..\..\..\..\Exes\PhysXCooking_64.dll"
+@REM copy /y PhysXDevice64.dll "..\..\..\..\..\..\..\Exes\PhysXDevice64.dll"
+@REM copy /y PhysXFoundation_64.dll "..\..\..\..\..\..\..\Exes\PhysXFoundation_64.dll"
+@REM copy /y PhysXGpu_64.dll "..\..\..\..\..\..\..\Exes\PhysXGpu_64.dll"
 cd ..\..\..\
 
 @REM set /p DUMMY=--Hecho--
