@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MotorOla_Project", "Project
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OgreProject", "Projects\OgreProject\OgreProject.vcxproj", "{543473C6-EF73-4D97-B2B8-ADF7B93EB452}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysXProject", "Projects\PhysXProject\PhysXProject.vcxproj", "{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaProject", "Projects\LuaProject\LuaProject.vcxproj", "{ED44E356-CDF5-4484-9381-AFE04E19A34C}"
 EndProject
 Global
@@ -36,6 +38,12 @@ Global
 		{543473C6-EF73-4D97-B2B8-ADF7B93EB452}.Release|x64.Build.0 = Release|x64
 		{543473C6-EF73-4D97-B2B8-ADF7B93EB452}.Release|x86.ActiveCfg = Release|Win32
 		{543473C6-EF73-4D97-B2B8-ADF7B93EB452}.Release|x86.Build.0 = Release|Win32
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Debug|x64.ActiveCfg = Debug|x64
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Debug|x64.Build.0 = Debug|x64
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Debug|x86.ActiveCfg = Debug|x64
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Release|x64.ActiveCfg = Release|x64
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Release|x64.Build.0 = Release|x64
+		{889CB3B8-ACC4-4360-B7A5-A21CC73EC733}.Release|x86.ActiveCfg = Release|x64
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Debug|x64.ActiveCfg = Debug|x64
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Debug|x64.Build.0 = Debug|x64
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Debug|x86.ActiveCfg = Debug|Win32

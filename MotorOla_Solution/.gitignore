@@ -11,20 +11,25 @@
 # /bin
 [Bb]in/
 
-# /exes
+# fichero autogenerados ( temporales )
 *.exe
 *.dll
 *.lib
 *.pdb
+*.iobj
+*.ipdb
+*.exp
 *.idb
 
+# /exes
 [Ee]xes/*.exe
 [Ee]xes/*.dll
 [Ee]xes/*.lib
 [Ee]xes/*.pdb
+[Ee]xes/*.iobj
+[Ee]xes/*.ipdb
 [Ee]xes/*.idb
-
-
+[Ee]xes/*.exp
 
 # /temp
 *.ilk
@@ -50,6 +55,9 @@ ogre.cfg
 !*/FMOD/libreria/x64/*.dll
 !*/FMOD/libreria/x64/*.lib
 
+## LUA
+/Dependencies/x64/
+
 ## PhysX-4.1
 /Dependencies/PhysX-4.1/[Bb]uild/
 /Dependencies/PhysX-4.1/[Ss]rc/physx/include/PxConfig.h
@@ -57,9 +65,7 @@ ogre.cfg
 # directorio de salida de compilación VS: ( .lib, .exe, .map, .exp )
 /Dependencies/PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/
 
-
 # archivos dll's imprescindibles ( x64 )
 !PhysX-4.1/[Ss]rc/physx/bin/win.x86_64.vc140.mt/**/PhysXGpu_64.dll
 !PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/glut32.dll
 !PhysX-4.1/[Ss]rc/physx/bin/*.mt/**/PhysXDevice64.dll
-

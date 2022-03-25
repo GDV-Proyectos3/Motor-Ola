@@ -4,6 +4,9 @@
 :: Se crea la carpeta Bin para meter las dlls
 mkdir Bin
 
+
+
+:: BUILD OGRE
 :: Entra en la carpeta de dependencias
 cd Dependencies
 
@@ -47,6 +50,14 @@ copy /Y OgreProperty.dll "../../../../../Bin/OgreProperty.dll"
 copy /Y OgreRTShaderSystem.dll "../../../../../Bin/OgreRTShaderSystem.dll"
 copy /Y Plugin_ParticleFX.dll "../../../../../Bin/Plugin_ParticleFX.dll"
 copy /Y RenderSystem_GL.dll "../../../../../Bin/RenderSystem_GL.dll"
+
+:: Mensaje de verificación: OGRE
+echo: && Echo ::::: BUILD [ OGRE ] COMPLETADA :::::
+@REM PAUSE >nul
+
+
+
+:: BUILD SDL
 :: Estas están repetidas pero por si acaso
 copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
 copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
@@ -60,18 +71,44 @@ cd Debug
 copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
 copy /Y SDL2d.dll "../../../../../Exes/SDL2d.dll"
 
+:: Mensaje de verificación: SDL
+echo: && Echo ::::: BUILD [ SDL ] COMPLETADA :::::
+@REM PAUSE >nul
+
+
+
+:: BUILD FMOD
 :: Copia fmod.dll y fmodL.dll en Bin y en Exes
 cd ..\..\..\..\FMOD\libreria\x64
 copy /Y fmod.dll "../../../../Bin/fmod.dll"
 copy /Y fmod.dll "../../../../Exes/fmod.dll"
 copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
 copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
+:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
+cd ..\..\..\..\
 
-:: Mensaje de verificación
-Echo BUILD DE OGRE COMPLETADA
+:: Mensaje de verificación: FMOD
+echo: && Echo ::::: BUILD [ FMOD ] COMPLETADA :::::
+@REM PAUSE >nul
 
+
+
+:: BUILD PHYSX
+:: Build de PhysX-4.1
+cd Dependencies\PhysX-4.1\Src\physx\
+call buildPhysX.bat
+:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
+cd ..\..\..\..\
+
+:: Mensaje de verificación: PhysX
+echo: && Echo ::::: BUILD [ PhysX ] COMPLETADA :::::
+@REM PAUSE >nul
+
+
+
+:: BUILD LUA
 :: Se va al directorio de Lua que esta en Dependencies
-cd ..\..\..\Lua
+cd Dependencies\Lua
 :: Uso msbuild para que se haga la build de Lua y especifico que se haga en debug y release
 msbuild -p:Configuration=Debug
 msbuild -p:Configuration=Release
@@ -84,12 +121,20 @@ copy /Y Lua_d.dll "../../../../Exes/Lua_d.dll"
 cd ../Release
 copy /Y Lua.dll "../../../../Bin/Lua.dll"
 copy /Y Lua.dll "../../../../Exes/Lua.dll"
+:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
+cd ..\..\..\..\
 
 :: Mensaje de verificacion
-Echo BUILD DE LUA COMPLETA
+echo: && Echo ::::: BUILD [ LUA ] COMPLETADA :::::
+@REM PAUSE >nul
 
-:: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
-cd ..\..\..\..
+
+
+:: FINALIZADO!!!
+:: Mensaje de verificación
+echo: && Echo ::::: BUILD [ MotorOla ] COMPLETADA :::::
+
+
 
 :: Pausa para ver que ha ocurrido
 PAUSE >nul

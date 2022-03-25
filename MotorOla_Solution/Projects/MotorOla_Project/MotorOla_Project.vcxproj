@@ -19,8 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LuaProject\LuaProject.vcxproj">
+      <Project>{ed44e356-cdf5-4484-9381-afe04e19a34c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\OgreProject\OgreProject.vcxproj">
       <Project>{543473c6-ef73-4d97-b2b8-adf7b93eb452}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PhysXProject\PhysXProject.vcxproj">
+      <Project>{889cb3b8-acc4-4360-b7a5-a21cc73ec733}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -131,7 +137,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)Temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Exes\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -146,7 +152,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OgreProject32_d.lib;OgreMain_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Bin;$(solutionDir)Exes;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(SolutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -172,16 +178,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Dependencies\FMOD\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib;SDL2d.lib;SDL2maind.lib;fmod_vc.lib;fmodL_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject_d.lib;OgreMain_d.lib;SDL2d.lib;SDL2maind.lib;fmod_vc.lib;fmodL_vc.lib;PhysXProject_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\snippets\graphics\lib\win64\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
@@ -193,9 +199,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\FMOD\inc;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -203,8 +209,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Bin\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib;PhysXProject.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\snippets\graphics\lib\win64\glut;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
