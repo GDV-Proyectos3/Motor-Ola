@@ -18,6 +18,10 @@ del Ogre.log
 rmdir /s /q Dependencies\Ogre\Build\
 @REM PAUSE >nul
 
+:: Lua
+rmdir /s /q Dependencies\Lua\x64\
+@REM PAUSE >nul
+
 :: PhysX
 cd Dependencies\PhysX-4.1\Src\physx\
 call clean-all.bat

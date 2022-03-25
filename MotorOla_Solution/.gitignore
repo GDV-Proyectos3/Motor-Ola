@@ -18,6 +18,7 @@
 *.pdb
 *.iobj
 *.ipdb
+*.exp
 *.idb
 
 # /exes
@@ -28,6 +29,7 @@
 [Ee]xes/*.iobj
 [Ee]xes/*.ipdb
 [Ee]xes/*.idb
+[Ee]xes/*.exp
 
 # /temp
 *.ilk
@@ -52,6 +54,9 @@ ogre.cfg
 ## FMOD
 !*/FMOD/libreria/x64/*.dll
 !*/FMOD/libreria/x64/*.lib
+
+## LUA
+/Dependencies/x64/
 
 ## PhysX-4.1
 /Dependencies/PhysX-4.1/[Bb]uild/
