@@ -8,6 +8,8 @@
 #include <OgreDataStream.h>
 #include <OgreFileSystemLayer.h>
 
+
+
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
@@ -60,13 +62,14 @@ void OgreManager::init()
 	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
 
 	// Esto todavía no funciona porque falta el Resource Manager
-
-	//Ogre::SceneNode* cuerpoNode = _sceneManager->getRootSceneNode()->createChildSceneNode("NodoPrueba");
-	//Ogre::Entity* ent = _sceneManager->createEntity("ogrehead.mesh");
 	
-	//cuerpoNode->createChildSceneNode();
-	//cuerpoNode->attachObject(ent);
-	//cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
+	Ogre::SceneNode* cuerpoNode = _sceneManager->getRootSceneNode()->createChildSceneNode("NodoPrueba");
+	
+	Ogre::Entity* ent = _sceneManager->createEntity("ogrehead.mesh");
+	
+	cuerpoNode->createChildSceneNode();
+	cuerpoNode->attachObject(ent);
+	cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
 
 	
 
@@ -348,10 +351,10 @@ void OgreManager::locateResources()
 	else
 	{
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
-			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Exes\\Assets"),
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\models"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	}
-
+	
 	Ogre::String sec, type, arch;
 	// go through all specified resource groups
 	Ogre::ConfigFile::SettingsBySection_::const_iterator seci;
