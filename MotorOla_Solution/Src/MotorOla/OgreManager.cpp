@@ -341,8 +341,14 @@ void OgreManager::locateResources()
 	}
 	else
 	{
+		// Lee la carpeta de modelos
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\models"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		// Lee la carpeta de materiales
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\materials"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	}
 	

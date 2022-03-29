@@ -171,7 +171,7 @@ void Motor::loadPong() {
 	Entidad* pala1 = _entidadManager->addEntidad();
 	pala1->addComponent<Transform>();
 	Ogre::SceneNode* nodoPala1 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala1");
-	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "amarillo");
+	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "Verde");
 	pala1->addComponent<Pala>();
 
 	pala1->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
@@ -183,13 +183,23 @@ void Motor::loadPong() {
 	Entidad* pala2 = _entidadManager->addEntidad();
 	pala2->addComponent<Transform>();
 	Ogre::SceneNode* nodoPala2 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala2");
-	pala2->addComponent<Mesh>(nodoPala2, "cube.mesh", "Amarillo");
+	pala2->addComponent<Mesh>(nodoPala2, "cube.mesh", "Rojo");
 	pala2->addComponent<Pala>();
 
 	pala2->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
 	pala2->getComponent<Transform>()->setPos(450.0f, 0.0f, 0.0f);
 
 	_inputManager->setPala2(pala2);
+
+	// Bola
+	Entidad* bola = _entidadManager->addEntidad();
+	bola->addComponent<Transform>();
+	Ogre::SceneNode* nodoBola = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoBola");
+	bola->addComponent<Mesh>(nodoBola, "sphere.mesh", "Azul");
+	bola->addComponent<Pala>();
+
+	bola->getComponent<Transform>()->setScale(0.4f, 0.4f, 1.0f);
+	bola->getComponent<Transform>()->setPos(0.0f, 0.0f, 0.0f);
 }
 
 
