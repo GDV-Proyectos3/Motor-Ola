@@ -12,8 +12,8 @@ Transform::Transform(Vector2D pos, Vector2D vel, double width, double height, do
 Transform::Transform():
 	position_(),
 	velocity_(),
-	width_(),
-	height_(),
+	width_(1),
+	height_(1),
 	rotation_()
 {
 }

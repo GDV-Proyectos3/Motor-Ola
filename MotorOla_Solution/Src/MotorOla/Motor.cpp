@@ -10,17 +10,18 @@
 #include "Entidad.h"
 #include "EntidadManager.h"
 #include "Movible.h"
+#include "Pala.h"
 #include <Windows.h>
 #include "AudioSource.h"
 #include <OgreEntity.h>
 #include <OgreVector3.h>
 #include <OgreVector.h>
+#include "LoadResources.h"
+#include "FMODAudioManager.h"
 
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
-#include "LoadResources.h"
-#include "FMODAudioManager.h"
 
 Motor::Motor()
 {
@@ -54,23 +55,31 @@ void Motor::initSystems()
 	_audioManager->playMusic(0, true);*/
 	
 	// Registrando Componentes
-	ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
-	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
-	ComponenteRegistro::ComponenteRegistro<Movible>("movible");
+	registryComponents();
 
-	
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
 		loadDLLGame();
 	}
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
-		loadTestMotorGame();
+		//loadTestMotorGame();
+		loadPong();
 	}
 }
 
-void Motor::updateSystems()
+void Motor::registryComponents()
 {
+	ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
+	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
+	ComponenteRegistro::ComponenteRegistro<Movible>("movible");
+	ComponenteRegistro::ComponenteRegistro<Pala>("pala");
+
+}
+
+void Motor::mainLoop()
+{
+	std::cout << "------------------- COMIENZA EL BUCLE PRINCIPAL -------------------\n";
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
 		// Recoger el Input
@@ -79,6 +88,7 @@ void Motor::updateSystems()
 		// Actualizar las físicas de las entidades
 		//_physxManager->update();
 
+		// Actualiza los transforms de las entitys después de las físicas
 
 		// Actualiza el resto de componentes (también los del juego)
 		_entidadManager->update();
@@ -89,18 +99,21 @@ void Motor::updateSystems()
 		//	
 		//}
 
-		Ogre::Vector3 v;
-		//v.x = ent3->getComponent<Transform>()->getPos().getX();
-		//v.y = ent3->getComponent<Transform>()->getPos().getY();
-		//v.z;		
-		v.x = ent2->getParentNode()->getPosition().x + 0.1;
-		v.y = ent2->getParentNode()->getPosition().y;
-		v.z = ent2->getParentNode()->getPosition().z;
+		//Ogre::Vector3 v;
+		////v.x = ent3->getComponent<Transform>()->getPos().getX();
+		////v.y = ent3->getComponent<Transform>()->getPos().getY();
+		////v.z;		
+		//v.x = ent2->getParentNode()->getPosition().x + 0.1;
+		//v.y = ent2->getParentNode()->getPosition().y;
+		//v.z = ent2->getParentNode()->getPosition().z;
 
-		ent2->getParentNode()->setPosition(v);
+		//ent2->getParentNode()->setPosition(v);
 
 		// Renderiza las entidades
 		_ogreManager->update();
+
+
+		//std::cout << "Vuelta " << ++frame << "\n";
 	}
 }
 
@@ -129,25 +142,42 @@ void Motor::loadDLLGame()
 
 void Motor::loadTestMotorGame() 
 {
-	// audio
+	// Audio
 	Entidad* ent = _entidadManager->addEntidad();
 	ent->addComponent<AudioSource>(channel, _audioManager, _loadResources->aud("blind_shift.mp3").c_str());
 	if (ent->hasComponent<AudioSource>()) {
 		ent->getComponent<AudioSource>()->play();
 	}
 
-	// cabeza
-	ent3 = _entidadManager->addEntidad();
-	ent3->addComponent<Transform>();
-	Ogre::SceneNode* cuerpoNode = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("NodoPrueba");
-	ent2 = _ogreManager->getSceneManager()->createEntity("ogrehead.mesh");
-	
-	//ent3->addComponent<Mesh>(cuerpoNode, "ogrehead.mesh", "");
-	cuerpoNode->createChildSceneNode();
-	cuerpoNode->attachObject(ent2);
-	cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
+	// Cabeza
+	Entidad* entMesh = _entidadManager->addEntidad();
+	entMesh->addComponent<Transform>();
+	Ogre::SceneNode* nodo = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("NodoCabeza");
+	entMesh->addComponent<Mesh>(nodo, "ogrehead.mesh", "material");
+	entMesh->addComponent<Movible>();
 
-	ent3->addComponent<Movible>();
+	//Entidad* entNoMesh = _entidadManager->addEntidad();
+	//entNoMesh->addComponent<Transform>();
+	//Ogre::SceneNode* nodo2 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("NodoCabeza2");
+	//Ogre::Entity* ent2 = _ogreManager->getSceneManager()->createEntity("ogrehead.mesh");
+	//nodo2->attachObject(ent2);
+
+	std::cout << nodo->getPosition() << nodo->getScale() << endl;
+	//std::cout << nodo2->getPosition() << nodo2->getScale() << endl;
+}
+
+void Motor::loadPong() {
+	// Pala 1
+	Entidad* pala1 = _entidadManager->addEntidad();
+	pala1->addComponent<Transform>();
+	Ogre::SceneNode* nodoPala1 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala1");
+	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "material");
+	pala1->addComponent<Pala>();
+
+	pala1->getComponent<Transform>()->setH(1.5);
+	pala1->getComponent<Transform>()->setW(0.3);
+
+	_inputManager->setPala1(pala1);
 }
 
 

@@ -2,27 +2,30 @@
 #include "Componente.h"
 #include "./utils/Vector2D.h"
 #include "utils/Vector2D.h"
+#include "InputManager.h"
 #include "Transform.h"
 #include "Entidad.h"
 
-class Movible : public Componente
+class Pala : public Componente
 {
 public:
-	Movible() {};
-	virtual ~Movible() {};
+	Pala() {};
+	virtual ~Pala() {};
 
 	bool  getActive() {};
 	void  setActive(bool a) {};
 
-	void init() {};
+	void init() { InputManager::instance()->setPala1(entity_); };
 	void update() {
-		Entidad* e = getEntidad();
-		Transform* t = e->getComponent<Transform>();
-		t->translate(0.2, 0.0);
+		//Entidad* e = getEntidad();
+		//Transform* t = e->getComponent<Transform>();
+		//t->translate(0.2, 0.0);
 	};
 	//void draw();
 
 private:
 	bool active = true;
 };
+
+
 

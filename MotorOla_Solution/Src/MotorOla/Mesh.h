@@ -20,12 +20,13 @@ public:
 
 	void setMesh(std::string mesh);
 	void setMaterial(std::string material);
-	void setBillboard(std::string material , Vector2D pos, Vector2D scale);
-	void toggleBillboard();
-	void setParticle(std::string material);
-	void toggleParticle();
-	void setLight();
-	void toggleLight();
+
+	//void setBillboard(std::string material , Vector2D pos, Vector2D scale);
+	//void toggleBillboard();
+	//void setParticle(std::string material);
+	//void toggleParticle();
+	//void setLight();
+	//void toggleLight();
 
 	void init();
 	void update();
@@ -34,15 +35,15 @@ public:
 
 
 private:
-	Ogre::SceneNode* mNode;
-	Ogre::SceneNode* bbNode;
-	Ogre::SceneNode* particleNode;
-	Ogre::ParticleSystem* smokePS;
-	Ogre::SceneNode* lightNode;
-	Ogre::Light* luzFoco;
-	Ogre::SceneManager* mSM;
-	Ogre::Entity* ent;
-	bool active = true;
+	Ogre::SceneNode* _nodo;
+	//Ogre::SceneNode* bbNode;
+	//Ogre::SceneNode* particleNode;
+	//Ogre::ParticleSystem* smokePS;
+	//Ogre::SceneNode* lightNode;
+	//Ogre::Light* luzFoco;
+	Ogre::SceneManager* _sceneManager;
+	Ogre::Entity* _entity;
+	bool _active = true;
 
 };
 

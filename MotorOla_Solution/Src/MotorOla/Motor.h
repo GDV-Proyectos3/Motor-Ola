@@ -31,11 +31,6 @@ private:
 	FMODAudioManager* _audioManager = nullptr;
 	EntidadManager* _entidadManager = nullptr;
 
-	Ogre::Entity* ent2 = nullptr;
-
-	Entidad* ent3 = nullptr;
-	
-
 	// Factoria Componentes
 
 	//Physx
@@ -46,13 +41,17 @@ private:
 
 	int channel = 0;
 
+	int frame = 0;
+
 public:
 	Motor();
 	~Motor();
 
 	void initSystems();
 
-	void updateSystems();
+	void registryComponents();
+
+	void mainLoop();
 
 	/// <summary>
 	/// Carga Juego.dll y llama a la funcion LoadGame()
@@ -64,6 +63,8 @@ public:
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();
+
+	void loadPong();
 
 	// Getters and Setters
 	void setStop(bool s);

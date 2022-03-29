@@ -19,7 +19,7 @@ int main()
 
     // Pone en marcha el bucle principal del Motor
     try {
-        m->updateSystems();
+        m->mainLoop();
     }
     catch (const char* error) {
         std::cout << "Error durante el bucle principal del motor\n";
@@ -32,13 +32,3 @@ int main()
 
     return hayError;
 }
-
-
-// Hola mundo! OGRE (prueba básica)
-/*#include <OgreRoot.h>
-int main()
-{
-    Ogre::Root* root;
-    root = new Ogre::Root();
-    return 0;
-}*/

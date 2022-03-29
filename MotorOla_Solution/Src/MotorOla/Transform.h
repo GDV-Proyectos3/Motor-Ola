@@ -1,6 +1,8 @@
 #pragma once
 #include "Componente.h"
 #include "./utils/Vector2D.h"
+
+
 class Transform :   public Componente
 {
 public:
@@ -71,6 +73,7 @@ public:
 	}
 
 private:
+
 	Vector2D position_;
 	Vector2D velocity_;
 	double width_;
