@@ -63,15 +63,6 @@ void OgreManager::init()
 
 	// Esto todavía no funciona porque falta el Resource Manager
 	
-	Ogre::SceneNode* cuerpoNode = _sceneManager->getRootSceneNode()->createChildSceneNode("NodoPrueba");
-	
-	Ogre::Entity* ent = _sceneManager->createEntity("ogrehead.mesh");
-	
-	cuerpoNode->createChildSceneNode();
-	cuerpoNode->attachObject(ent);
-	cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
-
-	
 
 	std::cout << "OgreManager iniciado\n";
 }

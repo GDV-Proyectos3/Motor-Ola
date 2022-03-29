@@ -47,6 +47,7 @@ public:
 
 	// Getters
 	Ogre::RenderWindow* getRenderWindow() const { return _window.render; }
+	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 

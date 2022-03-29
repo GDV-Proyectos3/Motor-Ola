@@ -47,7 +47,7 @@ public:
 		componentBitset[getComponentTypeID<T>()] = true;
 
 
-		//c->setEntity(this);
+		c->setEntidad(this);
 		c->init();
 		return c;
 	}

@@ -12,9 +12,11 @@ Mesh::Mesh(Ogre::SceneNode* node,std::string mesh, std::string material) : mNode
 {
 	mSM = mNode->getCreator();
 	ent = mSM->createEntity(mesh);
-	ent->setMaterialName(material);
-	mNode->attachObject(ent);
 
+	// RECORDAR DESCOMENTAR
+	//ent->setMaterialName(material);
+
+	mNode->attachObject(ent);
 }
 
 Mesh::~Mesh()

@@ -17,6 +17,6 @@ public:
 	void refresh();
 	
 
-private:
 	std::vector<uptr_ent> entitys_;
+private:
 };

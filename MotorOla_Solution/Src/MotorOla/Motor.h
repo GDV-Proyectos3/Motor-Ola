@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <string>
 #include <iostream>
+#include <Ogre.h>
 
 // Declaracion de clases necesarias
 class OgreManager;
@@ -10,6 +11,9 @@ class InputManager;
 class LoadResources;
 class FMODAudioManager;
 class Entidad;
+class EntidadManager;
+class Entity;
+
 class Motor
 {
 private:
@@ -25,6 +29,11 @@ private:
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
 	FMODAudioManager* _audioManager = nullptr;
+	EntidadManager* _entidadManager = nullptr;
+
+	Ogre::Entity* ent2 = nullptr;
+
+	Entidad* ent3 = nullptr;
 	
 
 	// Factoria Componentes
