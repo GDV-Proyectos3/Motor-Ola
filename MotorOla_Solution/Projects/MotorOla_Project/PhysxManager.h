@@ -4,9 +4,11 @@
 
 //#include <string>
 
-//namespace physx {
+#include <PxPhysicsAPI.h>
+
+namespace physx {
 	// ...
-//}
+}
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;

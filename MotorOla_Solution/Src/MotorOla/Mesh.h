@@ -6,7 +6,6 @@
 #include <OgreEntity.h>
 #include "utils/Vector2D.h"
 #include <OgreParticleSystem.h>
-
 class Mesh : public Componente
 {
 public:

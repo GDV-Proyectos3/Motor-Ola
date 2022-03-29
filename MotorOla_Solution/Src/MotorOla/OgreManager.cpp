@@ -314,6 +314,7 @@ void OgreManager::setWindowGrab(bool _grab)
 //			l.touchMoved(event.tfinger);
 //			break;
 //		}
+//
 //	}
 //}
 

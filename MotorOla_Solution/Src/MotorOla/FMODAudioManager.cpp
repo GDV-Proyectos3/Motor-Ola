@@ -16,6 +16,7 @@ void FMODAudioManager::init()
 	checkError(result);
 	result = system->init(128, FMOD_INIT_NORMAL, 0);
 	checkError(result);
+
 }
 
 void FMODAudioManager::update()

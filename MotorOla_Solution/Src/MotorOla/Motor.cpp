@@ -1,18 +1,20 @@
 #include "Motor.h"
 #include "OgreManager.h"
 #include "Componente.h"
-#include "InputManager.h"
-#include "LoadResources.h"
-#include "FMODAudioManager.h"
-#include "PhysxManager.h"
-#include "utils/Singleton.h"
 #include "ComponenteFactoria.h"
 #include "ComponenteRegistro.h"
+#include "utils/Singleton.h"
+#include "InputManager.h"
 #include "Entidad.h"
-#include "AudioSource.h"
 #include <Windows.h>
+#include "AudioSource.h"
+
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
+
+#include "LoadResources.h"
+#include "FMODAudioManager.h"
+
 
 class Transform : public Componente {
 public:
@@ -32,51 +34,33 @@ public:
 Motor::Motor()
 {
 	// Inicia los managers
-	if (!_loadResources)
-		_loadResources = new LoadResources();
-	if(!_ogreManager)
-		_ogreManager = new OgreManager();	
-	if (!_inputManager)
-		_inputManager = new InputManager();
-	if (!_audioManager)
-		_audioManager = new FMODAudioManager();
-	if (!_physxManager)
-		_physxManager = new PhysxManager();
+	if (!_loadResources)_loadResources = new LoadResources();
+	if(!_ogreManager) _ogreManager = new OgreManager();	
+	if (!_inputManager)_inputManager = new InputManager();
+
+	if (!_audioManager)_audioManager = new FMODAudioManager();
+	
+	
+
 }
 
 Motor::~Motor()
 {
 	// Destruye los managers
-	if (_ogreManager) {
-		delete _ogreManager;
-		_ogreManager = nullptr;
-	}
-	if (_inputManager) {
-		delete _inputManager;
-		_inputManager = nullptr;
-	}
-	if (_loadResources) {
-		delete _loadResources;
-		_loadResources = nullptr;
-	}
-	if (_audioManager) {
-		delete _audioManager;
-		_audioManager = nullptr;
-	}
-	if (_physxManager) {
-		delete _physxManager;
-		_physxManager = nullptr;
-	}
+	if (_ogreManager) delete _ogreManager;
+	if (_inputManager)delete _inputManager;
+	if (_loadResources)delete _loadResources;
+	if (_audioManager)delete _audioManager;
 }
 
 void Motor::initSystems()
 {
+
 	_loadResources->init();
 	//std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
 	_inputManager->init(this);
 	_audioManager->init();
-	_physxManager->init();
 	Entidad* ent = new Entidad();
 	ent->addComponent<AudioSource>(channel,_audioManager,_loadResources->aud("blind_shift.mp3").c_str());
 	if (ent->hasComponent<AudioSource>()) {
@@ -86,7 +70,8 @@ void Motor::initSystems()
 	_audioManager->loadMusic(0, _loadResources->aud("blind_shift.mp3").c_str());
 	_audioManager->playMusic(0, true);*/
 	
-
+	
+	
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
 		loadDLLGame();
@@ -107,8 +92,8 @@ void Motor::updateSystems()
 	while (!stop) {
 		_inputManager->handleEvents();
 		_ogreManager->update();
-		_physxManager->update();
 		
+	
 		//Input
 		//Update
 		//Render
