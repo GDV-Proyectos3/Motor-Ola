@@ -37,10 +37,10 @@
     <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PhysxManager.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,7 +96,7 @@
     <ClInclude Include="..\..\Src\MotorOla\AudioSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PhysxManager.h">
+    <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

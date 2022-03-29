@@ -3,7 +3,8 @@
 #include "Componente.h"
 #include "ComponenteFactoria.h"
 #include "ComponenteRegistro.h"
-#include "utils/Singleton.h"
+//#include "utils/Singleton.h"
+#include "PhysxManager.h"
 #include "InputManager.h"
 #include "Entidad.h"
 #include <Windows.h>
@@ -39,6 +40,7 @@ Motor::Motor()
 	if (!_inputManager)_inputManager = new InputManager();
 
 	if (!_audioManager)_audioManager = new FMODAudioManager();
+	if (!_physxManager)_physxManager = new PhysxManager();
 	
 	
 

@@ -9,6 +9,7 @@ class OgreManager;
 class InputManager;
 class LoadResources;
 class FMODAudioManager;
+class PhysxManager;
 class Entidad;
 class Motor
 {
@@ -25,6 +26,7 @@ private:
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
 	FMODAudioManager* _audioManager = nullptr;
+	PhysxManager* _physxManager = nullptr;
 	
 
 	// Factoria Componentes
