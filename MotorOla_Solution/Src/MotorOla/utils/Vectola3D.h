@@ -38,7 +38,6 @@ public:
 
 	inline Vectola3D operator-(const Vectola3D& v) const { return Vectola3D(x_ - v.x_, y_ - v.y_, z_ - v.z_); }
 	inline Vectola3D operator+(const Vectola3D& v) const { return Vectola3D(x_ + v.x_, y_ + v.y_, z_ + v.z_); }
-
 	inline Vectola3D operator*(double d) const { return Vectola3D(x_ * d, y_ * d, z_ * d); }
 	inline double operator *(const Vectola3D& d) const { return d.x_ * x_ + d.y_ * y_ + d.z_ * z_; }
 	Vectola3D operator/(double d) const { return Vectola3D(x_ / d, y_ / d, z_ / d); }
@@ -46,6 +45,5 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Vectola3D& v);
 
 	Ogre::Vector3 convertOgreVector(const Vectola3D& v)const;
-
 };
 

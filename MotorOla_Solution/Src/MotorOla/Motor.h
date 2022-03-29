@@ -31,6 +31,7 @@ private:
 	FMODAudioManager* _audioManager = nullptr;
 	EntidadManager* _entidadManager = nullptr;
 
+
 	// Factoria Componentes
 
 	//Physx
@@ -49,6 +50,9 @@ public:
 
 	void initSystems();
 
+	/// <summary>
+	/// Añadir aquí todos los componentes que se hagan
+	/// </summary>
 	void registryComponents();
 
 	void mainLoop();

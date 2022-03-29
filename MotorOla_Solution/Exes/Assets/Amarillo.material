@@ -1,0 +1,16 @@
+material Amarillo
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 1.0 0.96 0
+			}
+		}
+	}
+}

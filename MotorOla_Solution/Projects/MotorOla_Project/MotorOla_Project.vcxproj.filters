@@ -41,6 +41,9 @@
     <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
@@ -102,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vectola3D.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,12 +12,13 @@ Mesh::Mesh(Ogre::SceneNode* node,std::string mesh, std::string material) : _nodo
 {
 	_sceneManager = _nodo->getCreator();
 
+	// Crea la entity de Ogre
 	_entity = _sceneManager->createEntity(mesh);
 
-	std::cout << "Entra a mesh\n";
-	// RECORDAR DESCOMENTAR
-	//ent->setMaterialName(material);
+	// Asigna el material
+	_entity->setMaterialName(material);
 
+	// Junta la entity al nodo
 	_nodo->attachObject(_entity);
 }
 
