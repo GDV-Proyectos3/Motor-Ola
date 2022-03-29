@@ -43,6 +43,7 @@
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
+    <ClCompile Include="PhysxManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\AudioManager.h" />
@@ -61,6 +62,7 @@
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
+    <ClInclude Include="PhysxManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\Motor.h" />

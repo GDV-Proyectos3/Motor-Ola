@@ -50,7 +50,6 @@ public:
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 
-
 	void init();
 	void update();
 	void close();
@@ -96,4 +95,3 @@ private:
 	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
 	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };
-

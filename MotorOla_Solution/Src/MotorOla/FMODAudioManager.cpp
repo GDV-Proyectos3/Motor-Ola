@@ -45,14 +45,12 @@ void FMODAudioManager::playMusic(int chan, bool loops)
 		result = channel[chan]->setMode(FMOD_LOOP_NORMAL);
 		checkError(result);
 	}
-
 }
 
 void FMODAudioManager::stopMusic(int chan)
 {
 	result = channel[chan]->stop();
 	checkError(result);
-
 }
 
 void FMODAudioManager::togglePause(int chan)
@@ -62,12 +60,10 @@ void FMODAudioManager::togglePause(int chan)
 	checkError(result);
 	result = channel[chan]->setPaused(!paused);
 	checkError(result);
-
 }
 
 void FMODAudioManager::setVolume( int chan, int volume)
 {
-
 	result = channel[chan]->setVolume(volume);
 	checkError(result);
 }
@@ -103,5 +99,4 @@ void FMODAudioManager::checkError(FMOD_RESULT result)
 		// printf("FMOD error %d - %s", result, FMOD_ErrorString(result));
 		exit(-1);
 	}
-	
 }

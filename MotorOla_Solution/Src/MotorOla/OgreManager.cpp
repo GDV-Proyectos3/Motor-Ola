@@ -8,8 +8,6 @@
 #include <OgreDataStream.h>
 #include <OgreFileSystemLayer.h>
 
-
-
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
@@ -71,8 +69,6 @@ void OgreManager::init()
 	cuerpoNode->attachObject(ent);
 	cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
 
-	
-
 	std::cout << "OgreManager iniciado\n";
 }
 
@@ -131,7 +127,6 @@ void OgreManager::shutdown()
 	// Borra el sistema Overlay
 	delete _overlaySystem;
 	_overlaySystem = nullptr;
-
 
 	if (_window.native != nullptr)
 	{
