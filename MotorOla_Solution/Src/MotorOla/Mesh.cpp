@@ -105,11 +105,10 @@ void Mesh::init() //en funcion de si el eje sobre el que esta el suelo es x,y o 
 	if (entity_->hasComponent<Transform>())
 	{
 		Transform* tr = entity_->getComponent<Transform>();
-		//mNode->setPosition(tr->getPos().getX(), tr->getPos().getY(), 0);
-		_nodo->setPosition(tr->getPos().getX(), 0,tr->getPos().getY());
-		_nodo->setScale(tr->getW(), tr->getH(), tr->getW());
-		//mNode->setScale(tr->getW(), tr->getW(), tr->getH());
-		_nodo->yaw(Ogre::Degree(tr->getRot()));
+
+		_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+		//_nodo->setOrientation // Hace falta un Quaternion 
+		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
 	}
 }
 
@@ -119,10 +118,8 @@ void Mesh::update()
 	if (entity_->hasComponent<Transform>())
 	{
 		Transform* tr = entity_->getComponent<Transform>();
-		//mNode->setPosition(tr->getPos().getX(), tr->getPos().getY(), 0);
-		_nodo->setPosition(tr->getPos().getX(), 0, tr->getPos().getY());
-		_nodo->setScale(tr->getW(), tr->getH(), tr->getW());
-		//mNode->setScale(tr->getW(), tr->getW(), tr->getH());
-		_nodo->yaw(Ogre::Degree(tr->getRot()));
+		_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+		//_nodo->setOrientation // Hace falta un Quaternion 
+		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
 	}
 }

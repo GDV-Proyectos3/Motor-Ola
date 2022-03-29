@@ -174,10 +174,22 @@ void Motor::loadPong() {
 	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "material");
 	pala1->addComponent<Pala>();
 
-	pala1->getComponent<Transform>()->setH(1.5);
-	pala1->getComponent<Transform>()->setW(0.3);
+	pala1->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
+	pala1->getComponent<Transform>()->setPos(-450.0f, 0.0f, 0.0f);
 
 	_inputManager->setPala1(pala1);
+
+	// Pala 2
+	Entidad* pala2 = _entidadManager->addEntidad();
+	pala2->addComponent<Transform>();
+	Ogre::SceneNode* nodoPala2 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala2");
+	pala2->addComponent<Mesh>(nodoPala2, "cube.mesh", "material");
+	pala2->addComponent<Pala>();
+
+	pala2->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
+	pala2->getComponent<Transform>()->setPos(450.0f, 0.0f, 0.0f);
+
+	_inputManager->setPala2(pala2);
 }
 
 

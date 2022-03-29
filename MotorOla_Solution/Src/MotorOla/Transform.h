@@ -1,83 +1,46 @@
 #pragma once
 #include "Componente.h"
 #include "./utils/Vector2D.h"
-
+#include "./utils/Vectola3D.h"
 
 class Transform :   public Componente
 {
 public:
-	Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation);
+	Transform(Vectola3D position, Vectola3D scale, Vectola3D rotation);
 	Transform();
 	virtual ~Transform();
 
 	void init();
-	void translate(double x, double y);
+	void translate(double x, double y, double z);
 	void rotate(double angle);
 
+	// Funciones con posicion
+	inline const Vectola3D& getPos() const { return _position; }
+	inline void setPos(const Vectola3D& pos) { _position.set(pos); }
+	inline void setPos(double x, double y, double z) { _position.set(x, y, z); }
+	inline void setPosX(double x) { _position.setX(x); }
+	inline void setPosY(double y) { _position.setY(y); }
+	inline void setPosZ(double z) { _position.setZ(z); }
 
+	// Funciones con rotation
+	inline const Vectola3D& getRot() const { return _rotation; }
+	inline void setRot(const Vectola3D& rot) { _rotation.set(rot); }
+	inline void setRot(double x, double y, double z) { _rotation.set(x, y, z); }
+	inline void setRotX(double x) { _rotation.setX(x); }
+	inline void setRotY(double y) { _rotation.setY(y); }
+	inline void setRotZ(double z) { _rotation.setZ(z); }
 
-	inline const Vector2D& getPos() const {
-		return position_;
-	}
-	inline void setPos(const Vector2D& pos) {
-		position_.set(pos);
-	}
-	inline void setPos(double x, double y) {
-		position_.set(x, y);
-	}
-	inline void setPosX(double x) {
-		position_.setX(x);
-	}
-	inline void setPosY(double y) {
-		position_.setY(y);
-	}
-
-
-	inline double getRot() const {
-		return rotation_;
-	}
-	inline void setRot(double angle) {
-		rotation_ = angle;
-	}
-
-
-	inline const Vector2D& getVel() const {
-		return velocity_;
-	}
-	inline void setVel(const Vector2D& vel) {
-		velocity_.set(vel);
-	}
-	inline void setVel(double x, double y) {
-		velocity_.set(x, y);
-	}
-	inline void setVelX(double x) {
-		velocity_.setX(x);
-	}
-	inline void setVelY(double y) {
-		velocity_.setY(y);
-	}
-
-
-	inline double getW() const {
-		return width_;
-	}
-	inline void setW(double width) {
-		width_ = width;
-	}
-
-	inline double getH() const {
-		return height_;
-	}
-	inline void setH(double height) {
-		height_ = height;
-	}
+	// Funciones con scale
+	inline const Vectola3D& getScale() const { return _scale; }
+	inline void setScale(const Vectola3D& scale) { _scale.set(scale); }
+	inline void setScale(double x, double y, double z) { _scale.set(x, y, z); }
+	inline void setScaleX(double x) { _scale.setX(x); }
+	inline void setScaleY(double y) { _scale.setY(y); }
+	inline void setScaleZ(double z) { _scale.setZ(z); }
 
 private:
-
-	Vector2D position_;
-	Vector2D velocity_;
-	double width_;
-	double height_;
-	double rotation_;
+	Vectola3D _position;
+	Vectola3D _rotation;
+	Vectola3D _scale;
 };
 

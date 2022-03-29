@@ -36,14 +36,17 @@ void InputManager::handleEvents()
 
 			// Para pruebas
 			if (event.key.keysym.sym == SDLK_w) {
-				std::cout << "W\n";
-				//std::cout << pala1->getComponent<Transform>()->getPos() << "\n";
-				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() + 5.0f);
-				std::cout << pala1->getComponent<Transform>()->getPos() << "\n";
+				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() + 10.0f);
 			}
 			else if (event.key.keysym.sym == SDLK_s) {
-				std::cout << "S\n";
-				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() - 5.0f);
+				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() - 10.0f);
+			}
+			// Para pruebas
+			if (event.key.keysym.sym == SDLK_UP) {
+				pala2->getComponent<Transform>()->setPosY(pala2->getComponent<Transform>()->getPos().getY() + 10.0f);
+			}
+			else if (event.key.keysym.sym == SDLK_DOWN) {
+				pala2->getComponent<Transform>()->setPosY(pala2->getComponent<Transform>()->getPos().getY() - 10.0f);
 			}
 		}
 	}
