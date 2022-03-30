@@ -41,6 +41,7 @@
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\PhysxError.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
+    <ClInclude Include="..\..\Src\MotorOla\PhysxError.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
@@ -182,7 +184,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\source\foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -203,7 +205,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\source\foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>

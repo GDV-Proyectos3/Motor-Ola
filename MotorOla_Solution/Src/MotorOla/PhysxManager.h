@@ -1,14 +1,11 @@
 #pragma once
 
 #include "utils\Singleton.h"
-
-//#include <string>
-
 #include <PxPhysicsAPI.h>
+#include "PhysxErrorCallback.h"
 
-namespace physx {
-	// ...
-}
+using namespace physx;
+//#include <string>
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
@@ -28,10 +25,17 @@ public:
 	// void loadPatatas();
 
 private:
-	PhysxManager(/*...*/) : _patata(false) {};
+	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
 	// Variables
 	bool _patata;
+
+	PxFoundation* gFoundation = NULL;
+	PxDefaultAllocator		gAllocator;
+
+	// Pablo Cubells dice: "IDK why pero esta mierda así funciona bien."
+	// PxDefaultErrorCallback	gErrorCallback;
+	PhysxErrorCallback	gErrorCallback;
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
