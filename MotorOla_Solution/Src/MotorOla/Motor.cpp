@@ -19,6 +19,8 @@
 #include "LoadResources.h"
 #include "FMODAudioManager.h"
 
+#include "PingPongCtrl.h"
+
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
@@ -26,7 +28,7 @@ Motor::Motor()
 	// Inicia los managers
 	if (!_loadResources)_loadResources = new LoadResources();
 	if(!_ogreManager) _ogreManager = new OgreManager();	
-	if (!_inputManager)_inputManager = new InputManager();
+	//if (!_inputManager)_inputManager = new InputManager();
 	if (!_entidadManager) _entidadManager = new EntidadManager();
 	if (!_audioManager)_audioManager = new FMODAudioManager();
 }
@@ -35,7 +37,7 @@ Motor::~Motor()
 {
 	// Destruye los managers
 	if (_ogreManager) delete _ogreManager;
-	if (_inputManager) delete _inputManager;
+	//if (_inputManager) delete _inputManager;
 	if (_loadResources) delete _loadResources;
 	if (_audioManager) delete _audioManager;
 	if (_entidadManager) delete _entidadManager;
@@ -45,7 +47,8 @@ void Motor::initSystems()
 {
 	_loadResources->init();
 	_ogreManager->init();
-	_inputManager->init(this);
+	//_inputManager->init(this);
+//	_inputManager->init();
 	_audioManager->init();
 	
 	// Registrando Componentes
@@ -74,9 +77,18 @@ void Motor::mainLoop()
 {
 	std::cout << "------------------- COMIENZA EL BUCLE PRINCIPAL -------------------\n";
 	//Actualiza el motor. Bucle input->update/fisicas->render
+	SDL_Event event;
 	while (!stop) {
 		// Recoger el Input
-		_inputManager->handleEvents();
+		//_inputManager->handleEvents();
+		ih().clearState();
+		while (SDL_PollEvent(&event))
+			ih().update(event);
+
+		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			stop = true;
+			continue;
+		}
 
 		// Actualizar las físicas de las entidades
 		//_physxManager->update();
@@ -171,7 +183,8 @@ void Motor::loadPong() {
 	pala1->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
 	pala1->getComponent<Transform>()->setPos(-450.0f, 0.0f, 0.0f);
 
-	_inputManager->setPala1(pala1);
+	//_inputManager->setPala1(pala1);
+	pala1->addComponent<PingPongCtrl>(SDL_SCANCODE_W, SDL_SCANCODE_S);
 
 	// Pala 2
 	Entidad* pala2 = _entidadManager->addEntidad();
@@ -182,8 +195,9 @@ void Motor::loadPong() {
 
 	pala2->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
 	pala2->getComponent<Transform>()->setPos(450.0f, 0.0f, 0.0f);
+	pala2->addComponent<PingPongCtrl>(SDL_SCANCODE_UP, SDL_SCANCODE_DOWN);
 
-	_inputManager->setPala2(pala2);
+	//_inputManager->setPala2(pala2);
 
 	// Bola
 	Entidad* bola = _entidadManager->addEntidad();

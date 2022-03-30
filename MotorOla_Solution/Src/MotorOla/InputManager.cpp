@@ -1,4 +1,4 @@
-#include "InputManager.h"
+/*#include "InputManager.h"
 #include "Motor.h"
 #include "Entidad.h"
 #include "Transform.h"
@@ -34,7 +34,7 @@ void InputManager::handleEvents()
 				std::cout << "Input" << std::endl;
 			}
 
-			// Para pruebas
+		/*	// Para pruebas
 			if (event.key.keysym.sym == SDLK_w) {
 				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() + 10.0f);
 			}
@@ -53,11 +53,11 @@ void InputManager::handleEvents()
 	}
 }
 
-void InputManager::setPala2(Entidad* e)
+/*void InputManager::setPala2(Entidad * e)
 {
 	pala2 = e;
 }
 
 void InputManager::setPala1(Entidad* e) {
 	pala1 = e;
-}
+}*/

@@ -15,7 +15,7 @@ public:
 	bool  getActive() {};
 	void  setActive(bool a) {};
 
-	void init() { InputManager::instance()->setPala1(entity_); };
+	void init() { /*InputManager::instance()->setPala1(entity_);*/ };
 	void update() {
 		
 
