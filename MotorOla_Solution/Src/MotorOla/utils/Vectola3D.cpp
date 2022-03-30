@@ -66,13 +66,16 @@ double Vectola3D::angle(const Vectola3D& v) const {
 
 Vectola3D Vectola3D::normalize() const {
 	Vectola3D r;
-	//r.x_ = x_;
-	//r.y_ = y_;
-	//double mag = magnitude();
-	//if (mag > 0.0) {
-	//	r.x_ = r.x_ / mag;
-	//	r.y_ = r.y_ / mag;
-	//}
+	r.x_ = x_;
+	r.y_ = y_;
+	r.z_ = z_;
+	double mag = magnitude();
+	if (mag > 0.0) {
+		r.x_ = r.x_ / mag;
+		r.y_ = r.y_ / mag;
+		r.z_ = r.z_ / mag;
+		
+	}
 	return r;
 }
 
