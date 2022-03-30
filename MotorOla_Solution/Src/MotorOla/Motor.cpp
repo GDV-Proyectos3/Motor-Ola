@@ -19,9 +19,7 @@
 #include "LoadResources.h"
 #include "FMODAudioManager.h"
 
-
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
-
 
 Motor::Motor()
 {
@@ -37,22 +35,18 @@ Motor::~Motor()
 {
 	// Destruye los managers
 	if (_ogreManager) delete _ogreManager;
-	if (_inputManager)delete _inputManager;
-	if (_loadResources)delete _loadResources;
-	if (_audioManager)delete _audioManager;
+	if (_inputManager) delete _inputManager;
+	if (_loadResources) delete _loadResources;
+	if (_audioManager) delete _audioManager;
 	if (_entidadManager) delete _entidadManager;
 }
 
 void Motor::initSystems()
 {
-
 	_loadResources->init();
 	_ogreManager->init();
 	_inputManager->init(this);
 	_audioManager->init();
-	/*_audioManager->init();
-	_audioManager->loadMusic(0, _loadResources->aud("blind_shift.mp3").c_str());
-	_audioManager->playMusic(0, true);*/
 	
 	// Registrando Componentes
 	registryComponents();
@@ -74,7 +68,6 @@ void Motor::registryComponents()
 	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
 	ComponenteRegistro::ComponenteRegistro<Movible>("movible");
 	ComponenteRegistro::ComponenteRegistro<Pala>("pala");
-
 }
 
 void Motor::mainLoop()
@@ -171,7 +164,8 @@ void Motor::loadPong() {
 	Entidad* pala1 = _entidadManager->addEntidad();
 	pala1->addComponent<Transform>();
 	Ogre::SceneNode* nodoPala1 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala1");
-	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "Verde");
+	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "Rojo");
+
 	pala1->addComponent<Pala>();
 
 	pala1->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
@@ -200,6 +194,16 @@ void Motor::loadPong() {
 
 	bola->getComponent<Transform>()->setScale(0.4f, 0.4f, 1.0f);
 	bola->getComponent<Transform>()->setPos(0.0f, 0.0f, 0.0f);
+
+	// Ogre
+	Entidad* ogre = _entidadManager->addEntidad();
+	ogre->addComponent<Transform>();
+	Ogre::SceneNode* nodoOgre = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoOgre");
+	ogre->addComponent<Mesh>(nodoOgre, "ogrehead.mesh", "Azul");
+	ogre->addComponent<Pala>();
+
+	ogre->getComponent<Transform>()->setScale(0.4f, 0.4f, 1.0f);
+	ogre->getComponent<Transform>()->setPos(100.0f, 100.0f, 0.0f);
 }
 
 

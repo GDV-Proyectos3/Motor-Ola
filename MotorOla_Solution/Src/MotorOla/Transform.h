@@ -1,6 +1,5 @@
 #pragma once
 #include "Componente.h"
-#include "./utils/Vector2D.h"
 #include "./utils/Vectola3D.h"
 
 class Transform :   public Componente

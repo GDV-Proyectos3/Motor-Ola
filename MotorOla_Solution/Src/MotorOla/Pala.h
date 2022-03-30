@@ -17,6 +17,8 @@ public:
 
 	void init() { InputManager::instance()->setPala1(entity_); };
 	void update() {
+		
+
 		//Entidad* e = getEntidad();
 		//Transform* t = e->getComponent<Transform>();
 		//t->translate(0.2, 0.0);

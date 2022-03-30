@@ -42,6 +42,7 @@ private:
 
 	int channel = 0;
 
+	// Contador auxiliar
 	int frame = 0;
 
 public:
@@ -55,6 +56,9 @@ public:
 	/// </summary>
 	void registryComponents();
 
+	/// <summary>
+	/// Bucle principal de la ejecución del motor
+	/// </summary>
 	void mainLoop();
 
 	/// <summary>

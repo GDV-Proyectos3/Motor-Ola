@@ -41,6 +41,7 @@ void InputManager::handleEvents()
 			else if (event.key.keysym.sym == SDLK_s) {
 				pala1->getComponent<Transform>()->setPosY(pala1->getComponent<Transform>()->getPos().getY() - 10.0f);
 			}
+
 			// Para pruebas
 			if (event.key.keysym.sym == SDLK_UP) {
 				pala2->getComponent<Transform>()->setPosY(pala2->getComponent<Transform>()->getPos().getY() + 10.0f);

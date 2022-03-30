@@ -62,6 +62,19 @@ void OgreManager::init()
 	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
 
 	// Esto todavía no funciona porque falta el Resource Manager
+
+	// Luz de prueba
+	Ogre::Light* luz = _sceneManager->createLight("Luz");	//Cada luz tiene que tener un nombre diferente
+	luz->setType(Ogre::Light::LT_DIRECTIONAL);
+	luz->setDiffuseColour(1, 1, 1);
+
+	Ogre::SceneNode* mLightNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nLuz");
+	//mLightNode = mCamNode->createChildSceneNode("nLuz");
+	mLightNode->attachObject(luz);
+	mLightNode->setDirection(Ogre::Vector3(0.4, 0.2, -1));
+
+	// Luz ambiente en la escena
+	_sceneManager->setAmbientLight(Ogre::ColourValue(0.4f, 0.0f, 1.0f));
 	
 
 	std::cout << "OgreManager iniciado\n";
@@ -349,6 +362,11 @@ void OgreManager::locateResources()
 		// Lee la carpeta de materiales
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\materials"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		// Lee la carpeta de materiales
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\textures"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	}
 	
