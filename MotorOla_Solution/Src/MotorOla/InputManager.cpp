@@ -1,17 +1,20 @@
 #include "InputManager.h"
 #include "Motor.h"
-InputManager::InputManager() {
-
-}
+//InputManager::InputManager(Motor* mo) 
+//{
+//	SDL_Init(SDL_INIT_EVERYTHING);
+//	m = mo;
+//}
 InputManager::~InputManager()
 {
+	m = nullptr;
 }
 
-void InputManager::init(Motor* mo)
-{
-	SDL_Init(SDL_INIT_EVERYTHING);
-	m = mo;
-}
+//void InputManager::init(Motor* mo)
+//{
+//	SDL_Init(SDL_INIT_EVERYTHING);
+//	m = mo;
+//}
 
 void InputManager::handleEvents()
 {

@@ -9,11 +9,23 @@ class Motor;
 class InputManager : public Singleton<InputManager> {
 	friend Singleton<InputManager>;
 public:
-	InputManager();
 	~InputManager();
-	void init(Motor* mo);
+	//void init(Motor* mo);
 	void handleEvents();
 private:
+	InputManager() {};
+	InputManager(Motor* mo)
+	{
+		SDL_Init(SDL_INIT_EVERYTHING);
+		m = mo;
+	}
 	Motor* m;
 
 };
+
+// Esta macro define una forma compacta para usar el Singleton InputManager, 
+// en lugar de escribir 'InputManager::instance()->method()' escribiremos 'im().method()'
+//
+inline InputManager& im() {
+	return *InputManager::instance();
+}

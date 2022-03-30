@@ -37,7 +37,8 @@ Motor::Motor()
 	// Inicia los managers
 	if (!_loadResources)_loadResources = new LoadResources();
 	if(!_ogreManager) _ogreManager = new OgreManager();	
-	if (!_inputManager)_inputManager = new InputManager();
+	//if (!_inputManager)_inputManager = new InputManager();
+	_inputManager->init(this);
 
 	if (!_audioManager)_audioManager = new FMODAudioManager();
 	if (!_physxManager)_physxManager = new PhysxManager();
@@ -50,7 +51,7 @@ Motor::~Motor()
 {
 	// Destruye los managers
 	if (_ogreManager) delete _ogreManager;
-	if (_inputManager)delete _inputManager;
+	//if (_inputManager)delete _inputManager;
 	if (_loadResources)delete _loadResources;
 	if (_audioManager)delete _audioManager;
 }
@@ -61,7 +62,7 @@ void Motor::initSystems()
 	_loadResources->init();
 	//std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
-	_inputManager->init(this);
+	//_inputManager->init(this);
 	_audioManager->init();
 	Entidad* ent = new Entidad();
 	ent->addComponent<AudioSource>(channel,_audioManager,_loadResources->aud("blind_shift.mp3").c_str());
@@ -92,7 +93,7 @@ void Motor::updateSystems()
 {
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
-		_inputManager->handleEvents();
+		im().handleEvents();
 		_ogreManager->update();
 		
 	
