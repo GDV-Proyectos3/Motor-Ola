@@ -41,7 +41,12 @@ Motor::Motor()
 	_inputManager->init(this);
 
 	if (!_audioManager)_audioManager = new FMODAudioManager();
-	if (!_physxManager)_physxManager = new PhysxManager();
+
+	// Pablo Cubells dice: "Al ser un Singleton no hace se crea así la instancia,
+	// como una clase cualquiera, el new se hace dentro de la clase Singleton en init().
+	// Esto es porque es un unique_pointer."
+	// if (!_physxManager)_physxManager = new PhysxManager();
+	_physxManager->init();
 	
 	
 
@@ -54,6 +59,11 @@ Motor::~Motor()
 	//if (_inputManager)delete _inputManager;
 	if (_loadResources)delete _loadResources;
 	if (_audioManager)delete _audioManager;
+
+	// Pablo Cubells dice: "dejo comentado este delete porque no creo que se haga así,
+	// lo que creo es que no hay que hacer nada y se elimina solo al cerrar la aplicación, 
+	// pero por si acaso, hasta que esté claro, dejo esto."
+	// if (_physxManager)delete _physxManager; 
 }
 
 void Motor::initSystems()
@@ -63,6 +73,11 @@ void Motor::initSystems()
 	//std::cout << _loadResources->mes("ogrehead.mesh") << std::endl;
 	_ogreManager->init();
 	//_inputManager->init(this);
+	
+	// Pablo Cubells dice: "esto es en el caso que mantegamos esta función,
+	// podrían pasarse las inicializaciones al constructor."
+	// _physxManager->init();
+
 	_audioManager->init();
 	Entidad* ent = new Entidad();
 	ent->addComponent<AudioSource>(channel,_audioManager,_loadResources->aud("blind_shift.mp3").c_str());
@@ -94,6 +109,7 @@ void Motor::updateSystems()
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	while (!stop) {
 		im().handleEvents();
+		pm().update();
 		_ogreManager->update();
 		
 	

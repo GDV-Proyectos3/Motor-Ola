@@ -12,14 +12,12 @@ namespace physx {
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
-public:
-	PhysxManager(/*...*/);
+public:	
 	~PhysxManager();
 
 	// Getters
 	// ...
 
-	void init();
 	void update();
 	void close();
 
@@ -30,6 +28,15 @@ public:
 	// void loadPatatas();
 
 private:
+	PhysxManager(/*...*/) : _patata(false) {};
+	PhysxManager(bool n) { _patata = n; };
 	// Variables
 	bool _patata;
 };
+
+// Esta macro define una forma compacta para usar el Singleton PhysxManager, 
+// en lugar de escribir 'PhysxManager::instance()->method()' escribiremos 'im().method()'
+//
+inline PhysxManager& pm() {
+	return *PhysxManager::instance();
+}

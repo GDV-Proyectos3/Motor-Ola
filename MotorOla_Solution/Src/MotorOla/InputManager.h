@@ -13,7 +13,7 @@ public:
 	//void init(Motor* mo);
 	void handleEvents();
 private:
-	InputManager() {};
+	InputManager() : m(nullptr) {};
 	InputManager(Motor* mo)
 	{
 		SDL_Init(SDL_INIT_EVERYTHING);
