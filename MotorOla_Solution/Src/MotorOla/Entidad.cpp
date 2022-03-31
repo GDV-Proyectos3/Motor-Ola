@@ -10,12 +10,9 @@ void Entidad::update()
 {
 	for (auto& c : components)
 	{
-		c->update();
-	}
+		// de aqui hay que quitar el update de physx
 
-	for (auto& c : components)
-	{
-		c->draw();
+		c->update();
 	}
 }
 

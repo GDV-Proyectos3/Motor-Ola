@@ -26,6 +26,7 @@ public:
 	virtual ~Componente() {}
 
 	inline void setEntidad(Entidad* entity)	{ entity_ = entity;	}
+	inline Entidad* getEntidad() const { return entity_; }
 
 	inline bool setActive(bool state) { active_ = state; }
 
@@ -33,7 +34,6 @@ protected:
 	bool active_ = true;
 	bool inicializado_ = true;
 	Entidad* entity_ = nullptr;
-
 };
 
 

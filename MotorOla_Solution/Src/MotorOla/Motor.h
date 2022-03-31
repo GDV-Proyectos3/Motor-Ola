@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <string>
 #include <iostream>
+#include <Ogre.h>
 
 // Declaracion de clases necesarias
 class OgreManager;
@@ -11,6 +12,9 @@ class LoadResources;
 class FMODAudioManager;
 class PhysxManager;
 class Entidad;
+class EntidadManager;
+class Entity;
+
 class Motor
 {
 private:
@@ -26,8 +30,9 @@ private:
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
 	FMODAudioManager* _audioManager = nullptr;
-	PhysxManager* _physxManager = nullptr;
-	
+	PhysxManager* _physxManager = nullptr;	
+	EntidadManager* _entidadManager = nullptr;
+
 
 	// Factoria Componentes
 
@@ -39,13 +44,24 @@ private:
 
 	int channel = 0;
 
+	// Contador auxiliar
+	int frame = 0;
+
 public:
 	Motor();
 	~Motor();
 
 	void initSystems();
 
-	void updateSystems();
+	/// <summary>
+	/// A�adir aqu� todos los componentes que se hagan
+	/// </summary>
+	void registryComponents();
+
+	/// <summary>
+	/// Bucle principal de la ejecuci�n del motor
+	/// </summary>
+	void mainLoop();
 
 	/// <summary>
 	/// Carga Juego.dll y llama a la funcion LoadGame()
@@ -57,6 +73,8 @@ public:
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();
+
+	void loadPong();
 
 	// Getters and Setters
 	void setStop(bool s);

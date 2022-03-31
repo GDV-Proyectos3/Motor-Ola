@@ -4,7 +4,6 @@
 #include <math.h>
 #include <Ogre.h>
 
-
 class Vector2D
 {
 	double x_;

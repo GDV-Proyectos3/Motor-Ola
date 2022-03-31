@@ -59,15 +59,21 @@ void OgreManager::init()
 	Ogre::Viewport* vp = getRenderWindow()->addViewport(cam);
 	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
 
-	// Esto todavía no funciona porque falta el Resource Manager
+	// Esto todavï¿½a no funciona porque falta el Resource Manager
+
+	// Luz de prueba
+	Ogre::Light* luz = _sceneManager->createLight("Luz");	//Cada luz tiene que tener un nombre diferente
+	luz->setType(Ogre::Light::LT_DIRECTIONAL);
+	luz->setDiffuseColour(1, 1, 1);
+
+	Ogre::SceneNode* mLightNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nLuz");
+	//mLightNode = mCamNode->createChildSceneNode("nLuz");
+	mLightNode->attachObject(luz);
+	mLightNode->setDirection(Ogre::Vector3(0.4, 0.2, -1));
+
+	// Luz ambiente en la escena
+	_sceneManager->setAmbientLight(Ogre::ColourValue(0.4f, 0.0f, 1.0f));
 	
-	Ogre::SceneNode* cuerpoNode = _sceneManager->getRootSceneNode()->createChildSceneNode("NodoPrueba");
-	
-	Ogre::Entity* ent = _sceneManager->createEntity("ogrehead.mesh");
-	
-	cuerpoNode->createChildSceneNode();
-	cuerpoNode->attachObject(ent);
-	cuerpoNode->setScale(1.5, 1.5, 1.5); //sc
 
 	std::cout << "OgreManager iniciado\n";
 }
@@ -102,9 +108,9 @@ void OgreManager::createRoot()
 		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "Error buscando el archivo plugins.cfg");
 	}
 
-	_solutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
+	_solutionPath = pluginsPath;    // IG2: aï¿½adido para definir directorios relativos al de la soluciï¿½n 
 	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);
-	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
+	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuraciï¿½n ogre. (en el bin de la solubiï¿½n)
 	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   // IG2: Quito /bin
 
 	_root = new Ogre::Root(pluginsPath, _fileSystemLayer->getWritablePath("ogre.cfg"), _fileSystemLayer->getWritablePath("ogre.log"));
@@ -345,8 +351,19 @@ void OgreManager::locateResources()
 	}
 	else
 	{
+		// Lee la carpeta de modelos
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\models"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		// Lee la carpeta de materiales
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\materials"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		// Lee la carpeta de materiales
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\textures"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
 	}
 	
@@ -403,20 +420,20 @@ void OgreManager::locateResources()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(arch + "/materials/programs/HLSL", type, sec);
 	}
 
-	//mRTShaderLibPath = arch + "/RTShaderLib";
-	//Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/materials", type, sec);
-//	
-//	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
-//	{
-//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
-//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSLES", type, sec);
-//	}
-//	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
-//	{
-//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
-//	}
-//	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
-//	{
-//		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/HLSL", type, sec);
-//	}
+	Ogre::String mRTShaderLibPath = arch + "/RTShaderLib";
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/materials", type, sec);
+	
+	if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsles"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSLES", type, sec);
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("glsl"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/GLSL", type, sec);
+	}
+	else if (Ogre::GpuProgramManager::getSingleton().isSyntaxSupported("hlsl"))
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mRTShaderLibPath + "/HLSL", type, sec);
+	}
 }

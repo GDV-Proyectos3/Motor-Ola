@@ -1,20 +1,12 @@
 #include "Transform.h"
 
-Transform::Transform(Vector2D pos, Vector2D vel, double width, double height, double rotation):
-	position_(pos),
-	velocity_(vel), 
-	width_(width), 
-	height_(height), 
-	rotation_(rotation)
+Transform::Transform(Vectola3D position, Vectola3D scale, Vectola3D rotation) :
+	_position(position), _scale(scale), _rotation(rotation)
 {
 }
 
-Transform::Transform():
-	position_(),
-	velocity_(),
-	width_(),
-	height_(),
-	rotation_()
+Transform::Transform() :
+	_position(), _scale(), _rotation()
 {
 }
 
@@ -26,25 +18,24 @@ void Transform::init()
 {
 }
 
-void Transform::translate(double x, double y)
+void Transform::translate(double x, double y, double z)
 {
-	position_.setX(position_.getX() + x);
-	position_.setY(position_.getY() + y);
+	_position.setX(_position.getX() + x);
+	_position.setY(_position.getY() + y);
+	_position.setZ(_position.getZ() + z);
 }
 
 //2D,asi que solo puede rotar por eje Y
 void Transform::rotate(double angle)
 {
-	rotation_ += angle;
-	double rot = abs(rotation_);
-	while (rot >= 360)
-	{
-		rotation_ -= 360;
-	}
-	
-	if (rotation_ < 0)
-		rot *= -1;
-	rotation_ = rot;
-	
-
+	//_rotation += angle;
+	//double rot = abs(_rotation);
+	//while (rot >= 360)
+	//{
+	//	rotation_ -= 360;
+	//}
+	//
+	//if (rotation_ < 0)
+	//	rot *= -1;
+	//rotation_ = rot;
 }

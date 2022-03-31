@@ -43,7 +43,10 @@
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxErrorCallback.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\PingPongCtrl.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -57,13 +60,18 @@
     <ClInclude Include="..\..\Src\MotorOla\EntidadManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Movible.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxErrorCallback.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Pala.h" />
+    <ClInclude Include="..\..\Src\MotorOla\PingPongCtrl.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
+    <ClInclude Include="..\..\Src\MotorOla\utils\Vectola3D.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
   </ItemGroup>
   <ItemGroup>

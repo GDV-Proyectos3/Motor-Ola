@@ -12,7 +12,7 @@ namespace ComponenteRegistro {
 	public:
 		ComponenteRegistro(std::string compName) {
 			// Dejo esto comentado que no sé por que no funciona
-			//Singleton<ComponenteFactoria>().instance()->registerGenerator(compName, []()
+			//Singleton<ComponenteFactoria>::instance()->registerGenerator(compName, []()
 			//	{
 			//		return static_cast<Componente*>(new T());
 			//	}
