@@ -30,7 +30,7 @@ private:
 	InputManager* _inputManager = nullptr;
 	LoadResources* _loadResources = nullptr;
 	FMODAudioManager* _audioManager = nullptr;
-	PhysxManager* _physxManager = nullptr;	
+	//PhysxManager* _physxManager = nullptr;	
 	EntidadManager* _entidadManager = nullptr;
 
 

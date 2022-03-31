@@ -38,7 +38,9 @@ Motor::Motor()
 	// como una clase cualquiera, el new se hace dentro de la clase Singleton en init().
 	// Esto es porque es un unique_pointer."
 	// if (!_physxManager)_physxManager = new PhysxManager();
-	_physxManager->init();
+	//_physxManager->init(); // esto tb estaría mal hecho
+	//_physxManager = pm().init(); // esto estaría mejor, pero carece de sentido
+	pm().init(); // esto sería lo más adecuado y no hace falta registrarlo.
 	
 	
 
