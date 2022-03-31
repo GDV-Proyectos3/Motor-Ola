@@ -39,9 +39,9 @@ Motor::Motor()
 	// Esto es porque es un unique_pointer."
 	// if (!_physxManager)_physxManager = new PhysxManager();
 	//_physxManager->init(); // esto tb estaría mal hecho
-	_physxManager = pm().init(); // esto estaría mejor, pero carece de sentido
+	//_physxManager = pm().init(); // esto estaría mejor, pero carece de sentido
 	//pm().init(); // esto sería lo más adecuado y no hace falta registrarlo.
-	
+	Singleton<PhysxManager>::init();
 	
 
 	if (!_entidadManager) _entidadManager = new EntidadManager();
