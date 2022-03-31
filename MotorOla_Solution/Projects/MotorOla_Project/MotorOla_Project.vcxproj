@@ -41,7 +41,7 @@
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysxError.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\PhysxErrorCallback.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
@@ -60,7 +60,7 @@
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysxError.h" />
+    <ClInclude Include="..\..\Src\MotorOla\PhysxErrorCallback.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />

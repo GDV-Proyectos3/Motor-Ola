@@ -31,11 +31,17 @@ private:
 	bool _patata;
 
 	PxFoundation* gFoundation = NULL;
+	PxPhysics* gPhysics = NULL;
+
+	PxPvd* gPvd = NULL;
+
 	PxDefaultAllocator		gAllocator;
 
 	// Pablo Cubells dice: "IDK why pero esta mierda así funciona bien."
 	// PxDefaultErrorCallback	gErrorCallback;
 	PhysxErrorCallback	gErrorCallback;
+
+
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
