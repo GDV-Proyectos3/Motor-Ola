@@ -26,7 +26,7 @@ int posX = script.get("player.pos.X");
 class LuaScript
 {
 public:
-	LuaScript(char*  filename);
+	LuaScript(const std::string&  filename);
 	~LuaScript();
 
 	void printError(const std::string& variableName, const std::string& reason);
