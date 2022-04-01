@@ -2,10 +2,17 @@
 #include <string>
 extern "C"
 {
+    struct lua_State;
+    /*
     #include "lua.h"
     #include "lauxlib.h"
     #include "lualib.h"
+    */
 }
+
+
+
+
 /*
 * 
 player = {
@@ -61,36 +68,4 @@ private:
 
 };
 
-template<>
-inline std::string LuaScript::lua_getdefault() {
-    return "null";
-}
-
-template <>
-inline float LuaScript::lua_get(const std::string& variableName) {
-    if (!lua_isnumber(L, -1)) {
-        printError(variableName, "Not a number");
-    }
-    return (float)lua_tonumber(L, -1);
-}
-
-template <>
-inline int LuaScript::lua_get(const std::string& variableName) {
-    if (!lua_isnumber(L, -1)) {
-        printError(variableName, "Not a number");
-    }
-    return (int)lua_tonumber(L, -1);
-}
-
-template <>
-inline std::string LuaScript::lua_get(const std::string& variableName) {
-    std::string s = "null";
-    if (lua_isstring(L, -1)) {
-        s = std::string(lua_tostring(L, -1));
-    }
-    else {
-        printError(variableName, "Not a string");
-    }
-    return s;
-}
 

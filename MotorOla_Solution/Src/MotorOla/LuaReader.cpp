@@ -1,6 +1,12 @@
 #include "LuaReader.h"
 #include <iostream>
-
+extern "C"
+{
+    
+    #include "lua.h"
+    #include "lauxlib.h"
+    #include "lualib.h"
+}
 
 LuaScript::LuaScript(const std::string&  filename)
 {
@@ -98,4 +104,3 @@ inline T LuaScript::get(const std::string& variableName)
     lua_pop(L, level + 1); // pop all existing elements from stack
     return result;
 }
-
