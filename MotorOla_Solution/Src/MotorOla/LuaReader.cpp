@@ -27,7 +27,7 @@ void LuaScript::printError(const std::string& variableName, const std::string& r
 
 bool LuaScript::lua_gettostack(const std::string& variableName)
 {
-    int level = 0;
+    level = 0;
     std::string var = "";
     for (unsigned int i = 0; i < variableName.size(); i++) {
         if (variableName.at(i) == '.') {
