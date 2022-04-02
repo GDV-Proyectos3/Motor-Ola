@@ -213,10 +213,11 @@ void Motor::loadPong() {
 	Entidad* ogre = _entidadManager->addEntidad();
 	ogre->addComponent<Transform>();
 	Ogre::SceneNode* nodoOgre = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoOgre");
-	ogre->addComponent<Mesh>(nodoOgre, "ogrehead.mesh", "Azul");
+	ogre->addComponent<Mesh>(nodoOgre);
+	ogre->getComponent<Mesh>()->setMesh("ogrehead.mesh");
 	ogre->addComponent<Pala>();
 
-	ogre->getComponent<Transform>()->setScale(0.4f, 0.4f, 1.0f);
+	ogre->getComponent<Transform>()->setScale(4.0f, 4.0f, 4.0f);
 	ogre->getComponent<Transform>()->setPos(100.0f, 100.0f, 0.0f);
 }
 
