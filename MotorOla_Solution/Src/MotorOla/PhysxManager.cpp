@@ -1,4 +1,5 @@
 #include "PhysxManager.h"
+#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
 // _patata = interactive
 
@@ -25,7 +26,8 @@ PhysxManager::PhysxManager() : _patata(false) {
 
 PhysxManager::~PhysxManager()
 {
-
+	PX_RELEASE(gPhysics);
+	PX_RELEASE(gFoundation);
 }
 
 void PhysxManager::update()
@@ -36,6 +38,23 @@ void PhysxManager::update()
 void PhysxManager::close()
 {
 
+}
+
+void PhysxManager::createBall(
+	const PxTransform& t = PxTransform(PxVec3(0, 40, 100)), 
+	const PxGeometry& geometry = PxSphereGeometry(10), 
+	const PxVec3& velocity = PxVec3(0, -50, -100))
+{
+	PxMaterial* gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	PxRigidDynamic* dynamic = PxCreateDynamic(*gPhysics, t, geometry, *gMaterial, 10.0f);
+	//dynamic->setAngularDamping(0.5f);
+	//dynamic->setLinearVelocity(velocity);
+	//gScene->addActor(*dynamic);
+
+}
+
+void PhysxManager::attachBola(Entidad* ball)
+{
 }
 
 

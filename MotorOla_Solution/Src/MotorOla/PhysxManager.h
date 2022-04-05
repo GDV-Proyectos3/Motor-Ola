@@ -3,12 +3,15 @@
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include "PhysxErrorCallback.h"
+#include <vector>
+#include "Entidad.h"
 
 using namespace physx;
 //#include <string>
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
+	//using uptr_collider = std::unique_ptr<Px>;
 public:	
 	~PhysxManager();
 
@@ -17,6 +20,9 @@ public:
 
 	void update();
 	void close();
+
+	void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
+	void attachBola(Entidad* ball);
 
 	// Etc
 	// virtual void patata(...) {}
@@ -41,7 +47,9 @@ private:
 	// PxDefaultErrorCallback	gErrorCallback;
 	PhysxErrorCallback	gErrorCallback;
 
+	//std::vector<uptr_collider> colliders_;
 
+	Entidad* bola = nullptr;
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
