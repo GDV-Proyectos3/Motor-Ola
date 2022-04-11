@@ -20,6 +20,7 @@
 #include "FMODAudioManager.h"
 
 #include "PingPongCtrl.h"
+#include "OverlayManager.h"
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
@@ -31,6 +32,7 @@ Motor::Motor()
 	//if (!_inputManager)_inputManager = new InputManager();
 	if (!_entidadManager) _entidadManager = new EntidadManager();
 	if (!_audioManager)_audioManager = new FMODAudioManager();
+	if (!_overlayManager)_overlayManager = new OverlayManager();
 }
 
 Motor::~Motor()
@@ -41,6 +43,7 @@ Motor::~Motor()
 	if (_loadResources) delete _loadResources;
 	if (_audioManager) delete _audioManager;
 	if (_entidadManager) delete _entidadManager;
+	if (_overlayManager) delete _overlayManager;
 }
 
 void Motor::initSystems()
@@ -50,6 +53,8 @@ void Motor::initSystems()
 	//_inputManager->init(this);
 //	_inputManager->init();
 	_audioManager->init();
+	
+    _overlayManager->init();
 	
 	// Registrando Componentes
 	registryComponents();

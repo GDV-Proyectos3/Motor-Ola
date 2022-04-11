@@ -13,6 +13,7 @@ class FMODAudioManager;
 class Entidad;
 class EntidadManager;
 class Entity;
+class OverlayManager;
 
 class Motor
 {
@@ -30,6 +31,7 @@ private:
 	LoadResources* _loadResources = nullptr;
 	FMODAudioManager* _audioManager = nullptr;
 	EntidadManager* _entidadManager = nullptr;
+	OverlayManager* _overlayManager = nullptr;
 
 
 	// Factoria Componentes
