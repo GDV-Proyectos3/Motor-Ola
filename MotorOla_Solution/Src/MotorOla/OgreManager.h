@@ -87,7 +87,7 @@ private:
 	Ogre::Root* _root = nullptr;
 	NativeWindowPair _window;
 	Ogre::FileSystemLayer* _fileSystemLayer = nullptr;
-	Ogre::OverlaySystem* _overlaySystem;  // Overlay system
+	Ogre::OverlaySystem* _overlaySystem=nullptr;  // Overlay system
 	Ogre::SceneManager* _sceneManager = nullptr;
 	bool _firstRun;
 	Ogre::String _appName = "MotorOla";
@@ -97,4 +97,6 @@ private:
 	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
 	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };
-
+//inline OgreManager& og() {
+	//return *OgreManager::instance();
+//}

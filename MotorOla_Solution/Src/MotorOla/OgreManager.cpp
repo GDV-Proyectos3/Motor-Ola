@@ -7,6 +7,7 @@
 #include <OgreViewport.h>
 #include <OgreDataStream.h>
 #include <OgreFileSystemLayer.h>
+#include <OgreOverlaySystem.h>
 
 
 
@@ -75,6 +76,10 @@ void OgreManager::init()
 
 	// Luz ambiente en la escena
 	_sceneManager->setAmbientLight(Ogre::ColourValue(0.4f, 0.0f, 1.0f));
+	
+	_overlaySystem = new Ogre::OverlaySystem();
+	_root->getSceneManager("SceneManagerInstance1")->addRenderQueueListener(_overlaySystem);
+	
 	
 
 	std::cout << "OgreManager iniciado\n";
@@ -368,6 +373,11 @@ void OgreManager::locateResources()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\textures"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\fonts"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		
 	}
 	
 	Ogre::String sec, type, arch;

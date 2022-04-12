@@ -18,6 +18,8 @@
 #include <OgreTextAreaOverlayElement.h>
 #include <OgreOverlayContainer.h>
 
+
+
 #include "OgreOverlayPrerequisites.h"
 #include <OgrePanelOverlayElement.h>
 #include <OgreOverlay.h>
@@ -28,8 +30,6 @@ class OverlayManager : public Singleton<OverlayManager> {
 public:
 	OverlayManager() {  };
 	virtual ~OverlayManager() {
-		delete man;
-		man = nullptr;
 	};
 	void init();
 	//virtual void init();
@@ -41,9 +41,7 @@ public:
 
 private:
 	//Ogre::Overlay* _overlay = nullptr;
-	//PanelOverlayElement* mFader;
-	Ogre::PanelOverlayElement* mFader;
-	Ogre::OverlayManager* man;
+	
 };
 
 
