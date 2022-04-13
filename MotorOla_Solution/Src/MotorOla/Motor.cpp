@@ -99,7 +99,7 @@ void Motor::mainLoop()
 		//_physxManager->update();
 
 		// Actualiza los transforms de las entitys después de las físicas
-
+		_overlayManager->update();
 		// Actualiza el resto de componentes (también los del juego)
 		_entidadManager->update();
 

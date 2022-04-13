@@ -23,6 +23,7 @@
 #include "OgreOverlayPrerequisites.h"
 #include <OgrePanelOverlayElement.h>
 #include <OgreOverlay.h>
+#include <vector>
 
 
 class OverlayManager : public Singleton<OverlayManager> {
@@ -34,6 +35,7 @@ public:
 	void init();
 	//virtual void init();
 	//virtual void update() = 0;
+	void update();
 
 	void test() {
 		//Singleton<OgreManager>().instance()->getSceneManager()->createOverlay();
@@ -41,6 +43,7 @@ public:
 
 private:
 	//Ogre::Overlay* _overlay = nullptr;
+	std::vector< Ogre::PanelOverlayElement*>paneles;
 	
 };
 

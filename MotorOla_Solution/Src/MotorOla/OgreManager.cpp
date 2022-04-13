@@ -36,7 +36,7 @@ void OgreManager::init()
 {
     // Crea el root de Ogre
     createRoot();
-
+	
     // Inicia la ventana
 	if (oneTimeConfig()) {
 		setup();
@@ -44,6 +44,7 @@ void OgreManager::init()
 
 	// Agregado una prueba
 	_sceneManager = _root->createSceneManager();
+	
 	
 	// Create the camera
 	Ogre::Camera* cam = _sceneManager->createCamera("Cam");
@@ -77,7 +78,6 @@ void OgreManager::init()
 	// Luz ambiente en la escena
 	_sceneManager->setAmbientLight(Ogre::ColourValue(0.4f, 0.0f, 1.0f));
 	
-	_overlaySystem = new Ogre::OverlaySystem();
 	_root->getSceneManager("SceneManagerInstance1")->addRenderQueueListener(_overlaySystem);
 	
 	
@@ -155,7 +155,9 @@ void OgreManager::setup()
 	_root->initialise(false);
 	createWindow(_appName);
 	setWindowGrab(false);
-
+	//Crea el overlay System antes de cargar los recursos para cargar la fuente en el FontManager
+	_overlaySystem = new Ogre::OverlaySystem();
+	
 	locateResources();
 	//initialiseRTShaderSystem();
 	loadResources();
@@ -250,10 +252,12 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
 
 void OgreManager::setWindowGrab(bool _grab)
 {
+	//SDL_bool grab = SDL_bool(_grab);
 	SDL_bool grab = SDL_bool(_grab);
 	SDL_SetWindowGrab(_window.native, grab);
 	//SDL_SetRelativeMouseMode(grab);
-	SDL_ShowCursor(grab);
+	//SDL_ShowCursor(grab);
+	SDL_ShowCursor(true);
 }
 
 //void OgreManager::pollEvents()

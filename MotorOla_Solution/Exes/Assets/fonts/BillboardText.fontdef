@@ -1,0 +1,8 @@
+font DejaVu/SerifCondensedItalic
+{
+	zorder 1
+	type 		truetype
+	source 		DejaVuSerifCondensed-Italic.ttf
+	size 		15
+	resolution 	180
+}
