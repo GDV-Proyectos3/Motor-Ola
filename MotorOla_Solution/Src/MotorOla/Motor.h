@@ -79,5 +79,6 @@ public:
 	// Getters and Setters
 	void setStop(bool s);
 	bool getStop();
+	static void salir(Motor* m);
 };
 

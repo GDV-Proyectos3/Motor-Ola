@@ -54,7 +54,11 @@ void Motor::initSystems()
 //	_inputManager->init();
 	_audioManager->init();
 	
-    _overlayManager->init();
+    _overlayManager->init(_ogreManager,this);
+	_overlayManager->creaBoton(0.7, 0.5, "Boton 1", "Panel1", "Texto1",0.04f,"Azul",0.25f,0.25f,salir);
+	_overlayManager->creaBoton(0.2, 0.1, "Boton 2", "Panel2", "Texto2", 0.1f,"Azul", 0.25f, 0.25f,nullptr);
+	_overlayManager->creaTexto(0.1,0.8, "Hola", "textoSolo", 0.25f,"PaneldeTexto");
+	_overlayManager->creaPanel(0.6, 0.1, "Panelsolo", "Azul", 0.25, 0.25);
 	
 	// Registrando Componentes
 	registryComponents();
@@ -230,6 +234,11 @@ void Motor::loadPong() {
 bool Motor::getStop()
 {
 	return stop;
+}
+
+void Motor::salir(Motor* m)
+{
+	m->stop = true;
 }
 
 void Motor::setStop(bool s)

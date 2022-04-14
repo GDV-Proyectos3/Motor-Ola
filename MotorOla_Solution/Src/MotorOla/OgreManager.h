@@ -50,6 +50,7 @@ public:
 	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
+	
 
 
 	void init();
@@ -97,6 +98,6 @@ private:
 	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
 	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };
-//inline OgreManager& og() {
-	//return *OgreManager::instance();
-//}
+/*inline OgreManager& og() {
+	return *OgreManager::instance();
+}*/
