@@ -33,8 +33,7 @@ class OverlayManager : public Singleton<OverlayManager> {
 	
 public:
 	OverlayManager() {  };
-	virtual ~OverlayManager() {
-	};
+	virtual ~OverlayManager();
 	void init(OgreManager* om_,Motor* m);
 	//virtual void init();
 	//virtual void update() = 0;

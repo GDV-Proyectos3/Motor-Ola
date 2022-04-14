@@ -80,5 +80,6 @@ public:
 	void setStop(bool s);
 	bool getStop();
 	static void salir(Motor* m);
+	static void deleteOverlay(Motor* m);
 };
 
