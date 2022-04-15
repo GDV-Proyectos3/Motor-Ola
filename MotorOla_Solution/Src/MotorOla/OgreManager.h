@@ -50,6 +50,7 @@ public:
 	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
+	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
 	
 
 

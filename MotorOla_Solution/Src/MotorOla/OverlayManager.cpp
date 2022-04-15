@@ -8,11 +8,12 @@ OverlayManager::~OverlayManager()
 {
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	overlayManager.destroy("PanelOverlay");
-	for (int i = 0;i < botones.size();i++) {
+	/*for (int i = 0;i < botones.size();i++) {
 		delete botones[i];
 		botones[i] = nullptr;
 	}
 	botones.clear();
+	callbacks.clear();
 	for (int i = 0;i < paneles.size();i++) {
 		delete paneles[i];
 		paneles[i] = nullptr;
@@ -22,7 +23,8 @@ OverlayManager::~OverlayManager()
 		delete textos[i];
 		textos[i] = nullptr;
 	}
-	textos.clear();
+	textos.clear();*/
+	overlayManager.destroyAllOverlayElements();
 }
 
 void OverlayManager::init(OgreManager*om,Motor* m)

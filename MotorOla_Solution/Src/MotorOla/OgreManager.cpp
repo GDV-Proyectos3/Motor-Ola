@@ -8,6 +8,7 @@
 #include <OgreDataStream.h>
 #include <OgreFileSystemLayer.h>
 #include <OgreOverlaySystem.h>
+#include <OgreOverlayManager.h>
 
 
 
@@ -138,15 +139,20 @@ void OgreManager::shutdown()
 	}
 
 	// Borra el sistema Overlay
-	delete _overlaySystem;
-	_overlaySystem = nullptr;
+
+	if (Ogre::OverlayManager::getSingletonPtr() != nullptr) {
+		delete _overlaySystem;
+		_overlaySystem = nullptr;
+	}
 
 
 	if (_window.native != nullptr)
 	{
+		
 		SDL_DestroyWindow(_window.native);
-		SDL_QuitSubSystem(SDL_INIT_VIDEO);
+		//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		_window.native = nullptr;
+		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 }
 
@@ -257,7 +263,7 @@ void OgreManager::setWindowGrab(bool _grab)
 	SDL_SetWindowGrab(_window.native, grab);
 	//SDL_SetRelativeMouseMode(grab);
 	//SDL_ShowCursor(grab);
-	SDL_ShowCursor(true);
+	SDL_ShowCursor(grab);
 }
 
 //void OgreManager::pollEvents()

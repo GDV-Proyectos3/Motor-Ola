@@ -38,12 +38,14 @@ Motor::Motor()
 Motor::~Motor()
 {
 	// Destruye los managers
-	if (_ogreManager) delete _ogreManager;
+	
 	//if (_inputManager) delete _inputManager;
 	if (_loadResources) delete _loadResources;
 	if (_audioManager) delete _audioManager;
 	if (_entidadManager) delete _entidadManager;
-	if (_overlayManager) delete _overlayManager;
+	if (_ogreManager) delete _ogreManager;
+	//if (_overlayManager) delete _overlayManager;
+	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
 void Motor::initSystems()
@@ -55,10 +57,7 @@ void Motor::initSystems()
 	_audioManager->init();
 	
     _overlayManager->init(_ogreManager,this);
-	_overlayManager->creaBoton(0.7, 0.5, "Boton 1", "Panel1", "Texto1",0.04f,"Azul",0.25f,0.25f,salir);
-	_overlayManager->creaBoton(0.2, 0.1, "Boton 2", "Panel2", "Texto2", 0.1f,"Azul", 0.25f, 0.25f,deleteOverlay);
-	_overlayManager->creaTexto(0.1,0.8, "Hola", "textoSolo", 0.25f,"PaneldeTexto");
-	_overlayManager->creaPanel(0.6, 0.1, "Panelsolo", "Azul", 0.25, 0.25);
+	
 	
 	// Registrando Componentes
 	registryComponents();
@@ -230,6 +229,12 @@ void Motor::loadPong() {
 
 	ogre->getComponent<Transform>()->setScale(4.0f, 4.0f, 4.0f);
 	ogre->getComponent<Transform>()->setPos(100.0f, 100.0f, 0.0f);
+
+	//Prueba de Overlay
+	_overlayManager->creaBoton(0.7, 0.5, "Boton 1", "Panel1", "Texto1", 0.04f, "Azul", 0.25f, 0.25f, salir);
+	_overlayManager->creaBoton(0.2, 0.1, "Boton 2", "Panel2", "Texto2", 0.1f, "Azul", 0.25f, 0.25f, deleteOverlay);
+	_overlayManager->creaTexto(0.1, 0.8, "Hola", "textoSolo", 0.25f, "PaneldeTexto");
+	_overlayManager->creaPanel(0.6, 0.1, "Panelsolo", "Azul", 0.25, 0.25);
 }
 
 
