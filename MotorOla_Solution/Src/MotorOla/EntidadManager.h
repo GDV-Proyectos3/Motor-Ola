@@ -1,6 +1,7 @@
 #pragma once
-#include<vector>
+#include <vector>
 #include <memory>
+#include <string>
 
 class Entidad;
 
@@ -12,9 +13,12 @@ public:
 
 
 	Entidad* addEntidad();
+	Entidad* addEntidad(std::string entityName, int id);
 	void update();
 	void draw();
 	void refresh();
+	void pauseEntidades();
+	void reanudeEntidades();
 	
 	Entidad* getEntidadByID(int id);
 

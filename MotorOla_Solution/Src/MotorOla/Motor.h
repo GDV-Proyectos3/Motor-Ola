@@ -68,6 +68,12 @@ public:
 	void loadDLLGame();
 
 	/// <summary>
+	/// Carga una escena del juego
+	/// </summary>
+	/// <param name="name">name es el archivo "scene.lua"</param>
+	bool loadScene(std::string name);
+
+	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();

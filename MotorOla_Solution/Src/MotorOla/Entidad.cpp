@@ -6,6 +6,11 @@ Entidad::Entidad():
 {
 }
 
+Entidad::Entidad(std::string entityName, int id)
+{
+
+}
+
 void Entidad::update()
 {
 	for (auto& c : components)

@@ -32,6 +32,8 @@ int posX = script.get("player.pos.X");
 
 */
 
+void readFile(std::string file);
+
 class LuaScript
 {
 public:

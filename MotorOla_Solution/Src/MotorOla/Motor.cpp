@@ -19,6 +19,8 @@
 #include "FMODAudioManager.h"
 #include <Ogre.h>
 
+#include "LuaReader.h"
+
 #include "PingPongCtrl.h"
 #include "OverlayManager.h"
 
@@ -69,6 +71,9 @@ void Motor::initSystems()
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
 	}
+
+	// Carga una escena con Lua
+	//loadScene("");
 }
 
 void Motor::registryComponents()
@@ -150,6 +155,27 @@ void Motor::loadDLLGame()
 		FreeLibrary(hDLL);
 	}
 	else throw "DLL not found";
+}
+
+bool Motor::loadScene(std::string name) {
+	try {
+		name = "TestScene.lua";
+		// Borra las entidades de la escena actual
+		Singleton<EntidadManager>::instance()->pauseEntidades();
+
+		// TO DO
+		// Crea la ruta de la escena (esto debería venir de Resources pero para ir probando)
+		std::string sceneRoute = "..\\Assets\\Scenes\\" + name;
+
+		readFile(sceneRoute);
+	}
+	catch (std::exception e) {
+#if (defined _DEBUG)
+		std::cerr << e.what();
+#endif
+		return false;
+	}
+	return true;
 }
 
 void Motor::loadTestMotorGame() 

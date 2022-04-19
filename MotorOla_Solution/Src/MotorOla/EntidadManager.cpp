@@ -24,6 +24,18 @@ void EntidadManager::refresh()
 
 }
 
+void EntidadManager::pauseEntidades()
+{
+	for (auto& e : entitys_)
+		e->setActive(false);
+}
+
+void EntidadManager::reanudeEntidades()
+{
+	for (auto& e : entitys_)
+		e->setActive(false);
+}
+
 Entidad* EntidadManager::getEntidadByID(int id)
 {
 	// Busca entre las entidades activas
@@ -43,6 +55,15 @@ Entidad* EntidadManager::getEntidadByID(int id)
 Entidad* EntidadManager::addEntidad()
 {
 	Entidad* e = new Entidad();
+	e->setEntityMngr(this);
+	uptr_ent uPtr(e);
+	entitys_.emplace_back(std::move(uPtr));
+	return e;
+}
+
+Entidad* EntidadManager::addEntidad(std::string entityName, int id)
+{
+	Entidad* e = new Entidad(entityName, id);
 	e->setEntityMngr(this);
 	uptr_ent uPtr(e);
 	entitys_.emplace_back(std::move(uPtr));

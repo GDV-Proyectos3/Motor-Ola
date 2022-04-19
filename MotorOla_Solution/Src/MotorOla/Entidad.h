@@ -10,6 +10,8 @@ class Entidad
 	using uptr_cmp = std::unique_ptr<Componente>;
 public:
 	Entidad();
+	Entidad(std::string entityName, int id);
+
 	void update();
 	void draw() {};
 	bool isActive() const;
@@ -62,6 +64,8 @@ public:
 		}
 		throw std::exception("Error de carga del componente ");
 	}
+
+	inline void setActive(bool state) { active = state; }
 
 private:
 	EntidadManager* entManager_;
