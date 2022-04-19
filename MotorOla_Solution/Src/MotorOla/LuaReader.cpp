@@ -7,6 +7,7 @@
 #include "Entidad.h"
 #include "utils/Singleton.h"
 #include "EntidadManager.h"
+#include "OgreManager.h"
 
 extern "C"
 {
@@ -161,7 +162,6 @@ inline std::string LuaScript::lua_get(const std::string& variableName) {
 }
 
 void readFile(std::string file) {
-
 	std::vector<Entidad*> ents;
 	std::vector<bool> entInits;
 
@@ -176,22 +176,22 @@ void readFile(std::string file) {
 	}
 
 	try {
-		lua_getglobal(l, "GetMapa");
-		int err = lua_pcall(l, 0, 1, 0); // GetMapa()
+		lua_getglobal(l, "GetLevel");
+		int err = lua_pcall(l, 0, 1, 0); // GetLevel()
 
-		//lua_getfield(l, -1, "ambient");
-		//std::string s = lua_tostring(l, -1);
-		//std::string::size_type sz = 0, sa = 0;
-		//float a = std::stof(s, &sz), b = std::stof(s.substr(sz + 1), &sa), c = std::stof(s.substr(sz + sa + 2));
-		//OgreMotor::GetInstance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
-		//lua_pop(l, 1);
+		lua_getfield(l, -1, "ambient");
+		std::string aux = lua_tostring(l, -1);
+		std::string::size_type sz = 0, sa = 0;
+		float a = std::stof(aux, &sz), b = std::stof(aux.substr(sz + 1), &sa), c = std::stof(aux.substr(sz + sa + 2));
+		Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
+		lua_pop(l, 1);
 
-		//lua_getfield(l, -1, "gravity");
-		//s = lua_tostring(l, -1);
+		lua_getfield(l, -1, "gravity");
+		aux = lua_tostring(l, -1);
 		//BulletInstance::GetInstance()->getWorld()->setGravity({ std::stof(s, &sz), std::stof(s.substr(sz + 1), &sa), std::stof(s.substr(sz + sa + 2)) });
-		//lua_pop(l, 1);
+		lua_pop(l, 1);
 
-		lua_getfield(l, -1, "entities");
+		lua_getfield(l, -1, "entidades");
 		lua_pushnil(l);
 		while (lua_next(l, 2) != 0) {
 			// Entity is here

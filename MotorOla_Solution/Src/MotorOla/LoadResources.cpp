@@ -31,6 +31,12 @@ string LoadResources::tex(string tex)
 	return t->second;
 }
 
+string LoadResources::scene(string scene)
+{
+	auto it = scenes.find(scene);
+	return it->second;
+}
+
 void LoadResources::search(path p)
 {
 	//Recorre los directorios cargando los archivos en los diferentes map
@@ -60,5 +66,8 @@ void LoadResources::load(path p, size_t end, size_t pathLenght)
 	}
 	else if (extension == ".mesh") {
 		mesh.insert(pair<string, string>(name, p.string()));
+	}
+	else if (extension == ".lua") {
+		scenes.insert(std::pair<std::string, std::string>(name, p.string()));
 	}
 }

@@ -73,7 +73,7 @@ void Motor::initSystems()
 	}
 
 	// Carga una escena con Lua
-	//loadScene("");
+	loadScene("");
 }
 
 void Motor::registryComponents()
@@ -165,9 +165,9 @@ bool Motor::loadScene(std::string name) {
 
 		// TO DO
 		// Crea la ruta de la escena (esto debería venir de Resources pero para ir probando)
-		std::string sceneRoute = "..\\Assets\\Scenes\\" + name;
+		std::string sceneRoute = _loadResources->scene(name).c_str();
 
-		readFile(sceneRoute);
+		//readFile(sceneRoute);
 	}
 	catch (std::exception e) {
 #if (defined _DEBUG)
