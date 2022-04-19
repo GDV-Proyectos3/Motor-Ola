@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include <string>
 #include <iostream>
-#include <Ogre.h>
 
 // Declaracion de clases necesarias
 class OgreManager;

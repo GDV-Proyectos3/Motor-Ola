@@ -18,6 +18,7 @@
 #include <OgreVector.h>
 #include "LoadResources.h"
 #include "FMODAudioManager.h"
+#include <Ogre.h>
 
 #include "PingPongCtrl.h"
 #include "OverlayManager.h"
