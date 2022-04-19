@@ -1,7 +1,8 @@
 #pragma once
-
 #include <vector>
 #include "Componente.h"
+#include "utils/Singleton.h"
+#include "ComponenteFactoria.h"
 
 class EntidadManager;
 class Entidad
@@ -16,13 +17,11 @@ public:
 
 	virtual ~Entidad() {};
 
-	inline EntidadManager* getEntityMngr() const {
-		return entManager_;
-	}
+	inline EntidadManager* getEntityMngr() const { return entManager_; }
 
-	inline void setEntityMngr(EntidadManager* mngr) {
-		entManager_ = mngr;
-	}
+	inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
+
+	inline int getID() { return id; }
 
 	template<typename  T>
 	inline bool hasComponent() const {
@@ -35,27 +34,46 @@ public:
 		return static_cast<T*>(ptr);
 	}
 
+	//template<typename T, typename ... Targs>
+	//inline T* addComponent(Targs&&...args) {
 
-	template<typename T, typename ... Targs>
-	inline T* addComponent(Targs&&...args) {
+	//	T* c(new T(std::forward<Targs>(args)...));
+	//	uptr_cmp uPtr(c);
+	//	components.emplace_back(std::move(uPtr));
 
-		T* c(new T(std::forward<Targs>(args)...));
-		uptr_cmp uPtr(c);
-		components.emplace_back(std::move(uPtr));
+	//	componentArray[getComponentTypeID<T>()]=c;
+	//	componentBitset[getComponentTypeID<T>()] = true;
 
-		componentArray[getComponentTypeID<T>()]=c;
-		componentBitset[getComponentTypeID<T>()] = true;
+	//	c->setEntidad(this);
+	//	c->init();
+	//	return c;
+	//}
 
+	Componente* addComponent(const std::string& compName, const std::map<std::string, std::string>& map) {
+		Componente* t = Singleton<ComponenteFactoria>::instance()->getComponent(compName);
+		if (t != nullptr) {
+			t->entity_ = this;//ponemos la entidad en el componente
+			std::unique_ptr<Componente> upt(t);
+			components.push_back(std::move(upt));
+			compMaps.push_back(map);
+			compinits.push_back(false);
 
-		c->setEntidad(this);
-		c->init();
-		return c;
+			return t;
+		}
+		throw std::exception("Error de carga del componente ");
 	}
 
 private:
 	EntidadManager* entManager_;
 	std::vector<uptr_cmp> components;
 	bool active = true;
+	int id;
+
+
+	// Aqui estaran los componentes de esta entidad
+	//std::vector<std::unique_ptr<Componente>> compUnique;
+	std::vector<std::map<std::string, std::string>> compMaps;
+	std::vector<bool> compinits;
 
 	ComponentArray componentArray;
 	ComponentBitSet componentBitset;

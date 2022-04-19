@@ -9,7 +9,7 @@ typedef Componente* (*componentInstanceGenerator) ();
 class ComponenteFactoria : public Singleton<ComponenteFactoria> {
 public:
 	///<summary>
-	///Devuele el componente que quieres si esta guardado en mGenerators, si no existe devuelve nullptr
+	///Devuele el componente si esta guardado en mGenerators, si no existe devuelve nullptr
 	///</summary>
 	Componente* getComponent(std::string name);
 
@@ -18,12 +18,10 @@ public:
 	///</summary>
 	bool registerGenerator(std::string compName, const componentInstanceGenerator& instGenerator);
 
-private:
 	ComponenteFactoria() {};
 	~ComponenteFactoria() {};
-	///<summary>
-	// Tabla hash donde guardamos todos los componentes, string es el nombre
-	// componentInstanceGenerator es el componente como tal
-	///</summary>
+private:
+
+	// Tabla hash donde guardamos todos los componentes | Nombre -> Componente
 	std::unordered_map<std::string, componentInstanceGenerator> _mGenerators;
 };

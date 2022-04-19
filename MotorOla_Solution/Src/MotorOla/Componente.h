@@ -1,6 +1,7 @@
 #pragma once
-
 #include "ECS.h"
+#include <map>
+#include <string>
 
 class Entidad;
 
@@ -9,9 +10,12 @@ class Componente
 	friend Entidad;
 
 public:
-	virtual void init() {};
+	virtual bool init(const std::map<std::string, std::string>& mapa) = 0;
 
+	virtual void start() {};
 	virtual void update() {};
+
+	virtual ~Componente() {};
 
 	virtual void onTriggerStart(Entidad* other) {};
 	virtual void onTriggerStay(Entidad* other) {};
@@ -23,16 +27,15 @@ public:
 
 	virtual void draw() {};
 
-	virtual ~Componente() {}
-
+	inline bool setActive(bool state) { active_ = state; }
+	inline bool setInitialized(bool state) { inicializado_ = state; }
+	
 	inline void setEntidad(Entidad* entity)	{ entity_ = entity;	}
 	inline Entidad* getEntidad() const { return entity_; }
 
-	inline bool setActive(bool state) { active_ = state; }
-
 protected:
 	bool active_ = true;
-	bool inicializado_ = true;
+	bool inicializado_ = false;
 	Entidad* entity_ = nullptr;
 };
 

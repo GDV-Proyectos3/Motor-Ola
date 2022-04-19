@@ -65,7 +65,6 @@
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Pala.h" />
     <ClInclude Include="..\..\Src\MotorOla\PingPongCtrl.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />

@@ -1,15 +1,27 @@
 #pragma once
 #include "Componente.h"
 #include "./utils/Vectola3D.h"
+#include <list>
 
 class Transform :   public Componente
 {
 public:
-	Transform(Vectola3D position, Vectola3D scale, Vectola3D rotation);
+	// Unico constructor de cada componente
 	Transform();
 	virtual ~Transform();
 
-	void init();
+	// Función obligatoria para inicializar el componente mediante datos serializados
+	bool init(const std::map<std::string, std::string>& mapa);
+
+	// Funciones con parent
+	void setParent(Transform* par);
+
+	// Añade a un hijo a la lista
+	void setChild(Transform* child) { _children.push_back(child); }
+	// Elimina a un hijo de la lista
+	void removeChild(Transform* child) { if (child->_parent == this) _children.remove(child); };
+
+
 	void translate(double x, double y, double z);
 	void rotate(double angle);
 
@@ -38,8 +50,17 @@ public:
 	inline void setScaleZ(double z) { _scale.setZ(z); }
 
 private:
+	Transform* _parent = nullptr;
+	std::list<Transform*> _children;
+
+	// Posiciones globales
 	Vectola3D _position;
 	Vectola3D _rotation;
-	Vectola3D _scale;
+	Vectola3D _scale;	
+	
+	// Posiciones locales
+	Vectola3D _localPosition;
+	Vectola3D _localRotation;
+	Vectola3D _localScale;
 };
 

@@ -10,7 +10,6 @@
 #include "Entidad.h"
 #include "EntidadManager.h"
 #include "Movible.h"
-#include "Pala.h"
 #include <Windows.h>
 #include "AudioSource.h"
 #include <OgreEntity.h>
@@ -59,7 +58,6 @@ void Motor::initSystems()
 	
     _overlayManager->init(_ogreManager,this);
 	
-	
 	// Registrando Componentes
 	registryComponents();
 
@@ -69,17 +67,15 @@ void Motor::initSystems()
 	}
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
-		//loadTestMotorGame();
-		loadPong();
+		loadTestMotorGame();
 	}
 }
 
 void Motor::registryComponents()
 {
-	ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
 	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
-	ComponenteRegistro::ComponenteRegistro<Movible>("movible");
-	ComponenteRegistro::ComponenteRegistro<Pala>("pala");
+	//ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
+	//ComponenteRegistro::ComponenteRegistro<Movible>("movible");
 }
 
 void Motor::mainLoop()
@@ -158,86 +154,12 @@ void Motor::loadDLLGame()
 
 void Motor::loadTestMotorGame() 
 {
-	// Audio
+	// Entidad con un transform
 	Entidad* ent = _entidadManager->addEntidad();
-	ent->addComponent<AudioSource>(channel, _audioManager, _loadResources->aud("blind_shift.mp3").c_str());
-	if (ent->hasComponent<AudioSource>()) {
-		ent->getComponent<AudioSource>()->play();
-	}
+	map<string, string> m;
+	ent->addComponent("transform", m);
 
-	// Cabeza
-	Entidad* entMesh = _entidadManager->addEntidad();
-	entMesh->addComponent<Transform>();
-	Ogre::SceneNode* nodo = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("NodoCabeza");
-	entMesh->addComponent<Mesh>(nodo, "ogrehead.mesh", "material");
-	entMesh->addComponent<Movible>();
-
-	//Entidad* entNoMesh = _entidadManager->addEntidad();
-	//entNoMesh->addComponent<Transform>();
-	//Ogre::SceneNode* nodo2 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("NodoCabeza2");
-	//Ogre::Entity* ent2 = _ogreManager->getSceneManager()->createEntity("ogrehead.mesh");
-	//nodo2->attachObject(ent2);
-
-	std::cout << nodo->getPosition() << nodo->getScale() << endl;
-	//std::cout << nodo2->getPosition() << nodo2->getScale() << endl;
 }
-
-void Motor::loadPong() {
-	// Pala 1
-	Entidad* pala1 = _entidadManager->addEntidad();
-	pala1->addComponent<Transform>();
-	Ogre::SceneNode* nodoPala1 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala1");
-	pala1->addComponent<Mesh>(nodoPala1, "cube.mesh", "Rojo");
-
-	pala1->addComponent<Pala>();
-
-	pala1->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
-	pala1->getComponent<Transform>()->setPos(-450.0f, 0.0f, 0.0f);
-
-	//_inputManager->setPala1(pala1);
-	pala1->addComponent<PingPongCtrl>(SDL_SCANCODE_W, SDL_SCANCODE_S);
-
-	// Pala 2
-	Entidad* pala2 = _entidadManager->addEntidad();
-	pala2->addComponent<Transform>();
-	Ogre::SceneNode* nodoPala2 = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoPala2");
-	pala2->addComponent<Mesh>(nodoPala2, "cube.mesh", "Rojo");
-	pala2->addComponent<Pala>();
-
-	pala2->getComponent<Transform>()->setScale(0.4f, 4.0f, 1.0f);
-	pala2->getComponent<Transform>()->setPos(450.0f, 0.0f, 0.0f);
-	pala2->addComponent<PingPongCtrl>(SDL_SCANCODE_UP, SDL_SCANCODE_DOWN);
-
-	//_inputManager->setPala2(pala2);
-
-	// Bola
-	Entidad* bola = _entidadManager->addEntidad();
-	bola->addComponent<Transform>();
-	Ogre::SceneNode* nodoBola = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoBola");
-	bola->addComponent<Mesh>(nodoBola, "sphere.mesh", "Azul");
-	bola->addComponent<Pala>();
-
-	bola->getComponent<Transform>()->setScale(0.4f, 0.4f, 1.0f);
-	bola->getComponent<Transform>()->setPos(0.0f, 0.0f, 0.0f);
-
-	// Ogre
-	Entidad* ogre = _entidadManager->addEntidad();
-	ogre->addComponent<Transform>();
-	Ogre::SceneNode* nodoOgre = _ogreManager->getSceneManager()->getRootSceneNode()->createChildSceneNode("nodoOgre");
-	ogre->addComponent<Mesh>(nodoOgre);
-	ogre->getComponent<Mesh>()->setMesh("ogrehead.mesh");
-	ogre->addComponent<Pala>();
-
-	ogre->getComponent<Transform>()->setScale(4.0f, 4.0f, 4.0f);
-	ogre->getComponent<Transform>()->setPos(100.0f, 100.0f, 0.0f);
-
-	//Prueba de Overlay
-	_overlayManager->creaBoton(0.7, 0.5, "Boton 1", "Panel1", "Texto1", 0.04f, "Azul", 0.25f, 0.25f, salir);
-	_overlayManager->creaBoton(0.2, 0.1, "Boton 2", "Panel2", "Texto2", 0.1f, "Azul", 0.25f, 0.25f, deleteOverlay);
-	_overlayManager->creaTexto(0.1, 0.8, "Hola", "textoSolo", 0.25f, "PaneldeTexto");
-	_overlayManager->creaPanel(0.6, 0.1, "Panelsolo", "Azul", 0.25, 0.25);
-}
-
 
 bool Motor::getStop()
 {

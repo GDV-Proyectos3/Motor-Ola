@@ -67,13 +67,10 @@ public:
 	/// </summary>
 	void loadDLLGame();
 
-
 	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();
-
-	void loadPong();
 
 	// Getters and Setters
 	void setStop(bool s);

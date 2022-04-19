@@ -16,6 +16,7 @@ public:
 	void draw();
 	void refresh();
 	
+	Entidad* getEntidadByID(int id);
 
 	std::vector<uptr_ent> entitys_;
 private:

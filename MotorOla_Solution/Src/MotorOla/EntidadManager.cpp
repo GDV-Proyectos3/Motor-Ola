@@ -1,8 +1,6 @@
 #include "EntidadManager.h"
 #include "Entidad.h"
 
-
-
 void EntidadManager::update()
 {
 	for (auto& e : entitys_)
@@ -24,6 +22,20 @@ void EntidadManager::refresh()
 		entitys_.end()
 	);
 
+}
+
+Entidad* EntidadManager::getEntidadByID(int id)
+{
+	// Busca entre las entidades activas
+	Entidad* e = nullptr;
+	auto it = entitys_.begin();
+	while (e == nullptr && it != entitys_.end()) {
+		//if ((*it)->getID() == id) {
+		//	e = *it;
+		//}
+		++it;
+	}
+	return e;
 }
 
 
