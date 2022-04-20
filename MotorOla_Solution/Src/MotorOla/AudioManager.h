@@ -5,6 +5,7 @@
 
 
 class AudioManager : public Singleton<AudioManager> {
+	friend Singleton<AudioManager>;
 public:
 	AudioManager() {};
 	virtual ~AudioManager() {};

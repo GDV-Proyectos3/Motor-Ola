@@ -20,12 +20,12 @@ private:
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
 	// Managers
-	OgreManager* _ogreManager = nullptr;
-	InputManager* _inputManager = nullptr;
-	LoadResources* _loadResources = nullptr;
-	FMODAudioManager* _audioManager = nullptr;
-	EntidadManager* _entidadManager = nullptr;
-	OverlayManager* _overlayManager = nullptr;
+	//OgreManager* _ogreManager = nullptr;
+	//InputManager* _inputManager = nullptr;
+	//LoadResources* _loadResources = nullptr;
+	//FMODAudioManager* _audioManager = nullptr;
+	//EntidadManager* _entidadManager = nullptr;
+	//OverlayManager* _overlayManager = nullptr;
 
 
 	// Factoria Componentes
@@ -76,7 +76,9 @@ public:
 	// Getters and Setters
 	void setStop(bool s);
 	bool getStop();
+
+
 	static void salir(Motor* m);
-	static void deleteOverlay(Motor* m);
+	//static void deleteOverlay(Motor* m);
 };
 

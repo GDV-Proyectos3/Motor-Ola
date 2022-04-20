@@ -1,62 +1,64 @@
 #include "Motor.h"
-#include "OgreManager.h"
-#include "Componente.h"
-#include "ComponenteFactoria.h"
-#include "ComponenteRegistro.h"
-#include "utils/Singleton.h"
-#include "InputManager.h"
-#include "Mesh.h"
-#include "Transform.h"
-#include "Entidad.h"
-#include "EntidadManager.h"
-#include "Movible.h"
 #include <Windows.h>
-#include "AudioSource.h"
+#include "LuaReader.h"
+
+// Ogre
+#include <Ogre.h>
 #include <OgreEntity.h>
 #include <OgreVector3.h>
 #include <OgreVector.h>
+
+// Managers
+#include "utils/Singleton.h"
+#include "OgreManager.h"
+#include "EntidadManager.h"
+#include "InputManager.h"
 #include "LoadResources.h"
 #include "FMODAudioManager.h"
-#include <Ogre.h>
-
-#include "LuaReader.h"
-
-#include "PingPongCtrl.h"
 #include "OverlayManager.h"
+
+// Componentes
+#include "Entidad.h"
+#include "Componente.h"
+#include "ComponenteFactoria.h"
+#include "ComponenteRegistro.h"
+#include "Transform.h"
+#include "Mesh.h"
+#include "Movible.h"
+#include "AudioSource.h"
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
 	// Inicia los managers
-	if (!_loadResources) _loadResources = Singleton<LoadResources>::instance();
-	if (!_ogreManager) _ogreManager = Singleton<OgreManager>::instance();	
-	if (!_entidadManager) _entidadManager = Singleton<EntidadManager>::instance();
-	if (!_audioManager) _audioManager = Singleton<FMODAudioManager>::instance();
-	if (!_overlayManager) _overlayManager = Singleton<OverlayManager>::instance();
-	//if (!_inputManager)_inputManager = new InputManager();
+	Singleton<LoadResources>::instance();
+	Singleton<OgreManager>::instance();	
+	Singleton<EntidadManager>::instance();
+	Singleton<FMODAudioManager>::instance();
+	Singleton<OverlayManager>::instance();
 }
 
 Motor::~Motor()
 {
-	// Destruye los managers
-	if (_loadResources) delete _loadResources;
-	if (_audioManager) delete _audioManager;
-	if (_entidadManager) delete _entidadManager;
-	if (_ogreManager) delete _ogreManager;
-	//if (_inputManager) delete _inputManager;
+	// Destruye los managers en orden inverso a la creación
+	if (Singleton<OverlayManager>::instance() != nullptr) delete Singleton<OverlayManager>::instance();
+	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
+	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
+	if (Singleton<OgreManager>::instance() != nullptr) delete Singleton<OgreManager>::instance();
+	if (Singleton<LoadResources>::instance() != nullptr) delete Singleton<LoadResources>::instance();
+
 	//if (_overlayManager) delete _overlayManager;
 	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
 void Motor::initSystems()
 {
-	_loadResources->init();
-	_ogreManager->init();
-	//_inputManager->init(this);
-//	_inputManager->init();
-	_audioManager->init();
-    _overlayManager->init(_ogreManager,this);
+	// Inicia los sistemas
+	Singleton<LoadResources>::instance()->init();
+	Singleton<OgreManager>::instance()->init();
+	Singleton<FMODAudioManager>::instance()->init();
+	Singleton<OverlayManager>::instance()->init(Singleton<OgreManager>::instance(),this);
 	
 	// Se registran los componentes que conoce el motor
 	registryComponents();
@@ -77,11 +79,10 @@ void Motor::initSystems()
 
 void Motor::registryComponents()
 {
-	// Apuntar aquí todos los componentes del motor
+	// Apuntar aquí todos los componentes del motor (apuntar solo despues de refactorizar)
 	try {
 		ComponenteRegistro::ComponenteRegistro<Transform>("transform");
 		ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
-		//ComponenteRegistro::ComponenteRegistro<Movible>("movible");
 	}
 	catch (const char* error) {
 		std::cout << "Error registrando los componentes del motor: \n" << error << "\n";
@@ -95,11 +96,11 @@ void Motor::mainLoop()
 	SDL_Event event;
 	while (!stop) {
 		// Recoger el Input
-		//_inputManager->handleEvents();
 		ih().clearState();
 		while (SDL_PollEvent(&event))
 			ih().update(event);
 
+		// Cierra la aplicacion con ESCAPE
 		if (ih().isKeyDown(SDL_SCANCODE_ESCAPE)) {
 			stop = true;
 			continue;
@@ -109,28 +110,21 @@ void Motor::mainLoop()
 		//_physxManager->update();
 
 		// Actualiza los transforms de las entitys después de las físicas
-		if (_overlayManager != nullptr) {
-			_overlayManager->update();
+		if (Singleton<OverlayManager>::instance() != nullptr) {
+			Singleton<OverlayManager>::instance()->update();
 		}
 		// Actualiza el resto de componentes (también los del juego)
-		_entidadManager->update();
+		Singleton<EntidadManager>::instance()->update();
 
 		// Renderiza las entidades
-		_ogreManager->update();
-
-		// TEST
-		if (frame == 1) {
-			Entidad* e = _entidadManager->getEntidadByID(1);
-			std::cout << "NOMBRE: " << e->getName() << " | ID: " << e->getID() << "\n";
-			std::cout << "POS: " << e->getComponent<Transform>()->getPos() << "\n";
-			std::cout << "SCALE: " << e->getComponent<Transform>()->getScale() << "\n";
-			std::cout << "MESH: " << e->getComponent<Mesh>()->getActive() << "\n";
-		}
+		Singleton<OgreManager>::instance()->update();
 
 		// Contador de frames que los muetra cada 100 frames
+#if (defined _DEBUG)
 		if (++frame % 100 == 0) {
 			std::cout << "FrameCount: " << frame << "\n";
 		}
+#endif
 	}
 }
 
@@ -164,13 +158,13 @@ bool Motor::loadScene(std::string name) {
 
 		// BORRAR ES TESTEO
 		name = "run.lua";
-		std::string testSceneRoute = _loadResources->scene(name).c_str();
+		std::string testSceneRoute = Singleton<LoadResources>::instance()->scene(name).c_str();
 		readFileTest(testSceneRoute);
 
 		// TO DO
 		// Crea la ruta de la escena (esto debería venir de Resources pero para ir probando)
 		name = "TestScene.lua";
-		std::string sceneRoute = _loadResources->scene(name).c_str();
+		std::string sceneRoute = Singleton<LoadResources>::instance()->scene(name).c_str();
 		std::cout << "OgreManager is at " << Singleton<OgreManager>::instance() << "\n";
 		readFile(sceneRoute);
 	}
@@ -186,7 +180,7 @@ bool Motor::loadScene(std::string name) {
 void Motor::loadTestMotorGame() 
 {
 	// Entidad con un transform
-	Entidad* ent = _entidadManager->addEntidad();
+	Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	map<string, string> m;
 	ent->addComponent("transform", m);
 
@@ -201,11 +195,12 @@ void Motor::salir(Motor* m)
 {
 	m->stop = true;
 }
-void Motor::deleteOverlay(Motor* m)
-{
-	delete m->_overlayManager;
-	m->_overlayManager = nullptr;
-}
+
+//void Motor::deleteOverlay(Motor* m)
+//{
+//	delete m->_overlayManager;
+//	m->_overlayManager = nullptr;
+//}
 
 void Motor::setStop(bool s)
 {
