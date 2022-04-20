@@ -23,7 +23,7 @@ public:
 
 	inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
 
-	inline int getID() { return id; }
+	inline int getID() { return _id; }
 
 	template<typename  T>
 	inline bool hasComponent() const {
@@ -67,11 +67,17 @@ public:
 
 	inline void setActive(bool state) { active = state; }
 
+	bool init();
+
+
 private:
+	std::string _name;
+	int _id;
+
 	EntidadManager* entManager_;
+
 	std::vector<uptr_cmp> components;
 	bool active = true;
-	int id;
 
 
 	// Aqui estaran los componentes de esta entidad
@@ -81,5 +87,10 @@ private:
 
 	ComponentArray componentArray;
 	ComponentBitSet componentBitset;
+
+	bool _needsOtherEntity = false;
+
+	//numero de veces que puedes intentar iniciar tus componentes (para evitar bucle infinito)
+	int _numTriesToLoad;
 };
 

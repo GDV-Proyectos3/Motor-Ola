@@ -267,7 +267,7 @@ void readFile(std::string file) {
 		int numEnts = ents.size();
 		int initedEnts = 0;
 		while (initedEnts != numEnts) {
-			if (!entInits[i] /*&& ents[i]->init()*/) {
+			if (!entInits[i] && ents[i]->init()) {
 				++initedEnts;
 				entInits[i] = true;
 				//SceneManager::GetInstance()->addEntity(ents[i]);

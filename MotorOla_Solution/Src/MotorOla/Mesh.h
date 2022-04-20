@@ -48,15 +48,10 @@ public:
 	void setVisible(bool visible);
 
 private:
-	Ogre::SceneNode* _nodo = nullptr;
-	//Ogre::SceneNode* bbNode;
-	//Ogre::SceneNode* particleNode;
-	//Ogre::ParticleSystem* smokePS;
-	//Ogre::SceneNode* lightNode;
-	//Ogre::Light* luzFoco;
-	Ogre::SceneManager* _sceneManager = nullptr;
-	Ogre::Entity* _ogreEntity = nullptr;
-	bool _active = true;
 	bool _visible = true;
+	bool _active = true;
+	Ogre::SceneManager* _sceneManager = nullptr;
+	Ogre::SceneNode* _nodo = nullptr;
+	Ogre::Entity* _ogreEntity = nullptr;
 };
 
