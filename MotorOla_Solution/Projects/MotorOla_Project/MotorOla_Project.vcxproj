@@ -45,6 +45,7 @@
     <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PingPongCtrl.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\utils\Quaterniola.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
   </ItemGroup>
@@ -67,6 +68,7 @@
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\PingPongCtrl.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
+    <ClInclude Include="..\..\Src\MotorOla\utils\Quaterniola.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vectola3D.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />

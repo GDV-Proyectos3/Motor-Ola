@@ -6,11 +6,12 @@
 class Transform :   public Componente
 {
 public:
-	// Unico constructor de cada componente
+	// OBLIGATORIO EN CADA COMPONENTE
+	// Constructor sin parámetros
 	Transform();
+	// Destructor
 	virtual ~Transform();
-
-	// Función obligatoria para inicializar el componente mediante datos serializados
+	// Función para inicializar el componente mediante datos serializados
 	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Funciones con parent

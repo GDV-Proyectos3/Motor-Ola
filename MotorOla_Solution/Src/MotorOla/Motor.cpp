@@ -73,7 +73,7 @@ void Motor::initSystems()
 	}
 
 	// Carga una escena con Lua
-	if(!loadScene(""))
+	if(!loadScene("TestScene.lua"))
 		throw "Error loading a Scene\n";
 }
 
@@ -119,7 +119,7 @@ void Motor::mainLoop()
 		// Renderiza las entidades
 		Singleton<OgreManager>::instance()->update();
 
-		// Contador de frames que los muetra cada 100 frames
+		// Contador de frames que los muestra cada 100 frames
 #if (defined _DEBUG)
 		if (++frame % 100 == 0) {
 			std::cout << "FrameCount: " << frame << "\n";
@@ -156,16 +156,10 @@ bool Motor::loadScene(std::string name) {
 		// Borra las entidades de la escena actual
 		Singleton<EntidadManager>::instance()->pauseEntidades();
 
-		// BORRAR ES TESTEO
-		name = "run.lua";
-		std::string testSceneRoute = Singleton<LoadResources>::instance()->scene(name).c_str();
-		readFileTest(testSceneRoute);
-
-		// TO DO
-		// Crea la ruta de la escena (esto debería venir de Resources pero para ir probando)
-		name = "TestScene.lua";
+		// Devuelve la ruta de la escena
 		std::string sceneRoute = Singleton<LoadResources>::instance()->scene(name).c_str();
-		std::cout << "OgreManager is at " << Singleton<OgreManager>::instance() << "\n";
+
+		// Lee la escena cargando todas las entidades y sus componentes
 		readFile(sceneRoute);
 	}
 	catch (std::exception e) {
