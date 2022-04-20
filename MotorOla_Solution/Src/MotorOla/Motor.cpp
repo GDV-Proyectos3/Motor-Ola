@@ -124,6 +124,7 @@ void Motor::mainLoop()
 			std::cout << "NOMBRE: " << e->getName() << " | ID: " << e->getID() << "\n";
 			std::cout << "POS: " << e->getComponent<Transform>()->getPos() << "\n";
 			std::cout << "SCALE: " << e->getComponent<Transform>()->getScale() << "\n";
+			std::cout << "MESH: " << e->getComponent<Mesh>()->getActive() << "\n";
 		}
 
 		// Contador de frames que los muetra cada 100 frames

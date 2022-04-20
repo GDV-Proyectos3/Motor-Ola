@@ -195,13 +195,20 @@ void readFile(std::string file) {
 			throw std::exception("Lua function GetLevel was not able to be loaded");
 		}
 
-		lua_getfield(l, -1, "ambient");
+		lua_getfield(l, -1, "backgroundColor");
 		std::string aux = lua_tostring(l, -1);
 		std::string::size_type sz = 0, sa = 0;
 		float a = std::stof(aux, &sz), b = std::stof(aux.substr(sz + 1), &sa), c = std::stof(aux.substr(sz + sa + 2));
+		Singleton<OgreManager>::instance()->getViewPort()->setBackgroundColour(Ogre::ColourValue(a, b, c, 1.0f));
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "ambient");
+		std::string aux2 = lua_tostring(l, -1);
+		sz = 0, sa = 0;
+		a = std::stof(aux2, &sz); b = std::stof(aux2.substr(sz + 1), &sa); c = std::stof(aux2.substr(sz + sa + 2));
 
 		// TODO esto salta un error
-		//Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
+		Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "gravity");

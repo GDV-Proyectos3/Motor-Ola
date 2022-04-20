@@ -61,8 +61,8 @@ void OgreManager::init()
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
 
 	// and tell it to render into the main window
-	Ogre::Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
+	_vp = getRenderWindow()->addViewport(cam);
+	_vp->setBackgroundColour(Ogre::ColourValue(1.0, 1.0, 0.0, 1.0));
 
 	// Esto todavía no funciona porque falta el Resource Manager
 
