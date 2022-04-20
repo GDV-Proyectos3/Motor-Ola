@@ -28,18 +28,12 @@ typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
-	// Creo que esto mal
-	//if(!_ogreManager) _ogreManager = new OgreManager();	
-
 	// Inicia los managers
-	if (!_loadResources)_loadResources = Singleton<LoadResources>::instance();
-	std::cout << "-----Load at " << _loadResources << "\n";
-	if(!_ogreManager) _ogreManager = Singleton<OgreManager>::instance();	
-	std::cout << "-----Ogre at " << _ogreManager << "\n";
+	if (!_loadResources) _loadResources = Singleton<LoadResources>::instance();
+	if (!_ogreManager) _ogreManager = Singleton<OgreManager>::instance();	
 	if (!_entidadManager) _entidadManager = Singleton<EntidadManager>::instance();
-	std::cout << "-----EntidadManager at " << _entidadManager << "\n";
-	if (!_audioManager)_audioManager = Singleton<FMODAudioManager>::instance();
-	if (!_overlayManager)_overlayManager = Singleton<OverlayManager>::instance();
+	if (!_audioManager) _audioManager = Singleton<FMODAudioManager>::instance();
+	if (!_overlayManager) _overlayManager = Singleton<OverlayManager>::instance();
 	//if (!_inputManager)_inputManager = new InputManager();
 }
 
@@ -123,6 +117,8 @@ void Motor::mainLoop()
 
 		// Renderiza las entidades
 		_ogreManager->update();
+
+		_entidadManager->getEntidadByID(1)->isActive();
 
 
 		// Contador de frames que los muetra cada 100 frames

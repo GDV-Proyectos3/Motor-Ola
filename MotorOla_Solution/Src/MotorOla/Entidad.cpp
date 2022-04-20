@@ -7,9 +7,9 @@ Entidad::Entidad():
 {
 }
 
-Entidad::Entidad(std::string entityName, int id)
+Entidad::Entidad(std::string entityName, int id) :
+	entManager_(nullptr), active(true), _name(entityName), _id(id)
 {
-
 }
 
 void Entidad::update()

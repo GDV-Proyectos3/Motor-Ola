@@ -42,9 +42,9 @@ Entidad* EntidadManager::getEntidadByID(int id)
 	Entidad* e = nullptr;
 	auto it = entitys_.begin();
 	while (e == nullptr && it != entitys_.end()) {
-		//if ((*it)->getID() == id) {
-		//	e = *it;
-		//}
+		if ((*it)->getID() == id) {
+			e = (*it).get();
+		}
 		++it;
 	}
 	return e;
