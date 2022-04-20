@@ -79,8 +79,8 @@ public:
 		return instance_.get();
 	}
 
-	static std::unique_ptr<T> instance_;
 private:
+	static std::unique_ptr<T> instance_;
 };
 
 template<typename T>

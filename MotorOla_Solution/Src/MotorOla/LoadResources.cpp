@@ -15,19 +15,19 @@ void LoadResources::init()
 
 string LoadResources::mes(string m)
 {
-	auto it=mesh.find(m);
+	auto it = mesh.find(m);
 	return it->second;
 }
 
 string LoadResources::aud(string name)
 {
-	auto s= audio.find(name);
+	auto s = audio.find(name);
 	return s->second;
 }
 
 string LoadResources::tex(string tex)
 {
-	auto t=textures.find(tex);
+	auto t = textures.find(tex);
 	return t->second;
 }
 

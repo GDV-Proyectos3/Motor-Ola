@@ -28,24 +28,29 @@ typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
+	// Creo que esto mal
+	//if(!_ogreManager) _ogreManager = new OgreManager();	
+
 	// Inicia los managers
-	if (!_loadResources)_loadResources = new LoadResources();
-	if(!_ogreManager) _ogreManager = new OgreManager();	
+	if (!_loadResources)_loadResources = Singleton<LoadResources>::instance();
+	std::cout << "-----Load at " << _loadResources << "\n";
+	if(!_ogreManager) _ogreManager = Singleton<OgreManager>::instance();	
+	std::cout << "-----Ogre at " << _ogreManager << "\n";
+	if (!_entidadManager) _entidadManager = Singleton<EntidadManager>::instance();
+	std::cout << "-----EntidadManager at " << _entidadManager << "\n";
+	if (!_audioManager)_audioManager = Singleton<FMODAudioManager>::instance();
+	if (!_overlayManager)_overlayManager = Singleton<OverlayManager>::instance();
 	//if (!_inputManager)_inputManager = new InputManager();
-	if (!_entidadManager) _entidadManager = new EntidadManager();
-	if (!_audioManager)_audioManager = new FMODAudioManager();
-	if (!_overlayManager)_overlayManager = new OverlayManager();
 }
 
 Motor::~Motor()
 {
 	// Destruye los managers
-	
-	//if (_inputManager) delete _inputManager;
 	if (_loadResources) delete _loadResources;
 	if (_audioManager) delete _audioManager;
 	if (_entidadManager) delete _entidadManager;
 	if (_ogreManager) delete _ogreManager;
+	//if (_inputManager) delete _inputManager;
 	//if (_overlayManager) delete _overlayManager;
 	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
@@ -57,10 +62,9 @@ void Motor::initSystems()
 	//_inputManager->init(this);
 //	_inputManager->init();
 	_audioManager->init();
-	
     _overlayManager->init(_ogreManager,this);
 	
-	// Registrando Componentes
+	// Se registran los componentes que conoce el motor
 	registryComponents();
 
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
@@ -73,14 +77,21 @@ void Motor::initSystems()
 	}
 
 	// Carga una escena con Lua
-	loadScene("");
+	if(!loadScene(""))
+		throw "Error loading a Scene\n";
 }
 
 void Motor::registryComponents()
 {
-	ComponenteRegistro::ComponenteRegistro<Transform>("transform");
-	//ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
-	//ComponenteRegistro::ComponenteRegistro<Movible>("movible");
+	// Apuntar aquí todos los componentes del motor
+	try {
+		ComponenteRegistro::ComponenteRegistro<Transform>("transform");
+		ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
+		//ComponenteRegistro::ComponenteRegistro<Movible>("movible");
+	}
+	catch (const char* error) {
+		std::cout << "Error registrando los componentes del motor: \n" << error << "\n";
+	}
 }
 
 void Motor::mainLoop()
@@ -110,27 +121,14 @@ void Motor::mainLoop()
 		// Actualiza el resto de componentes (también los del juego)
 		_entidadManager->update();
 
-		// Actualiza los transforms de las entitys de Ogre
-		//for (auto e = _entidadManager->entitys_.begin(); e  != _entidadManager->entitys_.end(); e++)
-		//{
-		//	
-		//}
-
-		//Ogre::Vector3 v;
-		////v.x = ent3->getComponent<Transform>()->getPos().getX();
-		////v.y = ent3->getComponent<Transform>()->getPos().getY();
-		////v.z;		
-		//v.x = ent2->getParentNode()->getPosition().x + 0.1;
-		//v.y = ent2->getParentNode()->getPosition().y;
-		//v.z = ent2->getParentNode()->getPosition().z;
-
-		//ent2->getParentNode()->setPosition(v);
-
 		// Renderiza las entidades
 		_ogreManager->update();
 
 
-		//std::cout << "Vuelta " << ++frame << "\n";
+		// Contador de frames que los muetra cada 100 frames
+		if (++frame % 100 == 0) {
+			std::cout << "FrameCount: " << frame << "\n";
+		}
 	}
 }
 
@@ -159,15 +157,20 @@ void Motor::loadDLLGame()
 
 bool Motor::loadScene(std::string name) {
 	try {
-		name = "TestScene.lua";
 		// Borra las entidades de la escena actual
 		Singleton<EntidadManager>::instance()->pauseEntidades();
 
+		// BORRAR ES TESTEO
+		name = "run.lua";
+		std::string testSceneRoute = _loadResources->scene(name).c_str();
+		readFileTest(testSceneRoute);
+
 		// TO DO
 		// Crea la ruta de la escena (esto debería venir de Resources pero para ir probando)
+		name = "TestScene.lua";
 		std::string sceneRoute = _loadResources->scene(name).c_str();
-
-		//readFile(sceneRoute);
+		std::cout << "OgreManager is at " << Singleton<OgreManager>::instance() << "\n";
+		readFile(sceneRoute);
 	}
 	catch (std::exception e) {
 #if (defined _DEBUG)

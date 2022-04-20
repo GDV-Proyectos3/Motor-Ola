@@ -51,8 +51,6 @@ public:
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
-	
-
 
 	void init();
 	void update();

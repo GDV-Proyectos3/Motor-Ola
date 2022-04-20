@@ -17,11 +17,6 @@ class OverlayManager;
 class Motor
 {
 private:
-	/*SDL_Window* window;
-	const int WINWIDTH = 800;
-	const int WINHEIGHT = 600;
-	SDL_Renderer* renderer;*/
-
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
 	// Managers

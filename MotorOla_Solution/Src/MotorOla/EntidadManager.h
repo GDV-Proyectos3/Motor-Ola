@@ -2,10 +2,14 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <stack>
 
+#include "utils\Singleton.h"
 class Entidad;
 
-class EntidadManager {
+
+class EntidadManager : public Singleton<EntidadManager> {
+	friend Singleton<EntidadManager>;
 	using uptr_ent = std::unique_ptr<Entidad>;
 public:
 	EntidadManager() {};
@@ -22,6 +26,9 @@ public:
 	
 	Entidad* getEntidadByID(int id);
 
-	std::vector<uptr_ent> entitys_;
 private:
+	std::vector<uptr_ent> entitys_;
+
+	// Idea para guardar las entidades al poner nuevas escenas
+	//std::stack <std::vector<uptr_ent>> pilaEntidades_;
 };

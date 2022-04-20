@@ -5,7 +5,7 @@
 #include "Entidad.h"
 
 Transform::Transform() :
-	_position(), _scale(), _rotation()
+	_position(), _scale({ 1,1,1 }), _rotation()
 {
 }
 

@@ -2,16 +2,22 @@
 
 #include <iostream>
 #include <vector>
+//
+//#include <lua.hpp>
+//#include <lauxlib.h>
+//#include <lualib.h>
+#include <iostream>
+#include <map>
 
 // Clases propias
 #include "Entidad.h"
 #include "utils/Singleton.h"
 #include "EntidadManager.h"
 #include "OgreManager.h"
+#include <stdio.h>
 
 extern "C"
 {
-    
     #include "lua.h"
     #include "lauxlib.h"
     #include "lualib.h"
@@ -165,25 +171,37 @@ void readFile(std::string file) {
 	std::vector<Entidad*> ents;
 	std::vector<bool> entInits;
 
+	// Preparamos un LuaState para leer el fichero
 	lua_State* l;
 	l = luaL_newstate();
 	openlualibs(l);
+
 #if _DEBUG
 	std::printf("now calling lua\n\n");
 #endif
 	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {
-		throw std::exception("Lua file was not able to be loaded");
+		std::cout << lua_tostring(l, -1) << "\n";
+		std::cout << "Error reading .lua\n";
+		throw std::exception("Lua file was not able to be loaded\n");
 	}
 
 	try {
-		lua_getglobal(l, "GetLevel");
-		int err = lua_pcall(l, 0, 1, 0); // GetLevel()
+		std::cout << "LuaGettingLevel "  << lua_getglobal(l, "GetLevel") << "\n";
+		//int err = lua_pcall(l, 0, 1, 0); // GetLevel()
+		//std::cout << "Get Level result -> " << err << "\n";
+
+		if (lua_pcall(l, 0, 1, 0) != LUA_OK) {
+			std::cout << lua_tostring(l,-1) << "\nError reading GetLevel in .lua\n";	
+			throw std::exception("Lua function GetLevel was not able to be loaded");
+		}
 
 		lua_getfield(l, -1, "ambient");
 		std::string aux = lua_tostring(l, -1);
 		std::string::size_type sz = 0, sa = 0;
 		float a = std::stof(aux, &sz), b = std::stof(aux.substr(sz + 1), &sa), c = std::stof(aux.substr(sz + sa + 2));
-		Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
+
+		// TODO esto salta un error
+		//Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "gravity");
@@ -245,20 +263,135 @@ void readFile(std::string file) {
 #endif
 		lua_close(l);
 
-		//int i = 0;
-		//int numEnts = ents.size();
-		//int initedEnts = 0;
-		//while (initedEnts != numEnts) {
-		//	if (!entInits[i] && ents[i]->init()) {
-		//		++initedEnts;
-		//		entInits[i] = true;
-		//		SceneManager::GetInstance()->addEntity(ents[i]);
-		//	}
-		//	++i;
-		//	i %= numEnts;
-		//}
+		int i = 0;
+		int numEnts = ents.size();
+		int initedEnts = 0;
+		while (initedEnts != numEnts) {
+			if (!entInits[i] /*&& ents[i]->init()*/) {
+				++initedEnts;
+				entInits[i] = true;
+				//SceneManager::GetInstance()->addEntity(ents[i]);
+			}
+			++i;
+			i %= numEnts;
+		}
 	}
 	catch (...) {
-		throw std::exception("Lua file has incorrect formatting");
+		throw std::exception("Lua file has incorrect formatting\n");
 	}
 }
+
+// In Lua 5.0 reference manual is a table traversal example at page 29.
+void PrintTable(lua_State* L)
+{
+	lua_pushnil(L);
+
+	while (lua_next(L, -2) != 0)
+	{
+		if (lua_isstring(L, -1))
+			printf("%s = %s\n", lua_tostring(L, -2), lua_tostring(L, -1));
+		else if (lua_isnumber(L, -1))
+			printf("%s = %d\n", lua_tostring(L, -2), lua_tonumber(L, -1));
+		else if (lua_istable(L, -1))
+			PrintTable(L);
+
+		lua_pop(L, 1);
+	}
+}
+
+void readFileTest(std::string file)
+{
+	lua_State* L = luaL_newstate();
+	luaL_openlibs(L);
+
+	// Load file.
+	if (luaL_loadfile(L, file.c_str()) || lua_pcall(L, 0, 0, 0))
+	{
+		printf("Cannot run file\n");
+		return;
+	}
+
+	// Print table contents.
+	lua_getglobal(L, "level1");
+	PrintTable(L);
+
+	// Print music field.
+	lua_getglobal(L, "level1");
+	lua_pushstring(L, "music");
+	lua_gettable(L, -2);
+
+	if (lua_isstring(L, -1))
+		printf("\nlevel1.music = %s\n", lua_tostring(L, -1));
+
+	lua_close(L);
+}
+
+Entidad* readPrefab(std::string file) {
+	lua_State* l;
+	l = luaL_newstate();
+	openlualibs(l);
+#if _DEBUG
+	std::printf("now calling lua\n\n");
+#endif
+	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {
+		throw std::exception("Lua file was not able to be loaded");
+	}
+	try {
+		lua_getglobal(l, "GetPrefab");
+		int err = lua_pcall(l, 0, 1, 0); // GetPrefab()
+
+		// Entity is here
+		// Name
+		lua_getfield(l, -1, "name");
+		char* name = (char*)lua_tostring(l, -1);
+		lua_pop(l, 1);
+
+		// ID
+		lua_getfield(l, -1, "id");
+		int id = lua_tonumber(l, -1);
+		lua_pop(l, 1);
+
+		// showCursor
+		lua_getfield(l, -1, "cursor");
+		int cursor = lua_tonumber(l, -1);
+		lua_pop(l, 1);
+		//Gui::GetInstance()->setMouseVisibility(cursor);
+
+		Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad(name, id);
+
+		// Components
+		// Calls a similar while loop, creating a set<string, string> with each pair
+		// Knows which component is by key name and a translator function
+		lua_getfield(l, -1, "components");
+		lua_pushnil(l);
+		while (lua_next(l, 2) != 0) { // stack: Entity-compTabla
+
+			char* compName = (char*)lua_tostring(l, -2);
+
+			std::map<std::string, std::string> compMap;
+			lua_pushnil(l);
+			while (lua_next(l, 4) != 0) { // stack: Entity-compTabla-indComp-Component
+				char* attrName = (char*)lua_tostring(l, -2);
+				std::string s1(attrName);
+				char* attrValue = (char*)lua_tostring(l, -1);
+				std::string s2(attrValue);
+				compMap.insert((std::pair<std::string, std::string>(s1, s2)));
+				lua_pop(l, 1);
+			}
+
+			// Funcion de traduccion
+			ent->addComponent(compName, compMap);
+			lua_pop(l, 1);
+		}
+
+		//ent->init();
+
+		lua_pop(l, 1);
+		// Entity is no longer here, only key to be removed by lua_next
+		return ent;
+	}
+	catch (...) {
+		throw std::exception("Prefab file has incorrect formatting");
+	}
+}
+
