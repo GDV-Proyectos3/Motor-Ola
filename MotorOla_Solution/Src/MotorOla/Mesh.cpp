@@ -8,7 +8,7 @@
 Mesh::Mesh()
 {
 	_sceneManager = Singleton<OgreManager>::instance()->getSceneManager();
-	_nodo = _sceneManager->createSceneNode();
+	_nodo = _sceneManager->getRootSceneNode()->createChildSceneNode();
 	//_sceneManager = _nodo->getCreator();
 }
 
@@ -45,6 +45,9 @@ bool Mesh::init(const std::map<std::string, std::string>& mapa)
 
 	//_nodo = Singleton<OgreManager>::instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
 
+	Transform* tr = entity_->getComponent<Transform>();
+	if (tr == nullptr)
+		return false;
 
 	std::string me = mapa.at("mesh");
 	setMesh(me);
@@ -56,10 +59,6 @@ bool Mesh::init(const std::map<std::string, std::string>& mapa)
 	if (vi == "true") setVisible(true);
 	else if (vi == "false") setVisible(false);
 	else return false;
-
-	Transform* tr = entity_->getComponent<Transform>();
-	if (tr == nullptr)
-		return false;
 
 	_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
 	_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
