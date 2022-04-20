@@ -168,6 +168,7 @@ inline std::string LuaScript::lua_get(const std::string& variableName) {
 }
 
 void readFile(std::string file) {
+	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
 	std::vector<Entidad*> ents;
 	std::vector<bool> entInits;
 
@@ -179,22 +180,24 @@ void readFile(std::string file) {
 #if _DEBUG
 	std::printf("now calling lua\n\n");
 #endif
+	// Intenta abrir el archivo .lua
 	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {
 		std::cout << lua_tostring(l, -1) << "\n";
 		std::cout << "Error reading .lua\n";
 		throw std::exception("Lua file was not able to be loaded\n");
 	}
 
+	// Intenta leer la escena
 	try {
 		std::cout << "LuaGettingLevel "  << lua_getglobal(l, "GetLevel") << "\n";
-		//int err = lua_pcall(l, 0, 1, 0); // GetLevel()
-		//std::cout << "Get Level result -> " << err << "\n";
 
+		// Si no encuentra la function que devuelve la tabla
 		if (lua_pcall(l, 0, 1, 0) != LUA_OK) {
 			std::cout << lua_tostring(l,-1) << "\nError reading GetLevel in .lua\n";	
 			throw std::exception("Lua function GetLevel was not able to be loaded");
 		}
 
+		// Primero asigna el color de fondo de la escena
 		lua_getfield(l, -1, "backgroundColor");
 		std::string aux = lua_tostring(l, -1);
 		std::string::size_type sz = 0, sa = 0;
@@ -202,20 +205,21 @@ void readFile(std::string file) {
 		Singleton<OgreManager>::instance()->getViewPort()->setBackgroundColour(Ogre::ColourValue(a, b, c, 1.0f));
 		lua_pop(l, 1);
 
+		// Luego la luz ambiente
 		lua_getfield(l, -1, "ambient");
 		std::string aux2 = lua_tostring(l, -1);
 		sz = 0, sa = 0;
 		a = std::stof(aux2, &sz); b = std::stof(aux2.substr(sz + 1), &sa); c = std::stof(aux2.substr(sz + sa + 2));
-
-		// TODO esto salta un error
 		Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
 		lua_pop(l, 1);
 
+		// Modifica la gravedad de la escena
 		lua_getfield(l, -1, "gravity");
 		aux = lua_tostring(l, -1);
-		//BulletInstance::GetInstance()->getWorld()->setGravity({ std::stof(s, &sz), std::stof(s.substr(sz + 1), &sa), std::stof(s.substr(sz + sa + 2)) });
+		//Singleton<Physx> cambiar gravedad
 		lua_pop(l, 1);
 
+		// Después lee todas las entidades y los componentes de cada una
 		lua_getfield(l, -1, "entidades");
 		lua_pushnil(l);
 		while (lua_next(l, 2) != 0) {
