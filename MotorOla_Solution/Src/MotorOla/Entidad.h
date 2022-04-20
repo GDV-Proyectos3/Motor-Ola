@@ -25,15 +25,41 @@ public:
 
 	inline int getID() { return _id; }
 
-	template<typename  T>
-	inline bool hasComponent() const {
-		return componentBitset[getComponentTypeID<T>()];
+	//template<typename  T>
+	//inline bool hasComponent() const {
+	//	return componentBitset[getComponentTypeID<T>()];
+	//}
+
+	//template<typename T>
+	//inline T* getComponent() const {
+	//	auto ptr(compMaps[getComponentTypeID<T>()]);
+	//	return static_cast<T*>(ptr);
+	//}
+		/// <summary>
+	/// Devuelve si tiene o no un componente. Coste: O(N) :(
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	template<typename T>
+	bool hasComponent() {
+		return getComponent<T>() != nullptr;
 	}
 
+	/// <summary>
+/// Devuelve un componente de la entidad, o nullptr si no lo tiene. Coste: O(N) :(
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns></returns>
 	template<typename T>
-	inline T* getComponent() const {
-		auto ptr(componentArray[getComponentTypeID<T>()]);
-		return static_cast<T*>(ptr);
+	T* getComponent() {
+		T* ret = nullptr;
+		int i = 0;
+		while (i < components.size() && ret == nullptr) {
+			ret = dynamic_cast<T*>(components[i].get());
+			++i;
+		}
+
+		return ret;
 	}
 
 	//template<typename T, typename ... Targs>
@@ -66,6 +92,9 @@ public:
 	}
 
 	inline void setActive(bool state) { active = state; }
+	inline void setName(std::string n) { _name = n; }
+
+	std::string getName() const { return _name; }
 
 	bool init();
 

@@ -118,8 +118,13 @@ void Motor::mainLoop()
 		// Renderiza las entidades
 		_ogreManager->update();
 
-		_entidadManager->getEntidadByID(1)->isActive();
-
+		// TEST
+		if (frame == 1) {
+			Entidad* e = _entidadManager->getEntidadByID(1);
+			std::cout << "NOMBRE: " << e->getName() << " | ID: " << e->getID() << "\n";
+			std::cout << "POS: " << e->getComponent<Transform>()->getPos() << "\n";
+			std::cout << "SCALE: " << e->getComponent<Transform>()->getScale() << "\n";
+		}
 
 		// Contador de frames que los muetra cada 100 frames
 		if (++frame % 100 == 0) {
