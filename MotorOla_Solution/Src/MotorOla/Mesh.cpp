@@ -60,12 +60,9 @@ bool Mesh::init(const std::map<std::string, std::string>& mapa)
 	else if (vi == "false") setVisible(false);
 	else return false;
 
-	_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+	_nodo->setPosition(tr->getPosition().getX(), tr->getPosition().getY(), tr->getPosition().getZ());
 	_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
-	//_nodo->setPosition(0, 0, 0);
-	//_nodo->setScale(1, 1, 1);
-	// TODO cuando esten los Quaternion
-	//_nodo->setOrientation(tr->rotation());
+	_nodo->setOrientation(tr->getRotation());
 
 	inicializado_ = true;
 
@@ -165,7 +162,7 @@ void Mesh::update()
 	if (entity_->hasComponent<Transform>())
 	{
 		Transform* tr = entity_->getComponent<Transform>();
-		_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+		_nodo->setPosition(tr->getPosition().getX(), tr->getPosition().getY(), tr->getPosition().getZ());
 		//_nodo->setOrientation // Hace falta un Quaternion 
 		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
 	}

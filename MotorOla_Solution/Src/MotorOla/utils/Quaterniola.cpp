@@ -5,15 +5,15 @@
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
-Quaternion::Quaternion() : s(1), v(0, 0, 0) {};
+Quaterniola::Quaterniola() : s(1), v(0, 0, 0) {};
 
-Quaternion::Quaternion(float w, float x, float y, float z) : s(w), v(x, y, z) {}
+Quaterniola::Quaterniola(float w, float x, float y, float z) : s(w), v(x, y, z) {}
 
-Quaternion::Quaternion(float scalar, Vectola3D& vector) : s(scalar), v(vector) {}
+Quaterniola::Quaterniola(float scalar, Vectola3D& vector) : s(scalar), v(vector) {}
 
-Quaternion::Quaternion(const Quaternion& quat) : s(quat.s), v(quat.v) {}
+Quaterniola::Quaterniola(const Quaterniola& quat) : s(quat.s), v(quat.v) {}
 
-Quaternion Quaternion::Euler(Vectola3D vector) {
+Quaterniola Quaterniola::Euler(Vectola3D vector) {
 	Vectola3D v = vector * M_PI / 180;
 
 	float cx = cosf(v.getX() * 0.5);
@@ -38,14 +38,14 @@ Quaternion Quaternion::Euler(Vectola3D vector) {
 	return { s, vec };
 }
 
-Quaternion Quaternion::Lerp(Quaternion a, Quaternion b, float t) {
+Quaterniola Quaterniola::Lerp(Quaterniola a, Quaterniola b, float t) {
 	if (t <= 0) return a;
 	else if (t >= 1) return b;
 	float scale = 1 - t;
 	return (a * scale + b * t);
 }
 
-Quaternion Quaternion::Slerp(Quaternion a, Quaternion b, float t, float threshold) {
+Quaterniola Quaterniola::Slerp(Quaterniola a, Quaterniola b, float t, float threshold) {
 	if (t <= 0) return a;
 	else if (t >= 1) return b;
 	float angle = a.dotProduct(b);
@@ -65,21 +65,21 @@ Quaternion Quaternion::Slerp(Quaternion a, Quaternion b, float t, float threshol
 		return (a * scale + b * invScale);
 	}
 	else
-		return Quaternion::Lerp(a, b, t);
+		return Quaterniola::Lerp(a, b, t);
 }
 
-float Quaternion::Angle(Quaternion& a, Quaternion& b) {
-	Quaternion ab = a.conjugate() * b;
+float Quaterniola::Angle(Quaterniola& a, Quaterniola& b) {
+	Quaterniola ab = a.conjugate() * b;
 	return 2.0 * atan2(ab.v.magnitude(), ab.s);
 }
 
-float Quaternion::magnitude() {
+float Quaterniola::magnitude() {
 	float scalar = s * s;
 	float vec = v.dotProduct(v);
 	return sqrt(scalar + vec);
 }
 
-Quaternion Quaternion::normalize() {
+Quaterniola Quaterniola::normalize() {
 	float mag = magnitude();
 	if (mag != 0) {
 		float normalizeValue = 1 / mag;
@@ -92,23 +92,23 @@ Quaternion Quaternion::normalize() {
 	throw std::domain_error("Magnitude equals zero");
 }
 
-Quaternion Quaternion::conjugate() {
+Quaterniola Quaterniola::conjugate() {
 	Vectola3D vec = v * -1;
 	return { s, vec };
 }
 
-Quaternion Quaternion::inverse() {
+Quaterniola Quaterniola::inverse() {
 	float mag = magnitude();
 	mag *= mag;
 	mag = 1 / mag;
 
-	Quaternion conj = conjugate();
+	Quaterniola conj = conjugate();
 	Vectola3D vec = conj.v * mag;
 
 	return { conj.s * mag , vec };
 }
 
-Vectola3D Quaternion::toEuler() {
+Vectola3D Quaterniola::toEuler() {
 	Vectola3D vec;
 	float sinx_cosy = 2 * (s * v.getX() + v.getY() * v.getZ());
 	float cosx_cosy = 1 - 2 * (v.getX() * v.getX() + v.getY() * v.getY());
@@ -138,59 +138,59 @@ Vectola3D Quaternion::toEuler() {
 //	return { -ang.getColumn(2).x, -ang.getColumn(2).y, -ang.getColumn(2).z };;
 //}
 
-float Quaternion::dotProduct(const Quaternion& q)
+float Quaterniola::dotProduct(const Quaterniola& q)
 {
 	return(v.getX() * q.v.getX()) + (v.getY() * q.v.getY()) + (v.getZ() * q.v.getZ()) + (s * q.s);
 }
 
-Quaternion& Quaternion::operator=(const Quaternion& quat) {
+Quaterniola& Quaterniola::operator=(const Quaterniola& quat) {
 	s = quat.s;
 	v = quat.v;
 	return *this;
 }
 
-void Quaternion::operator+=(const Quaternion& quat) {
+void Quaterniola::operator+=(const Quaterniola& quat) {
 	s += quat.s;
 	v = v + quat.v;
 }
 
-Quaternion Quaternion::operator+(const Quaternion& quat) const {
+Quaterniola Quaterniola::operator+(const Quaterniola& quat) const {
 	Vectola3D vec = v + quat.v;
 	return { s + quat.s, vec };
 }
 
-void Quaternion::operator-=(const Quaternion& quat) {
+void Quaterniola::operator-=(const Quaterniola& quat) {
 	s -= quat.s;
 	v = v - quat.v;
 }
 
-Quaternion Quaternion::operator-(const Quaternion& quat) const {
+Quaterniola Quaterniola::operator-(const Quaterniola& quat) const {
 	Vectola3D vec = v - quat.v;
 	return { s - quat.s, vec };
 }
 
-void Quaternion::operator*=(const Quaternion& quat) {
+void Quaterniola::operator*=(const Quaterniola& quat) {
 	s = s * quat.s - v.dotProduct(quat.v);
 	v = quat.v * s + v * quat.s + v.crossProduct(quat.v);
 }
 
-Quaternion Quaternion::operator*(const Quaternion& quat) const {
+Quaterniola Quaterniola::operator*(const Quaterniola& quat) const {
 	float scalar = s * quat.s - v.dotProduct(quat.v);
 	Vectola3D vec = quat.v * s + v * quat.s + v.crossProduct(quat.v);
 	return { scalar, vec };
 }
 
-void Quaternion::operator*=(const float value) {
+void Quaterniola::operator*=(const float value) {
 	s *= value;
 	v = v * value;
 }
 
-Quaternion Quaternion::operator*(const float value) const {
+Quaterniola Quaterniola::operator*(const float value) const {
 	Vectola3D vec = v * value;
 	return { s * value, vec };
 }
 
-Vectola3D Quaternion::operator*(const Vectola3D value) const
+Vectola3D Quaterniola::operator*(const Vectola3D value) const
 {
 	Vectola3D v1, v2;
 	v1 = v.crossProduct(value);
@@ -200,10 +200,10 @@ Vectola3D Quaternion::operator*(const Vectola3D value) const
 	return v1 + v2 + v;
 }
 
-bool Quaternion::operator==(const Quaternion& value) const {
+bool Quaterniola::operator==(const Quaterniola& value) const {
 	return s == value.s && (v.getX() == value.v.getX() && v.getY() == value.v.getY() && v.getZ() == value.v.getZ());
 }
 
-Quaternion::operator Ogre::Quaternion() const {
+Quaterniola::operator Ogre::Quaternion() const {
 	return { s, (float)v.getX(), (float)v.getY(), (float)v.getZ() };
 }

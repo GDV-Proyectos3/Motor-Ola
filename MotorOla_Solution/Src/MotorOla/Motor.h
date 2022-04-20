@@ -19,22 +19,7 @@ class Motor
 private:
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
-	// Managers
-	//OgreManager* _ogreManager = nullptr;
-	//InputManager* _inputManager = nullptr;
-	//LoadResources* _loadResources = nullptr;
-	//FMODAudioManager* _audioManager = nullptr;
-	//EntidadManager* _entidadManager = nullptr;
-	//OverlayManager* _overlayManager = nullptr;
-
-
-	// Factoria Componentes
-
-	//Physx
-	//FMod
-	//Cegui
 	bool stop = false;
-	//void handleEvents();
 
 	int channel = 0;
 

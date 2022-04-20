@@ -44,9 +44,6 @@
     <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\PingPongCtrl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\LuaReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -113,9 +110,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\PingPongCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\LuaReader.h">

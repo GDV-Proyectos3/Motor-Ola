@@ -36,14 +36,8 @@ public:
 	double angle(const Vectola3D& v) const;
 	Vectola3D normalize() const;
 
-	/// <summary>
-/// Devuelve el producto escalar entre 2 vectores
-/// </summary>
 	double dotProduct(const Vectola3D& other) const { return x_ * other.x_ + y_ * other.y_ + z_ * other.z_; }
 
-	/// <summary>
-	/// Devuelve el producto cruzado entre 2 vectores
-	/// </summary>
 	Vectola3D crossProduct(const Vectola3D& other) const {
 		float nx = y_ * other.z_ - z_ * other.y_;
 		float ny = z_ * other.x_ - x_ * other.z_;

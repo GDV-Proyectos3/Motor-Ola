@@ -10,7 +10,7 @@ local level = {
                 transform={
                     parent="-1",
                     position="100,10,0",
-                    rotation="0,0,0",
+                    rotation="180,90,0",
                     scale="5,5,5"
                 },
                 mesh={
