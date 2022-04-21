@@ -8,6 +8,10 @@ OverlayManager::~OverlayManager()
 {
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	overlayManager.destroy("PanelOverlay");
+	botones.clear();
+	paneles.clear();
+	textos.clear();
+	callbacks.clear();
 	/*for (int i = 0;i < botones.size();i++) {
 		delete botones[i];
 		botones[i] = nullptr;
@@ -69,7 +73,7 @@ void OverlayManager::update() {
 
 }
 
-void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,const std::string& nombrePanel,const std::string& nombreTexto,float tamLetra, const std::string& material, float dimX, float dimY,CallBackOnClick* click_)
+void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,const std::string& nombrePanel,const std::string& nombreTexto,float tamLetra, const std::string& material, float dimX, float dimY/*, CallBackOnClick* click_*/)
 {
 	if (tamLetra > 0.1) {
 		tamLetra = 0.1;//Si no se sale del panel con el tamaño que tiene
@@ -106,7 +110,14 @@ void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,c
 	botones.back()->addChild(text);
 	mOverlay->add2D(botones.back());
 	mOverlay->show();
-	callbacks.insert(std::pair(botones.back(), click_));
+	//callbacks.insert(std::pair(botones.back(), click_));
+}
+
+void OverlayManager::setCallBackToButton(std::string p, CallBackOnClick* click)
+{
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+	Ogre::PanelOverlayElement* panel = static_cast<Ogre::PanelOverlayElement*>(overlayManager.getOverlayElement(p));
+	callbacks.insert(std::pair(panel, click));
 }
 
 void OverlayManager::creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel)

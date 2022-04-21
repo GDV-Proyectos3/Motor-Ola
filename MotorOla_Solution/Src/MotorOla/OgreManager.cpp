@@ -149,9 +149,11 @@ void OgreManager::shutdown()
 	if (_window.native != nullptr)
 	{
 		
-		SDL_DestroyWindow(_window.native);
+		
 		//SDL_QuitSubSystem(SDL_INIT_VIDEO);
+		SDL_DestroyWindow(_window.native);
 		_window.native = nullptr;
+		
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 extern "C"
 {
     struct lua_State;
@@ -33,6 +34,7 @@ int posX = script.get("player.pos.X");
 */
 
 void readFile(std::string file);
+void readFileMenus(std::string file);
 
 void PrintTable(lua_State* L);
 
@@ -74,6 +76,9 @@ public:
 private:
     lua_State* L;
     int level = 0;
+
+    //Motor* m = nullptr;
+    //static void exit(Motor* m);
 
 };
 
