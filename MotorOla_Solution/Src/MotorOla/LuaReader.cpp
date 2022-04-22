@@ -297,7 +297,7 @@ void readFile(std::string file) {
 	}
 }
 
-void readFileMenus(std::string file)
+void readFileMenus(std::string file,const char* get)
 {
 	
 	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
@@ -321,7 +321,7 @@ void readFileMenus(std::string file)
 
 	// Intenta leer la escena
 	try {
-		std::cout << "LuaGettingLevel " << lua_getglobal(l, "GetMainMenu") << "\n";
+		std::cout << "LuaGettingLevel " << lua_getglobal(l, get) << "\n";
 
 		// Si no encuentra la function que devuelve la tabla
 		if (lua_pcall(l, 0, 1, 0) != LUA_OK) {

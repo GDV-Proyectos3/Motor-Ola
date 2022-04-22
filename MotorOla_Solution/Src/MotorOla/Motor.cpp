@@ -74,7 +74,7 @@ void Motor::initSystems()
 
 	// Carga una escena con Lua
 	//if(!loadScene("TestScene.lua"))
-	if(!loadMainMenu("MainMenuScene.lua"))
+	if(!loadMainMenu("MainMenuScene.lua","GetMainMenu"))
 		throw "Error loading a Scene\n";
 }
 
@@ -171,7 +171,7 @@ bool Motor::loadScene(std::string name) {
 	}
 	return true;
 }
-bool Motor::loadMainMenu(std::string name) {
+bool Motor::loadMainMenu(std::string name,const char*get) {
 	try {
 		// Borra las entidades de la escena actual
 		Singleton<EntidadManager>::instance()->pauseEntidades();
@@ -180,9 +180,9 @@ bool Motor::loadMainMenu(std::string name) {
 		std::string sceneRoute = Singleton<LoadResources>::instance()->scene(name).c_str();
 
 		// Lee la escena cargando todas las entidades y sus componentes
-		readFileMenus(sceneRoute);
+		readFileMenus(sceneRoute,get);
 		Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("OptionsPanel",newGame);
+		Singleton<OverlayManager>::instance()->setCallBackToButton("OptionsPanel",options);
 		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);
 	}
 	catch (std::exception e) {
@@ -215,11 +215,20 @@ void Motor::salir(Motor* m)
 
 void Motor::newGame(Motor* m)
 {
-	OverlayManager* o = Singleton<OverlayManager>::instance();
-	delete o;
-	o = nullptr;
-	//Singleton<OverlayManager>::close();
+	//OverlayManager* o = Singleton<OverlayManager>::instance();
+	//delete o;
+	//o = nullptr;
+	Singleton<OverlayManager>::close();
 	m->loadScene("TestScene.lua");
+}
+void Motor::options(Motor* m)
+{
+	//OverlayManager* o = Singleton<OverlayManager>::instance();
+	//delete o;
+	//o = nullptr;
+	//Singleton<OverlayManager>::close();
+	Singleton<OverlayManager>::instance()->clear();
+	m->loadMainMenu("Options.lua","GetOptions");
 }
 
 //void Motor::deleteOverlay(Motor* m)

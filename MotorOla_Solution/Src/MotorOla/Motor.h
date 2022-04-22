@@ -52,7 +52,7 @@ public:
 	/// </summary>
 	/// <param name="name">name es el archivo "scene.lua"</param>
 	bool loadScene(std::string name);
-	bool loadMainMenu(std::string name);
+	bool loadMainMenu(std::string name,const char* get);
 
 	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
@@ -66,6 +66,7 @@ public:
 
 	static void salir(Motor* m);
 	static void newGame(Motor* m);
+	static void options(Motor* m);
 	//static void deleteOverlay(Motor* m);
 };
 

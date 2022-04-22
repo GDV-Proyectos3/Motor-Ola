@@ -46,6 +46,7 @@ public:
 	void setCallBackToButton(std::string p, CallBackOnClick* click_);
 	void creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel);
 	void creaPanel(float x, float y,  const std::string& nombrePanel, const std::string& material, float dimX, float dimY);
+	void clear();
 
 
 private:

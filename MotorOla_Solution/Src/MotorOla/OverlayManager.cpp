@@ -160,4 +160,26 @@ void OverlayManager::creaPanel(float x, float y, const std::string& nombrePanel,
 	mOverlay->add2D(paneles.back());
 }
 
+void OverlayManager::clear()
+{
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+	/*for (auto it = botones.begin(); it != botones.end(); it++) {
+		delete(*it);
+		(*it) = nullptr;
+	}*/
+	botones.clear();
+	/*for (auto it = paneles.begin(); it != paneles.end(); it++) {
+		delete(*it);
+		(*it) = nullptr;
+	}*/
+	paneles.clear();
+	/*for (auto it = textos.begin(); it != textos.end(); it++) {
+		delete(*it);
+		(*it) = nullptr;
+	}*/
+	textos.clear();
+	callbacks.clear();
+	overlayManager.destroyAllOverlayElements();
+}
+
 

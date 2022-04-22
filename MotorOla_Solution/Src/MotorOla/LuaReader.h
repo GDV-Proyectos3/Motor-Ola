@@ -34,7 +34,7 @@ int posX = script.get("player.pos.X");
 */
 
 void readFile(std::string file);
-void readFileMenus(std::string file);
+void readFileMenus(std::string file,const char* get);
 
 void PrintTable(lua_State* L);
 
