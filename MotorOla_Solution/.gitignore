@@ -30,7 +30,7 @@
 [Ee]xes/*.ipdb
 [Ee]xes/*.idb
 [Ee]xes/*.exp
-[Ee]xes/Assets
+#[Ee]xes/Assets
 
 # /temp
 *.ilk

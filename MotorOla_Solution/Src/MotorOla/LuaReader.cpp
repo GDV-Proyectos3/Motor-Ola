@@ -9,7 +9,10 @@
 #include "utils/Singleton.h"
 #include "EntidadManager.h"
 #include "OgreManager.h"
+#include "OverlayManager.h"
 #include <stdio.h>
+
+
 
 extern "C"
 {
@@ -32,6 +35,8 @@ void openlualibs(lua_State* l) {
 		lua_settop(l, 0);
 	}
 }
+
+
 
 
 void readFile(std::string file) {
@@ -153,6 +158,166 @@ void readFile(std::string file) {
 			++i;
 			i %= numEnts;
 		}
+	}
+	catch (...) {
+		throw std::exception("Lua file has incorrect formatting\n");
+	}
+}
+
+void readFileMenus(std::string file,const char* get)
+{
+	
+	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
+	//std::vector<Entidad*> ents;
+	//std::vector<bool> entInits;
+
+	// Preparamos un LuaState para leer el fichero
+	lua_State* l;
+	l = luaL_newstate();
+	openlualibs(l);
+
+#if _DEBUG
+	std::printf("now calling lua\n\n");
+#endif
+	// Intenta abrir el archivo .lua
+	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {
+		std::cout << lua_tostring(l, -1) << "\n";
+		std::cout << "Error reading .lua\n";
+		throw std::exception("Lua file was not able to be loaded\n");
+	}
+
+	// Intenta leer la escena
+	try {
+		std::cout << "LuaGettingLevel " << lua_getglobal(l, get) << "\n";
+
+		// Si no encuentra la function que devuelve la tabla
+		if (lua_pcall(l, 0, 1, 0) != LUA_OK) {
+			std::cout << lua_tostring(l, -1) << "\nError reading GetLevel in .lua\n";
+			throw std::exception("Lua function GetLevel was not able to be loaded");
+		}
+
+		// Primero asigna el color de fondo de la escena
+		lua_getfield(l, -1, "backgroundColor");
+		std::string aux = lua_tostring(l, -1);
+		std::string::size_type sz = 0, sa = 0;
+		float a = std::stof(aux, &sz), b = std::stof(aux.substr(sz + 1), &sa), c = std::stof(aux.substr(sz + sa + 2));
+		Singleton<OgreManager>::instance()->getViewPort()->setBackgroundColour(Ogre::ColourValue(a, b, c, 1.0f));
+		lua_pop(l, 1);
+
+		// Luego la luz ambiente
+		lua_getfield(l, -1, "ambient");
+		std::string aux2 = lua_tostring(l, -1);
+		sz = 0, sa = 0;
+		a = std::stof(aux2, &sz); b = std::stof(aux2.substr(sz + 1), &sa); c = std::stof(aux2.substr(sz + sa + 2));
+		Singleton<OgreManager>::instance()->getSceneManager()->setAmbientLight(Ogre::ColourValue(a, b, c));
+		lua_pop(l, 1);
+
+		// Modifica la gravedad de la escena
+		lua_getfield(l, -1, "gravity");
+		aux = lua_tostring(l, -1);
+		//Singleton<Physx> cambiar gravedad
+		lua_pop(l, 1);
+
+		// Después lee todas las entidades y los componentes de cada una
+		lua_getfield(l, -1, "botones");
+		lua_pushnil(l);
+		while (lua_next(l, 2) != 0) {
+			// Entity is here
+			// Name
+			lua_getfield(l, -1, "positionX");
+			float positionX = lua_tonumber(l, -1);
+			lua_pop(l, 1);
+
+			// ID
+			lua_getfield(l, -1, "positionY");
+			float positionY = lua_tonumber(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "texto");
+			char* texto = (char*)lua_tostring(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "nombrePanel");
+			char* nombrePanel = (char*)lua_tostring(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "nombreTexto");
+			char* nombreTexto = (char*)lua_tostring(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "tamLetra");
+			float tamLetra = lua_tonumber(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "material");
+			char* material = (char*)lua_tostring(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "dimensionX");
+			float dimensionX = lua_tonumber(l, -1);
+			lua_pop(l, 1);
+
+			lua_getfield(l, -1, "dimensionY");
+			float dimensionY = lua_tonumber(l, -1);
+			lua_pop(l, 1);
+
+			
+			
+
+
+
+			Singleton<OverlayManager>::instance()->creaBoton(positionX, positionY, texto, nombrePanel, nombreTexto, tamLetra, material, dimensionX, dimensionY);
+			//ents.push_back(ent);
+			//entInits.push_back(false);
+
+			// Components
+			// Calls a similar while loop, creating a set<string, string> with each pair
+			// Knows which component is by key name and a translator function
+			//lua_getfield(l, -1, "components");
+			//lua_pushnil(l);
+			//while (lua_next(l, 5) != 0) { // stack: mapa-entities-indEntity-Entity-compTabla
+
+				//char* compName = (char*)lua_tostring(l, -2);
+
+				//std::map<std::string, std::string> compMap;
+				//lua_pushnil(l);
+				/*while (lua_next(l, 7) != 0) { // stack: mapa-entities-indEntity-Entity-compTabla-indComp-Component
+					char* attrName = (char*)lua_tostring(l, -2);
+					std::string s1(attrName);
+					char* attrValue = (char*)lua_tostring(l, -1);
+					std::string s2(attrValue);
+					compMap.insert((std::pair<std::string, std::string>(s1, s2)));
+					lua_pop(l, 1);
+				}*/
+
+				// Funcion de traduccion
+				//ent->addComponent(compName, compMap);
+				//lua_pop(l, 1);
+			//}
+
+			//lua_pop(l, 1);
+			// Entity is no longer here, only key to be removed by lua_next
+			lua_pop(l, 1);
+		}
+
+		lua_pop(l, 2);
+#if _DEBUG
+		std::printf("\ndo something else\n\n");
+#endif
+		lua_close(l);
+
+		//int i = 0;
+		//int numEnts = ents.size();
+		//int initedEnts = 0;
+		/*while (initedEnts != numEnts) {
+			if (!entInits[i] && ents[i]->init()) {
+				++initedEnts;
+				entInits[i] = true;
+				//SceneManager::GetInstance()->addEntity(ents[i]);
+			}
+			++i;
+			i %= numEnts;
+		}*/
 	}
 	catch (...) {
 		throw std::exception("Lua file has incorrect formatting\n");
