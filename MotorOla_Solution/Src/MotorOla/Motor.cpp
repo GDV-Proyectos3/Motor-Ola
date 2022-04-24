@@ -74,7 +74,7 @@ void Motor::initSystems()
 	}
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
-		//loadTestMotorGame();
+		loadTestMotorGame();
 		//loadPong();
 	}
 
@@ -101,7 +101,7 @@ void Motor::mainLoop()
 	std::cout << "------------------- COMIENZA EL BUCLE PRINCIPAL -------------------\n";
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	SDL_Event event;
-	
+	std::cout << Singleton<EntidadManager>::instance() << "\n";
 
 	while (!stop) {
 		// Recoger el Input
@@ -207,10 +207,10 @@ bool Motor::loadMainMenu(std::string name,const char*get) {
 
 void Motor::loadTestMotorGame() 
 {
-	// Entidad con un transform
-	Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
-	map<string, string> m;
-	ent->addComponent("transform", m);
+	//// Entidad con un transform
+	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
+	//map<string, string> m;
+	//ent->addComponent("transform", m);
 
 }
 
