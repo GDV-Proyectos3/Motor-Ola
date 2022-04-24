@@ -87,4 +87,3 @@ private:
 	Quaterniola _localRotation;
 	Vectola3D _localScale;
 };
-

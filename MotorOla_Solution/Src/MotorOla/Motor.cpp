@@ -27,6 +27,8 @@
 #include "Mesh.h"
 #include "Movible.h"
 #include "AudioSource.h"
+#include "Collider.h"
+#include "RigidBody.h"
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
