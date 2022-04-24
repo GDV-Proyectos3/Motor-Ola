@@ -5,7 +5,7 @@ Motor de juego de "Proyectos 3"
 ***Renderizado Gráfico*** -> Ogre 3D  
 ***Físicas y colisiones***  -> Physx  
 ***Gestión de Audio y Sonido*** -> Fmod  
-***Interfaz de Usuario*** -> Cegui  
+***Interfaz de Usuario*** -> OgreOverlay  
 ***Lenguaje Script*** -> LUA  
 
 ![Motor-Ola Diagram drawio (3)](https://user-images.githubusercontent.com/48984072/154504254-b99e09b5-be97-4acd-a8e4-ee7a112673f0.png)
@@ -25,11 +25,8 @@ Está desarrollado por NVIDIA y de hecho está integrado en sus chips gráficos 
 Motor propietario de efectos de sonido especializado para el desarrollo de videojuegos,  
 reproduce y mezcla sonidos en muchos sistemas operativos.  
 
-## CEGUI  
-Crazy Eddie's GUI, biblioteca de interfaz gráfico de usuario (GUI) para el lenguaje C++,  
-Diseñado para las necesidades de los videojuegos, pensado para ofrecer *flexivilidad* al usuario  
-tanto en apariencia como en sensación, y, para ser *adaptable* a elección del desarrollador  
-tanto en la variedad de herramientas como en la elección del sistema operativo.
+## OGREOVERLAY
+UI facilitada por Ogre a la que hay que añadir las funcionalidades de los botones
 
 ## LUA  
 Lenguaje multiparadigma, imperativo, estructurado y bastante ligero.  

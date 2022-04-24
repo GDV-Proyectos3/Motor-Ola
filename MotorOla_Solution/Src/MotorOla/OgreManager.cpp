@@ -7,6 +7,10 @@
 #include <OgreViewport.h>
 #include <OgreDataStream.h>
 #include <OgreFileSystemLayer.h>
+#include <OgreOverlaySystem.h>
+#include <OgreOverlayManager.h>
+
+
 
 #include <SDL_video.h>
 #include <SDL_syswm.h>
@@ -33,7 +37,7 @@ void OgreManager::init()
 {
     // Crea el root de Ogre
     createRoot();
-
+	
     // Inicia la ventana
 	if (oneTimeConfig()) {
 		setup();
@@ -41,6 +45,7 @@ void OgreManager::init()
 
 	// Agregado una prueba
 	_sceneManager = _root->createSceneManager();
+	
 	
 	// Create the camera
 	Ogre::Camera* cam = _sceneManager->createCamera("Cam");
@@ -56,10 +61,10 @@ void OgreManager::init()
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
 
 	// and tell it to render into the main window
-	Ogre::Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(1.0, 0.5, 0.0, 1.0));
+	_vp = getRenderWindow()->addViewport(cam);
+	_vp->setBackgroundColour(Ogre::ColourValue(1.0, 1.0, 0.0, 1.0));
 
-	// Esto todavï¿½a no funciona porque falta el Resource Manager
+	// Esto todavía no funciona porque falta el Resource Manager
 
 	// Luz de prueba
 	Ogre::Light* luz = _sceneManager->createLight("Luz");	//Cada luz tiene que tener un nombre diferente
@@ -73,6 +78,9 @@ void OgreManager::init()
 
 	// Luz ambiente en la escena
 	_sceneManager->setAmbientLight(Ogre::ColourValue(0.4f, 0.0f, 1.0f));
+	
+	_root->getSceneManager("SceneManagerInstance1")->addRenderQueueListener(_overlaySystem);
+	
 	
 
 	std::cout << "OgreManager iniciado\n";
@@ -108,9 +116,9 @@ void OgreManager::createRoot()
 		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "Error buscando el archivo plugins.cfg");
 	}
 
-	_solutionPath = pluginsPath;    // IG2: aï¿½adido para definir directorios relativos al de la soluciï¿½n 
+	_solutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
 	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);
-	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuraciï¿½n ogre. (en el bin de la solubiï¿½n)
+	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
 	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   // IG2: Quito /bin
 
 	_root = new Ogre::Root(pluginsPath, _fileSystemLayer->getWritablePath("ogre.cfg"), _fileSystemLayer->getWritablePath("ogre.log"));
@@ -131,14 +139,22 @@ void OgreManager::shutdown()
 	}
 
 	// Borra el sistema Overlay
-	delete _overlaySystem;
-	_overlaySystem = nullptr;
+
+	if (Ogre::OverlayManager::getSingletonPtr() != nullptr) {
+		delete _overlaySystem;
+		_overlaySystem = nullptr;
+	}
+
 
 	if (_window.native != nullptr)
 	{
+		
+		
+		//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		SDL_DestroyWindow(_window.native);
-		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		_window.native = nullptr;
+		
+		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 }
 
@@ -147,7 +163,9 @@ void OgreManager::setup()
 	_root->initialise(false);
 	createWindow(_appName);
 	setWindowGrab(false);
-
+	//Crea el overlay System antes de cargar los recursos para cargar la fuente en el FontManager
+	_overlaySystem = new Ogre::OverlaySystem();
+	
 	locateResources();
 	//initialiseRTShaderSystem();
 	loadResources();
@@ -242,9 +260,11 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
 
 void OgreManager::setWindowGrab(bool _grab)
 {
+	//SDL_bool grab = SDL_bool(_grab);
 	SDL_bool grab = SDL_bool(_grab);
 	SDL_SetWindowGrab(_window.native, grab);
 	//SDL_SetRelativeMouseMode(grab);
+	//SDL_ShowCursor(grab);
 	SDL_ShowCursor(grab);
 }
 
@@ -365,6 +385,11 @@ void OgreManager::locateResources()
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
 			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\textures"),
 			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(
+			Ogre::FileSystemLayer::resolveBundlePath(_solutionPath + "\\Assets\\fonts"),
+			"FileSystem", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+		
 	}
 	
 	Ogre::String sec, type, arch;

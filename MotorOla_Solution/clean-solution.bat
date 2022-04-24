@@ -1,10 +1,11 @@
 :: ROOT\
-rmdir /s /q .vs\
+@REM rmdir /s /q .vs\
 rmdir /s /q Bin\
 rmdir /s /q Temp\
 @REM PAUSE >nul
 
 :: ROOT\Exes\
+cd Exes\
 del *.dll
 del *.lib
 del *.pdb
@@ -12,6 +13,7 @@ del *.exe
 del *.ipdb
 del *.iobj
 del Ogre.log
+cd ..
 @REM PAUSE >nul
 
 :: Ogre

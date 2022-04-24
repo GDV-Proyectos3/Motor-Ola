@@ -130,7 +130,7 @@ if(OGRE_BUILD_DEPENDENCIES AND NOT EXISTS ${OGREDEPS_PATH})
       file(DOWNLOAD
           http://zlib.net/zlib-1.2.11.tar.gz
           ${PROJECT_BINARY_DIR}/zlib-1.2.11.tar.gz
-          EXPECTED_MD5 1c9f62f0778697a09d36121ead88e08e)
+          EXPECTED_MD5 5fc414a9726be31427b440b434d05f78)
       execute_process(COMMAND ${CMAKE_COMMAND}
           -E tar xf zlib-1.2.11.tar.gz WORKING_DIRECTORY ${PROJECT_BINARY_DIR})
       execute_process(COMMAND ${BUILD_COMMAND_COMMON}

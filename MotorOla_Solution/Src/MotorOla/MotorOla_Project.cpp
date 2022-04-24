@@ -28,7 +28,10 @@ int main()
     }
     
     // Libera la memoria del Motor y los sistemas principales
-    delete m;
+    if (m != nullptr) {
+        delete m;
+        m = nullptr;
+    }
 
     return hayError;
 }

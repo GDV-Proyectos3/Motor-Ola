@@ -19,14 +19,15 @@ public:
 	string mes(string m);
     string aud(string name);
 	string tex(string tex);
+	string scene(string scene);
 
 private:
 	map<string, string>mesh;//.mesh
 	map<string, string>audio;//.mp3,.ogg,.wav
 	map<string, string>textures;//.png,.jpg,.bmp
+	map<string, string>scenes;//.lua
 	//Si hay otro tipo añadir el map
 	void search(path p);
 	void load(path p, size_t end, size_t pathLenght);
-	
 };
 

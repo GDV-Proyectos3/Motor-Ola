@@ -14,33 +14,14 @@ class PhysxManager;
 class Entidad;
 class EntidadManager;
 class Entity;
+class OverlayManager;
 
 class Motor
 {
 private:
-	/*SDL_Window* window;
-	const int WINWIDTH = 800;
-	const int WINHEIGHT = 600;
-	SDL_Renderer* renderer;*/
-
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
-	// Managers
-	OgreManager* _ogreManager = nullptr;
-	InputManager* _inputManager = nullptr;
-	LoadResources* _loadResources = nullptr;
-	FMODAudioManager* _audioManager = nullptr;
-	//PhysxManager* _physxManager = nullptr;	
-	EntidadManager* _entidadManager = nullptr;
-
-
-	// Factoria Componentes
-
-	//Physx
-	//FMod
-	//Cegui
 	bool stop = false;
-	//void handleEvents();
 
 	int channel = 0;
 
@@ -68,6 +49,12 @@ public:
 	/// </summary>
 	void loadDLLGame();
 
+	/// <summary>
+	/// Carga una escena del juego
+	/// </summary>
+	/// <param name="name">name es el archivo "scene.lua"</param>
+	bool loadScene(std::string name);
+	bool loadMainMenu(std::string name,const char* get);
 
 	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
@@ -79,5 +66,11 @@ public:
 	// Getters and Setters
 	void setStop(bool s);
 	bool getStop();
+
+
+	static void salir(Motor* m);
+	static void newGame(Motor* m);
+	static void options(Motor* m);
+	//static void deleteOverlay(Motor* m);
 };
 

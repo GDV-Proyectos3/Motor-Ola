@@ -15,20 +15,26 @@ void LoadResources::init()
 
 string LoadResources::mes(string m)
 {
-	auto it=mesh.find(m);
+	auto it = mesh.find(m);
 	return it->second;
 }
 
 string LoadResources::aud(string name)
 {
-	auto s= audio.find(name);
+	auto s = audio.find(name);
 	return s->second;
 }
 
 string LoadResources::tex(string tex)
 {
-	auto t=textures.find(tex);
+	auto t = textures.find(tex);
 	return t->second;
+}
+
+string LoadResources::scene(string scene)
+{
+	auto it = scenes.find(scene);
+	return it->second;
 }
 
 void LoadResources::search(path p)
@@ -60,5 +66,8 @@ void LoadResources::load(path p, size_t end, size_t pathLenght)
 	}
 	else if (extension == ".mesh") {
 		mesh.insert(pair<string, string>(name, p.string()));
+	}
+	else if (extension == ".lua") {
+		scenes.insert(std::pair<std::string, std::string>(name, p.string()));
 	}
 }

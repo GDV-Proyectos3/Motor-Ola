@@ -48,8 +48,10 @@ public:
 	// Getters
 	Ogre::RenderWindow* getRenderWindow() const { return _window.render; }
 	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
+	Ogre::Viewport* getViewPort() const { return _vp; }
 	Ogre::Root* getRoot() const { return _root; }
 	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
+	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
 
 	void init();
 	void update();
@@ -86,8 +88,9 @@ private:
 	Ogre::Root* _root = nullptr;
 	NativeWindowPair _window;
 	Ogre::FileSystemLayer* _fileSystemLayer = nullptr;
-	Ogre::OverlaySystem* _overlaySystem;  // Overlay system
+	Ogre::OverlaySystem* _overlaySystem=nullptr;  // Overlay system
 	Ogre::SceneManager* _sceneManager = nullptr;
+	Ogre::Viewport* _vp = nullptr;
 	bool _firstRun;
 	Ogre::String _appName = "MotorOla";
 	Ogre::String _solutionPath;
@@ -96,3 +99,6 @@ private:
 	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
 	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };
+/*inline OgreManager& og() {
+	return *OgreManager::instance();
+}*/

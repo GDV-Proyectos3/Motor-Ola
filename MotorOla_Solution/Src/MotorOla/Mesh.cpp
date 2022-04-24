@@ -1,29 +1,72 @@
 #include "Mesh.h"
 #include "Entidad.h"
 #include "Transform.h"
+#include "utils/Singleton.h"
+#include "OgreManager.h"
 #include <OgreBillboardSet.h>
 
-Mesh::Mesh(Ogre::SceneNode* node) : _nodo(node)
+Mesh::Mesh()
 {
-	_sceneManager = _nodo->getCreator();
+	_sceneManager = Singleton<OgreManager>::instance()->getSceneManager();
+	_nodo = _sceneManager->getRootSceneNode()->createChildSceneNode();
+	//_sceneManager = _nodo->getCreator();
 }
 
-Mesh::Mesh(Ogre::SceneNode* node,std::string mesh, std::string material) : _nodo(node)
-{
-	_sceneManager = _nodo->getCreator();
-
-	// Crea la entity de Ogre
-	_entity = _sceneManager->createEntity(mesh);
-
-	// Asigna el material
-	_entity->setMaterialName(material);
-
-	// Junta la entity al nodo
-	_nodo->attachObject(_entity);
-}
+//Mesh::Mesh(Ogre::SceneNode* node) : _nodo(node)
+//{
+//	_sceneManager = _nodo->getCreator();
+//}
+//
+//Mesh::Mesh(Ogre::SceneNode* node,std::string mesh, std::string material) : _nodo(node)
+//{
+//	_sceneManager = _nodo->getCreator();
+//
+//	// Crea la entity de Ogre
+//	_OgreEntity = _sceneManager->createEntity(mesh);
+//
+//	// Asigna el material
+//	_OgreEntity->setMaterialName(material);
+//
+//	// Junta la entity al nodo
+//	_nodo->attachObject(_OgreEntity);
+//}
 
 Mesh::~Mesh()
 {
+	Singleton<OgreManager>::instance()->getSceneManager()->destroyEntity(_ogreEntity);
+	Singleton<OgreManager>::instance()->getSceneManager()->destroySceneNode(_nodo);
+}
+
+
+
+bool Mesh::init(const std::map<std::string, std::string>& mapa)
+{
+	if (mapa.find("mesh") == mapa.end() || mapa.find("material") == mapa.end() || mapa.find("visible") == mapa.end()) return false;
+
+	//_nodo = Singleton<OgreManager>::instance()->getSceneManager()->getRootSceneNode()->createChildSceneNode();
+
+	Transform* tr = entity_->getComponent<Transform>();
+	if (tr == nullptr)
+		return false;
+
+	std::string me = mapa.at("mesh");
+	setMesh(me);
+
+	std::string ma = mapa.at("material");
+	if (ma != "") setMaterial(ma);
+
+	std::string vi = mapa.at("visible");
+	if (vi == "true") setVisible(true);
+	else if (vi == "false") setVisible(false);
+	else return false;
+
+	_nodo->setPosition(tr->getPosition().getX(), tr->getPosition().getY(), tr->getPosition().getZ());
+	_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
+	_nodo->setOrientation(tr->getRotation());
+
+	inicializado_ = true;
+
+	return true;
 }
 
 bool Mesh::getActive()
@@ -43,13 +86,13 @@ Ogre::SceneNode* Mesh::getNodo()
 
 void Mesh::setMesh(std::string mesh)
 {
-	_entity = _sceneManager->createEntity(mesh);
-	_nodo->attachObject(_entity);
+	_ogreEntity = _sceneManager->createEntity(mesh);
+	_nodo->attachObject(_ogreEntity);
 }
 
 void Mesh::setMaterial(std::string material)
 {
-	_entity->setMaterialName(material);
+	_ogreEntity->setMaterialName(material);
 }
 
 //void Mesh::setBillboard(std::string material, Vector2D pos, Vector2D scale)
@@ -103,14 +146,14 @@ void Mesh::setMaterial(std::string material)
 
 void Mesh::init() //en funcion de si el eje sobre el que esta el suelo es x,y o xz comentar/descomentar algunas de estas lineas
 {
-	if (entity_->hasComponent<Transform>())
-	{
-		Transform* tr = entity_->getComponent<Transform>();
+	//if (entity_->hasComponent<Transform>())
+	//{
+	//	Transform* tr = entity_->getComponent<Transform>();
 
-		_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
-		//_nodo->setOrientation // Hace falta un Quaternion 
-		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
-	}
+	//	_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+	//	//_nodo->setOrientation // Hace falta un Quaternion 
+	//	_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
+	//}
 }
 
 void Mesh::update()
@@ -119,8 +162,15 @@ void Mesh::update()
 	if (entity_->hasComponent<Transform>())
 	{
 		Transform* tr = entity_->getComponent<Transform>();
-		_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
+		_nodo->setPosition(tr->getPosition().getX(), tr->getPosition().getY(), tr->getPosition().getZ());
 		//_nodo->setOrientation // Hace falta un Quaternion 
 		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
 	}
 }
+
+void Mesh::setVisible(bool state)
+{
+	_visible = state;
+	_nodo->setVisible(state);
+}
+

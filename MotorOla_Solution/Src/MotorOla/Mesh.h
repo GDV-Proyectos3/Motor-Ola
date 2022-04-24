@@ -10,9 +10,14 @@
 class Mesh : public Componente
 {
 public:
-	Mesh(Ogre::SceneNode* node);
-	Mesh(Ogre::SceneNode* node, std::string mesh, std::string material);
+	Mesh();
+
+	//Mesh(Ogre::SceneNode* node);
+	//Mesh(Ogre::SceneNode* node, std::string mesh, std::string material);
 	virtual ~Mesh();
+
+	// Función obligatoria para inicializar el componente mediante datos serializados
+	bool init(const std::map<std::string, std::string>& mapa) override;
 
 	bool  getActive();
 	void  setActive(bool a) ;
@@ -32,18 +37,21 @@ public:
 	void update();
 	//void draw();
 
+	/// <summary>
+	/// Devuelve si es o no visible la entidad
+	/// </summary>
+	inline bool isVisible() { return _visible; };
 
+	/// <summary>
+	/// Hace visible a la entidad
+	/// </summary>
+	void setVisible(bool visible);
 
 private:
-	Ogre::SceneNode* _nodo;
-	//Ogre::SceneNode* bbNode;
-	//Ogre::SceneNode* particleNode;
-	//Ogre::ParticleSystem* smokePS;
-	//Ogre::SceneNode* lightNode;
-	//Ogre::Light* luzFoco;
-	Ogre::SceneManager* _sceneManager;
-	Ogre::Entity* _entity;
+	bool _visible = true;
 	bool _active = true;
-
+	Ogre::SceneManager* _sceneManager = nullptr;
+	Ogre::SceneNode* _nodo = nullptr;
+	Ogre::Entity* _ogreEntity = nullptr;
 };
 

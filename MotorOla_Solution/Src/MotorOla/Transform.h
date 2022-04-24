@@ -1,45 +1,90 @@
 #pragma once
 #include "Componente.h"
-#include "./utils/Vectola3D.h"
+#include "utils/Vectola3D.h"
+#include "utils/Quaterniola.h"
+#include <list>
 
 class Transform :   public Componente
 {
 public:
-	Transform(Vectola3D position, Vectola3D scale, Vectola3D rotation);
+	// OBLIGATORIO EN CADA COMPONENTE
+	// Constructor sin parámetros
 	Transform();
+	// Destructor
 	virtual ~Transform();
+	// Función para inicializar el componente mediante datos serializados
+	bool init(const std::map<std::string, std::string>& mapa);
 
-	void init();
+	// Movimientos
+	enum class Space { Self, World,	Parent };
 	void translate(double x, double y, double z);
-	void rotate(double angle);
+	void rotate(float xAngle, float yAngle, float zAngle, Space relativeTo = Space::Self);
 
-	// Funciones con posicion
-	inline const Vectola3D& getPos() const { return _position; }
-	inline void setPos(const Vectola3D& pos) { _position.set(pos); }
-	inline void setPos(double x, double y, double z) { _position.set(x, y, z); }
-	inline void setPosX(double x) { _position.setX(x); }
-	inline void setPosY(double y) { _position.setY(y); }
-	inline void setPosZ(double z) { _position.setZ(z); }
+	// Getters
+	Transform* getParent() { return _parent; }
+	Transform* findChild(char* name);
 
-	// Funciones con rotation
-	inline const Vectola3D& getRot() const { return _rotation; }
-	inline void setRot(const Vectola3D& rot) { _rotation.set(rot); }
-	inline void setRot(double x, double y, double z) { _rotation.set(x, y, z); }
-	inline void setRotX(double x) { _rotation.setX(x); }
-	inline void setRotY(double y) { _rotation.setY(y); }
-	inline void setRotZ(double z) { _rotation.setZ(z); }
+	Vectola3D getPosition() { getParentData(); return _position; }
+	Quaterniola getRotation() { getParentData(); return _rotation; }
+	Vectola3D getScale() { getParentData(); return _scale; }
 
-	// Funciones con scale
-	inline const Vectola3D& getScale() const { return _scale; }
-	inline void setScale(const Vectola3D& scale) { _scale.set(scale); }
-	inline void setScale(double x, double y, double z) { _scale.set(x, y, z); }
-	inline void setScaleX(double x) { _scale.setX(x); }
-	inline void setScaleY(double y) { _scale.setY(y); }
-	inline void setScaleZ(double z) { _scale.setZ(z); }
+	Vectola3D getLocalPosition() { return _localPosition; }
+	Quaterniola getLocalRotation() { return _localRotation; }
+	Vectola3D getLocalScale() { return _localScale; }
+
+	// Setter
+	void setParent(Transform* par);
+
+	void setPosition(Vectola3D v);
+	void setPosition(float x, float y, float z);
+
+	void setRotation(Quaterniola q);
+	Quaterniola inverseTransformRotation(Quaterniola q);
+	void setRotation(float x, float y, float z);
+
+	void setScale(Vectola3D v);
+	void setScale(float x, float y, float z);
+
+	void setLocalPosition(Vectola3D v);
+	void setLocalPosition(float x, float y, float z);
+
+	void setLocalRotation(Quaterniola q);
+	Quaterniola transformRotation(Quaterniola q);
+	void setLocalRotation(float x, float y, float z);
+
+	void setLocalScale(Vectola3D v);
+	void setLocalScale(float x, float y, float z);
+
+
+	// Transforma el vector direction del espacio local al espacio global
+	Vectola3D transformDirection(Vectola3D direction);
+	// Transforma la posicion x, y, z del espacio local al espacio global
+	Vectola3D transformDirection(float x, float y, float z);
+
+	// Transforma el vector direction del espacio global al espacio local
+	Vectola3D inverseTransformDirection(Vectola3D direction);
+	// Transforma la posicion x, y, z del espacio global al espacio local
+	Vectola3D inverseTransformDirection(float x, float y, float z);
 
 private:
+	Transform* _parent = nullptr;
+	std::list<Transform*> _children;
+
+	// Añade a un hijo a la lista
+	void setChild(Transform* child) { _children.push_back(child); }
+	// Elimina a un hijo de la lista
+	void removeChild(Transform* child) { if (child->_parent == this) _children.remove(child); };
+	// Actualiza los datos en funcion del padre
+	void getParentData();
+
+	// Posiciones globales
 	Vectola3D _position;
-	Vectola3D _rotation;
-	Vectola3D _scale;
+	Quaterniola _rotation;
+	Vectola3D _scale;	
+	
+	// Posiciones locales
+	Vectola3D _localPosition;
+	Quaterniola _localRotation;
+	Vectola3D _localScale;
 };
 
