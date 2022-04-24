@@ -1,4 +1,6 @@
 #include "PhysxManager.h"
+///#include "callbacks.hpp"
+
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
 // _patata = interactive
@@ -20,6 +22,16 @@ PhysxManager::PhysxManager() : _patata(false) {
 
 	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
 
+	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
+	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
+	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f); // fijar gravedad global para s. r.
+	gDispatcher = PxDefaultCpuDispatcherCreate(2);
+	sceneDesc.cpuDispatcher = gDispatcher;
+	////sceneDesc.filterShader = contactReportFilterShader;
+	////sceneDesc.simulationEventCallback = &gContactReportCallback;
+	gScene = gPhysics->createScene(sceneDesc);
+	// ------------------------------------------------------
+
 	if (gPhysics == NULL) throw "PhysX no se ha iniciado correctamente.";
 	else std::cout << "PhysX INICIALIZADO!!\n" << std::endl;
 }
@@ -32,12 +44,32 @@ PhysxManager::~PhysxManager()
 
 void PhysxManager::update()
 {
+	////gScene->simulate(/*t*/0);
+	////gScene->fetchResults(true);
 
+	//spawn
+	///....
+	//update
+	///....
+	//refresh
+	///....
 }
 
 void PhysxManager::close()
 {
+	// delete
+	///....
 
+	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
+	gScene->release();
+	gDispatcher->release();
+	// -----------------------------------------------------
+	gPhysics->release();
+	PxPvdTransport* transport = gPvd->getTransport();
+	gPvd->release();
+	transport->release();
+
+	gFoundation->release();
 }
 
 void PhysxManager::createBall(
@@ -56,5 +88,3 @@ void PhysxManager::createBall(
 void PhysxManager::attachBola(Entidad* ball)
 {
 }
-
-

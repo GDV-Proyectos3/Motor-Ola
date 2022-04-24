@@ -4,6 +4,7 @@
 #include <PxPhysicsAPI.h>
 #include <vector>
 #include "Entidad.h"
+///#include <callbacks.hpp>
 
 using namespace physx;
 //#include <string>
@@ -36,7 +37,14 @@ private:
 	bool _patata;
 
 	PxFoundation* gFoundation = NULL;
+
 	PxPhysics* gPhysics = NULL;
+
+	PxDefaultCpuDispatcher* gDispatcher = NULL;
+
+	PxScene* gScene = NULL;
+
+	///ContactReportCallback gContactReportCallback;
 
 	PxPvd* gPvd = NULL;
 
@@ -45,6 +53,7 @@ private:
 	PxDefaultErrorCallback gErrorCallback;
 
 	//std::vector<uptr_collider> colliders_;
+
 
 	Entidad* bola = nullptr;
 };
