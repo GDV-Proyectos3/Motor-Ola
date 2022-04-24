@@ -31,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Collider.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp" />
@@ -43,16 +44,16 @@
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\RigidBody.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Quaterniola.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vector2D.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\AudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\AudioSource.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Collider.h" />
     <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
     <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h" />
     <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h" />
@@ -68,13 +69,12 @@
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\RigidBody.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Quaterniola.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vectola3D.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="RigidBody.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\Motor.h" />

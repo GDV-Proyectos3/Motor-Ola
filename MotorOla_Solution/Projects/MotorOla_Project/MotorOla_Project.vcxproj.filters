@@ -49,15 +49,13 @@
     <ClCompile Include="..\..\Src\MotorOla\utils\Quaterniola.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\Motor.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\RigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RigidBody.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
@@ -127,10 +125,10 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\Motor.h" />
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="..\..\Src\MotorOla\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RigidBody.h">
+    <ClInclude Include="..\..\Src\MotorOla\RigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
