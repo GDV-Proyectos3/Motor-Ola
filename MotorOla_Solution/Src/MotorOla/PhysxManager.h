@@ -24,6 +24,9 @@ public:
 	void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
 	void attachBola(Entidad* ball);
 
+	// Getters
+	PxPhysics* getPhysX() { return gPhysics; };
+
 	// Etc
 	// virtual void patata(...) {}
 
@@ -63,4 +66,9 @@ private:
 //
 inline PhysxManager& pm() {
 	return *PhysxManager::instance();
+}
+
+// Forma breve de acceder al creador y padre todopoderoso de las fisicas
+inline PxPhysics* physx() {
+	return PhysxManager::instance()->getPhysX();
 }

@@ -6,6 +6,8 @@
 ///#include "utils/Quaterniola.h"
 ///#include <list>
 
+using namespace physx;
+
 class Collider : public Componente, public PxShape
 {
 public:
@@ -15,7 +17,10 @@ public:
 	* PxType: 
 	* PxBaseFlags: ( eOWNS_MEMORY | eIS_RELEASABLE ) posee memoria o es liberable.
 	*/
-	Collider(PxType concreteType, PxBaseFlags baseFlags) : PxShape(concreteType, baseFlags) {};
+	Collider(PxType concreteType = PxConcreteType::eSHAPE, 
+		PxBaseFlags baseFlags = PxBaseFlag::eOWNS_MEMORY,
+		PxGeometryType::Enum type = PxGeometryType::eBOX
+	);
 	// Destructor
 	virtual ~Collider();
 	// Función para inicializar el componente mediante datos serializados

@@ -13,8 +13,16 @@ class RigidBody : public Componente, public PxRigidDynamic
 {
 public:
 	// OBLIGATORIO EN CADA COMPONENTE
-	// Constructor sin parámetros
-	RigidBody(PxType concreteType, PxBaseFlags baseFlags) : PxRigidDynamic(concreteType, baseFlags) {};
+	// Constructor sin parámetros 
+	/**
+	* PxType: 
+	* PxBaseFlags: ( eOWNS_MEMORY | eIS_RELEASABLE ) posee memoria o es liberable.
+	*/
+	RigidBody(PxType concreteType = PxConcreteType::eRIGID_DYNAMIC, 
+		PxBaseFlags baseFlags = PxBaseFlag::eOWNS_MEMORY, 
+		PxVec3 position = PxVec3(PxZero), 
+		PxQuat orientation = PxQuat(PxIdentity)
+	);
 	// Destructor
 	virtual ~RigidBody();
 	// Función para inicializar el componente mediante datos serializados
@@ -27,6 +35,5 @@ public:
 	//...
 
 private:
-
 	//...
 };
