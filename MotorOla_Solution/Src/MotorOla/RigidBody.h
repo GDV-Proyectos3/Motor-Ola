@@ -1,17 +1,20 @@
 #pragma once
 #pragma once
 
+#include "PxRigidDynamic.h"
 #include "Componente.h"
 ///#include "utils/Vectola3D.h"
 ///#include "utils/Quaterniola.h"
 ///#include <list>
 
-class RigidBody : public Componente
+using namespace physx;
+
+class RigidBody : public Componente, public PxRigidDynamic
 {
 public:
 	// OBLIGATORIO EN CADA COMPONENTE
 	// Constructor sin parámetros
-	RigidBody();
+	RigidBody(PxType concreteType, PxBaseFlags baseFlags) : PxRigidDynamic(concreteType, baseFlags) {};
 	// Destructor
 	virtual ~RigidBody();
 	// Función para inicializar el componente mediante datos serializados
