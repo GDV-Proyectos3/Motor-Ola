@@ -61,7 +61,10 @@ public:
 	/// </summary>
 	void loadTestMotorGame();
 
-	void loadPong();
+	/// <summary>
+	/// Mini-juego de prueba del motor
+	/// </summary>
+	//void loadPong();
 
 	// Getters and Setters
 	void setStop(bool s);

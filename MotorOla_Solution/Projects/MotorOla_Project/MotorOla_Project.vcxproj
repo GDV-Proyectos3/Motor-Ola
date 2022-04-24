@@ -42,7 +42,6 @@
     <ClCompile Include="..\..\Src\MotorOla\EntidadManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\PhysxErrorCallback.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
@@ -66,7 +65,6 @@
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />
-    <ClInclude Include="..\..\Src\MotorOla\PhysxErrorCallback.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />

@@ -32,7 +32,7 @@ typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
-	// Inicia los managers (PC: ya que no se usan métodos, se podría dejar con init que para el caso es lo mismo, pero en initSystems ya se hace, es redundante hacerlo en ambos lados creo)
+	// Inicia los managers (PC: ya que no se usan métodos, se podría dejar con init que para el caso es lo mismo)
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
@@ -44,7 +44,7 @@ Motor::Motor()
 Motor::~Motor()
 {
 	// Destruye los managers en orden inverso a la creaci�n (PC: puede que esto no sea necesario porque al cerrar se borran solos)
-	if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
+	//if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
 	if (Singleton<OverlayManager>::instance() != nullptr) delete Singleton<OverlayManager>::instance();
 	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
@@ -62,7 +62,7 @@ void Motor::initSystems()
 	Singleton<OgreManager>::instance()->init();
 	Singleton<FMODAudioManager>::instance()->init();
 	Singleton<OverlayManager>::instance()->init(Singleton<OgreManager>::instance(),this);
-	Singleton<PhysxManager>::init();
+	pm().init();
 	
 	// Se registran los componentes que conoce el motor
 	registryComponents();
@@ -74,7 +74,7 @@ void Motor::initSystems()
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
 		//loadTestMotorGame();
-		loadPong();
+		//loadPong();
 	}
 
 	// Carga una escena con Lua
