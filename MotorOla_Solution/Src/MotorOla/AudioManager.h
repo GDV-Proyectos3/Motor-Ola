@@ -3,7 +3,6 @@
 #include <string>
 #include "./utils/Singleton.h"
 
-
 class AudioManager : public Singleton<AudioManager> {
 	friend Singleton<AudioManager>;
 public:
@@ -21,6 +20,4 @@ public:
 	virtual void setPitch(int chan, int pitch) = 0;
 	virtual void fadeIn(int chan) = 0;
 	virtual void fadeOut(int chan) = 0;
-
-
 };

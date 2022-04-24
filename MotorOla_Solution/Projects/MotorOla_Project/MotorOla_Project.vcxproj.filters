@@ -16,9 +16,6 @@
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\Motor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,11 +28,16 @@
     <ClCompile Include="..\..\Src\MotorOla\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\LoadResources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\ComponenteFactoria.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp">
@@ -50,6 +52,7 @@
     <ClCompile Include="..\..\Src\MotorOla\utils\Quaterniola.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
@@ -79,9 +82,6 @@
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\Motor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -103,6 +103,9 @@
     <ClInclude Include="..\..\Src\MotorOla\AudioSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\Movible.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -118,6 +121,7 @@
     <ClInclude Include="..\..\Src\MotorOla\utils\Quaterniola.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\Motor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -4,6 +4,8 @@
 del /q include\PxConfig.h
 
 @REM \bin
+rmdir /s /q bin\win.x86_64.vc142.md
+
 cd bin\win.x86_64.vc142.mt\
 mkdir temporal
 
@@ -49,4 +51,6 @@ cd ..\..
 @REM \Build
 rmdir /s /q ..\..\Build\vc16win64\.vs
 rmdir /s /q ..\..\Build\vc16win64\x64
+rmdir /s /q ..\..\Build\vc16win64-min\.vs
+rmdir /s /q ..\..\Build\vc16win64-min\x64
 rmdir /s /q ..\..\Build

@@ -3,12 +3,14 @@
 #include <SDL.h>
 #include <string>
 #include <iostream>
+#include <Ogre.h>
 
 // Declaracion de clases necesarias
 class OgreManager;
 class InputManager;
 class LoadResources;
 class FMODAudioManager;
+class PhysxManager;
 class Entidad;
 class EntidadManager;
 class Entity;
@@ -33,12 +35,12 @@ public:
 	void initSystems();
 
 	/// <summary>
-	/// Añadir aquí todos los componentes que se hagan
+	/// AÃ±adir aqui todos los componentes que se hagan
 	/// </summary>
 	void registryComponents();
 
 	/// <summary>
-	/// Bucle principal de la ejecución del motor
+	/// Bucle principal de la ejecucion del motor
 	/// </summary>
 	void mainLoop();
 
@@ -58,6 +60,11 @@ public:
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();
+
+	/// <summary>
+	/// Mini-juego de prueba del motor
+	/// </summary>
+	//void loadPong();
 
 	// Getters and Setters
 	void setStop(bool s);

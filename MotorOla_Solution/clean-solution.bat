@@ -26,7 +26,8 @@ rmdir /s /q Dependencies\Lua\x64\
 
 :: PhysX
 cd Dependencies\PhysX-4.1\Src\physx\
-call clean-all.bat
+call clean-min.bat
+@REM call clean-all.bat
 cd ..\..\..\..\
 @REM PAUSE >nul
 

@@ -16,6 +16,7 @@
 #include "LoadResources.h"
 #include "FMODAudioManager.h"
 #include "OverlayManager.h"
+#include "PhysxManager.h"
 
 // Componentes
 #include "Entidad.h"
@@ -31,17 +32,19 @@ typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
-	// Inicia los managers
+	// Inicia los managers (PC: ya que no se usan mÃ©todos, se podrÃ­a dejar con init que para el caso es lo mismo)
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
+	Singleton<PhysxManager>::init();
 }
 
 Motor::~Motor()
 {
-	// Destruye los managers en orden inverso a la creación
+	// Destruye los managers en orden inverso a la creaciï¿½n (PC: puede que esto no sea necesario porque al cerrar se borran solos)
+	//if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
 	if (Singleton<OverlayManager>::instance() != nullptr) delete Singleton<OverlayManager>::instance();
 	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
@@ -59,6 +62,7 @@ void Motor::initSystems()
 	Singleton<OgreManager>::instance()->init();
 	Singleton<FMODAudioManager>::instance()->init();
 	Singleton<OverlayManager>::instance()->init(Singleton<OgreManager>::instance(),this);
+	pm().init();
 	
 	// Se registran los componentes que conoce el motor
 	registryComponents();
@@ -69,7 +73,8 @@ void Motor::initSystems()
 	}
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
-		loadTestMotorGame();
+		//loadTestMotorGame();
+		//loadPong();
 	}
 
 	// Carga una escena con Lua
@@ -80,7 +85,7 @@ void Motor::initSystems()
 
 void Motor::registryComponents()
 {
-	// Apuntar aquí todos los componentes del motor (apuntar solo despues de refactorizar)
+	// Apuntar aqui todos los componentes del motor (apuntar solo despues de refactorizar)
 	try {
 		ComponenteRegistro::ComponenteRegistro<Transform>("transform");
 		ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
@@ -98,6 +103,7 @@ void Motor::mainLoop()
 	while (!stop) {
 		// Recoger el Input
 		ih().clearState();
+
 		while (SDL_PollEvent(&event))
 			ih().update(event);
 
@@ -107,14 +113,15 @@ void Motor::mainLoop()
 			continue;
 		}
 
-		// Actualizar las físicas de las entidades
-		//_physxManager->update();
+		// Actualizar las fisicas de las entidades
+		// Update PhysX: (PC: el 'pm()' igual que 'ih()' es un alias es decir una forma breve para nombrar la llamada a '(...)::instance()')
+		pm().update(); 
 
-		// Actualiza los transforms de las entitys después de las físicas
+		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {
 			Singleton<OverlayManager>::instance()->update();
 		}
-		// Actualiza el resto de componentes (también los del juego)
+		// Actualiza el resto de componentes (tambien los del juego)
 		Singleton<EntidadManager>::instance()->update();
 
 		// Renderiza las entidades

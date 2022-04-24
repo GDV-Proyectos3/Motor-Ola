@@ -3,6 +3,8 @@
 del /q include\PxConfig.h
 
 @REM \bin
+rmdir /s /q bin\win.x86_64.vc142.md
+
 cd bin\win.x86_64.vc142.mt\
 mkdir temporal
 
@@ -47,3 +49,4 @@ cd ..\..
 
 @REM Basura temp de la solución
 rmdir /s /q ..\Build\vc16win64\x64
+rmdir /s /q ..\Build\vc16win64-min\x64
