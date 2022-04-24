@@ -2,7 +2,6 @@
 
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
-#include "PhysxErrorCallback.h"
 #include <vector>
 #include "Entidad.h"
 
@@ -17,7 +16,7 @@ public:
 
 	// Getters
 	// ...
-
+	void init() {};
 	void update();
 	void close();
 
@@ -41,11 +40,9 @@ private:
 
 	PxPvd* gPvd = NULL;
 
-	PxDefaultAllocator		gAllocator;
+	PxDefaultAllocator gAllocator;
 
-	// Pablo Cubells dice: "IDK why pero esta mierda así funciona bien."
-	// PxDefaultErrorCallback	gErrorCallback;
-	PhysxErrorCallback	gErrorCallback;
+	PxDefaultErrorCallback gErrorCallback;
 
 	//std::vector<uptr_collider> colliders_;
 
