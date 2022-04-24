@@ -15,6 +15,7 @@ Transform::~Transform()
 
 bool Transform::init(const std::map<std::string, std::string>& mapa)
 {
+	
 	if (mapa.find("parent") == mapa.end() || mapa.find("position") == mapa.end() || mapa.find("rotation") == mapa.end() || mapa.find("scale") == mapa.end()) return false;
 	std::string::size_type sz = 0, sa = 0;
 

@@ -36,6 +36,7 @@ Motor::Motor()
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
+	
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::init();
@@ -100,8 +101,11 @@ void Motor::mainLoop()
 	std::cout << "------------------- COMIENZA EL BUCLE PRINCIPAL -------------------\n";
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	SDL_Event event;
+	
+
 	while (!stop) {
 		// Recoger el Input
+		
 		ih().clearState();
 
 		while (SDL_PollEvent(&event))

@@ -14,6 +14,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysXProject", "Projects\Ph
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaProject", "Projects\LuaProject\LuaProject.vcxproj", "{ED44E356-CDF5-4484-9381-AFE04E19A34C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "App", "Projects\App\App.vcxproj", "{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F6AF22F4-46D3-4E02-BB0B-57F45F00230A} = {F6AF22F4-46D3-4E02-BB0B-57F45F00230A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -52,6 +57,14 @@ Global
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Release|x64.Build.0 = Release|x64
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Release|x86.ActiveCfg = Release|Win32
 		{ED44E356-CDF5-4484-9381-AFE04E19A34C}.Release|x86.Build.0 = Release|Win32
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Debug|x64.ActiveCfg = Debug|x64
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Debug|x64.Build.0 = Debug|x64
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Debug|x86.ActiveCfg = Debug|Win32
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Debug|x86.Build.0 = Debug|Win32
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Release|x64.ActiveCfg = Release|x64
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Release|x64.Build.0 = Release|x64
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Release|x86.ActiveCfg = Release|Win32
+		{BE1123A9-2B24-42C9-92B7-B7A20C4CE16B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,9 +16,6 @@
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\MotorOla\MotorOla_Project.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\OgreManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
