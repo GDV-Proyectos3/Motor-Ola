@@ -3,6 +3,7 @@
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
+#include <cassert>
 #include "Entidad.h"
 ///#include <callbacks.hpp>
 
@@ -25,7 +26,7 @@ public:
 	void attachBola(Entidad* ball);
 
 	// Getters
-	PxPhysics* getPhysX() { return gPhysics; };
+	PxPhysics* getPhysX() { return mPhysics; };
 
 	// Etc
 	// virtual void patata(...) {}
@@ -39,21 +40,25 @@ private:
 	// Variables
 	bool _patata;
 
-	PxFoundation* gFoundation = NULL;
+	PxFoundation* mFoundation = NULL;
+	PxPhysics* mPhysics = NULL;
 
-	PxPhysics* gPhysics = NULL;
+	PxCooking* mCooking = NULL;
 
-	PxDefaultCpuDispatcher* gDispatcher = NULL;
+	PxCudaContextManager* mCuda = NULL;
+	PxCudaContextManagerDesc cudaDesc;
 
-	PxScene* gScene = NULL;
+	PxDefaultCpuDispatcher* mDispatcher = NULL;
+
+	PxScene* mScene = NULL;
 
 	///ContactReportCallback gContactReportCallback;
 
-	PxPvd* gPvd = NULL;
+	PxPvd* mPvd = NULL;
 
-	PxDefaultAllocator gAllocator;
+	PxDefaultErrorCallback mErrorCallback;
+	PxDefaultAllocator mAllocator;
 
-	PxDefaultErrorCallback gErrorCallback;
 
 	//std::vector<uptr_collider> colliders_;
 
@@ -69,6 +74,6 @@ inline PhysxManager& pm() {
 }
 
 // Forma breve de acceder al creador y padre todopoderoso de las fisicas
-inline PxPhysics* physx() {
+inline PxPhysics* physX() {
 	return PhysxManager::instance()->getPhysX();
 }

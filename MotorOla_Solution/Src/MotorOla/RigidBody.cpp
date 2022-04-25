@@ -6,7 +6,7 @@ RigidBody::RigidBody(PxType concreteType, PxBaseFlags baseFlags, PxVec3 position
 {
 	// Position and orientation in world space (Physx pose)
 	PxTransform pose = PxTransform(position, orientation);
-	physx()->createRigidDynamic(pose);
+	physX()->createRigidDynamic(pose);
 }
 
 RigidBody::~RigidBody()

@@ -12,12 +12,12 @@ Collider::Collider(PxType concreteType, PxBaseFlags baseFlags, PxGeometryType::E
 	//setFlag(PxShapeFlag::eTRIGGER_SHAPE); // for triggers
 
 	// Establece el tipo de material
-	PxMaterial* gMaterial = physx()->createMaterial(0.5f, 0.5f, 0.6f);
+	PxMaterial* gMaterial = physX()->createMaterial(0.5f, 0.5f, 0.6f);
 	setMaterials(&gMaterial, 1); // por ejemplo
 
 	// En caso de no heredar y guardar el puntero: (mas breve)
 	//PxGeometry* geo = new PxSphereGeometry(10);
-	//physx()->createShape(*geo, *gMaterial);
+	//physX()->createShape(*geo, *gMaterial);
 }
 
 Collider::~Collider()

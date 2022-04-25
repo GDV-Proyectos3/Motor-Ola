@@ -1,45 +1,64 @@
 #include "PhysxManager.h"
-///#include "callbacks.hpp"
-
+#define PVD_HOST "127.0.0.1"	//Set this to the IP address of the system running the PhysX Visual Debugger that you want to connect to.
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
-// _patata = interactive
+///#include "callbacks.hpp"
 
-PhysxManager::PhysxManager() : _patata(false) {
+PhysxManager::PhysxManager() : _patata(false) 
+{
 	PX_UNUSED(_patata);
 
-	gFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, gAllocator, gErrorCallback);
+	// General settings
+	PxTolerancesScale scale;
+	scale.length = 100;        // typical length of an object
+	scale.speed = 981;         // typical speed of an object, gravity*1s is a reasonable choice
 
-	if (gFoundation == NULL) throw "PhysX-foundation no se ha iniciado correctamente.";
-	else std::cout << std::endl << "PhysX-foundation INICIALIZADO!!" << std::endl;
+	// Foundation --------------------------------------------------------------------
+	mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, mAllocator, mErrorCallback);
+	if (!mFoundation) 
+		assert("PxCreateFoundation failed!");
+	else std::cout << std::endl << "PxFoundation INICIALIZADO!!" << std::endl;
 
-	/* Si se quiere utilizar esta herramienta Pvd = PhysX Visual Debugger,
-	* la cual es una herramienta externa, habría que resolver los RuntimeLibrary que genera esto:
-	**
-	gPvd = PxCreatePvd(*gFoundation);
-	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);*/
+	// PhysX Visual Debugger ---------------------------------------------------------
+	bool recordMemoryAllocations = true;
 
-	gPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *gFoundation, PxTolerancesScale(), true, gPvd);
+	mPvd = PxCreatePvd(*mFoundation);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5050, 10);
+	mPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 
-	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
-	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f); // fijar gravedad global para s. r.
-	gDispatcher = PxDefaultCpuDispatcherCreate(2);
-	sceneDesc.cpuDispatcher = gDispatcher;
-	////sceneDesc.filterShader = contactReportFilterShader;
-	////sceneDesc.simulationEventCallback = &gContactReportCallback;
-	gScene = gPhysics->createScene(sceneDesc);
-	// ------------------------------------------------------
+	// Physics -----------------------------------------------------------------------
+	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation,
+		scale, recordMemoryAllocations, mPvd);
+	if (!mPhysics)
+		assert("PxCreatePhysics failed!");
+	else std::cout << "PxPhysX INICIALIZADO!!\n" << std::endl;
 
-	if (gPhysics == NULL) throw "PhysX no se ha iniciado correctamente.";
-	else std::cout << "PhysX INICIALIZADO!!\n" << std::endl;
+	// Cooking -----------------------------------------------------------------------
+	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, PxCookingParams(scale));
+	if (!mCooking)
+		assert("PxCreateCooking failed!");
+	else std::cout << "PxCooking INICIALIZADO!!\n" << std::endl;
+
+	// Scene for GPU Rigid Bodies ----------------------------------------------------
+	mCuda = PxCreateCudaContextManager(*mFoundation, cudaDesc, PxGetProfilerCallback());
+
+	PxSceneDesc sceneDesc(scale);
+	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	mDispatcher = PxDefaultCpuDispatcherCreate(4);
+	sceneDesc.cpuDispatcher = mDispatcher;
+	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
+	sceneDesc.cudaContextManager = mCuda;
+
+	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
+	sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;
+
+	mScene = mPhysics->createScene(sceneDesc);
 }
 
 PhysxManager::~PhysxManager()
 {
-	PX_RELEASE(gPhysics);
-	PX_RELEASE(gFoundation);
+	PX_RELEASE(mPhysics);
+	PX_RELEASE(mFoundation);
 }
 
 void PhysxManager::update()
@@ -61,15 +80,15 @@ void PhysxManager::close()
 	///....
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
-	gScene->release();
-	gDispatcher->release();
+	mScene->release();
+	mDispatcher->release();
 	// -----------------------------------------------------
-	gPhysics->release();
-	PxPvdTransport* transport = gPvd->getTransport();
-	gPvd->release();
+	mPhysics->release();
+	PxPvdTransport* transport = mPvd->getTransport();
+	mPvd->release();
 	transport->release();
 
-	gFoundation->release();
+	mFoundation->release();
 }
 
 void PhysxManager::createBall(
@@ -77,8 +96,8 @@ void PhysxManager::createBall(
 	const PxGeometry& geometry = PxSphereGeometry(10), 
 	const PxVec3& velocity = PxVec3(0, -50, -100))
 {
-	PxMaterial* gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-	PxRigidDynamic* dynamic = PxCreateDynamic(*gPhysics, t, geometry, *gMaterial, 10.0f);
+	PxMaterial* gMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	PxRigidDynamic* dynamic = PxCreateDynamic(*mPhysics, t, geometry, *gMaterial, 10.0f);
 	//dynamic->setAngularDamping(0.5f);
 	//dynamic->setLinearVelocity(velocity);
 	//gScene->addActor(*dynamic);
