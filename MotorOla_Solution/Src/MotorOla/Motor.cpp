@@ -36,7 +36,6 @@ Motor::Motor()
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
-	
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::init();
@@ -133,7 +132,13 @@ void Motor::mainLoop()
 
 		// Contador de frames que los muestra cada 100 frames
 #if (defined _DEBUG)
-		if (++frame % 100 == 0) {
+		if (++frame % 60 == 0) {
+			// Prueba de los prefabs
+			float x = rand() % 800 - 400;
+			float y = rand() % 600 - 300;
+			Entidad::instantiate("Bala.prefab", Vectola3D(x,y,0));
+			EntidadManager* aux = Singleton<EntidadManager>::instance();
+			std::cout << aux << std::endl;
 			std::cout << "FrameCount: " << frame << "\n";
 		}
 #endif

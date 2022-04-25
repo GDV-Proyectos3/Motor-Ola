@@ -1,5 +1,8 @@
 #include "Entidad.h"
 #include "Transform.h"
+#include "LoadResources.h"
+#include "EntidadManager.h"
+#include "LuaReader.h"
 
 Entidad::Entidad():
 	entManager_(nullptr),
@@ -63,4 +66,14 @@ bool Entidad::init()
 		components[0].swap(components[i]);
 	}
 	return true;
+}
+
+Entidad* Entidad::instantiate(std::string name, Vectola3D position, Quaterniola rotation)
+{
+	std::string path = Singleton<LoadResources>::instance()->prefab(name);
+	Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
+	ent = readPrefab(path);
+	ent->getComponent<Transform>()->setPosition(position);
+	ent->getComponent<Transform>()->setRotation(rotation);
+	return ent;
 }

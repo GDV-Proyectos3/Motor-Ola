@@ -20,12 +20,13 @@ public:
     string aud(string name);
 	string tex(string tex);
 	string scene(string scene);
-
+	string prefab(string prefab);
 private:
 	map<string, string>mesh;//.mesh
 	map<string, string>audio;//.mp3,.ogg,.wav
 	map<string, string>textures;//.png,.jpg,.bmp
 	map<string, string>scenes;//.lua
+	map<string, string>prefabs;
 	//Si hay otro tipo añadir el map
 	void search(path p);
 	void load(path p, size_t end, size_t pathLenght);

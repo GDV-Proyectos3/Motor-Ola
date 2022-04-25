@@ -3,8 +3,11 @@
 #include "Componente.h"
 #include "utils/Singleton.h"
 #include "ComponenteFactoria.h"
+#include "utils/Vectola3D.h"
+#include "utils/Quaterniola.h"
 
 class EntidadManager;
+
 class Entidad
 {
 	using uptr_cmp = std::unique_ptr<Componente>;
@@ -97,6 +100,8 @@ public:
 	std::string getName() const { return _name; }
 
 	bool init();
+
+	static Entidad* instantiate(std::string name, Vectola3D position = Vectola3D(), Quaterniola rotation = Quaterniola());
 
 
 private:
