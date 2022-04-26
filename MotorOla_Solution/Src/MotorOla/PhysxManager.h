@@ -33,9 +33,19 @@ public:
 	double GetCounter();
 	void StartCounter();
 
-	// factory
-	void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
-	void attachBola(Entidad* ball);
+	// FACTORY
+	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(0));
+	PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(0));
+	
+	PxRigidStatic* createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material);
+	PxRigidStatic* createStaticRigid(const PxTransform& transform, PxShape* shape);
+
+	PxShape* createShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+	PxShape* createTriggerShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+
+	// factory prefabs
+	PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
+	PxRigidDynamic* createBall();
 
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };
@@ -50,42 +60,43 @@ private:
 	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
 
+	// ON/OFF physics
+	bool	mPause = false;
+	bool	mOneFrame = false;
+
 	// Timer...
 	double PCFreq = 0.0;
 	__int64 CounterStart = 0;
 	__int64 CounterLast = 0;
 
-	// Variables
+	// Variables editables
 	bool _patata;
 
 	PxTolerancesScale scale;
+	PxCudaContextManagerDesc cudaDesc;
+
+	PxReal stackZ = 10.0f;
+
+	// Inevitables para que funcione
+	PxDefaultAllocator		mAllocator;
+	PxDefaultErrorCallback	mErrorCallback;
 
 	PxFoundation* mFoundation = NULL;
 	PxPhysics* mPhysics = NULL;
 
-	PxCooking* mCooking = NULL;
-
-	PxCudaContextManager* mCuda = NULL;
-	PxCudaContextManagerDesc cudaDesc;
-
 	PxDefaultCpuDispatcher* mDispatcher = NULL;
 	PxScene* mScene = NULL;
 
-	///ContactReportCallback gContactReportCallback;
+	PxMaterial* mMaterial = NULL;	// default material
 
 	PxPvd* mPvd = NULL;
+	PxCooking* mCooking = NULL;
 
-	PxDefaultErrorCallback mErrorCallback;
-	PxDefaultAllocator mAllocator;
-
-	//std::vector<uptr_collider> colliders_;
-
-	Entidad* bola = nullptr;
+	PxCudaContextManager* mCuda = NULL;
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
 // en lugar de escribir 'PhysxManager::instance()->method()' escribiremos 'im().method()'
-//
 inline PhysxManager& pm() {
 	return *PhysxManager::instance();
 }

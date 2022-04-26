@@ -71,7 +71,7 @@ void PhysxManager::init()
 	bool recordMemoryAllocations = true;
 
 	mPvd = PxCreatePvd(*mFoundation);
-	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5050, 10);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	mPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 
 	// Physics -----------------------------------------------------------------------
@@ -87,26 +87,65 @@ void PhysxManager::init()
 		assert("PxCreateCooking failed!");
 	else std::cout << "PxCooking INICIALIZADO!!\n" << std::endl;
 
-	// Scene for GPU Rigid Bodies ----------------------------------------------------
+	// Cuda Context Manager ----------------------------------------------------------
 	mCuda = PxCreateCudaContextManager(*mFoundation, cudaDesc, PxGetProfilerCallback());
+	if (mCuda)
+	{
+		if (!mCuda->contextIsValid())
+		{
+			mCuda->release();
+			mCuda = NULL;
+		}
+	}
+#ifdef RENDER_SNIPPET
+	cudaDesc.interopMode = PxCudaInteropMode::OGL_INTEROP;	//Choose interop mode. As the snippets use OGL, we select OGL_INTEROP
+															//when using D3D, cudaContextManagerDesc.graphicsDevice must be set as the graphics device pointer.
+#else
+	cudaDesc.interopMode = PxCudaInteropMode::NO_INTEROP;
+#endif
 
-	PxSceneDesc sceneDesc(scale);
+	// Scene for GPU Rigid Bodies ----------------------------------------------------
+	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
-	mDispatcher = PxDefaultCpuDispatcherCreate(4);
+	mDispatcher = PxDefaultCpuDispatcherCreate(4);				//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
 	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
-	sceneDesc.cudaContextManager = mCuda;
 
-	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;
-	sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;
+	sceneDesc.cudaContextManager = mCuda;						//Set the CUDA context manager, used by GRB.
+
+	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;		//Enable GPU dynamics - without this enabled, simulation (contact gen and solver) will run on the CPU.
+	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;				//Enable PCM. PCM NP is supported on GPU. Legacy contact gen will fall back to CPU
+	sceneDesc.flags |= PxSceneFlag::eENABLE_STABILIZATION;		//Improve solver stability by enabling post-stabilization.
+	sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;			//Enable GPU broad phase. Without this set, broad phase will run on the CPU.
+	sceneDesc.gpuMaxNumPartitions = 8;							//Defines the maximum number of partitions used by the solver. Only power-of-2 values are valid. 
+																//A value of 8 generally gives best balance between performance and stability.
 
 	mScene = mPhysics->createScene(sceneDesc);
+
+	// PVD client conection ----------------------------------------------------------
+	PxPvdSceneClient* pvdClient = mScene->getScenePvdClient();
+	if (pvdClient)
+	{
+		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, false);
+		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, false);
+		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, false);
+	}
+
+	// Inicialización de variables dependientes --------------------------------------
+	mMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+
+	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
+	mScene->addActor(*groundPlane);
 }
 
 // interactive = game is rendering
 // t = time passed since last call in ms
 void PhysxManager::update(bool interactive, double t)
 {
+	if (mPause/* && !gOneFrame*/)
+		return;
+	//gOneFrame = false;
+
 	stepPhysics(interactive, t);
 
 	//spawn objects
@@ -122,21 +161,21 @@ void PhysxManager::update(bool interactive, double t)
 // interactive = game is rendering
 void PhysxManager::close(bool interactive)
 {
-	// delete
-	///....
-
 	PX_UNUSED(interactive);
 
-	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
-	mScene->release();
-	mDispatcher->release();
-	// -----------------------------------------------------
-	mPhysics->release();
-	PxPvdTransport* transport = mPvd->getTransport();
-	mPvd->release();
-	transport->release();
+	PX_RELEASE(mScene);
+	PX_RELEASE(mDispatcher);
+	PX_RELEASE(mPhysics);
 
-	mFoundation->release();
+	if (mPvd)
+	{
+		PxPvdTransport* transport = mPvd->getTransport();
+		mPvd->release();	mPvd = NULL;
+		PX_RELEASE(transport);
+	}
+
+	PX_RELEASE(mCuda);
+	PX_RELEASE(mFoundation);
 }
 
 // ---------------- UTILS --------------------------------------------------
@@ -160,22 +199,78 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 
 // ---------------- FACTORY --------------------------------------------------
 
-void PhysxManager::createBall(
-	const PxTransform& t = PxTransform(PxVec3(0, 40, 100)), 
-	const PxGeometry& geometry = PxSphereGeometry(10), 
-	const PxVec3& velocity = PxVec3(0, -50, -100))
+PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity)
 {
-	PxMaterial* gMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
-	PxRigidDynamic* dynamic = PxCreateDynamic(*mPhysics, t, geometry, *gMaterial, 10.0f);
-	//dynamic->setAngularDamping(0.5f);
-	//dynamic->setLinearVelocity(velocity);
-	//mScene->addActor(*dynamic);
+	PxRigidDynamic* dynamic = PxCreateDynamic(*mPhysics, transform, geometry, material, 10.0f);
+	dynamic->setAngularDamping(0.5f);
+	dynamic->setLinearVelocity(velocity);
+	mScene->addActor(*dynamic);
+	return dynamic;
 }
 
-void PhysxManager::attachBola(Entidad* ball)
+PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity)
 {
+	PxRigidDynamic* dynamic = PxCreateDynamic(*mPhysics, transform, *shape, 10.0f);
+	dynamic->setAngularDamping(0.5f);
+	dynamic->setLinearVelocity(velocity);
+	mScene->addActor(*dynamic);
+	return dynamic;
 }
 
+PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material)
+{
+	PxShape* shape = createTriggerShape(geom, material, false);
+	PxRigidStatic* body = createStaticRigid(transform, shape);
+	shape->release(); // importante! (cuando ya se ha usado hay que borrarlo)
+	return nullptr;
+}
+
+PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, PxShape* shape)
+{
+	PxRigidStatic* body = nullptr;
+
+	if (shape)
+	{
+		body = mPhysics->createRigidStatic(transform);
+		body->attachShape(*shape);
+		mScene->addActor(*body);
+	}
+
+	return body;
+}
+
+PxShape* PhysxManager::createShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive)
+{
+	PxShape* shape = nullptr;
+	const PxShapeFlags shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSCENE_QUERY_SHAPE | PxShapeFlag::eSIMULATION_SHAPE;
+	shape = mPhysics->createShape(geom, material, isExclusive, shapeFlags);
+	return shape;
+}
+
+PxShape* PhysxManager::createTriggerShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive)
+{
+	PxShape* shape = nullptr;
+	const PxShapeFlags shapeFlags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eTRIGGER_SHAPE;
+	shape = mPhysics->createShape(geom, material, isExclusive, shapeFlags);
+	return shape;
+}
+
+PxRigidStatic* PhysxManager::createTriggerStaticBox(const PxVec3 halfExtent, const PxTransform& transform)
+{
+	PxShape* shape = createTriggerShape(PxBoxGeometry(halfExtent), *mMaterial, false);
+	PxRigidStatic* body = createStaticRigid(transform, shape);
+	shape->release(); // importante! (cuando ya se ha usado hay que borrarlo)
+	return body;
+}
+
+PxRigidDynamic* PhysxManager::createBall()
+{
+	PxTransform transform = PxTransform(PxVec3(0, 40, 100));
+	PxVec3 velocity = PxVec3(0, -50, -100);
+	PxRigidDynamic* ball = createDynamic(transform, PxSphereGeometry(10), *mMaterial, velocity);
+	PxRigidBodyExt::updateMassAndInertia(*ball, 1000.f); //density = 1000 ¡arrasa con todo!
+	return ball;
+}
 
 ////----
 float stepTime = 0.0f;
