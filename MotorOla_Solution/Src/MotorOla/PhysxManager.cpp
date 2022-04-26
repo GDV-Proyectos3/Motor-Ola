@@ -1,7 +1,9 @@
 #include "PhysxManager.h"
-#include <windows.h>
-//#include <winnt.h>
-//#include <profileapi.h>
+
+#include <windows.h> // LARGE_INTEGER ...
+////#include <winnt.h>
+////#include <profileapi.h>
+
 #define PVD_HOST "127.0.0.1"	//Set this to the IP address of the system running the PhysX Visual Debugger that you want to connect to.
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
@@ -9,7 +11,10 @@
 
 PhysxManager::PhysxManager() : _patata(false) 
 {
-	PX_UNUSED(_patata);
+	StartCounter();
+
+	PX_UNUSED(true);
+	//PX_UNUSED(_patata);
 
 	// General settings
 	scale.length = 100;        // typical length of an object
@@ -98,25 +103,29 @@ void PhysxManager::init()
 	mScene = mPhysics->createScene(sceneDesc);
 }
 
-void PhysxManager::update()
+// interactive = game is rendering
+// t = time passed since last call in ms
+void PhysxManager::update(bool interactive, double t)
 {
-	mScene->simulate(/*t*/0);
-	mScene->fetchResults(true);
+	stepPhysics(interactive, t);
 
-	//spawn
+	//spawn objects
 	///....
-	//update
+	//update objects
 	///....
-	//refresh
+	//delete objects that reached max. TTL seconds
 	///....
 }
 
 // Function to clean data
 // Add custom code to the begining of the function
-void PhysxManager::close()
+// interactive = game is rendering
+void PhysxManager::close(bool interactive)
 {
 	// delete
 	///....
+
+	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	mScene->release();
@@ -160,10 +169,37 @@ void PhysxManager::createBall(
 	PxRigidDynamic* dynamic = PxCreateDynamic(*mPhysics, t, geometry, *gMaterial, 10.0f);
 	//dynamic->setAngularDamping(0.5f);
 	//dynamic->setLinearVelocity(velocity);
-	//gScene->addActor(*dynamic);
-
+	//mScene->addActor(*dynamic);
 }
 
 void PhysxManager::attachBola(Entidad* ball)
 {
 }
+
+
+////----
+float stepTime = 0.0f;
+//#define FIXED_STEP
+//
+void PhysxManager::renderCallback()
+{
+	double t = GetCounter();
+#ifdef FIXED_STEP
+	if (t < (1.0f / 30.0f))
+	{
+		fprintf(stderr, "Time: %f\n", stepTime);
+		stepTime += t;
+	}
+	else
+		stepTime = 1.0f / 30.0f;
+
+	if (stepTime >= (1.0f / 30.0f))
+	{
+		PhysxManager::update(true, stepTime);
+		stepTime = 0.0f;
+	}
+#else
+	PhysxManager::update(true, t);
+#endif
+}
+////----

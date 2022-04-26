@@ -17,10 +17,12 @@ class PhysxManager : public Singleton<PhysxManager> {
 public:	
 	~PhysxManager();
 
+	void renderCallback();
+
 	// MAIN SINGLETON
 	void init();
-	void update();
-	void close();
+	void update(bool interactive, double t);
+	void close(bool interactive);
 
 	// utils
 	void stepPhysics(bool interactive, double t);
@@ -48,6 +50,7 @@ private:
 	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
 
+	// Timer...
 	double PCFreq = 0.0;
 	__int64 CounterStart = 0;
 	__int64 CounterLast = 0;
@@ -68,7 +71,6 @@ private:
 	PxDefaultCpuDispatcher* mDispatcher = NULL;
 	PxScene* mScene = NULL;
 
-
 	///ContactReportCallback gContactReportCallback;
 
 	PxPvd* mPvd = NULL;
@@ -76,9 +78,7 @@ private:
 	PxDefaultErrorCallback mErrorCallback;
 	PxDefaultAllocator mAllocator;
 
-
 	//std::vector<uptr_collider> colliders_;
-
 
 	Entidad* bola = nullptr;
 };
