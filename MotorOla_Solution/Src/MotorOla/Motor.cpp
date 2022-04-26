@@ -34,14 +34,14 @@ typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
 Motor::Motor()
 {
-	// Inicia los managers (PC: ya que no se usan métodos, se podría dejar con init que para el caso es lo mismo)
+	// Inicia los managers
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
 	
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
-	Singleton<PhysxManager>::init();
+	Singleton<PhysxManager>::instance();
 }
 
 Motor::~Motor()

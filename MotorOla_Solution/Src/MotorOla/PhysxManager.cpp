@@ -1,4 +1,7 @@
 #include "PhysxManager.h"
+#include <windows.h>
+//#include <winnt.h>
+//#include <profileapi.h>
 #define PVD_HOST "127.0.0.1"	//Set this to the IP address of the system running the PhysX Visual Debugger that you want to connect to.
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
@@ -9,13 +12,53 @@ PhysxManager::PhysxManager() : _patata(false)
 	PX_UNUSED(_patata);
 
 	// General settings
-	PxTolerancesScale scale;
 	scale.length = 100;        // typical length of an object
 	scale.speed = 981;         // typical speed of an object, gravity*1s is a reasonable choice
+}
 
+PhysxManager::~PhysxManager()
+{
+	/*PX_RELEASE(mPhysics);
+	PX_RELEASE(mFoundation);*/
+}
+
+// -------------- TIMER ----------------------------------------------------------------
+
+void PhysxManager::StartCounter()
+{
+	LARGE_INTEGER li;
+	if (!QueryPerformanceFrequency(&li))
+		return;
+
+	PCFreq = double(li.QuadPart) /*/ 1000.0*/;
+
+	QueryPerformanceCounter(&li);
+	CounterStart = li.QuadPart;
+	CounterLast = CounterStart;
+}
+
+double PhysxManager::GetCounter()
+{
+	LARGE_INTEGER li;
+	QueryPerformanceCounter(&li);
+	double t = double(li.QuadPart - CounterLast) / PCFreq;
+	CounterLast = li.QuadPart;
+	return t;
+}
+
+double PhysxManager::GetLastTime()
+{
+	double t = double(CounterLast - CounterStart) / PCFreq;
+	return t;
+}
+
+// ------------ MAIN SINGLETON -------------------------------------------------------
+
+void PhysxManager::init()
+{
 	// Foundation --------------------------------------------------------------------
 	mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, mAllocator, mErrorCallback);
-	if (!mFoundation) 
+	if (!mFoundation)
 		assert("PxCreateFoundation failed!");
 	else std::cout << std::endl << "PxFoundation INICIALIZADO!!" << std::endl;
 
@@ -55,16 +98,10 @@ PhysxManager::PhysxManager() : _patata(false)
 	mScene = mPhysics->createScene(sceneDesc);
 }
 
-PhysxManager::~PhysxManager()
-{
-	PX_RELEASE(mPhysics);
-	PX_RELEASE(mFoundation);
-}
-
 void PhysxManager::update()
 {
-	////gScene->simulate(/*t*/0);
-	////gScene->fetchResults(true);
+	mScene->simulate(/*t*/0);
+	mScene->fetchResults(true);
 
 	//spawn
 	///....
@@ -74,6 +111,8 @@ void PhysxManager::update()
 	///....
 }
 
+// Function to clean data
+// Add custom code to the begining of the function
 void PhysxManager::close()
 {
 	// delete
@@ -90,6 +129,27 @@ void PhysxManager::close()
 
 	mFoundation->release();
 }
+
+// ---------------- UTILS --------------------------------------------------
+
+// Function to configure what happens in each step of physics
+// interactive: true if the game is rendering, false if it offline
+// t: time passed since last call in milliseconds
+void PhysxManager::stepPhysics(bool interactive, double t)
+{
+	PX_UNUSED(interactive);
+
+	mScene->simulate(t);
+	mScene->fetchResults(true);
+}
+
+void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
+{
+	PX_UNUSED(actor1);
+	PX_UNUSED(actor2);
+}
+
+// ---------------- FACTORY --------------------------------------------------
 
 void PhysxManager::createBall(
 	const PxTransform& t = PxTransform(PxVec3(0, 40, 100)), 

@@ -3,6 +3,7 @@
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
+#include <ctype.h>
 #include <cassert>
 #include "Entidad.h"
 ///#include <callbacks.hpp>
@@ -16,12 +17,21 @@ class PhysxManager : public Singleton<PhysxManager> {
 public:	
 	~PhysxManager();
 
-	// Getters
-	// ...
-	void init() {};
+	// MAIN SINGLETON
+	void init();
 	void update();
 	void close();
 
+	// utils
+	void stepPhysics(bool interactive, double t);
+	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+
+	// TIMER
+	double GetLastTime();
+	double GetCounter();
+	void StartCounter();
+
+	// factory
 	void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
 	void attachBola(Entidad* ball);
 
@@ -37,8 +47,15 @@ public:
 private:
 	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
+
+	double PCFreq = 0.0;
+	__int64 CounterStart = 0;
+	__int64 CounterLast = 0;
+
 	// Variables
 	bool _patata;
+
+	PxTolerancesScale scale;
 
 	PxFoundation* mFoundation = NULL;
 	PxPhysics* mPhysics = NULL;
@@ -49,8 +66,8 @@ private:
 	PxCudaContextManagerDesc cudaDesc;
 
 	PxDefaultCpuDispatcher* mDispatcher = NULL;
-
 	PxScene* mScene = NULL;
+
 
 	///ContactReportCallback gContactReportCallback;
 
