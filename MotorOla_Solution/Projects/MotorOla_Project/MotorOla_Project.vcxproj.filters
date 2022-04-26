@@ -50,6 +50,12 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\MotorOla\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\utils\Vector2D.h">
@@ -119,6 +125,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Src\MotorOla\Motor.h" />
+    <ClInclude Include="..\..\Src\MotorOla\framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -10,8 +10,6 @@
 #include <OgreOverlaySystem.h>
 #include <OgreOverlayManager.h>
 
-
-
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 

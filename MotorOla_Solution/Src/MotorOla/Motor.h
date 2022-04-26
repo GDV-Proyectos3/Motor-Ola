@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <string>
@@ -16,7 +23,7 @@ class EntidadManager;
 class Entity;
 class OverlayManager;
 
-class Motor
+MOTOR_API class Motor
 {
 private:
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
@@ -29,10 +36,10 @@ private:
 	int frame = 0;
 
 public:
-	Motor();
-	~Motor();
+	MOTOR_API Motor();
+	MOTOR_API ~Motor();
 
-	void initSystems();
+	MOTOR_API void initSystems();
 
 	/// <summary>
 	/// Añadir aqui todos los componentes que se hagan
@@ -42,7 +49,7 @@ public:
 	/// <summary>
 	/// Bucle principal de la ejecucion del motor
 	/// </summary>
-	void mainLoop();
+	MOTOR_API void mainLoop();
 
 	/// <summary>
 	/// Carga Juego.dll y llama a la funcion LoadGame()
@@ -61,10 +68,7 @@ public:
 	/// </summary>
 	void loadTestMotorGame();
 
-	/// <summary>
-	/// Mini-juego de prueba del motor
-	/// </summary>
-	//void loadPong();
+
 
 	// Getters and Setters
 	void setStop(bool s);

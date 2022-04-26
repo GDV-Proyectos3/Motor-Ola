@@ -1,3 +1,7 @@
+#include "pch.h" // use stdafx.h in Visual Studio 2017 and earlier
+#include <utility>
+#include <limits.h>
+
 #include "Motor.h"
 #include <Windows.h>
 #include "LuaReader.h"
@@ -27,6 +31,7 @@
 #include "Mesh.h"
 #include "Movible.h"
 #include "AudioSource.h"
+#include <iostream>
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
 
@@ -38,7 +43,7 @@ Motor::Motor()
 	Singleton<EntidadManager>::instance();
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
-	Singleton<PhysxManager>::init();
+	Singleton<PhysxManager>::instance();
 }
 
 Motor::~Motor()
@@ -74,7 +79,6 @@ void Motor::initSystems()
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
-		//loadPong();
 	}
 
 	// Carga una escena con Lua
