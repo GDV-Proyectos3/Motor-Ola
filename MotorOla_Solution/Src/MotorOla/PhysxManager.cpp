@@ -1,4 +1,5 @@
 #include "PhysxManager.h"
+#include "PsArray.h"
 
 #include <windows.h> // LARGE_INTEGER ...
 ////#include <winnt.h>
@@ -163,7 +164,8 @@ void PhysxManager::close(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	PX_RELEASE(mScene);
+	releaseScene();
+	//PX_RELEASE(mScene);
 	PX_RELEASE(mDispatcher);
 	PX_RELEASE(mPhysics);
 
@@ -183,11 +185,11 @@ void PhysxManager::close(bool interactive)
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
-void PhysxManager::stepPhysics(bool interactive, double t)
+void PhysxManager::stepPhysics(bool interactive, double frameTime)
 {
 	PX_UNUSED(interactive);
 
-	mScene->simulate(t);
+	mScene->simulate(frameTime/*1.0f / 60.0f*/);
 	mScene->fetchResults(true);
 }
 
@@ -291,6 +293,12 @@ void PhysxManager::createStackBoxes(const PxTransform& t, PxU32 size, PxReal hal
 	shape->release();
 }
 
+void PhysxManager::tiledStacks(PxReal num, PxReal sideLength)
+{
+	for (PxU32 i = 0; i < num; i++)
+		createStackBoxes(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 20 / sideLength, sideLength);
+}
+
 ////----
 float stepTime = 0.0f;
 //#define FIXED_STEP
@@ -315,5 +323,31 @@ void PhysxManager::runPhysX()
 #else
 	PhysxManager::update(true, t);
 #endif
+}
+
+// Elimina de forma robusta todos los RigidBody's de la Scene.
+void PhysxManager::releaseScene()
+{
+	PxActorTypeFlags actorTypes = PxActorTypeFlag::eRIGID_STATIC | PxActorTypeFlag::eRIGID_DYNAMIC;
+	shdfnd::Array<PxActor*> actorArray;
+
+	PxU32 numActors = mScene->getNbActors(actorTypes);
+	actorArray.resize(numActors);
+
+	mScene->getActors(actorTypes, actorArray.begin(), actorArray.size());
+
+	PxActor** actores = new PxActor*[numActors];
+	for (int i = 0; i < numActors; i++) {
+		actores[i] = actorArray[i];
+	}
+
+	mScene->removeActors(actores, numActors, false);
+	PX_RELEASE(mScene);
+}
+
+// Elimina un RigidBody concreto de la Scene.
+void PhysxManager::releaseBody(PxActor& body)
+{
+	mScene->removeActor(body, false);
 }
 ////----

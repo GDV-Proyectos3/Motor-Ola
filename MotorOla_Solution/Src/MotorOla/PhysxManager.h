@@ -3,21 +3,19 @@
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
-#include <ctype.h>
 #include <cassert>
-#include "Entidad.h"
-///#include <callbacks.hpp>
 
 using namespace physx;
-//#include <string>
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
-	//using uptr_collider = std::unique_ptr<Px>;
 public:	
 	~PhysxManager();
 
+	// main resources
 	void runPhysX();
+	void releaseScene();
+	void releaseBody(PxActor& body);
 
 	// MAIN SINGLETON
 	void init();
@@ -47,15 +45,10 @@ public:
 	PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
 	PxRigidDynamic* createBall();
 	void createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent);
+	void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
 
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };
-
-	// Etc
-	// virtual void patata(...) {}
-
-	// Funciones
-	// void loadPatatas();
 
 private:
 	PhysxManager(/*...*/);
