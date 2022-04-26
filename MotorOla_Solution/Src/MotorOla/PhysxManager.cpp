@@ -1,5 +1,6 @@
 #include "PhysxManager.h"
 #include "PsArray.h"
+#include "Transform.h"
 
 #include <windows.h> // LARGE_INTEGER ...
 ////#include <winnt.h>
@@ -323,6 +324,21 @@ void PhysxManager::runPhysX()
 #else
 	PhysxManager::update(true, t);
 #endif
+}
+
+void PhysxManager::actualizaTransform(Transform& tr, const PxRigidActor& body)
+{
+	PxTransform bodyTr = body.getGlobalPose();
+	bodyTr.getNormalized();
+
+	PxVec3 bodyPos = PxVec3(bodyTr.p);
+	PxQuat bodyRot = PxQuat(bodyTr.q);
+
+	Vectola3D pos = Vectola3D(bodyPos.x, bodyPos.y, bodyPos.z);
+	tr.setPosition(pos);
+
+	Quaterniola rot = Quaterniola(bodyRot.x, bodyRot.y, bodyRot.z, bodyRot.w);
+	tr.setRotation(rot);
 }
 
 // Elimina de forma robusta todos los RigidBody's de la Scene.

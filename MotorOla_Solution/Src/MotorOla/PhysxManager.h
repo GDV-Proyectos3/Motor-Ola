@@ -6,6 +6,7 @@
 #include <cassert>
 
 using namespace physx;
+class Transform;
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
@@ -14,6 +15,9 @@ public:
 
 	// main resources
 	void runPhysX();
+	void actualizaTransform(Transform& tr, const PxRigidActor& body);
+	
+	// elimina memoria
 	void releaseScene();
 	void releaseBody(PxActor& body);
 
