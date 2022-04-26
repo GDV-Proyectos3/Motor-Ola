@@ -10,6 +10,7 @@ class Transform;
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
+	friend std::ostream& operator<<(std::ostream& os, const PxVec3& v);
 public:	
 	~PhysxManager();
 
@@ -31,9 +32,10 @@ public:
 	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 
 	// TIMER
-	double GetLastTime();
-	double GetCounter();
 	void StartCounter();
+	double GetCounter();
+	double GetLastTime();
+	void debugTime();
 
 	// FACTORY
 	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(0));
@@ -58,6 +60,8 @@ private:
 	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
 
+	PxRigidDynamic* testBALL = nullptr;
+
 	// ON/OFF physics
 	bool	mPause = false;
 	bool	mOneFrame = false;
@@ -66,6 +70,7 @@ private:
 	double PCFreq = 0.0;
 	__int64 CounterStart = 0;
 	__int64 CounterLast = 0;
+	__int64 GlobalTimer = 0;
 
 	// Variables editables
 	bool _patata;

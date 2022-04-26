@@ -210,6 +210,7 @@ bool Motor::loadMainMenu(std::string name,const char*get) {
 
 void Motor::loadTestMotorGame() 
 {
+	pm().createBall();
 	//// Entidad con un transform
 	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	//map<string, string> m;

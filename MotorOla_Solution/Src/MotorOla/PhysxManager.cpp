@@ -13,7 +13,7 @@
 
 PhysxManager::PhysxManager() : _patata(false) 
 {
-	StartCounter();
+	//StartCounter();
 
 	PX_UNUSED(true);
 	//PX_UNUSED(_patata);
@@ -57,6 +57,15 @@ double PhysxManager::GetLastTime()
 {
 	double t = double(CounterLast - CounterStart) / PCFreq;
 	return t;
+}
+
+void PhysxManager::debugTime()
+{
+	std::cout << "PCFreq : " << PCFreq << std::endl;
+	std::cout << "CounterStart : " << CounterStart << std::endl;
+	std::cout << "CounterLast : " << CounterLast << std::endl;
+	std::cout << "GetLastTime() = " << GetLastTime() << std::endl;
+	std::cout << "GlobalTimer : " << GlobalTimer << std::endl;
 }
 
 // ------------ MAIN SINGLETON -------------------------------------------------------
@@ -138,6 +147,9 @@ void PhysxManager::init()
 
 	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 	mScene->addActor(*groundPlane);
+
+	testBALL = createBall();
+	StartCounter();
 }
 
 // interactive = game is rendering
@@ -148,7 +160,18 @@ void PhysxManager::update(bool interactive, double t)
 		return;
 	//gOneFrame = false;
 
-	stepPhysics(interactive, t);
+	stepPhysics(interactive, 1.0f/60.0f);
+
+	// GetLastTime() 
+	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
+	// pero su uso real es llevar el tiempo real de la app activa.
+	if (GetLastTime() - GlobalTimer > 1.0) {
+		PxVec3 v = testBALL->getGlobalPose().p;
+		std::cout << "PhyBALL position : ";
+		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
+		debugTime();
+		GlobalTimer = GetLastTime();
+	}
 
 	//spawn objects
 	///....
@@ -198,6 +221,11 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+}
+
+std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
+	os << "(" << v.x << "," << v.y << "," << v.z << ")";
+	return os;
 }
 
 // ---------------- FACTORY --------------------------------------------------
@@ -270,7 +298,7 @@ PxRigidStatic* PhysxManager::createTriggerStaticBox(const PxVec3 halfExtent, con
 
 PxRigidDynamic* PhysxManager::createBall()
 {
-	PxTransform transform = PxTransform(PxVec3(0, 40, 100));
+	PxTransform transform = PxTransform(PxVec3(0, 400, 100));
 	PxVec3 velocity = PxVec3(0, -50, -100);
 	PxRigidDynamic* ball = createDynamic(transform, PxSphereGeometry(10), *mMaterial, velocity);
 	PxRigidBodyExt::updateMassAndInertia(*ball, 1000.f); //density = 1000 ¡arrasa con todo!
