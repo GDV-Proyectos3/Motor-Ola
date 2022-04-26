@@ -17,7 +17,7 @@ class PhysxManager : public Singleton<PhysxManager> {
 public:	
 	~PhysxManager();
 
-	void renderCallback();
+	void runPhysX();
 
 	// MAIN SINGLETON
 	void init();
@@ -46,6 +46,7 @@ public:
 	// factory prefabs
 	PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
 	PxRigidDynamic* createBall();
+	void createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent);
 
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };

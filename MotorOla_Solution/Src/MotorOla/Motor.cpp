@@ -122,7 +122,7 @@ void Motor::mainLoop()
 		// Actualizar las fisicas de las entidades
 		// Update PhysX: (PC: el 'pm()' igual que 'ih()' es un alias,
 		// es decir una forma breve para nombrar la llamada a '(...)::instance()')
-		pm().renderCallback(); ////pm().update(true, 0);
+		pm().runPhysX(); ////pm().update(true, 0);
 
 		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {

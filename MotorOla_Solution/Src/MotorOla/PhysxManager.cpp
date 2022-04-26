@@ -255,6 +255,8 @@ PxShape* PhysxManager::createTriggerShape(const PxGeometry& geom, PxMaterial& ma
 	return shape;
 }
 
+// ---------------- PREFABS --------------------------------------------------
+
 PxRigidStatic* PhysxManager::createTriggerStaticBox(const PxVec3 halfExtent, const PxTransform& transform)
 {
 	PxShape* shape = createTriggerShape(PxBoxGeometry(halfExtent), *mMaterial, false);
@@ -272,11 +274,28 @@ PxRigidDynamic* PhysxManager::createBall()
 	return ball;
 }
 
+void PhysxManager::createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent)
+{
+	PxShape* shape = createShape(PxBoxGeometry(halfExtent, halfExtent, halfExtent), *mMaterial);
+	for (PxU32 i = 0; i < size; i++)
+	{
+		for (PxU32 j = 0; j < size - i; j++)
+		{
+			//Esta linea sobra, pero es un ejemplo de Dynamic con solo transform:
+			//PxRigidDynamic* body = gPhysics->createRigidDynamic(t.transform(localTm));
+			PxTransform localTm(PxVec3(PxReal(j * 2) - PxReal(size - i), PxReal(i * 2 + 1), 0) * halfExtent);
+			PxRigidDynamic* body = createDynamic(t.transform(localTm), shape);
+			PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
+		}
+	}
+	shape->release();
+}
+
 ////----
 float stepTime = 0.0f;
 //#define FIXED_STEP
 //
-void PhysxManager::renderCallback()
+void PhysxManager::runPhysX()
 {
 	double t = GetCounter();
 #ifdef FIXED_STEP
