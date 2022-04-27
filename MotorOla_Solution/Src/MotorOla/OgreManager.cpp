@@ -79,8 +79,6 @@ void OgreManager::init()
 	
 	_root->getSceneManager("SceneManagerInstance1")->addRenderQueueListener(_overlaySystem);
 	
-	
-
 	std::cout << "OgreManager iniciado\n";
 }
 

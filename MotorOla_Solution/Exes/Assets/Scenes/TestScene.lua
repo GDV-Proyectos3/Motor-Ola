@@ -5,7 +5,7 @@ local level = {
     camera = {
         nearClipDistance="1",
         farClipDistance="10000",
-        camPosition="0,0,-1000",
+        camPosition="0,0,0",
         camRotation="0,0,0"
     },
     entidades = {
@@ -20,25 +20,110 @@ local level = {
                     scale="5,5,5"
                 },
                 mesh={
-                    mesh="ogrehead.mesh",
+                    mesh="sphere.mesh",
                     material="Verde",
                     visible="true"
                 }
             }
         },
         {
-            name="Pala2",
+            name="Lado1",
             id=2,
             components={
                 transform={
                     parent="-1",
-                    position="0,0,0",
+                    position="10,0,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Rojo",
+                    material="Amarillo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Lado2",
+            id=3,
+            components={
+                transform={
+                    parent="-1",
+                    position="-10,0,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Amarillo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Lado3",
+            id=4,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,10,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Amarillo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Lado4",
+            id=5,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,-10,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Amarillo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Lado5",
+            id=6,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,0,10",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Amarillo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Lado6",
+            id=7,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,0,-10",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Amarillo",
                     visible="true"
                 }
             }

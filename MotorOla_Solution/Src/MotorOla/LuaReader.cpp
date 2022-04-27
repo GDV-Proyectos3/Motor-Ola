@@ -128,6 +128,9 @@ void readFile(std::string file) {
 		//camNode->setOrientation(qaux.operator Ogre::Quaternion());
 		lua_pop(l, 1);	
 
+		Singleton<OgreManager>::instance()->getRenderWindow()->getViewport(0)->update();
+		//getRenderWindow()->getViewport(0)->update();
+
 		lua_pop(l, 1);
 
 		// Después lee todas las entidades y los componentes de cada una
