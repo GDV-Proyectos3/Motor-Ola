@@ -111,7 +111,7 @@ void readFile(std::string file) {
 		std::string temp = camPos.substr(sz + 1);
 		cy = stof(temp, &sa);
 		cz = stof(camPos.substr(sz + sa + 2));
-		camNode->setPosition({ cx, cy, cz });
+		//camNode->setPosition({ cx, cy, cz });
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "camRotation");
@@ -124,8 +124,11 @@ void readFile(std::string file) {
 		Vectola3D vaux(cx, cy, cz);
 		Quaterniola qaux;
 		qaux = qaux.Euler(vaux);
-		camNode->setOrientation(qaux.operator Ogre::Quaternion());
+		//camNode->lookAt(Ogre::Vector3(cx, cy, cz), Ogre::Node::TS_WORLD);
+		//camNode->setOrientation(qaux.operator Ogre::Quaternion());
 		lua_pop(l, 1);	
+
+		lua_pop(l, 1);
 
 		// Después lee todas las entidades y los componentes de cada una
 		lua_getfield(l, -1, "entidades");
