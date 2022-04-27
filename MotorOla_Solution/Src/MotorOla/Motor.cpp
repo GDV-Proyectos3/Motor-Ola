@@ -82,8 +82,8 @@ void Motor::initSystems()
 	}
 
 	// Carga una escena con Lua
-	if(!loadScene("TestScene.lua"))
-	//if(!loadMainMenu("MainMenuScene.lua","GetMainMenu"))
+	//if(!loadScene("TestScene.lua"))
+	if(!loadMainMenu("MainMenuScene.lua","GetMainMenu"))
 		throw "Error loading a Scene\n";
 }
 
