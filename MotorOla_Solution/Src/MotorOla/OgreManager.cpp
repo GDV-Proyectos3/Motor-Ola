@@ -46,13 +46,13 @@ void OgreManager::init()
 	
 	
 	// Create the camera
-	Ogre::Camera* cam = _sceneManager->createCamera("Cam");
+	cam = _sceneManager->createCamera("Cam");
 	cam->setNearClipDistance(1);
 	cam->setFarClipDistance(10000);
 	cam->setAutoAspectRatio(true);
 	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
-	Ogre::SceneNode* camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
+	camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
 	camNode->attachObject(cam);
 	camNode->setPosition(0, 0, 1000);
 	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);

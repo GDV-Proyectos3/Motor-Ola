@@ -46,6 +46,8 @@ public:
 	~OgreManager();
 
 	// Getters
+	Ogre::Camera* getCam() const { return cam; };
+	Ogre::SceneNode* getCamNode() const { return camNode; };
 	Ogre::RenderWindow* getRenderWindow() const { return _window.render; }
 	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
 	Ogre::Viewport* getViewPort() const { return _vp; }
@@ -91,6 +93,8 @@ private:
 	Ogre::OverlaySystem* _overlaySystem=nullptr;  // Overlay system
 	Ogre::SceneManager* _sceneManager = nullptr;
 	Ogre::Viewport* _vp = nullptr;
+	Ogre::Camera* cam = nullptr;
+	Ogre::SceneNode* camNode = nullptr;
 	bool _firstRun;
 	Ogre::String _appName = "MotorOla";
 	Ogre::String _solutionPath;

@@ -7,10 +7,6 @@ extern "C"
    
 }
 
-
-
-
-
 void readFile(std::string file);
 void readFileMenus(std::string file,const char* get);
 

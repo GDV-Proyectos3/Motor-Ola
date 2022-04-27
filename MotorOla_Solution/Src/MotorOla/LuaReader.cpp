@@ -1,5 +1,4 @@
 #include "LuaReader.h"
-
 #include <vector>
 #include <iostream>
 #include <map>
@@ -12,15 +11,12 @@
 #include "OverlayManager.h"
 #include <stdio.h>
 
-
-
 extern "C"
 {
     #include "lua.h"
     #include "lauxlib.h"
     #include "lualib.h"
 }
-
 
 static const luaL_Reg lualibs[] = {
 		{ "base",       luaopen_base },
@@ -35,9 +31,6 @@ void openlualibs(lua_State* l) {
 		lua_settop(l, 0);
 	}
 }
-
-
-
 
 void readFile(std::string file) {
 	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
@@ -90,6 +83,49 @@ void readFile(std::string file) {
 		aux = lua_tostring(l, -1);
 		//Singleton<Physx> cambiar gravedad
 		lua_pop(l, 1);
+
+		// Modifica la camara de la escena
+		lua_getfield(l, -1, "camera");
+		//lua_pushnil(l);
+
+		// Obtenemos la camara y su nodo
+		Ogre::Camera* cam = Singleton<OgreManager>::instance()->getCam();
+		Ogre::SceneNode* camNode = Singleton<OgreManager>::instance()->getCamNode();
+
+		// Ajustamos sus parametros
+		lua_getfield(l, -1, "nearClipDistance");
+		int nCD = lua_tonumber(l, -1);
+		cam->setNearClipDistance(nCD);
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "farClipDistance");
+		int fCD = lua_tonumber(l, -1);
+		cam->setNearClipDistance(fCD);
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "camPosition");
+		sz = 0, sa = 0;
+		std::string camPos = lua_tostring(l, -1);
+		float cx, cy, cz;
+		cx = stof(camPos, &sz);
+		std::string temp = camPos.substr(sz + 1);
+		cy = stof(temp, &sa);
+		cz = stof(camPos.substr(sz + sa + 2));
+		camNode->setPosition({ cx, cy, cz });
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "camRotation");
+		sz = 0; sa = 0;
+		std::string camRot = lua_tostring(l, -1);
+		cx = stof(camRot, &sz);
+		temp = camRot.substr(sz + 1);
+		cy = stof(temp, &sa);
+		cz = stof(camRot.substr(sz + sa + 2));
+		Vectola3D vaux(cx, cy, cz);
+		Quaterniola qaux;
+		qaux = qaux.Euler(vaux);
+		camNode->setOrientation(qaux.operator Ogre::Quaternion());
+		lua_pop(l, 1);	
 
 		// Después lee todas las entidades y los componentes de cada una
 		lua_getfield(l, -1, "entidades");
@@ -260,11 +296,6 @@ void readFileMenus(std::string file,const char* get)
 			lua_getfield(l, -1, "dimensionY");
 			float dimensionY = lua_tonumber(l, -1);
 			lua_pop(l, 1);
-
-			
-			
-
-
 
 			Singleton<OverlayManager>::instance()->creaBoton(positionX, positionY, texto, nombrePanel, nombreTexto, tamLetra, material, dimensionX, dimensionY);
 			//ents.push_back(ent);
