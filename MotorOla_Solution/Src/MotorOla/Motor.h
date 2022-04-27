@@ -28,6 +28,8 @@ private:
 	// Contador auxiliar
 	int frame = 0;
 
+	Entidad* cuboTest = nullptr;
+
 public:
 	Motor();
 	~Motor();
