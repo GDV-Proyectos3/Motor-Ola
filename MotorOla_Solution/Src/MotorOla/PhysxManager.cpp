@@ -10,7 +10,7 @@
 
 ///#include "callbacks.hpp"
 
-PhysxManager::PhysxManager() : _patata(false) 
+PhysxManager::PhysxManager() : _patata(false)
 {
 	//StartCounter();
 
@@ -263,6 +263,22 @@ Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
 	tr.setRotation(rot);
 
 	return tr;
+}
+
+void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
+{
+	Transform* tr = e.getComponent<Transform>();
+	PxTransform bodyTR = globalToPhysxTR(*tr);
+	body.getGlobalPose().p = bodyTR.p;
+	body.getGlobalPose().q = bodyTR.q;
+}
+
+void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body)
+{
+	Transform auxTR = physxToGlobalTR(body);
+	Transform* tr = e.getComponent<Transform>();
+	tr->setPosition(auxTR.getPosition());
+	tr->setRotation(auxTR.getRotation());
 }
 
 // ---------------- FACTORY --------------------------------------------------

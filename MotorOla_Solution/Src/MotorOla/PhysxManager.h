@@ -1,10 +1,12 @@
 #pragma once
 
 #include "utils\Singleton.h"
-#include "Transform.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
 #include <cassert>
+
+#include "Transform.h"
+#include "Entidad.h"
 
 using namespace physx;
 
@@ -59,6 +61,10 @@ public:
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };
 	PxRigidDynamic* getBall() { return testBALL; };
+
+	// Setters
+	void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
+	void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
 
 private:
 	PhysxManager(/*...*/);
