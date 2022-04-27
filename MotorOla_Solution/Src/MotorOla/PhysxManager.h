@@ -1,12 +1,12 @@
 #pragma once
 
 #include "utils\Singleton.h"
+#include "Transform.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
 #include <cassert>
 
 using namespace physx;
-class Transform;
 
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
@@ -16,7 +16,10 @@ public:
 
 	// main resources
 	void runPhysX();
-	void actualizaTransform(Transform& tr, const PxRigidActor& body);
+
+	// transform
+	PxTransform globalToPhysxTR(Transform& tr);
+	Transform physxToGlobalTR(const PxRigidActor& body);
 	
 	// elimina memoria
 	void releaseScene();
@@ -55,6 +58,7 @@ public:
 
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };
+	PxRigidDynamic* getBall() { return testBALL; };
 
 private:
 	PhysxManager(/*...*/);

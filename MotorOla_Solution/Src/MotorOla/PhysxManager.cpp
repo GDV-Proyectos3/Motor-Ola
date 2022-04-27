@@ -1,6 +1,5 @@
 #include "PhysxManager.h"
 #include "PsArray.h"
-#include "Transform.h"
 
 #include <windows.h> // LARGE_INTEGER ...
 ////#include <winnt.h>
@@ -228,6 +227,44 @@ std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
 	return os;
 }
 
+// Copia los valores de un transform global a uno propio de physx
+PxTransform PhysxManager::globalToPhysxTR(Transform& tr)
+{
+	PxTransform bodyTr = PxTransform();
+
+	Vectola3D trPos = tr.getPosition();
+	Quaterniola trRot = tr.getRotation();
+	trRot.normalize();
+
+	PxVec3 pos = PxVec3(trPos.getX(), trPos.getY(), trPos.getZ());
+	bodyTr.p = pos;
+
+	PxQuat rot = PxQuat(trRot.s, trRot.v.getX(), trRot.v.getY(), trRot.v.getZ());
+	bodyTr.q = rot;
+
+	return bodyTr;
+}
+
+// Copia los valores de un transform tipico de physx a uno global
+Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
+{
+	Transform tr = Transform();
+
+	PxTransform bodyTr = body.getGlobalPose();
+	bodyTr.getNormalized();
+
+	PxVec3 bodyPos = PxVec3(bodyTr.p);
+	PxQuat bodyRot = PxQuat(bodyTr.q);
+
+	Vectola3D pos = Vectola3D(bodyPos.x, bodyPos.y, bodyPos.z);
+	tr.setPosition(pos);
+
+	Quaterniola rot = Quaterniola(bodyRot.x, bodyRot.y, bodyRot.z, bodyRot.w);
+	tr.setRotation(rot);
+
+	return tr;
+}
+
 // ---------------- FACTORY --------------------------------------------------
 
 PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity)
@@ -352,21 +389,6 @@ void PhysxManager::runPhysX()
 #else
 	PhysxManager::update(true, t);
 #endif
-}
-
-void PhysxManager::actualizaTransform(Transform& tr, const PxRigidActor& body)
-{
-	PxTransform bodyTr = body.getGlobalPose();
-	bodyTr.getNormalized();
-
-	PxVec3 bodyPos = PxVec3(bodyTr.p);
-	PxQuat bodyRot = PxQuat(bodyTr.q);
-
-	Vectola3D pos = Vectola3D(bodyPos.x, bodyPos.y, bodyPos.z);
-	tr.setPosition(pos);
-
-	Quaterniola rot = Quaterniola(bodyRot.x, bodyRot.y, bodyRot.z, bodyRot.w);
-	tr.setRotation(rot);
 }
 
 // Elimina de forma robusta todos los RigidBody's de la Scene.
