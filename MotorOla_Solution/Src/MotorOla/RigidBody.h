@@ -14,19 +14,12 @@ class RigidBody : public Componente, public PxRigidDynamic
 public:
 	// OBLIGATORIO EN CADA COMPONENTE
 	// Constructor sin parámetros 
-	/**
-	* PxType: 
-	* PxBaseFlags: ( eOWNS_MEMORY | eIS_RELEASABLE ) posee memoria o es liberable.
-	*/
-	RigidBody(PxType concreteType = PxConcreteType::eRIGID_DYNAMIC, 
-		PxBaseFlags baseFlags = PxBaseFlag::eOWNS_MEMORY, 
-		PxVec3 position = PxVec3(PxZero), 
-		PxQuat orientation = PxQuat(PxIdentity)
-	);
+	RigidBody();
 	// Destructor
 	virtual ~RigidBody();
 	// Función para inicializar el componente mediante datos serializados
-	bool init(const std::map<std::string, std::string>& mapa);
+	bool init(PxVec3 position, PxQuat orientation,
+		const std::map<std::string, std::string>& mapa);
 
 	// Getters
 
@@ -35,5 +28,13 @@ public:
 	//...
 
 private:
-	//...
+
+	/**
+	* PxType:
+	* PxBaseFlags: ( eOWNS_MEMORY | eIS_RELEASABLE ) posee memoria o es liberable.
+	*/
+	PxType concreteType_ = PxConcreteType::eRIGID_DYNAMIC;
+	PxBaseFlags baseFlags_ = PxBaseFlag::eOWNS_MEMORY;
+	PxVec3 position_ = PxVec3(PxZero);
+	PxQuat orientation_ = PxQuat(PxIdentity);
 };
