@@ -1,6 +1,14 @@
 // This file is part of the course TPV2@UCM - Samir Genaim
 
 #pragma once
+
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
+
 #ifndef _SINGLETON_
 #define _SINGLETON_
 #include <memory>
@@ -55,7 +63,7 @@ public:
 	// some singletons need to be initialised with some parameters, we
 	// can call this method at the beginning of the program.
 	template<typename ...Targs>
-	inline static T* init(Targs &&...args) {
+	MOTOR_API inline static T* init(Targs &&...args) {
 		//std::cout << "Initializing Resources..." << std::endl;
 		assert(instance_.get() == nullptr);
 		instance_.reset(new T(std::forward<Targs>(args)...));
@@ -65,12 +73,12 @@ public:
 
 	// in some cases, when singletons depend on each other, you have
 	// to close them in a specific order, This is why we have this close method
-	inline static void close() {
+	MOTOR_API inline static void close() {
 		instance_.reset();
 	}
 
 	// get the singleton instance as a pointer
-	inline static T* instance() {
+	MOTOR_API inline static T* instance() {
 		// you can replace the "if" by assert(instance_.get() != nullptr)
 		// to force initialisation at the beginning
 		if (instance_.get() == nullptr) {
@@ -80,10 +88,11 @@ public:
 	}
 
 private:
-	 static std::unique_ptr<T> instance_;
-};
 
+	MOTOR_API static std::unique_ptr<T> instance_;
+};
+/*
 template<typename T>
 std::unique_ptr<T> Singleton<T>::instance_;
-
+*/
 #endif // !_SINGLETON_

@@ -4,7 +4,6 @@
 extern "C"
 {
     struct lua_State;
-   
 }
 
 void readFile(std::string file);

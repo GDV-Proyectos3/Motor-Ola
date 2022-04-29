@@ -1,5 +1,7 @@
 #include "FMODAudioManager.h"
 
+std::unique_ptr<FMODAudioManager> Singleton<FMODAudioManager>::instance_ = nullptr;
+
 FMODAudioManager::FMODAudioManager()
 {
 }

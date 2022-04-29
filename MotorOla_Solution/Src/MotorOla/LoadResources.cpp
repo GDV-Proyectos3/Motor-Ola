@@ -1,5 +1,7 @@
 #include "LoadResources.h"
 
+std::unique_ptr<LoadResources> Singleton<LoadResources>::instance_ = nullptr;
+
 LoadResources::LoadResources()
 {
 }

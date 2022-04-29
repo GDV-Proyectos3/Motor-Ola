@@ -1,27 +1,33 @@
 #pragma once
 
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #include "AudioManager.h"
 #include <fmod.hpp>
 #include <fmod_errors.h>
 #include <map>
 
-class FMODAudioManager : public AudioManager {
+MOTOR_API class FMODAudioManager : public AudioManager {
 public:
 	FMODAudioManager();
 	~FMODAudioManager();
 
-	void init() override;
-	void update() override;
+	MOTOR_API void init() override;
+	MOTOR_API void update() override;
 
-	virtual void loadMusic(int channel, const char* fileName)override;
-	virtual void playMusic(int channel, bool loops ) override;
-	virtual void stopMusic(int channel) override;
-	virtual void togglePause(int channel) override;
-	virtual void setVolume(int chan, int volume) override;
-	virtual void setPitch(int chan, int pitch) override;
-	virtual void fadeIn(int chan) override;
-	virtual void fadeOut(int chan)override;
-	void checkError(FMOD_RESULT result ) ;
+	MOTOR_API virtual void loadMusic(int channel, const char* fileName)override;
+	MOTOR_API virtual void playMusic(int channel, bool loops ) override;
+	MOTOR_API virtual void stopMusic(int channel) override;
+	MOTOR_API virtual void togglePause(int channel) override;
+	MOTOR_API virtual void setVolume(int chan, int volume) override;
+	MOTOR_API virtual void setPitch(int chan, int pitch) override;
+	MOTOR_API virtual void fadeIn(int chan) override;
+	MOTOR_API virtual void fadeOut(int chan)override;
+	MOTOR_API void checkError(FMOD_RESULT result ) ;
 
 private:
 	FMOD::System* system;

@@ -1,6 +1,9 @@
 #include "EntidadManager.h"
 #include "Entidad.h"
 
+std::unique_ptr<EntidadManager> Singleton<EntidadManager>::instance_ = nullptr;
+
+
 void EntidadManager::update()
 {
 	for (auto& e : entitys_)

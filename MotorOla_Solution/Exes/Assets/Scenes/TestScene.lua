@@ -1,7 +1,7 @@
 local level = {
-    backgroundColor="0.9,0.0,0.1",
+    backgroundColor="0.6,1.0,0.0",
     ambient="0.1,0.1,0.1",
-    gravity="0 -9.8 0",
+    gravity="0.0,-9.8,0.0",
     camera = {
         nearClipDistance="1",
         farClipDistance="10000",
@@ -20,110 +20,110 @@ local level = {
                     scale="5,5,5"
                 },
                 mesh={
-                    mesh="sphere.mesh",
-                    material="Verde",
+                    mesh="ogrehead.mesh",
+                    material="Azul",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado1",
+            name="Vista1",
             id=2,
             components={
                 transform={
                     parent="-1",
-                    position="10,0,0",
+                    position="1000,0,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Rojo",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado2",
+            name="Vista1",
             id=3,
             components={
                 transform={
                     parent="-1",
-                    position="-10,0,0",
+                    position="-1000,0,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Rojo",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado3",
+            name="Vista1",
             id=4,
             components={
                 transform={
                     parent="-1",
-                    position="0,10,0",
+                    position="0,1000,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Rojo",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado4",
+            name="Abajo",
             id=5,
             components={
                 transform={
                     parent="-1",
-                    position="0,-10,0",
+                    position="0,-1000,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Azul",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado5",
+            name="Vista1",
             id=6,
             components={
                 transform={
                     parent="-1",
-                    position="0,0,10",
+                    position="0,0,1000",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Rojo",
                     visible="true"
                 }
             }
         },
         {
-            name="Lado6",
+            name="Vista1",
             id=7,
             components={
                 transform={
                     parent="-1",
-                    position="0,0,-10",
+                    position="0,0,-1000",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Amarillo",
+                    material="Rojo",
                     visible="true"
                 }
             }

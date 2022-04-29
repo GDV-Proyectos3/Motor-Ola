@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #include <map>
 #include <string>
 #include "utils/Singleton.h"
@@ -10,17 +17,19 @@ using namespace std;
 //using namespace filesystem;
 //static const std::string ASSETS = "../../Exes/Assets/";
 static const std::string ASSETS = "../../Exes/Assets";
-class LoadResources : public Singleton<LoadResources> {
+
+
+MOTOR_API class LoadResources : public Singleton<LoadResources> {
 	friend Singleton<LoadResources>;
 public:
 	LoadResources();
 	~LoadResources();
-	void init();
-	string mes(string m);
-    string aud(string name);
-	string tex(string tex);
-	string scene(string scene);
-	string prefab(string prefab);
+	MOTOR_API void init();
+	MOTOR_API string mes(string m);
+	MOTOR_API string aud(string name);
+	MOTOR_API string tex(string tex);
+	MOTOR_API string scene(string scene);
+	MOTOR_API string prefab(string prefab);
 private:
 	map<string, string>mesh;//.mesh
 	map<string, string>audio;//.mp3,.ogg,.wav

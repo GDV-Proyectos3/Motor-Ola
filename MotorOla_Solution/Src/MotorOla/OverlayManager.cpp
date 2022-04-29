@@ -3,6 +3,9 @@
 #include "InputManager.h"
 #include "Motor.h"
 
+std::unique_ptr<OverlayManager> Singleton<OverlayManager>::instance_ = nullptr;
+
+
 
 OverlayManager::~OverlayManager()
 {

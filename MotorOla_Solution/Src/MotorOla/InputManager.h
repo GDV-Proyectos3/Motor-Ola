@@ -1,32 +1,10 @@
-/*#pragma once
-
-#include <SDL.h>
-#include "utils\Singleton.h"
-#include <iostream>
-
-class Motor;
-class Entidad;
-
-class InputManager : public Singleton<InputManager> {
-	friend Singleton<InputManager>;
-public:
-	InputManager();
-	~InputManager();
-	void init(Motor* mo);
-	void handleEvents();
-	//void setPala1(Entidad* e);
-	//void setPala2(Entidad* e);
-private:
-	Motor* m;
-
-
-	// Pruebas
-	Entidad* pala1 = nullptr;
-	Entidad* pala2 = nullptr;
-};*/
-// This file is part of the course TPV2@UCM - Samir Genaim
-
 #pragma once
+
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 
 #include <iostream>
 #include <SDL.h>
@@ -37,12 +15,12 @@ private:
 // Instead of a Singleton class, we could make it part of
 // SDLUtils as well.
 
-class InputManager : public Singleton<InputManager> {
+MOTOR_API class InputManager : public Singleton<InputManager> {
 
 	friend Singleton<InputManager>;
 
 public:
-	enum MOUSEBUTTON : uint8_t {
+	MOTOR_API enum MOUSEBUTTON : uint8_t {
 		LEFT = 0, MIDDLE = 1, RIGHT = 2
 	};
 
@@ -50,7 +28,7 @@ public:
 	}
 
 	// clear the state
-	inline void clearState() {
+	MOTOR_API inline void clearState() {
 		isCloseWindoEvent_ = false;
 		isKeyDownEvent_ = false;
 		isKeyUpEvent_ = false;
@@ -64,7 +42,7 @@ public:
 
 
 	// update the state with a new event
-	inline void update(const SDL_Event& event) {
+	MOTOR_API inline void update(const SDL_Event& event) {
 		switch (event.type) {
 		case SDL_KEYDOWN:
 			onKeyDown(event);
@@ -90,7 +68,7 @@ public:
 	}
 
 	// refresh
-	inline void refresh() {
+	MOTOR_API inline void refresh() {
 		SDL_Event event;
 
 		clearState();
@@ -99,49 +77,49 @@ public:
 	}
 
 	// close window event
-	inline bool closeWindowEvent() {
+	MOTOR_API inline bool closeWindowEvent() {
 		return isCloseWindoEvent_;
 	}
 
 	// keyboard
-	inline bool keyDownEvent() {
+	MOTOR_API inline bool keyDownEvent() {
 		return isKeyDownEvent_;
 	}
 
-	inline bool keyUpEvent() {
+	MOTOR_API inline bool keyUpEvent() {
 		return isKeyUpEvent_;
 	}
 
-	inline bool isKeyDown(SDL_Scancode key) {
+	MOTOR_API inline bool isKeyDown(SDL_Scancode key) {
 		return keyDownEvent() && kbState_[key] == 1;
 	}
 
-	inline bool isKeyDown(SDL_Keycode key) {
+	MOTOR_API inline bool isKeyDown(SDL_Keycode key) {
 		return isKeyDown(SDL_GetScancodeFromKey(key));
 	}
 
-	inline bool isKeyUp(SDL_Scancode key) {
+	MOTOR_API inline bool isKeyUp(SDL_Scancode key) {
 		return keyUpEvent() && kbState_[key] == 0;
 	}
 
-	inline bool isKeyUp(SDL_Keycode key) {
+	MOTOR_API inline bool isKeyUp(SDL_Keycode key) {
 		return isKeyUp(SDL_GetScancodeFromKey(key));
 	}
 
 	// mouse
-	inline bool mouseMotionEvent() {
+	MOTOR_API inline bool mouseMotionEvent() {
 		return isMouseMotionEvent_;
 	}
 
-	inline bool mouseButtonEvent() {
+	MOTOR_API inline bool mouseButtonEvent() {
 		return isMouseButtonEvent_;
 	}
 
-	inline const std::pair<Sint32, Sint32>& getMousePos() {
+	MOTOR_API inline const std::pair<Sint32, Sint32>& getMousePos() {
 		return mousePos_;
 	}
 
-	inline int getMouseButtonState(MOUSEBUTTON b) {
+	MOTOR_API inline int getMouseButtonState(MOUSEBUTTON b) {
 		return mbState_[b];
 	}
 
@@ -210,6 +188,7 @@ private:
 // This macro defines a compact way for using the singleton InputHandler, instead of
 // writing InputHandler::instance()->method() we write ih().method()
 //
-inline InputManager& ih() {
+MOTOR_API inline InputManager& ih() {
 	return *InputManager::instance();
 }
+

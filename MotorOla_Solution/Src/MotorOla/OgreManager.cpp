@@ -13,6 +13,9 @@
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
+std::unique_ptr<OgreManager> Singleton<OgreManager>::instance_ = nullptr;
+
+
 OgreManager::OgreManager(const Ogre::String& appName)
 {
 	_appName = appName;
@@ -261,7 +264,7 @@ void OgreManager::setWindowGrab(bool _grab)
 	SDL_SetWindowGrab(_window.native, grab);
 	//SDL_SetRelativeMouseMode(grab);
 	//SDL_ShowCursor(grab);
-	SDL_ShowCursor(grab);
+	SDL_ShowCursor(true);
 }
 
 //void OgreManager::pollEvents()

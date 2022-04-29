@@ -158,7 +158,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -175,7 +175,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\OgreProject\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -192,7 +192,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;_DEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(SolutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(SolutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(SolutionDir)Dependencies\Ogre\Src\OgreMain\include;$(SolutionDir)Dependencies\Ogre\Build\include;$(SolutionDir)Src\MotorOla\;$(SolutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\Lua\include;$(SolutionDir)Dependencies\Ogre\Src\Components\Overlay\include\;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\source\foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -213,7 +213,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;NDEBUG;_CONSOLE;WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\Lua\include;$(solutionDir)Dependencies\Ogre\Src\Components\Overlay\include\;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\source\foundation\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>

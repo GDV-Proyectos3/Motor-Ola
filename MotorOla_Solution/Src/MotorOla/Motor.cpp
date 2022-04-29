@@ -44,6 +44,9 @@ Motor::Motor()
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::instance();
+
+
+
 }
 
 Motor::~Motor()
@@ -68,9 +71,13 @@ void Motor::initSystems()
 	Singleton<FMODAudioManager>::instance()->init();
 	Singleton<OverlayManager>::instance()->init(Singleton<OgreManager>::instance(),this);
 	pm().init();
-	
+
 	// Se registran los componentes que conoce el motor
 	registryComponents();
+
+	std::cout << "EM: " << Singleton<EntidadManager>::instance() << "\n";
+	std::cout << "LR " << Singleton<LoadResources>::instance() << "\n";
+	std::cout << "FMOD: " << Singleton<FMODAudioManager>::instance() << "\n";
 
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
@@ -154,8 +161,11 @@ void Motor::loadDLLGame()
 	HINSTANCE hDLL;               // Handle to DLL
 	LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
 	HRESULT hrReturnVal;
-
+#ifdef _NDEBUG
 	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+#else
+	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+#endif
 
 	if (NULL != hDLL)
 	{

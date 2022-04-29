@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
@@ -8,7 +14,7 @@
 using namespace physx;
 //#include <string>
 
-class PhysxManager : public Singleton<PhysxManager> {
+MOTOR_API class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
 	//using uptr_collider = std::unique_ptr<Px>;
 public:	
@@ -16,12 +22,12 @@ public:
 
 	// Getters
 	// ...
-	void init() {};
-	void update();
-	void close();
+	MOTOR_API void init() {};
+	MOTOR_API void update();
+	MOTOR_API void close();
 
-	void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
-	void attachBola(Entidad* ball);
+	MOTOR_API void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
+	MOTOR_API void attachBola(Entidad* ball);
 
 	// Etc
 	// virtual void patata(...) {}

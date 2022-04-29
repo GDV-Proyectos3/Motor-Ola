@@ -80,8 +80,10 @@ void readFile(std::string file) {
 
 		// Modifica la gravedad de la escena
 		lua_getfield(l, -1, "gravity");
-		aux = lua_tostring(l, -1);
-		//Singleton<Physx> cambiar gravedad
+		std::string aux3 = lua_tostring(l, -1);
+		sz = 0, sa = 0;
+		a = std::stof(aux3, &sz); b = std::stof(aux3.substr(sz + 1), &sa); c = std::stof(aux3.substr(sz + sa + 2));
+		//AQUE CUBELLS Singleton<Physx> cambiar gravedad
 		lua_pop(l, 1);
 
 		// Modifica la camara de la escena
@@ -100,7 +102,7 @@ void readFile(std::string file) {
 
 		lua_getfield(l, -1, "farClipDistance");
 		int fCD = lua_tonumber(l, -1);
-		cam->setNearClipDistance(fCD);
+		cam->setFarClipDistance(fCD);
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "camPosition");
@@ -111,7 +113,7 @@ void readFile(std::string file) {
 		std::string temp = camPos.substr(sz + 1);
 		cy = stof(temp, &sa);
 		cz = stof(camPos.substr(sz + sa + 2));
-		camNode->setPosition({ cx, cy, cz });
+		camNode->setPosition(cx, cy, cz);
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "camRotation");

@@ -1,6 +1,8 @@
 #include "PhysxManager.h"
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
+std::unique_ptr<PhysxManager> Singleton<PhysxManager>::instance_ = nullptr;
+
 // _patata = interactive
 
 PhysxManager::PhysxManager() : _patata(false) {
