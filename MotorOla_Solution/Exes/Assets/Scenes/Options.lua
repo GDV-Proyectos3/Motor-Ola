@@ -17,6 +17,19 @@ local options = {
 			
 			
 		},
+		{
+			positionX="0.75",
+			positionY="0.5",
+			texto="Return",
+			nombrePanel="ReturnPanel",
+			nombreTexto="ReturnTexto",
+			tamLetra="0.05",
+			material="Azul",
+			dimensionX="0.25",
+			dimensionY="0.25",
+			
+			
+		},
 	}
 }
 

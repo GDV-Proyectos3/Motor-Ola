@@ -35,6 +35,7 @@ void FMODAudioManager::loadMusic(int channel, const char* fileName)
 		0, 
 		&sound[channel]);
 	checkError(result);
+	cont++;
 }
 
 void FMODAudioManager::playMusic(int chan, bool loops)
@@ -101,4 +102,19 @@ void FMODAudioManager::checkError(FMOD_RESULT result)
 		// printf("FMOD error %d - %s", result, FMOD_ErrorString(result));
 		exit(-1);
 	}
+}
+
+int FMODAudioManager::getCont()
+{
+	return cont;
+}
+
+bool FMODAudioManager::getMute()
+{
+	return mute;
+}
+
+void FMODAudioManager::setMute(bool m)
+{
+	mute = m;
 }

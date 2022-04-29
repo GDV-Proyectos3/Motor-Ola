@@ -28,10 +28,15 @@ public:
 	MOTOR_API virtual void fadeIn(int chan) override;
 	MOTOR_API virtual void fadeOut(int chan)override;
 	MOTOR_API void checkError(FMOD_RESULT result ) ;
+	MOTOR_API int getCont();
+	MOTOR_API bool getMute();
+	MOTOR_API void setMute(bool m);
 
 private:
 	FMOD::System* system;
 	FMOD_RESULT result;
 	FMOD::Channel* channel[24];
 	FMOD::Sound* sound[24];
+	bool mute = false;
+	int cont = 0;
 };
