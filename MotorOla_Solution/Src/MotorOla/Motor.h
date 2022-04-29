@@ -60,8 +60,8 @@ public:
 	/// Carga una escena del juego
 	/// </summary>
 	/// <param name="name">name es el archivo "scene.lua"</param>
-	bool loadScene(std::string name);
-	bool loadMainMenu(std::string name,const char* get);
+	MOTOR_API bool loadScene(std::string name);
+	MOTOR_API bool loadMenu(std::string name,const char* get);
 
 	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
@@ -71,13 +71,13 @@ public:
 
 
 	// Getters and Setters
-	void setStop(bool s);
+	MOTOR_API void setStop(bool s);
 	bool getStop();
 
 
-	static void salir(Motor* m);
-	static void newGame(Motor* m);
-	static void options(Motor* m);
+	//static void salir(Motor* m);
+	//static void newGame(Motor* m);
+	//static void options(Motor* m);
 	//static void deleteOverlay(Motor* m);
 };
 

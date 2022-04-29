@@ -34,6 +34,7 @@
 #include <iostream>
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
+HINSTANCE hDLL;               // Handle to DLL
 
 Motor::Motor()
 {
@@ -58,6 +59,7 @@ Motor::~Motor()
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
 	if (Singleton<OgreManager>::instance() != nullptr) delete Singleton<OgreManager>::instance();
 	if (Singleton<LoadResources>::instance() != nullptr) delete Singleton<LoadResources>::instance();
+	FreeLibrary(hDLL);
 
 	//if (_overlayManager) delete _overlayManager;
 	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
@@ -90,8 +92,8 @@ void Motor::initSystems()
 
 	// Carga una escena con Lua
 	//if(!loadScene("TestScene.lua"))
-	if(!loadMainMenu("MainMenuScene.lua","GetMainMenu"))
-		throw "Error loading a Scene\n";
+	/*if (!loadMainMenu("MainMenuScene.lua", "GetMainMenu"))
+		throw "Error loading a Scene\n";*/
 }
 
 void Motor::registryComponents()
@@ -158,7 +160,7 @@ void Motor::mainLoop()
 
 void Motor::loadDLLGame()
 {
-	HINSTANCE hDLL;               // Handle to DLL
+	
 	LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
 	HRESULT hrReturnVal;
 #ifdef _NDEBUG
@@ -177,7 +179,7 @@ void Motor::loadDLLGame()
 		else throw "Function LoadGame not found in DLL";
 
 		// Libera la memoria de la DLL cargada explicitamente
-		FreeLibrary(hDLL);
+		//FreeLibrary(hDLL);
 	}
 	else throw "DLL not found";
 }
@@ -201,7 +203,7 @@ bool Motor::loadScene(std::string name) {
 	}
 	return true;
 }
-bool Motor::loadMainMenu(std::string name,const char*get) {
+bool Motor::loadMenu(std::string name,const char*get) {
 	try {
 		// Borra las entidades de la escena actual
 		Singleton<EntidadManager>::instance()->pauseEntidades();
@@ -211,9 +213,9 @@ bool Motor::loadMainMenu(std::string name,const char*get) {
 
 		// Lee la escena cargando todas las entidades y sus componentes
 		readFileMenus(sceneRoute,get);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
+		/*Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
 		Singleton<OverlayManager>::instance()->setCallBackToButton("OptionsPanel",options);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);
+		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);*/
 	}
 	catch (std::exception e) {
 #if (defined _DEBUG)
@@ -238,7 +240,7 @@ bool Motor::getStop()
 	return stop;
 }
 
-void Motor::salir(Motor* m)
+/*void Motor::salir(Motor* m)
 {
 	m->stop = true;
 }
@@ -259,7 +261,7 @@ void Motor::options(Motor* m)
 	//Singleton<OverlayManager>::close();
 	Singleton<OverlayManager>::instance()->clear();
 	m->loadMainMenu("Options.lua","GetOptions");
-}
+}*/
 
 //void Motor::deleteOverlay(Motor* m)
 //{

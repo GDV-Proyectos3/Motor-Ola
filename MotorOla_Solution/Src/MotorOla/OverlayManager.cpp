@@ -45,6 +45,7 @@ void OverlayManager::init(OgreManager*om,Motor* m)
 		mOverlay->setZOrder(100);
 		og = om;//Usar Singleton cuando funcione
 		motor = m;
+		std::cout << motor << std::endl;
 		
 		
 		
@@ -183,6 +184,11 @@ void OverlayManager::clear()
 	textos.clear();
 	callbacks.clear();
 	overlayManager.destroyAllOverlayElements();
+}
+
+ Motor* OverlayManager::getMotor()
+{
+	return motor;
 }
 
 
