@@ -160,10 +160,11 @@ void Motor::mainLoop()
 
 void Motor::loadDLLGame()
 {
-	
+	HINSTANCE hDLL;
 	LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
 	HRESULT hrReturnVal;
-#ifdef _NDEBUG
+	std::cout<<"Entra en loadDLL"<<std::endl;
+#ifdef NDEBUG
 	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 #else
 	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
