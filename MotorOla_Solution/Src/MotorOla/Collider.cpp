@@ -39,7 +39,7 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 		if (mapa.find("x") == mapa.end() ||
 			mapa.find("y") == mapa.end() ||
 			mapa.find("z") == mapa.end())
-			return false;
+				return false;
 
 		// traducción
 		std::string xString = mapa.at("x");
@@ -69,5 +69,5 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 	//PxGeometry* geo = new PxSphereGeometry(10);
 	//physX()->createShape(*geo, *gMaterial);
 
-	return false;
+	return true;
 }

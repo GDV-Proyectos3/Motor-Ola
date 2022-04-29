@@ -19,12 +19,6 @@ public:
 	// Función para inicializar el componente mediante datos serializados
 	bool init(const std::map<std::string, std::string>& mapa);
 
-	// Getters
-
-	// Setters
-
-	//...
-
 private:
 
 	/**

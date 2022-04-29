@@ -18,14 +18,7 @@ public:
 	// Destructor
 	virtual ~RigidBody();
 	// Función para inicializar el componente mediante datos serializados
-	bool init(PxVec3 position, PxQuat orientation,
-		const std::map<std::string, std::string>& mapa);
-
-	// Getters
-
-	// Setters
-
-	//...
+	bool init(const std::map<std::string, std::string>& mapa);
 
 private:
 
@@ -36,6 +29,6 @@ private:
 	PxType concreteType_ = PxConcreteType::eRIGID_DYNAMIC;
 	PxBaseFlags baseFlags_ = PxBaseFlag::eOWNS_MEMORY;
 
-	PxVec3 position_ = PxVec3(PxZero); /// LUA
-	PxQuat orientation_ = PxQuat(PxIdentity); /// LUA
+	PxVec3 position_ = PxVec3(PxZero);
+	PxQuat orientation_ = PxQuat(PxIdentity);
 };
