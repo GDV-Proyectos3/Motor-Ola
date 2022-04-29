@@ -8,17 +8,56 @@ Collider::~Collider()
 {
 }
 
-bool Collider::init(PxGeometryType::Enum type,
-	const std::map<std::string, std::string>& mapa)
+bool Collider::init(const std::map<std::string, std::string>& mapa)
 {
-	PxGeometryType::Enum type_ = type;
+	// comprobar que la sección existe
+	if (mapa.find("type") == mapa.end())
+		return false;
 
+	// interpretar
+	std::string typeString = mapa.at("type");
+	if (typeString == "sphere") {
+		// comprobar que la sección existe
+		if (mapa.find("radius") == mapa.end())
+			return false;
 
-	// Crea la forma del collider (por defecto un cubo)
-	if (type == PxGeometryType::eBOX)
-		setGeometry(PxBoxGeometry(PxVec3(PxZero)));
+		// establecemos config. de geometría
+		type_ = PxGeometryType::eSPHERE;
+
+		// traducción
+		std::string radiusString = mapa.at("radius");
+		float rad = stof(radiusString);
+		//
+		if (rad < 0)
+			return false;
+
+		// Crea la forma del collider (esfera)
+		setGeometry(PxSphereGeometry(rad)); /// ¿escala?
+	}
+	else { ////PxGeometryType::eBOX////
+		// comprobar que la sección existe
+		if (mapa.find("x") == mapa.end() ||
+			mapa.find("y") == mapa.end() ||
+			mapa.find("z") == mapa.end())
+			return false;
+
+		// traducción
+		std::string xString = mapa.at("x");
+		float dimX = stof(xString);
+		std::string yString = mapa.at("y");
+		float dimY = stof(yString);
+		std::string zString = mapa.at("z");
+		float dimZ = stof(zString);
+		//
+		if (dimX < 0 || dimY < 0 || dimZ < 0)
+			return false;
+
+		// Crea la forma del collider (cubo)
+		setGeometry(PxBoxGeometry(PxVec3(dimX, dimY, dimZ))); /// ¿escala?
+	}
 
 	// Establece el tipo de simulacion fisica
+	/// TODO LUA ?
 	setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); // for collision simulation
 	//setFlag(PxShapeFlag::eTRIGGER_SHAPE); // for triggers
 
@@ -30,7 +69,5 @@ bool Collider::init(PxGeometryType::Enum type,
 	//PxGeometry* geo = new PxSphereGeometry(10);
 	//physX()->createShape(*geo, *gMaterial);
 
-
-	// TODO: lectura del archivo .lua
 	return false;
 }

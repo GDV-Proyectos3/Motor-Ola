@@ -35,6 +35,7 @@ private:
 	*/
 	PxType concreteType_ = PxConcreteType::eRIGID_DYNAMIC;
 	PxBaseFlags baseFlags_ = PxBaseFlag::eOWNS_MEMORY;
-	PxVec3 position_ = PxVec3(PxZero);
-	PxQuat orientation_ = PxQuat(PxIdentity);
+
+	PxVec3 position_ = PxVec3(PxZero); /// LUA
+	PxQuat orientation_ = PxQuat(PxIdentity); /// LUA
 };

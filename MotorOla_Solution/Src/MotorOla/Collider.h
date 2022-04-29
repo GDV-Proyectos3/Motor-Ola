@@ -17,8 +17,7 @@ public:
 	// Destructor
 	virtual ~Collider();
 	// Función para inicializar el componente mediante datos serializados
-	bool init(PxGeometryType::Enum type,
-		const std::map<std::string, std::string>& mapa);
+	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Getters
 
@@ -34,5 +33,6 @@ private:
 	*/
 	PxType concreteType_ = PxConcreteType::eSHAPE;
 	PxBaseFlags baseFlags_ = PxBaseFlag::eOWNS_MEMORY;
+
 	PxGeometryType::Enum type_ = PxGeometryType::eBOX;
 };
