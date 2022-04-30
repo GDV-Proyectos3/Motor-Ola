@@ -7,6 +7,7 @@
 
 Mesh::Mesh()
 {
+	std::cout << "CREANDO MESH" << std::endl;
 	_sceneManager = Singleton<OgreManager>::instance()->getSceneManager();
 	_nodo = _sceneManager->getRootSceneNode()->createChildSceneNode();
 	//_sceneManager = _nodo->getCreator();

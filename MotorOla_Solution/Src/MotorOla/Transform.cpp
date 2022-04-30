@@ -7,6 +7,7 @@
 Transform::Transform() :
 	_position(), _scale({ 1,1,1 }), _rotation()
 {
+	std::cout << "CREANDO TRASNFORM" << std::endl;
 }
 
 Transform::~Transform()

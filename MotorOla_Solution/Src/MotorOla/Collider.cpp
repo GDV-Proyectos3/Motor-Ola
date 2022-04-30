@@ -1,8 +1,10 @@
 #include "Collider.h"
 #include "PhysxManager.h"
 
-Collider::Collider() : PxShape(concreteType_, baseFlags_)
-{}
+Collider::Collider()
+{
+	std::cout << "CREANDO COLLIDER" << std::endl;
+}
 
 Collider::~Collider()
 {

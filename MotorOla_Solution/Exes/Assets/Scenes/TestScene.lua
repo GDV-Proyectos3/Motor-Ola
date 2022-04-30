@@ -15,13 +15,13 @@ local level = {
                 },
                 mesh={
                     mesh="ogrehead.mesh",
-                    material="Azul",
+                    material="Ogre/Skin",
                     visible="true"
                 }
             }
         },
         {
-            name="Pala2",
+            name="Ball",
             id=2,
             components={
                 transform={
@@ -34,6 +34,19 @@ local level = {
                     mesh="cube.mesh",
                     material="Rojo",
                     visible="true"
+                },
+                collider={
+                    type="sphere",
+                    radius="10"
+                },
+                rigidbody={
+                    posX="10",
+                    posY="10",
+                    posZ="10",
+                    oriX="0",
+                    oriY="0",
+                    oriZ="0",
+                    oriW="1"
                 }
             }
         }

@@ -1,8 +1,10 @@
 #include "RigidBody.h"
 #include "PhysxManager.h"
 
-RigidBody::RigidBody() : PxRigidDynamic(concreteType_, baseFlags_)
-{}
+RigidBody::RigidBody()
+{
+	std::cout << "CREANDO RIGIDBODY" << std::endl;
+}
 
 RigidBody::~RigidBody()
 {

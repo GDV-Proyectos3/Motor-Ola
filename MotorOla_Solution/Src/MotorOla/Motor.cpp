@@ -92,6 +92,8 @@ void Motor::registryComponents()
 	try {
 		ComponenteRegistro::ComponenteRegistro<Transform>("transform");
 		ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
+		ComponenteRegistro::ComponenteRegistro<Collider>("collider");
+		ComponenteRegistro::ComponenteRegistro<RigidBody>("rigidbody");
 	}
 	catch (const char* error) {
 		std::cout << "Error registrando los componentes del motor: \n" << error << "\n";
@@ -123,7 +125,7 @@ void Motor::mainLoop()
 		// Update PhysX: (PC: el 'pm()' igual que 'ih()' es un alias,
 		// es decir una forma breve para nombrar la llamada a '(...)::instance()')
 		pm().runPhysX(); ////pm().update(true, 0);
-		pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
+		//pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
 
 		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {
@@ -212,13 +214,13 @@ bool Motor::loadMainMenu(std::string name,const char*get) {
 void Motor::loadTestMotorGame() 
 {
 	loadScene("TestScene.lua");
-	pm().createBall();
 	//// Entidad con un transform
 	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	//map<string, string> m;
 	//ent->addComponent("transform", m);
 	cuboTest = Singleton<EntidadManager>::instance()->getEntidadByID(2);	
-	pm().setGlobalToPhysxTR(*cuboTest, *pm().getBall());
+	//pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
+	//pm().setGlobalToPhysxTR(*cuboTest, *pm().getBall());
 }
 
 bool Motor::getStop()

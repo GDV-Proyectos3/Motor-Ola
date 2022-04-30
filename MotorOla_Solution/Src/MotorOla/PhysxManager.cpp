@@ -149,7 +149,7 @@ void PhysxManager::init()
 	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 	mScene->addActor(*groundPlane);
 
-	testBALL = createBall();
+	//testBALL = createBall();
 	StartCounter();
 }
 
@@ -163,16 +163,7 @@ void PhysxManager::update(bool interactive, double t)
 
 	stepPhysics(interactive, 1.0f/60.0f);
 
-	// GetLastTime() 
-	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
-	// pero su uso real es llevar el tiempo real de la app activa.
-	if (GetLastTime() - GlobalTimer > 1.0) {
-		PxVec3 v = testBALL->getGlobalPose().p;
-		std::cout << "PhyBALL position : ";
-		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
-		//debugTime();
-		GlobalTimer = GetLastTime();
-	}
+	//debugBall();
 
 	//spawn objects
 	///....
@@ -359,6 +350,20 @@ PxRigidDynamic* PhysxManager::createBall()
 	PxRigidDynamic* ball = createDynamic(transform, PxSphereGeometry(10), *mMaterial, velocity);
 	PxRigidBodyExt::updateMassAndInertia(*ball, 1000.f); //density = 1000 ¡arrasa con todo!
 	return ball;
+}
+
+void PhysxManager::debugBall()
+{
+	// GetLastTime() 
+	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
+	// pero su uso real es llevar el tiempo real de la app activa.
+	if (GetLastTime() - GlobalTimer > 1.0) {
+		PxVec3 v = testBALL->getGlobalPose().p;
+		std::cout << "PhyBALL position : ";
+		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
+		//debugTime();
+		GlobalTimer = GetLastTime();
+	}
 }
 
 void PhysxManager::createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent)
