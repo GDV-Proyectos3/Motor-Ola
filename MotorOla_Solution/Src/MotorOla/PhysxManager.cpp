@@ -117,18 +117,20 @@ void PhysxManager::init()
 	// Scene for GPU Rigid Bodies ----------------------------------------------------
 	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
-	mDispatcher = PxDefaultCpuDispatcherCreate(4);				//Create a CPU dispatcher using 4 worther threads
+	mDispatcher = PxDefaultCpuDispatcherCreate(4);					//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
-	sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 
-	sceneDesc.cudaContextManager = mCuda;						//Set the CUDA context manager, used by GRB.
+	//sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
+	sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
 
-	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;		//Enable GPU dynamics - without this enabled, simulation (contact gen and solver) will run on the CPU.
-	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;				//Enable PCM. PCM NP is supported on GPU. Legacy contact gen will fall back to CPU
-	sceneDesc.flags |= PxSceneFlag::eENABLE_STABILIZATION;		//Improve solver stability by enabling post-stabilization.
-	sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;			//Enable GPU broad phase. Without this set, broad phase will run on the CPU.
-	sceneDesc.gpuMaxNumPartitions = 8;							//Defines the maximum number of partitions used by the solver. Only power-of-2 values are valid. 
-																//A value of 8 generally gives best balance between performance and stability.
+	sceneDesc.cudaContextManager = mCuda;							//Set the CUDA context manager, used by GRB.
+
+	sceneDesc.flags |= PxSceneFlag::eENABLE_GPU_DYNAMICS;			//Enable GPU dynamics - without this enabled, simulation (contact gen and solver) will run on the CPU.
+	sceneDesc.flags |= PxSceneFlag::eENABLE_PCM;					//Enable PCM. PCM NP is supported on GPU. Legacy contact gen will fall back to CPU
+	sceneDesc.flags |= PxSceneFlag::eENABLE_STABILIZATION;			//Improve solver stability by enabling post-stabilization.
+	sceneDesc.broadPhaseType = PxBroadPhaseType::eGPU;				//Enable GPU broad phase. Without this set, broad phase will run on the CPU.
+	sceneDesc.gpuMaxNumPartitions = 8;								//Defines the maximum number of partitions used by the solver. Only power-of-2 values are valid. 
+																	//A value of 8 generally gives best balance between performance and stability.
 
 	mScene = mPhysics->createScene(sceneDesc);
 
@@ -168,7 +170,7 @@ void PhysxManager::update(bool interactive, double t)
 		PxVec3 v = testBALL->getGlobalPose().p;
 		std::cout << "PhyBALL position : ";
 		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
-		debugTime();
+		//debugTime();
 		GlobalTimer = GetLastTime();
 	}
 
@@ -216,6 +218,7 @@ void PhysxManager::stepPhysics(bool interactive, double frameTime)
 	mScene->fetchResults(true);
 }
 
+// TODO: ¿que pasa cuando esto se detecta?
 void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);

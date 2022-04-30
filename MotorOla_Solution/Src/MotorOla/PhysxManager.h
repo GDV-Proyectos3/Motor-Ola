@@ -7,6 +7,7 @@
 
 #include "Transform.h"
 #include "Entidad.h"
+#include "ContactReportCallback.h"
 
 using namespace physx;
 
@@ -93,6 +94,7 @@ private:
 	// Inevitables para que funcione
 	PxDefaultAllocator		mAllocator;
 	PxDefaultErrorCallback	mErrorCallback;
+	ContactReportCallback	mContactReportCallback;
 
 	PxFoundation* mFoundation = NULL;
 	PxPhysics* mPhysics = NULL;

@@ -56,7 +56,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\MotorOla\Motor.cpp" />
-    <ClCompile Include="..\..\Src\MotorOla\callbacks.cpp">
+    <ClCompile Include="..\..\Src\MotorOla\ContactReportCallback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClInclude Include="..\..\Src\MotorOla\RigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Src\MotorOla\callbacks.hpp">
+    <ClInclude Include="..\..\Src\MotorOla\ContactReportCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,6 +21,11 @@
   <ItemGroup>
     <ClCompile Include="..\..\Src\App\MotorOla_Project.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MotorOla_Project\MotorOla_Project.vcxproj">
+      <Project>{f6af22f4-46d3-4e02-bb0b-57f45f00230a}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
