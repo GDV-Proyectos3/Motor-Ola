@@ -16,8 +16,13 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 	if (mapa.find("type") == mapa.end())
 		return false;
 
-	// interpretar
+	// variables principales
+	PxGeometry geometry = PxBoxGeometry();
+	PxMaterial* material = pm().getMaterial();	// Establece el tipo de material
+
+	// identifica el tipo de geometría
 	std::string typeString = mapa.at("type");
+
 	if (typeString == "sphere") {
 		// comprobar que la sección existe
 		if (mapa.find("radius") == mapa.end())
@@ -34,14 +39,17 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 			return false;
 
 		// Crea la forma del collider (esfera)
-		setGeometry(PxSphereGeometry(rad)); /// ¿escala?
+		geometry = PxSphereGeometry(rad); /// ¿la escala es igual respecto a Ogre?
 	}
-	else { ////PxGeometryType::eBOX////
+	else if (typeString == "box") {
 		// comprobar que la sección existe
 		if (mapa.find("x") == mapa.end() ||
 			mapa.find("y") == mapa.end() ||
 			mapa.find("z") == mapa.end())
 				return false;
+
+		// establecemos config. de geometría
+		type_ = PxGeometryType::eBOX;
 
 		// traducción
 		std::string xString = mapa.at("x");
@@ -55,21 +63,20 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 			return false;
 
 		// Crea la forma del collider (cubo)
-		setGeometry(PxBoxGeometry(PxVec3(dimX, dimY, dimZ))); /// ¿escala?
+		geometry = PxBoxGeometry(PxVec3(dimX, dimY, dimZ)); /// ¿escala?
 	}
-
-	// Establece el tipo de simulacion fisica
-	/// TODO LUA ?
-	setFlag(PxShapeFlag::eSIMULATION_SHAPE, true); // for collision simulation
-	//setFlag(PxShapeFlag::eTRIGGER_SHAPE); // for triggers
-
-	// Establece el tipo de material
-	PxMaterial* gMaterial = physX()->createMaterial(0.5f, 0.5f, 0.6f);
-	setMaterials(&gMaterial, 1); // por ejemplo
-
-	// En caso de no heredar y guardar el puntero: (mas breve)
-	//PxGeometry* geo = new PxSphereGeometry(10);
-	//physX()->createShape(*geo, *gMaterial);
-
+	
+	if (mapa.find("trigger") == mapa.end())
+		return false;
+	else {
+		// Establece el tipo de simulacion fisica
+		std::string triggerString = mapa.at("trigger");
+		if (triggerString == "true")
+			shape = pm().createTriggerShape(geometry, *material, true);
+		else {
+			shape = pm().createShape(geometry, *material, true);
+		}
+	}
+	
 	return true;
 }
