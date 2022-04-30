@@ -41,7 +41,10 @@ public:
 	void StartCounter();
 	double GetCounter();
 	double GetLastTime();
+
+	// testing debug
 	void debugTime();
+	void debugBall();
 
 	// FACTORY
 	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(0));
@@ -62,6 +65,7 @@ public:
 	// Getters
 	PxPhysics* getPhysX() { return mPhysics; };
 	PxRigidDynamic* getBall() { return testBALL; };
+	PxMaterial* getMaterial() { return mMaterial; };
 
 	// Setters
 	void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);

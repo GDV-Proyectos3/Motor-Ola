@@ -1,15 +1,12 @@
 #pragma once
 #pragma once
 
-#include "PxRigidDynamic.h"
 #include "Componente.h"
-///#include "utils/Vectola3D.h"
-///#include "utils/Quaterniola.h"
-///#include <list>
+#include "PxRigidDynamic.h"
 
 using namespace physx;
 
-class RigidBody : public Componente, public PxRigidDynamic
+class RigidBody : public Componente
 {
 public:
 	// OBLIGATORIO EN CADA COMPONENTE
@@ -20,15 +17,15 @@ public:
 	// Función para inicializar el componente mediante datos serializados
 	bool init(const std::map<std::string, std::string>& mapa);
 
+	// Getter
+	PxRigidDynamic* getBody() { return body; };
+	PxRigidStatic* getStBody() { return stBody; };
+
 private:
+	PxRigidDynamic* body = nullptr;
+	PxRigidStatic* stBody = nullptr;
 
-	/**
-	* PxType:
-	* PxBaseFlags: ( eOWNS_MEMORY | eIS_RELEASABLE ) posee memoria o es liberable.
-	*/
-	PxType concreteType_ = PxConcreteType::eRIGID_DYNAMIC;
-	PxBaseFlags baseFlags_ = PxBaseFlag::eOWNS_MEMORY;
-
+	// parametros por defecto
 	PxVec3 position_ = PxVec3(PxZero);
 	PxQuat orientation_ = PxQuat(PxIdentity);
 };
