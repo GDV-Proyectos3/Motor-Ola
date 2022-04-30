@@ -190,6 +190,15 @@ void readFile(std::string file) {
 #endif
 		lua_close(l);
 
+		int initTotales = 0;
+
+		//for (int i = 0; i < ents.size(); i++)
+		//{
+		//	ents[i]->init();
+		//	std::cout << "Entidad " << i << " iniciada\n";
+		//	initTotales++;
+		//} 
+
 		int i = 0;
 		int numEnts = ents.size();
 		int initedEnts = 0;
@@ -197,11 +206,14 @@ void readFile(std::string file) {
 			if (!entInits[i] && ents[i]->init()) {
 				++initedEnts;
 				entInits[i] = true;
-				//SceneManager::GetInstance()->addEntity(ents[i]);
+				std::cout << "Entidad " << i << " iniciada\n";
+				initTotales++;
 			}
 			++i;
 			i %= numEnts;
 		}
+
+		std::cout << "Init Totales "<< initTotales << "\n";
 	}
 	catch (...) {
 		throw std::exception("Lua file has incorrect formatting\n");

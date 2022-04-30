@@ -37,7 +37,7 @@ void Entidad::destroy()
 
 bool Entidad::init()
 {
-	_numTriesToLoad = components.size() * 10;
+	_numTriesToLoad = components.size() * 100000;
 	int i = 0, j = 0;
 	int numComponents = components.size();
 	int initedComps = 0;

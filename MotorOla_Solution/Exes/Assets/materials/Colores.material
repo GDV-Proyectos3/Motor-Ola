@@ -1,20 +1,3 @@
-material Amarillo
-{
-	technique
-	{
-		pass
-		{
-			diffuse 1.0 1.0 1.0 1.0
-			ambient 1.0 1.0 1.0 1.0
-			specular 0.0 0.0 0.0 0.0
-			texture_unit
-			{
-			  colour_op_ex source1 src_manual src_current 1.0 0.96 0
-			}
-		}
-	}
-}
-
 material Azul
 {
 	technique
@@ -61,6 +44,125 @@ material Rojo
 			texture_unit
 			{
 			  colour_op_ex source1 src_manual src_current 1.0 0.0 0.0
+			}
+		}
+	}
+}
+
+material Amarillo
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 1.0 0.96 0
+			}
+		}
+	}
+}
+
+material Morado
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 0.3 0.0 1.0
+			}
+		}
+	}
+}
+
+material Rosa
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 0.7 0.1 0.8
+			}
+		}
+	}
+}
+
+material Naranja
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 0.8 0.4 0.0
+			}
+		}
+	}
+}
+
+material Cian
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 0.0 1.0 1.0
+			}
+		}
+	}
+}
+
+material Blanco
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 1.0 1.0 1.0
+			}
+		}
+	}
+}
+
+material Negro
+{
+	technique
+	{
+		pass
+		{
+			diffuse 1.0 1.0 1.0 1.0
+			ambient 1.0 1.0 1.0 1.0
+			specular 0.0 0.0 0.0 0.0
+			texture_unit
+			{
+			  colour_op_ex source1 src_manual src_current 0.0 0.0 0.0
 			}
 		}
 	}
