@@ -23,7 +23,8 @@ local level = {
                     mesh="ogrehead.mesh",
                     material="Azul",
                     visible="true"
-                }
+                },
+				
             }
         },
         {
@@ -40,7 +41,8 @@ local level = {
                     mesh="cube.mesh",
                     material="Rojo",
                     visible="true"
-                }
+                },
+				
             }
         },
         {

@@ -60,7 +60,8 @@ public:
 	MOTOR_API Ogre::Root* getRoot() const { return _root; }
 	MOTOR_API Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
-
+	MOTOR_API int getWindowWidth() const { return _window.render->getWidth(); }
+	MOTOR_API int getWindowHeight() const { return _window.render->getHeight(); }
 	MOTOR_API void init();
 	MOTOR_API void update();
 	MOTOR_API void close();

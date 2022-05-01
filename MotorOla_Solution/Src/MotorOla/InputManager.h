@@ -11,6 +11,7 @@
 #include <array>
 
 #include "utils/Singleton.h"
+#include "OgreManager.h"
 
 // Instead of a Singleton class, we could make it part of
 // SDLUtils as well.
@@ -122,7 +123,13 @@ public:
 	MOTOR_API inline int getMouseButtonState(MOUSEBUTTON b) {
 		return mbState_[b];
 	}
+	MOTOR_API inline std::pair<Sint32, Sint32>& getMousePosInGame() {
+		std::pair<Sint32, Sint32>p;
+		p.first = mousePos_.first + (Singleton<OgreManager>::instance()->getWindowWidth() / 2);
+		p.second = mousePos_.second + (Singleton<OgreManager>::instance()->getWindowHeight() / 2);
+		return p;
 
+	}
 	// TODO add support for Joystick, see Chapter 4 of
 	// the book 'SDL Game Development'
 

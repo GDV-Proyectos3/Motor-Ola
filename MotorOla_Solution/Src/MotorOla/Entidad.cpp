@@ -71,8 +71,8 @@ bool Entidad::init()
 Entidad* Entidad::instantiate(std::string name, Vectola3D position, Quaterniola rotation)
 {
 	std::string path = Singleton<LoadResources>::instance()->prefab(name);
-	Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
-	ent = readPrefab(path);
+	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
+	Entidad* ent = readPrefab(path);
 	ent->getComponent<Transform>()->setPosition(position);
 	ent->getComponent<Transform>()->setRotation(rotation);
 	return ent;
