@@ -30,11 +30,13 @@ public:
 	MOTOR_API void refresh();
 	MOTOR_API void pauseEntidades();
 	MOTOR_API void reanudeEntidades();
+	MOTOR_API void sincronizaVectorEnt();
 	
 	MOTOR_API Entidad* getEntidadByID(int id);
 
 private:
 	std::vector<uptr_ent> entitys_;
+	//std::vector<uptr_ent> entitiesToLoad_;		// Vector con las entidades a cargar al final del frame
 
 	// Idea para guardar las entidades al poner nuevas escenas
 	//std::stack <std::vector<uptr_ent>> pilaEntidades_;

@@ -1,15 +1,22 @@
-            name="Pala2",
-            id=2,
-            components={
-                transform={
-                    parent="-1",
-                    position="0,0,0",
-                    rotation="0,0,0",
-                    scale="1,1,1"
-                },
-                mesh={
-                    mesh="cube.mesh",
-                    material="Rojo",
-                    visible="true"
-                }
-            }
+local prefab = { 
+    name="Zombie",
+    id=1,
+    cursor=0,
+    components={
+        transform={
+            parent="-1",
+            position="0,0,0",
+            rotation="0,0,0",
+            scale="1,1,1"
+        },
+        mesh={
+            mesh="sphere.mesh",
+            material="Cian",
+            visible="true"
+        }
+    }
+}
+
+function GetPrefab()
+    return prefab
+end

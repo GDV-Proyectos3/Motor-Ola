@@ -131,5 +131,6 @@ private:
 
 	//numero de veces que puedes intentar iniciar tus componentes (para evitar bucle infinito)
 	int _numTriesToLoad;
+	int j;
 };
 

@@ -38,7 +38,8 @@ void Entidad::destroy()
 bool Entidad::init()
 {
 	_numTriesToLoad = components.size() * 100000;
-	int i = 0, j = 0;
+	int i = 0;
+	j = 0;
 	int numComponents = components.size();
 	int initedComps = 0;
 	while (initedComps != numComponents && j < _numTriesToLoad) {
@@ -54,7 +55,6 @@ bool Entidad::init()
 		i %= numComponents;
 	}
 	if (j >= _numTriesToLoad) {
-
 		throw std::exception("Error al iniciar los componentes en Entity \n ");
 	}
 	Transform* t;

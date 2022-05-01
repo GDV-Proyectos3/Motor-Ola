@@ -45,9 +45,6 @@ Motor::Motor()
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::instance();
-
-
-
 }
 
 Motor::~Motor()
@@ -137,6 +134,7 @@ void Motor::mainLoop()
 		if (Singleton<OverlayManager>::instance() != nullptr) {
 			Singleton<OverlayManager>::instance()->update();
 		}
+
 		// Actualiza el resto de componentes (tambien los del juego)
 		Singleton<EntidadManager>::instance()->update();
 
