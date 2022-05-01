@@ -114,7 +114,7 @@ void Motor::mainLoop()
 
 	while (!stop) {
 		// Recoger el Input
-		
+		Singleton<EntidadManager>::instance()->refresh();
 		ih().clearState();
 
 		while (SDL_PollEvent(&event))
