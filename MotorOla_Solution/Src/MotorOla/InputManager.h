@@ -35,9 +35,9 @@ public:
 		isKeyUpEvent_ = false;
 		isMouseButtonEvent_ = false;
 		isMouseMotionEvent_ = false;
-		for (auto i = 0u; i < 3; i++) {
-			mbState_[i] = false;
-		}
+		//for (auto i = 0u; i < 3; i++) {
+		//	mbState_[i] = false;
+		//}
 	}
 
 
@@ -123,6 +123,7 @@ public:
 	MOTOR_API inline int getMouseButtonState(MOUSEBUTTON b) {
 		return mbState_[b];
 	}
+
 	MOTOR_API inline std::pair<Sint32, Sint32>& getMousePosInGame() {
 		std::pair<Sint32, Sint32>p;
 		p.first = mousePos_.first -(Singleton<OgreManager>::instance()->getWindowWidth() / 2);

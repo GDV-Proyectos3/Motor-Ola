@@ -7,7 +7,7 @@ local prefab = {
             parent="-1",
             position="0,0,0",
             rotation="0,0,0",
-            scale="0.8,0.8,0.8"
+            scale="0.15,0.15,0.15"
         },
         mesh={
             mesh="sphere.mesh",
@@ -16,7 +16,7 @@ local prefab = {
         },
 		moveBullet={
 			direction="0,0,0",
-			velocity="5"
+			velocity="50"
 		}
     }
 }
