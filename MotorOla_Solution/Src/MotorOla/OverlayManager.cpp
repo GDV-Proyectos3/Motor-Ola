@@ -124,14 +124,14 @@ void OverlayManager::setCallBackToButton(std::string p, CallBackOnClick* click)
 	callbacks.insert(std::pair(panel, click));
 }
 
-void OverlayManager::creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel)
+void OverlayManager::creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel,float dimX,float dimY)
 {
 	
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
 	textos.push_back(static_cast<Ogre::PanelOverlayElement*>(overlayManager.createOverlayElement("Panel", nombrePanel)));
 	textos.back()->setMetricsMode(Ogre::GMM_RELATIVE);
 	textos.back()->setPosition(x, y);
-	textos.back()->setDimensions(0.25, 0.25);
+	textos.back()->setDimensions(dimX,dimY);
 	
 	Ogre::TextAreaOverlayElement* text = static_cast<Ogre::TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", nombreTexto));
