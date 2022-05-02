@@ -92,7 +92,7 @@ local level = {
                 mesh={
                     mesh="cube.mesh",
                     material="Azul",
-                    visible="true"
+                    visible="false"
                 }
             }
         },
@@ -127,6 +127,58 @@ local level = {
                     mesh="cube.mesh",
                     material="Rojo",
                     visible="true"
+                }
+            }
+        },
+        {
+            name="Ball",
+            id=8,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 0 0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Cian",
+                    visible="true"
+                },  
+                collider={
+                    type="sphere",
+                    radius="10",
+                    trigger="false"
+                },
+                rigidbody={
+                    static="false",
+                    -- velocity="-100 0 0",
+                    density="1000"
+                }
+            }
+        },
+        {
+            name="Ball2",
+            id=9,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 -1000 0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rosa",
+                    visible="true"
+                },  
+                collider={
+                    type="sphere",
+                    radius="10",
+                    trigger="false"
+                },
+                rigidbody={
+                    static="true"
                 }
             }
         }

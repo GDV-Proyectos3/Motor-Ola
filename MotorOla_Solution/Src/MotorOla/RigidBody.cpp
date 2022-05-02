@@ -136,7 +136,10 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		std::string densityString = mapa.at("density");
 		density = stof(densityString);
 		if (body) PxRigidBodyExt::updateMassAndInertia(*body, density);
-		else return false; // solo para dynamic!
+		else {
+			std::cout << "RigidBody - ERROR: un static no usa density!" << std::endl;
+			return false; // solo para dynamic!
+		}
 	}
 
 	// Añade la entidad asociado al manager de phyx

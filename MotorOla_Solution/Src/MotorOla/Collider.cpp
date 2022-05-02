@@ -81,11 +81,11 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 		// Establece el tipo de simulacion fisica
 		std::string triggerString = mapa.at("trigger");
 		if (triggerString == "true")
-			shape = pm().createTriggerShape(*geometry, *material, true);
+			shape = pm().createTriggerShape(*geometry, *material, false);
 	}
 	// Si no se ha definido dicho parametro o es 'false'
 	if (shape == nullptr) {
-		shape = pm().createShape(*geometry, *material, true); // NO TRIGGER, NO POO
+		shape = pm().createShape(*geometry, *material, false); // NO TRIGGER, NO POO
 	}
 
 	// Recoge si existe el componente RigidBody

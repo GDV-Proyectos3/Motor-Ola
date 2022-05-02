@@ -90,8 +90,8 @@ public:
 	// Setters
 	MOTOR_API void addEntityID(int id) { ids_.push_back(id); };
 	MOTOR_API void addEntityToEraseID(int id) { ids_erase.push_back(id); };
-	MOTOR_API void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
-	MOTOR_API void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
+	MOTOR_API void setGlobalToPhysxTR(Entidad& e, PxRigidActor& body);
+	MOTOR_API void setPhysxToGlobalTR(Entidad& e, PxRigidActor& body);
 
 private:
 	PhysxManager(/*...*/);

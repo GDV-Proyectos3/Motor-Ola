@@ -157,13 +157,14 @@ void PhysxManager::update(bool interactive, double t)
 	//gOneFrame = false;
 
 	// Actualiza las fisicas de movimiento y colisiones
-	stepPhysics(interactive, 1.0f/60.0f);
+	stepPhysics(interactive, 1.5f/60.0f);
 
 	// Actualiza las posiciones: PxTransform --> Transform global
 	for (auto& id : ids_) {
 		Entidad* e = em().getEntidadByID(id);
 		RigidBody* body = e->getComponent<RigidBody>();
-		setPhysxToGlobalTR(*e, *body->getBody());
+		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
+		//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
 		debugBuddy(e);
 	}
 }
@@ -250,7 +251,7 @@ Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
 }
 
 // Realiza la conversi�n de datos: Transform global --> PxTransform
-void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
+void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidActor& body)
 {
 	Transform* tr = e.getComponent<Transform>();
 	PxTransform bodyTR = globalToPhysxTR(*tr);
@@ -260,7 +261,7 @@ void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
 }
 
 // Realiza la conversi�n de datos: PxTransform --> Transform global
-void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body)
+void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidActor& body)
 {
 	Transform auxTR = physxToGlobalTR(body);
 	Transform* tr = e.getComponent<Transform>();
