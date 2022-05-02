@@ -51,6 +51,7 @@ public:
 	// utils
 	MOTOR_API void stepPhysics(bool interactive, double t);
 	MOTOR_API void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+	MOTOR_API void onTrigger(physx::PxActor* actor1, physx::PxActor* actor2);
 
 	// TIMER
 	MOTOR_API void StartCounter();
@@ -87,6 +88,7 @@ public:
 	MOTOR_API PxRigidDynamic* getBall() { return testBALL; };
 	MOTOR_API PxScene* getScene() { return mScene; };
 	MOTOR_API PxMaterial* getMaterial() { return mMaterial; };
+	MOTOR_API Entidad* findEntityByPxActor(PxActor* actor);
 
 	// Setters
 	MOTOR_API void addEntityID(int id) { ids_.push_back(id); };

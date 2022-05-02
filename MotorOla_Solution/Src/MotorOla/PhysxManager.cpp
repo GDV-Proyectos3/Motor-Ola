@@ -189,19 +189,6 @@ void PhysxManager::update(bool interactive, double t)
 		debugBuddy(e);
 	}
 
-	//for (Entidad* e : &em().getAllEntidades()) {
-
-	//	if (e->getComponent<RigidBody>() != nullptr) {
-
-	//	}
-
-	//	Entidad* e = em().getEntidadByID(id);
-	//	RigidBody* body = e->getComponent<RigidBody>();
-	//	if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-	//	//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
-	//	debugBuddy(e);
-	//}
-
 	//for (auto& id : ids_) {
 	//	Entidad* e = em().getEntidadByID(id);
 	//	RigidBody* body = e->getComponent<RigidBody>();
@@ -252,8 +239,32 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+	
+	Entidad* a = findEntityByPxActor(actor1);
+	Entidad* b = findEntityByPxActor(actor2);
+	if (a != b) 
+	{
+		a->OnCollisionEnter(b);
+		b->OnCollisionEnter(a);
+	}
 
-	std::cout << "Choca\n";
+	std::cout << "COLLIDERS COLLISION detected!\n";
+}
+
+void PhysxManager::onTrigger(physx::PxActor* actor1, physx::PxActor* actor2)
+{
+	PX_UNUSED(actor1);
+	PX_UNUSED(actor2);
+
+	Entidad* a = findEntityByPxActor(actor1);
+	Entidad* b = findEntityByPxActor(actor2);
+	if (a != b)
+	{
+		a->OnTriggerEnter(b);
+		b->OnTriggerEnter(a);
+	}
+
+	std::cout << "TRIGGER COLLISION detected!\n";
 }
 
 // Copia los valores de un transform global a uno propio de physx
@@ -292,6 +303,33 @@ Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
 	tr.setRotation(rot);
 
 	return tr;
+}
+
+MOTOR_API Entidad* PhysxManager::findEntityByPxActor(PxActor* actor)
+{
+	RigidBody* body = nullptr;
+	auto it = em().getAllEntidades().begin();
+	while (it != em().getAllEntidades().end()) {
+		Entidad* e = (*it).get();
+		it++;
+
+		if (e->getComponent<RigidBody>() == nullptr) continue;
+
+		body = e->getComponent<RigidBody>();
+		PxRigidDynamic* bodyRD = body->getBody();
+		PxRigidStatic* bodyST = body->getStBody();
+
+		PxActor* actorAUX = nullptr;
+		if (bodyRD) actorAUX = dynamic_cast<PxActor*>(bodyRD);
+		else if (bodyST) actorAUX = dynamic_cast<PxActor*>(bodyST);
+		else continue;
+
+		if (actorAUX && actorAUX == actor)
+		{
+			return e;
+		}
+	}
+	return nullptr;
 }
 
 // Realiza la conversi�n de datos: Transform global --> PxTransform

@@ -25,8 +25,8 @@ public:
 	bool isActive() const;
 	void destroy();
 
-	void OnCollisionEnter(Entidad* other) { std::cout << "OnCollisionEnter\n"; };
-	void OnTriggerEnter(Entidad* other) { std::cout << "OnTriggerEnter\n"; };
+	void OnCollisionEnter(Entidad* other);
+	void OnTriggerEnter(Entidad* other);
 
 	virtual ~Entidad() {};
 

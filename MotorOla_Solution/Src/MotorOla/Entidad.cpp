@@ -37,6 +37,24 @@ void Entidad::destroy()
 	active = false;
 }
 
+void Entidad::OnCollisionEnter(Entidad* other)
+{
+	std::cout << "OnCollisionEnter\n";
+	for (auto& c : components)
+	{
+		c->onCollisionStart(other);
+	}
+}
+
+void Entidad::OnTriggerEnter(Entidad* other)
+{
+	std::cout << "OnTriggerEnter\n";
+	for (auto& c : components)
+	{
+		c->onTriggerStart(other);
+	}
+}
+
 bool Entidad::init()
 {
 	_numTriesToLoad = components.size() * 100000;

@@ -46,7 +46,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 
 		if (isTriggerShape(current.shapes[0]) && isTriggerShape(current.shapes[1]))
 			printf("Trigger-trigger overlap detected\n");
-	}
+	}	
 
 	physx::PxActor* actor1 = pairHeader.actors[0];
 	physx::PxActor* actor2 = pairHeader.actors[1];
@@ -64,5 +64,9 @@ void ContactReportCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 			printf("Shape is entering trigger volume\n");
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_LOST)
 			printf("Shape is leaving trigger volume\n");
+
+		physx::PxActor* actor1 = current.otherActor;
+		physx::PxActor* actor2 = current.triggerActor;
+		pm().onTrigger(actor1, actor2);
 	}
 }

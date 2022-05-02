@@ -28,7 +28,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Este",
             id=2,
             components={
                 transform={
@@ -46,7 +46,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Oeste",
             id=3,
             components={
                 transform={
@@ -63,7 +63,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Arriba",
             id=4,
             components={
                 transform={
@@ -97,7 +97,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Sur",
             id=6,
             components={
                 transform={
@@ -114,7 +114,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Norte",
             id=7,
             components={
                 transform={
