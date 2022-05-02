@@ -26,7 +26,7 @@ local level = {
             components={
                 transform={
                     parent="-1",
-                    position="0,0,0",
+                    position="0 0 0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
@@ -37,16 +37,13 @@ local level = {
                 },
                 collider={
                     type="sphere",
-                    radius="10"
+                    radius="10",
+                    trigger="false"
                 },
                 rigidbody={
-                    posX="10",
-                    posY="10",
-                    posZ="10",
-                    oriX="0",
-                    oriY="0",
-                    oriZ="0",
-                    oriW="1"
+                    static="false",
+                    velocity="0 -50 -100",
+                    density="1000"
                 }
             }
         }
