@@ -52,5 +52,7 @@ private:
 	Ogre::SceneManager* _sceneManager = nullptr;
 	Ogre::SceneNode* _nodo = nullptr;
 	Ogre::Entity* _ogreEntity = nullptr;
+
+	bool debugCom = false;
 };
 

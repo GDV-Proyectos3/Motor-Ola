@@ -5,7 +5,7 @@
 
 RigidBody::RigidBody()
 {
-	//std::cout << "CONSTRUCTOR VACIO RIGIDBODY" << std::endl;
+	if (debugCom) std::cout << "CONSTRUCTOR VACIO RIGIDBODY" << std::endl;
 }
 
 RigidBody::~RigidBody()
@@ -20,7 +20,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		return false;
 	}*/
 
-	std::cout << "init RIGIDBODY, id:" << getEntidad()->getID() << std::endl;
+	if (debugCom) std::cout << "init RIGIDBODY, id:" << getEntidad()->getID() << std::endl;
 
 	// Recoge si existe el componente transform
 	Transform* tr = getEntidad()->getComponent<Transform>();
@@ -49,7 +49,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 
 			// Establece las propiedades leidas...
 			pos_ = PxVec3(posX, posY, posZ);
-			std::cout << "Position RB = " << pos_ << std::endl;
+			if (debugCom) std::cout << "Position RB = " << pos_ << std::endl;
 		}
 
 		// comprobar que la sección existe
@@ -67,19 +67,19 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 
 			// Establece las propiedades leidas...
 			ori_ = PxQuat(oriX, oriY, oriZ, oriW);
-			std::cout << "Orientation RB = " << ori_ << std::endl;
+			if (debugCom) std::cout << "Orientation RB = " << ori_ << std::endl;
 		}
 	}
 	else {
-		std::cout << "Lectura directa de Transform  para RigidBody" << std::endl;
+		if (debugCom) std::cout << "\nLectura directa de Transform  para RigidBody" << std::endl;
 		Vectola3D pos = tr->getLocalPosition();
 		Quaterniola rot = tr->getLocalRotation();
-		std::cout << "Position TR = " << pos << std::endl;
-		std::cout << "Orientation TR = " << rot << std::endl;
+		if (debugCom) std::cout << "\nPosition TR = " << pos << std::endl;
+		if (debugCom) std::cout << "Orientation TR = " << rot;// << std::endl;
 		pos_ = PxVec3(pos.getX(), pos.getY(), pos.getZ());
 		ori_ = PxQuat(rot.v.getX(), rot.v.getX(), rot.v.getX(), rot.s);
-		std::cout << "Position RB = " << pos_ << std::endl;
-		std::cout << "Orientation RB = " << ori_ << std::endl;
+		if (debugCom) std::cout << "Position RB = " << pos_ << std::endl;
+		if (debugCom) std::cout << "Orientation RB = " << ori_ << std::endl << std::endl;
 	}
 
 	// comprobar que la sección existe
@@ -95,7 +95,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 
 		// Establece las propiedades leidas...
 		vel_ = PxVec3(velX, velY, velZ);
-		std::cout << "Velocity RB = " << vel_ << std::endl;
+		if (debugCom) std::cout << "Velocity RB = " << vel_ << std::endl;
 	}	
 
 	// Position and orientation in world space (Physx pose)
@@ -118,14 +118,14 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 			stBody = pm().createStaticRigid(pose, shape);
 		else
 			body = pm().createDynamic(pose, shape, vel_);
-		std::cout << "Rigidbody - collider!" << std::endl;
+		if (debugCom) std::cout << "Rigidbody - collider!" << std::endl;
 	}
 	else {
 		if (estatico)
 			stBody = pm().createStaticRigid(pose);
 		else
 			body = pm().createDynamic(pose, vel_);
-		std::cout << "Rigidbody - sin collider!" << std::endl;
+		if (debugCom) std::cout << "Rigidbody - sin collider!" << std::endl;
 	}
 
 	// Establece la densidad del objeto
@@ -137,7 +137,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		density = stof(densityString);
 		if (body) PxRigidBodyExt::updateMassAndInertia(*body, density);
 		else {
-			std::cout << "RigidBody - ERROR: un static no usa density!" << std::endl;
+			if (debugCom) std::cout << "RigidBody - ERROR: un static no usa density!" << std::endl;
 			return false; // solo para dynamic!
 		}
 	}

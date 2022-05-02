@@ -36,5 +36,6 @@ private:
 	PxQuat ori_ = PxQuat(PxIdentity);	// orientation
 	PxVec3 vel_ = PxVec3(PxZero);		// velocity
 
-	bool no1stTry = true;
+	//bool no1stTry = true;
+	bool debugCom = false;
 };

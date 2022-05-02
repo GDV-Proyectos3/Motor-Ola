@@ -4,7 +4,7 @@
 
 Collider::Collider()
 {
-	//std::cout << "CONSTRUCTOR VACIO COLLIDER" << std::endl;
+	if (debugCom) std::cout << "CONSTRUCTOR VACIO COLLIDER" << std::endl;
 }
 
 Collider::~Collider()
@@ -13,7 +13,7 @@ Collider::~Collider()
 
 bool Collider::init(const std::map<std::string, std::string>& mapa)
 {
-	std::cout << "init COLLIDER, id:" << getEntidad()->getID() << std::endl;
+	if (debugCom) std::cout << "init COLLIDER, id:" << getEntidad()->getID() << std::endl;
 
 	// comprobar que la sección existe
 	if (mapa.find("type") == mapa.end())
@@ -25,7 +25,7 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 
 	// identifica el tipo de geometría
 	std::string typeString = mapa.at("type");
-	std::cout << "type geometry = " << typeString << std::endl;
+	if (debugCom) std::cout << "type geometry = " << typeString << std::endl;
 
 	if (typeString == "sphere") {
 		// comprobar que la sección existe
@@ -90,12 +90,15 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 
 	// Recoge si existe el componente RigidBody
 	RigidBody* body = getEntidad()->getComponent<RigidBody>();
-	if (body->getBody() && body->getBody()->getNbShapes() == 0)				// dynamic
-		body->getBody()->attachShape(*shape);
-	else if (body->getStBody() && body->getStBody()->getNbShapes() == 0)	// static
-		body->getStBody()->attachShape(*shape);
+	if (body) {
+		if (body->getBody() && body->getBody()->getNbShapes() == 0)				// dynamic
+			body->getBody()->attachShape(*shape);
+		else if (body->getStBody() && body->getStBody()->getNbShapes() == 0)	// static
+			body->getStBody()->attachShape(*shape);
+		if (debugCom) std::cout << "Collider: shape attach!" << std::endl;
+	}
 	else
-		std::cout << "Collider: no body, no shape attach" << std::endl;
+		if (debugCom) std::cout << "Collider: no body, no shape attach" << std::endl;
 
 	return true;
 }

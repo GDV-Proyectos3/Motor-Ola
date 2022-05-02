@@ -169,7 +169,7 @@ void PhysxManager::update(bool interactive, double t)
 		RigidBody* body = e->getComponent<RigidBody>();
 
 		if (body->getBody()) setGlobalToPhysxTR(*e, *body->getBody());
-		debugBuddy(e);
+		//debugBuddy(e);
 	}
 
 	// Actualiza las fisicas de movimiento y colisiones
@@ -186,7 +186,7 @@ void PhysxManager::update(bool interactive, double t)
 		RigidBody* body = e->getComponent<RigidBody>();
 
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-		debugBuddy(e);
+		//debugBuddy(e);
 	}
 
 	//for (auto& id : ids_) {
@@ -349,8 +349,8 @@ void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidActor& body)
 	Transform* tr = e.getComponent<Transform>();
 	tr->setPosition(auxTR.getPosition());
 	tr->setRotation(auxTR.getRotation());
-	std::cout << auxTR.getPosition() << "\n";
-	std::cout << tr->getPosition() << "\n";
+	//std::cout << auxTR.getPosition() << "\n";
+	//std::cout << tr->getPosition() << "\n";
 }
 
 // ---------------- FACTORY --------------------------------------------------

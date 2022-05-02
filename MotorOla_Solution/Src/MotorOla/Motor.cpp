@@ -130,27 +130,8 @@ void Motor::mainLoop()
 			continue;
 		}
 
-		// Recoge los id's de la entities que tienen RigidBody
-		std::vector<int>* physxIDs = pm().getIDs();
-
-		// Actualiza las posiciones: Transform global --> PxTransform
-		//for (auto& id : *physxIDs) {
-		//	Entidad* e = em().getEntidadByID(id);
-		//	RigidBody* body = e->getComponent<RigidBody>();
-		//	pm().setGlobalToPhysxTR(*e, *body->getBody());
-		//	pm().debugBuddy(e);
-		//}
-
 		// Actualizar las fisicas de las entidades
 		pm().runPhysX();
-
-		// Actualiza las posiciones: PxTransform --> Transform global
-		/*for (auto& id : *physxIDs) {
-			Entidad* e = em().getEntidadByID(id);
-			RigidBody* body = e->getComponent<RigidBody>();
-			pm().setPhysxToGlobalTR(*e, *body->getBody());
-			pm().debugBuddy(e);
-		}*/
 
 		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {
