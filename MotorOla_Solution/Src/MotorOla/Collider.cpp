@@ -1,9 +1,10 @@
 #include "Collider.h"
 #include "PhysxManager.h"
+#include "RigidBody.h"
 
 Collider::Collider()
 {
-	std::cout << "CREANDO COLLIDER" << std::endl;
+	//std::cout << "CONSTRUCTOR VACIO COLLIDER" << std::endl;
 }
 
 Collider::~Collider()
@@ -12,16 +13,19 @@ Collider::~Collider()
 
 bool Collider::init(const std::map<std::string, std::string>& mapa)
 {
+	std::cout << "init COLLIDER, id:" << getEntidad()->getID() << std::endl;
+
 	// comprobar que la sección existe
 	if (mapa.find("type") == mapa.end())
 		return false;
 
 	// variables principales
-	PxGeometry geometry = PxBoxGeometry();
+	PxGeometry* geometry = nullptr;
 	PxMaterial* material = pm().getMaterial();	// Establece el tipo de material
 
 	// identifica el tipo de geometría
 	std::string typeString = mapa.at("type");
+	std::cout << "type geometry = " << typeString << std::endl;
 
 	if (typeString == "sphere") {
 		// comprobar que la sección existe
@@ -39,7 +43,7 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 			return false;
 
 		// Crea la forma del collider (esfera)
-		geometry = PxSphereGeometry(rad); /// ¿la escala es igual respecto a Ogre?
+		geometry = new PxSphereGeometry(rad); /// ¿la escala es igual respecto a Ogre?
 	}
 	else if (typeString == "box") {
 		// comprobar que la sección existe
@@ -63,20 +67,35 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 			return false;
 
 		// Crea la forma del collider (cubo)
-		geometry = PxBoxGeometry(PxVec3(dimX, dimY, dimZ)); /// ¿escala?
+		geometry = new PxBoxGeometry(PxVec3(dimX, dimY, dimZ)); /// ¿escala?
 	}
 	
+	/*
 	if (mapa.find("trigger") == mapa.end())
-		return false;
-	else {
+		return false; // salta esto si no lo encuentra...
+	*/
+
+	// Localiza el parametro que indica si el collider es tipo 'trigger'
+	if (mapa.find("trigger") != mapa.end()) 
+	{
 		// Establece el tipo de simulacion fisica
 		std::string triggerString = mapa.at("trigger");
 		if (triggerString == "true")
-			shape = pm().createTriggerShape(geometry, *material, true);
-		else {
-			shape = pm().createShape(geometry, *material, true);
-		}
+			shape = pm().createTriggerShape(*geometry, *material, true);
 	}
-	
+	// Si no se ha definido dicho parametro o es 'false'
+	if (shape == nullptr) {
+		shape = pm().createShape(*geometry, *material, true); // NO TRIGGER, NO POO
+	}
+
+	// Recoge si existe el componente RigidBody
+	RigidBody* body = getEntidad()->getComponent<RigidBody>();
+	if (body->getBody() && body->getBody()->getNbShapes() == 0)				// dynamic
+		body->getBody()->attachShape(*shape);
+	else if (body->getStBody() && body->getStBody()->getNbShapes() == 0)	// static
+		body->getStBody()->attachShape(*shape);
+	else
+		std::cout << "Collider: no body, no shape attach" << std::endl;
+
 	return true;
 }
