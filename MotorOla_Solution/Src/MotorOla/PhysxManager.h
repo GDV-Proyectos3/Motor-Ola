@@ -85,6 +85,7 @@ public:
 	MOTOR_API std::vector<int>* getIDs() { return &ids_; };
 	MOTOR_API PxPhysics* getPhysX() { return mPhysics; };
 	MOTOR_API PxRigidDynamic* getBall() { return testBALL; };
+	MOTOR_API PxScene* getScene() { return mScene; };
 	MOTOR_API PxMaterial* getMaterial() { return mMaterial; };
 
 	// Setters

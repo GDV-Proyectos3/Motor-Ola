@@ -2,7 +2,9 @@
 #include "Transform.h"
 #include "LoadResources.h"
 #include "EntidadManager.h"
+#include "PhysxManager.h"
 #include "LuaReader.h"
+#include "RigidBody.h"
 
 Entidad::Entidad():
 	entManager_(nullptr),
@@ -75,5 +77,9 @@ Entidad* Entidad::instantiate(std::string name, Vectola3D position, Quaterniola 
 	Entidad* ent = readPrefab(path);
 	ent->getComponent<Transform>()->setPosition(position);
 	ent->getComponent<Transform>()->setRotation(rotation);
+	if (ent->getComponent<RigidBody>() != nullptr) {
+		pm().setGlobalToPhysxTR(*ent, *ent->getComponent<RigidBody>()->getBody());
+	}
+
 	return ent;
 }

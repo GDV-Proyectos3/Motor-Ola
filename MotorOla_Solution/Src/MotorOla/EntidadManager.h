@@ -32,6 +32,9 @@ public:
 	MOTOR_API void reanudeEntidades();
 	MOTOR_API void sincronizaVectorEnt();
 	
+	MOTOR_API std::vector<uptr_ent>& getAllEntidades() {
+		return entitys_;
+	}
 	MOTOR_API Entidad* getEntidadByID(int id);
 
 private:

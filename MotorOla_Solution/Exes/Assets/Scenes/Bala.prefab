@@ -17,7 +17,17 @@ local prefab = {
 		moveBullet={
 			direction="0,0,0",
 			velocity="50"
-		}
+		},  
+        collider={
+            type="sphere",
+            radius="0.15",
+            trigger="false"
+        },
+        rigidbody={
+            static="false",
+            -- velocity="-100 0 0",
+            density="1000"
+        }
     }
 }
 

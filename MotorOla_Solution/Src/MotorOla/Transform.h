@@ -4,12 +4,13 @@
 #else
 #define MOTOR_API __declspec(dllimport)
 #endif
+
 #include "Componente.h"
 #include "utils/Vectola3D.h"
 #include "utils/Quaterniola.h"
 #include <list>
 
-class Transform :   public Componente
+class Transform : public Componente
 {
 public:
 	// OBLIGATORIO EN CADA COMPONENTE

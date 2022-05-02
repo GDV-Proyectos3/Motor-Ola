@@ -111,7 +111,9 @@ void PhysxManager::init()
 
 	// Scene for GPU Rigid Bodies ----------------------------------------------------
 	PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);
+	
+	sceneDesc.gravity = PxVec3(0.0f, 0.0f, 0.0f);
+
 	mDispatcher = PxDefaultCpuDispatcherCreate(4);					//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
 
@@ -156,17 +158,57 @@ void PhysxManager::update(bool interactive, double t)
 		return;
 	//gOneFrame = false;
 
+	// Actualiza las posiciones: Transform global --> PxTransform
+	auto it = em().getAllEntidades().begin();
+	while (it != em().getAllEntidades().end()) {
+		Entidad* e = (*it).get();
+		it++;
+
+		if (e->getComponent<RigidBody>() == nullptr) continue;
+
+		RigidBody* body = e->getComponent<RigidBody>();
+
+		if (body->getBody()) setGlobalToPhysxTR(*e, *body->getBody());
+		debugBuddy(e);
+	}
+
 	// Actualiza las fisicas de movimiento y colisiones
 	stepPhysics(interactive, 1.5f/60.0f);
 
 	// Actualiza las posiciones: PxTransform --> Transform global
-	for (auto& id : ids_) {
-		Entidad* e = em().getEntidadByID(id);
+	it = em().getAllEntidades().begin();
+	while (it != em().getAllEntidades().end()) {
+		Entidad* e = (*it).get();
+		it++;
+
+		if (e->getComponent<RigidBody>() == nullptr) continue;
+
 		RigidBody* body = e->getComponent<RigidBody>();
+
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-		//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
 		debugBuddy(e);
 	}
+
+	//for (Entidad* e : &em().getAllEntidades()) {
+
+	//	if (e->getComponent<RigidBody>() != nullptr) {
+
+	//	}
+
+	//	Entidad* e = em().getEntidadByID(id);
+	//	RigidBody* body = e->getComponent<RigidBody>();
+	//	if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
+	//	//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
+	//	debugBuddy(e);
+	//}
+
+	//for (auto& id : ids_) {
+	//	Entidad* e = em().getEntidadByID(id);
+	//	RigidBody* body = e->getComponent<RigidBody>();
+	//	if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
+	//	//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
+	//	debugBuddy(e);
+	//}
 }
 
 // Function to clean data
@@ -210,6 +252,8 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+
+	std::cout << "Choca\n";
 }
 
 // Copia los valores de un transform global a uno propio de physx
@@ -267,6 +311,8 @@ void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidActor& body)
 	Transform* tr = e.getComponent<Transform>();
 	tr->setPosition(auxTR.getPosition());
 	tr->setRotation(auxTR.getRotation());
+	std::cout << auxTR.getPosition() << "\n";
+	std::cout << tr->getPosition() << "\n";
 }
 
 // ---------------- FACTORY --------------------------------------------------

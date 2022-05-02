@@ -25,6 +25,9 @@ public:
 	bool isActive() const;
 	void destroy();
 
+	void OnCollisionEnter(Entidad* other) { std::cout << "OnCollisionEnter\n"; };
+	void OnTriggerEnter(Entidad* other) { std::cout << "OnTriggerEnter\n"; };
+
 	virtual ~Entidad() {};
 
 	inline EntidadManager* getEntityMngr() const { return entManager_; }
@@ -33,21 +36,7 @@ public:
 
 	inline int getID() { return _id; }
 
-	//template<typename  T>
-	//inline bool hasComponent() const {
-	//	return componentBitset[getComponentTypeID<T>()];
-	//}
 
-	//template<typename T>
-	//inline T* getComponent() const {
-	//	auto ptr(compMaps[getComponentTypeID<T>()]);
-	//	return static_cast<T*>(ptr);
-	//}
-		/// <summary>
-	/// Devuelve si tiene o no un componente. Coste: O(N) :(
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <returns></returns>
 	template<typename T>
 	bool hasComponent() {
 		return getComponent<T>() != nullptr;
@@ -66,24 +55,9 @@ public:
 			ret = dynamic_cast<T*>(components[i].get());
 			++i;
 		}
-
 		return ret;
 	}
 
-	//template<typename T, typename ... Targs>
-	//inline T* addComponent(Targs&&...args) {
-
-	//	T* c(new T(std::forward<Targs>(args)...));
-	//	uptr_cmp uPtr(c);
-	//	components.emplace_back(std::move(uPtr));
-
-	//	componentArray[getComponentTypeID<T>()]=c;
-	//	componentBitset[getComponentTypeID<T>()] = true;
-
-	//	c->setEntidad(this);
-	//	c->init();
-	//	return c;
-	//}
 
 	Componente* addComponent(const std::string& compName, const std::map<std::string, std::string>& map) {
 		Componente* t = Singleton<ComponenteFactoria>::instance()->getComponent(compName);
@@ -107,7 +81,6 @@ public:
 	bool init();
 
 	MOTOR_API static Entidad* instantiate(std::string name, Vectola3D position = Vectola3D(), Quaterniola rotation = Quaterniola());
-
 
 private:
 	std::string _name;

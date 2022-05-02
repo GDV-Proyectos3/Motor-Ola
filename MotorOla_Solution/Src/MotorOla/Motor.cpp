@@ -116,8 +116,6 @@ void Motor::mainLoop()
 	SDL_Event event;
 	std::cout << Singleton<EntidadManager>::instance() << "\n";
 
-	
-
 	while (!stop) {
 		// Recoger el Input
 		Singleton<EntidadManager>::instance()->refresh();

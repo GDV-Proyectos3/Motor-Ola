@@ -10,6 +10,7 @@
 #include "OgreManager.h"
 #include "OverlayManager.h"
 #include <stdio.h>
+#include "PhysxManager.h"
 
 extern "C"
 {
@@ -84,6 +85,8 @@ void readFile(std::string file) {
 		sz = 0, sa = 0;
 		a = std::stof(aux3, &sz); b = std::stof(aux3.substr(sz + 1), &sa); c = std::stof(aux3.substr(sz + sa + 2));
 		//AQUE CUBELLS Singleton<Physx> cambiar gravedad
+		pm().getScene()->setGravity(PxVec3(a, b, c));
+
 		lua_pop(l, 1);
 
 		// Modifica la camara de la escena
