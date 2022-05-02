@@ -31,6 +31,8 @@
 #include "Mesh.h"
 #include "Movible.h"
 #include "AudioSource.h"
+#include "Collider.h"
+#include "RigidBody.h"
 #include <iostream>
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
@@ -38,7 +40,7 @@ HINSTANCE hDLL;               // Handle to DLL
 
 Motor::Motor()
 {
-	// Inicia los managers (PC: ya que no se usan métodos, se podría dejar con init que para el caso es lo mismo)
+	// Inicia los managers
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
@@ -99,6 +101,8 @@ void Motor::registryComponents()
 	try {
 		ComponenteRegistro::ComponenteRegistro<Transform>("transform");
 		ComponenteRegistro::ComponenteRegistro<Mesh>("mesh");
+		ComponenteRegistro::ComponenteRegistro<Collider>("collider");
+		ComponenteRegistro::ComponenteRegistro<RigidBody>("rigidbody");
 	}
 	catch (const char* error) {
 		std::cout << "Error registrando los componentes del motor: \n" << error << "\n";
@@ -111,6 +115,8 @@ void Motor::mainLoop()
 	//Actualiza el motor. Bucle input->update/fisicas->render
 	SDL_Event event;
 	std::cout << Singleton<EntidadManager>::instance() << "\n";
+
+	
 
 	while (!stop) {
 		// Recoger el Input
@@ -126,9 +132,27 @@ void Motor::mainLoop()
 			continue;
 		}
 
+		// Recoge los id's de la entities que tienen RigidBody
+		std::vector<int>* physxIDs = pm().getIDs();
+
+		// Actualiza las posiciones: Transform global --> PxTransform
+		//for (auto& id : *physxIDs) {
+		//	Entidad* e = em().getEntidadByID(id);
+		//	RigidBody* body = e->getComponent<RigidBody>();
+		//	pm().setGlobalToPhysxTR(*e, *body->getBody());
+		//	pm().debugBuddy(e);
+		//}
+
 		// Actualizar las fisicas de las entidades
-		// Update PhysX: (PC: el 'pm()' igual que 'ih()' es un alias es decir una forma breve para nombrar la llamada a '(...)::instance()')
-		pm().update(); 
+		pm().runPhysX();
+
+		// Actualiza las posiciones: PxTransform --> Transform global
+		/*for (auto& id : *physxIDs) {
+			Entidad* e = em().getEntidadByID(id);
+			RigidBody* body = e->getComponent<RigidBody>();
+			pm().setPhysxToGlobalTR(*e, *body->getBody());
+			pm().debugBuddy(e);
+		}*/
 
 		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {
@@ -227,11 +251,14 @@ bool Motor::loadMenu(std::string name,const char*get) {
 
 void Motor::loadTestMotorGame() 
 {
+	loadScene("TestScene.lua");
 	//// Entidad con un transform
 	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	//map<string, string> m;
 	//ent->addComponent("transform", m);
-
+	//cuboTest = Singleton<EntidadManager>::instance()->getEntidadByID(2);	
+	//pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
+	//pm().setGlobalToPhysxTR(*cuboTest, *pm().getBall());
 }
 
 bool Motor::getStop()

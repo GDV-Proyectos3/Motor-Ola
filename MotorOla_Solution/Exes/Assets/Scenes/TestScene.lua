@@ -21,14 +21,14 @@ local level = {
                 },
                 mesh={
                     mesh="ogrehead.mesh",
-                    material="Azul",
+                    material="Ogre/Skin",
                     visible="true"
                 },
 				
             }
         },
         {
-            name="Vista1",
+            name="Este",
             id=2,
             components={
                 transform={
@@ -46,7 +46,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Oeste",
             id=3,
             components={
                 transform={
@@ -63,7 +63,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Arriba",
             id=4,
             components={
                 transform={
@@ -97,7 +97,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Sur",
             id=6,
             components={
                 transform={
@@ -114,7 +114,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Norte",
             id=7,
             components={
                 transform={
@@ -127,6 +127,33 @@ local level = {
                     mesh="cube.mesh",
                     material="Rojo",
                     visible="true"
+                }
+            }
+        },
+        {
+            name="Ball",
+            id=8,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 0 0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Cian",
+                    visible="true"
+                },  
+                collider={
+                    type="sphere",
+                    radius="10",
+                    trigger="false"
+                },
+                rigidbody={
+                    static="false",
+                    -- velocity="-100 0 0",
+                    density="1000"
                 }
             }
         }

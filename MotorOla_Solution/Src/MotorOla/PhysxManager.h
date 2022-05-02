@@ -9,55 +9,144 @@
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
+#include <cassert>
+
+#include "Transform.h"
 #include "Entidad.h"
+#include "ContactReportCallback.h"
 
 using namespace physx;
-//#include <string>
+
+MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
+	os << "(" << v.x << "," << v.y << "," << v.z << ")";
+	return os;
+}
+
+MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxQuat& q) {
+	os << "(" << q.x << "," << q.y << "," << q.z << "," << q.w << ")";
+	return os;
+}
 
 MOTOR_API class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
-	//using uptr_collider = std::unique_ptr<Px>;
 public:	
 	~PhysxManager();
 
+	// main resources
+	MOTOR_API void runPhysX();
+
+	// transform
+	MOTOR_API PxTransform globalToPhysxTR(Transform& tr);
+	MOTOR_API Transform physxToGlobalTR(const PxRigidActor& body);
+	
+	// elimina memoria
+	MOTOR_API void releaseScene();
+	MOTOR_API void releaseBody(PxActor& body);
+
+	// MAIN SINGLETON
+	MOTOR_API void init();
+	MOTOR_API void update(bool interactive, double t);
+	MOTOR_API void close(bool interactive);
+
+	// utils
+	MOTOR_API void stepPhysics(bool interactive, double t);
+	MOTOR_API void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+
+	// TIMER
+	MOTOR_API void StartCounter();
+	MOTOR_API double GetCounter();
+	MOTOR_API double GetLastTime();
+
+	// testing debug
+	MOTOR_API void debugTime();
+	MOTOR_API void debugBall();
+	MOTOR_API void debugBuddy(Entidad* e);
+
+	// FACTORY
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, const PxVec3& velocity = PxVec3(PxZero));
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(PxZero));
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(PxZero));
+	
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform);
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material);
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform, PxShape* shape);
+
+	MOTOR_API PxShape* createShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+	MOTOR_API PxShape* createTriggerShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+
+	// factory prefabs
+	MOTOR_API PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
+	MOTOR_API PxRigidDynamic* createBall();
+	MOTOR_API void createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent);
+	MOTOR_API void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
+
 	// Getters
-	// ...
-	MOTOR_API void init() {};
-	MOTOR_API void update();
-	MOTOR_API void close();
+	MOTOR_API int getID(int k) { return ids_[k]; };
+	MOTOR_API std::vector<int>* getIDs() { return &ids_; };
+	MOTOR_API PxPhysics* getPhysX() { return mPhysics; };
+	MOTOR_API PxRigidDynamic* getBall() { return testBALL; };
+	MOTOR_API PxMaterial* getMaterial() { return mMaterial; };
 
-	MOTOR_API void createBall(const PxTransform& t, const PxGeometry& geometry, const PxVec3& velocity/* = PxVec3(0)*/);
-	MOTOR_API void attachBola(Entidad* ball);
-
-	// Etc
-	// virtual void patata(...) {}
-
-	// Funciones
-	// void loadPatatas();
+	// Setters
+	MOTOR_API void addEntityID(int id) { ids_.push_back(id); };
+	MOTOR_API void addEntityToEraseID(int id) { ids_erase.push_back(id); };
+	MOTOR_API void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
+	MOTOR_API void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
 
 private:
 	PhysxManager(/*...*/);
 	PhysxManager(bool n) { _patata = n; };
-	// Variables
+
+	PxRigidDynamic* testBALL = nullptr;
+
+	// ON/OFF physics
+	bool	mPause = false;
+	bool	mOneFrame = false;
+
+	// Timer...
+	double PCFreq = 0.0;
+	__int64 CounterStart = 0;
+	__int64 CounterLast = 0;
+	__int64 GlobalTimer = 0;
+
+	// Variables editables
 	bool _patata;
 
-	PxFoundation* gFoundation = NULL;
-	PxPhysics* gPhysics = NULL;
+	PxTolerancesScale scale;
+	PxCudaContextManagerDesc cudaDesc;
 
-	PxPvd* gPvd = NULL;
+	PxReal stackZ = 10.0f;
 
-	PxDefaultAllocator gAllocator;
+	// Inevitables para que funcione
+	PxDefaultAllocator		mAllocator;
+	PxDefaultErrorCallback	mErrorCallback;
+	ContactReportCallback	mContactReportCallback;
 
-	PxDefaultErrorCallback gErrorCallback;
+	PxFoundation* mFoundation = NULL;
+	PxPhysics* mPhysics = NULL;
 
-	//std::vector<uptr_collider> colliders_;
+	PxDefaultCpuDispatcher* mDispatcher = NULL;
+	PxScene* mScene = NULL;
 
-	Entidad* bola = nullptr;
+	PxMaterial* mMaterial = NULL;	// default material
+
+	PxPvd* mPvd = NULL;
+	PxCooking* mCooking = NULL;
+
+	PxCudaContextManager* mCuda = NULL;
+
+	// vector para identificar entidades
+	std::vector<int> ids_;
+	std::vector<int> ids_erase;
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
 // en lugar de escribir 'PhysxManager::instance()->method()' escribiremos 'im().method()'
-//
 inline PhysxManager& pm() {
 	return *PhysxManager::instance();
+}
+
+// Forma breve de acceder al creador y padre todopoderoso de las fisicas
+inline PxPhysics* physX() {
+	return PhysxManager::instance()->getPhysX();
 }

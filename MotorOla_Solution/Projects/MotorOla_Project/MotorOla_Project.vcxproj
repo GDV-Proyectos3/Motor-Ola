@@ -31,6 +31,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\MotorOla\AudioSource.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\ContactReportCallback.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\Collider.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\dllmain.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\InputManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\FMODAudioManager.cpp" />
@@ -45,6 +47,7 @@
     <ClCompile Include="..\..\Src\MotorOla\pch.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\PhysxManager.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\OverlayManager.cpp" />
+    <ClCompile Include="..\..\Src\MotorOla\RigidBody.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\Transform.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Quaterniola.cpp" />
     <ClCompile Include="..\..\Src\MotorOla\utils\Vectola3D.cpp" />
@@ -53,6 +56,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Src\MotorOla\AudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\AudioSource.h" />
+    <ClInclude Include="..\..\Src\MotorOla\ContactReportCallback.h" />
+    <ClInclude Include="..\..\Src\MotorOla\Collider.h" />
     <ClInclude Include="..\..\Src\MotorOla\Componente.h" />
     <ClInclude Include="..\..\Src\MotorOla\ComponenteFactoria.h" />
     <ClInclude Include="..\..\Src\MotorOla\ComponenteRegistro.h" />
@@ -70,6 +75,7 @@
     <ClInclude Include="..\..\Src\MotorOla\pch.h" />
     <ClInclude Include="..\..\Src\MotorOla\PhysxManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
+    <ClInclude Include="..\..\Src\MotorOla\RigidBody.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Quaterniola.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
