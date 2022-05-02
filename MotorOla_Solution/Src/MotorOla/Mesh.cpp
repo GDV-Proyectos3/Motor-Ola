@@ -151,7 +151,7 @@ void Mesh::update()
 	{
 		Transform* tr = entity_->getComponent<Transform>();
 		_nodo->setPosition(tr->getPosition().getX(), tr->getPosition().getY(), tr->getPosition().getZ());
-		//_nodo->setOrientation // Hace falta un Quaternion 
+		_nodo->setOrientation(tr->getRotation());
 		_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
 	}
 }
