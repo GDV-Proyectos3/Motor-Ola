@@ -20,12 +20,21 @@ public:
 	// Getter
 	PxRigidDynamic* getBody() { return body; };
 	PxRigidStatic* getStBody() { return stBody; };
+	PxVec3 getVelocity() { return vel_; };
+	PxVec3 getAngularVelocity() { return body->getAngularVelocity(); };
+
+	// Setter
+	void setVelocity(PxVec3 v);
+	void setAngularVelocity(PxVec3 av);
 
 private:
 	PxRigidDynamic* body = nullptr;
 	PxRigidStatic* stBody = nullptr;
 
-	// parametros por defecto
-	PxVec3 position_ = PxVec3(PxZero);
-	PxQuat orientation_ = PxQuat(PxIdentity);
+	// Parametros por defecto
+	PxVec3 pos_ = PxVec3(PxZero);		// position
+	PxQuat ori_ = PxQuat(PxIdentity);	// orientation
+	PxVec3 vel_ = PxVec3(PxZero);		// velocity
+
+	bool no1stTry = true;
 };

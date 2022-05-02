@@ -1,10 +1,11 @@
 #include "RigidBody.h"
 #include "PhysxManager.h"
 #include "Collider.h"
+#include "Transform.h"
 
 RigidBody::RigidBody()
 {
-	std::cout << "CREANDO RIGIDBODY" << std::endl;
+	//std::cout << "CONSTRUCTOR VACIO RIGIDBODY" << std::endl;
 }
 
 RigidBody::~RigidBody()
@@ -13,51 +14,95 @@ RigidBody::~RigidBody()
 
 bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 {
-	float positionX, positionY, positionZ;
-	float orientationX, orientationY, orientationZ, orientationW;
-
-	// comprobar que la sección existe
-	if (mapa.find("posX") == mapa.end() ||
-		mapa.find("posY") == mapa.end() ||
-		mapa.find("posZ") == mapa.end() ||
-		mapa.find("oriX") == mapa.end() ||
-		mapa.find("oriY") == mapa.end() ||
-		mapa.find("oriZ") == mapa.end() ||
-		mapa.find("oriW") == mapa.end())
+	/*if (no1stTry)
 	{
-		std::cout << "Rigidbody - posicion por defecto!" << std::endl;
+		no1stTry = false;
+		return false;
+	}*/
+
+	std::cout << "init RIGIDBODY, id:" << getEntidad()->getID() << std::endl;
+
+	// Recoge si existe el componente transform
+	Transform* tr = getEntidad()->getComponent<Transform>();
+
+	// Valores para guardar los datos leidos
+	float posX=0.f, posY=0.f, posZ=0.f;
+	float oriX=0.f, oriY=0.f, oriZ=0.f, oriW=1.f;
+	float velX=0.f, velY=0.f, velZ=0.f;
+
+	// Valores auxiliares para guardar el tamaño de cada string
+	std::string::size_type sact = 0, stot = 0;
+	std::string tempString; // string auxiliar para guardar la subcadena actual
+
+	// Si no existe / no tiene el componente Transform, lee los datos de LUA
+	if (!tr) {
+		// comprobar que la sección existe
+		if (mapa.find("position") != mapa.end())
+		{
+			// Lee los datos de la posición
+			std::string posString = mapa.at("position");
+			posX = stof(posString, &sact); stot = sact + 1; sact = 0;
+			tempString = posString.substr(stot);
+			posY = stof(tempString, &sact); stot += sact + 1; sact = 0;
+			tempString = posString.substr(stot);
+			posZ = stof(tempString, &sact); stot += sact + 1; sact = 0;
+
+			// Establece las propiedades leidas...
+			pos_ = PxVec3(posX, posY, posZ);
+			std::cout << "Position RB = " << pos_ << std::endl;
+		}
+
+		// comprobar que la sección existe
+		if (mapa.find("orientation") != mapa.end())
+		{
+			// Lee los datos de la orientación
+			std::string oriString = mapa.at("orientation");
+			oriX = stof(oriString, &sact); stot = sact + 1; sact = 0;
+			tempString = oriString.substr(stot);
+			oriY = stof(tempString, &sact); stot += sact + 1; sact = 0;
+			tempString = oriString.substr(stot);
+			oriZ = stof(tempString, &sact); stot += sact + 1; sact = 0;
+			tempString = oriString.substr(stot);
+			oriW = stof(tempString, &sact); stot += sact + 1; sact = 0;
+
+			// Establece las propiedades leidas...
+			ori_ = PxQuat(oriX, oriY, oriZ, oriW);
+			std::cout << "Orientation RB = " << ori_ << std::endl;
+		}
 	}
 	else {
-		// posición
-		std::string pxString = mapa.at("posX");
-		positionX = stof(pxString);
-		std::string pyString = mapa.at("posY");
-		positionY = stof(pyString);
-		std::string pzString = mapa.at("posZ");
-		positionZ = stof(pzString);
-		// orientación
-		std::string oxString = mapa.at("oriX");
-		orientationX = stof(oxString);
-		std::string oyString = mapa.at("oriY");
-		orientationY = stof(oyString);
-		std::string ozString = mapa.at("oriZ");
-		orientationZ = stof(ozString);
-		std::string owString = mapa.at("oriW");
-		orientationW = stof(owString);
-
-		// establece las propiedades
-		position_ = PxVec3(positionX, positionY, positionZ);
-		orientation_ = PxQuat(orientationX, orientationY, orientationZ, orientationW);
+		std::cout << "Lectura directa de Transform  para RigidBody" << std::endl;
+		Vectola3D pos = tr->getPosition();
+		Quaterniola rot = tr->getRotation();
+		pos_ = PxVec3(pos.getX(), pos.getY(), pos.getZ());
+		ori_ = PxQuat(rot.v.getX(), rot.v.getX(), rot.v.getX(), rot.s);
+		std::cout << "Position RB = " << pos_ << std::endl;
+		std::cout << "Orientation RB = " << ori_ << std::endl;
 	}
 
+	// comprobar que la sección existe
+	if (mapa.find("velocity") != mapa.end())
+	{
+		// Lee los datos de la velocidad
+		std::string velString = mapa.at("velocity");
+		velX = stof(velString, &sact); stot = sact + 1; sact = 0;
+		tempString = velString.substr(stot);
+		velY = stof(tempString, &sact); stot += sact + 1; sact = 0;
+		tempString = velString.substr(stot);
+		velZ = stof(tempString, &sact); stot += sact + 1; sact = 0;
+
+		// Establece las propiedades leidas...
+		vel_ = PxVec3(velX, velY, velZ);
+		std::cout << "Velocity RB = " << vel_ << std::endl;
+	}	
+
 	// Position and orientation in world space (Physx pose)
-	PxTransform pose = PxTransform(position_, orientation_);
+	PxTransform pose = PxTransform(pos_, ori_);
 
 	// Establece si es estatico o dinamico
 	bool estatico = false;
-	if (mapa.find("static") == mapa.end())
-		return false;
-	else {
+	if (mapa.find("static") != mapa.end())
+	{
 		// Establece el tipo de simulacion fisica
 		std::string staticString = mapa.at("static");
 		if (staticString == "true")
@@ -70,16 +115,42 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		if (estatico)
 			stBody = pm().createStaticRigid(pose, shape);
 		else
-			body = pm().createDynamic(pose, shape);
+			body = pm().createDynamic(pose, shape, vel_);
 		std::cout << "Rigidbody - collider!" << std::endl;
 	}
 	else {
 		if (estatico)
-			stBody = physX()->createRigidStatic(pose);
+			stBody = pm().createStaticRigid(pose);
 		else
-			body = physX()->createRigidDynamic(pose);		
+			body = pm().createDynamic(pose, vel_);
 		std::cout << "Rigidbody - sin collider!" << std::endl;
 	}
 
+	// Establece la densidad del objeto
+	float density = 1000.f;
+	if (mapa.find("density") != mapa.end())
+	{
+		// Establece la masa y la inercia
+		std::string densityString = mapa.at("density");
+		density = stof(densityString);
+		if (body) PxRigidBodyExt::updateMassAndInertia(*body, density);
+		else return false; // solo para dynamic!
+	}
+
+	// Añade la entidad asociado al manager de phyx
+	int id_ = getEntidad()->getID();
+	pm().addEntityID(id_);
+
 	return true;
+}
+
+void RigidBody::setVelocity(PxVec3 v)
+{
+	vel_ = v;
+	body->setLinearVelocity(v);
+}
+
+void RigidBody::setAngularVelocity(PxVec3 av)
+{
+	body->setAngularVelocity(av);
 }
