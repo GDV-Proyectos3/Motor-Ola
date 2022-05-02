@@ -28,7 +28,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Este",
             id=2,
             components={
                 transform={
@@ -46,7 +46,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Oeste",
             id=3,
             components={
                 transform={
@@ -63,7 +63,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Arriba",
             id=4,
             components={
                 transform={
@@ -97,7 +97,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Sur",
             id=6,
             components={
                 transform={
@@ -114,7 +114,7 @@ local level = {
             }
         },
         {
-            name="Vista1",
+            name="Norte",
             id=7,
             components={
                 transform={
@@ -136,13 +136,13 @@ local level = {
             components={
                 transform={
                     parent="-1",
-                    position="0,0,0",
+                    position="0 0 0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
                 mesh={
                     mesh="cube.mesh",
-                    material="Rojo",
+                    material="Cian",
                     visible="true"
                 },  
                 collider={
@@ -152,7 +152,7 @@ local level = {
                 },
                 rigidbody={
                     static="false",
-                    velocity="0 -50 -100",
+                    -- velocity="-100 0 0",
                     density="1000"
                 }
             }

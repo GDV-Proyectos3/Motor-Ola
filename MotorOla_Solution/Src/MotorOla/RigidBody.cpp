@@ -72,8 +72,10 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 	}
 	else {
 		std::cout << "Lectura directa de Transform  para RigidBody" << std::endl;
-		Vectola3D pos = tr->getPosition();
-		Quaterniola rot = tr->getRotation();
+		Vectola3D pos = tr->getLocalPosition();
+		Quaterniola rot = tr->getLocalRotation();
+		std::cout << "Position TR = " << pos << std::endl;
+		std::cout << "Orientation TR = " << rot << std::endl;
 		pos_ = PxVec3(pos.getX(), pos.getY(), pos.getZ());
 		ori_ = PxQuat(rot.v.getX(), rot.v.getX(), rot.v.getX(), rot.s);
 		std::cout << "Position RB = " << pos_ << std::endl;

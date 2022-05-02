@@ -23,7 +23,7 @@ PhysxManager::PhysxManager() : _patata(false)
 
 	// General settings
 	scale.length = 100;        // typical length of an object
-	scale.speed = 981;         // typical speed of an object, gravity*1s is a reasonable choice
+	scale.speed = 9.81;         // typical speed of an object, gravity*1s is a reasonable choice
 }
 
 PhysxManager::~PhysxManager()
@@ -141,10 +141,10 @@ void PhysxManager::init()
 	// Inicializaci�n de variables dependientes --------------------------------------
 	mMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
-	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
-	mScene->addActor(*groundPlane);
+	/*PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
+	mScene->addActor(*groundPlane);*/
 
-	testBALL = createBall();
+	//testBALL = createBall();
 	StartCounter();
 }
 
