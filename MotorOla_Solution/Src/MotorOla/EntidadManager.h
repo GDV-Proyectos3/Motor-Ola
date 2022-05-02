@@ -32,3 +32,9 @@ private:
 	// Idea para guardar las entidades al poner nuevas escenas
 	//std::stack <std::vector<uptr_ent>> pilaEntidades_;
 };
+
+// Esta macro define una forma compacta para usar el Singleton EntidadManager, 
+// en lugar de escribir 'EntidadManager::instance()->method()' escribiremos 'em().method()'
+inline EntidadManager& em() {
+	return *EntidadManager::instance();
+}
