@@ -9,6 +9,8 @@
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
 ///#include "callbacks.hpp"
+#include "EntidadManager.h"
+#include "RigidBody.h"
 
 PhysxManager::PhysxManager() : _patata(false)
 {
@@ -56,15 +58,6 @@ double PhysxManager::GetLastTime()
 {
 	double t = double(CounterLast - CounterStart) / PCFreq;
 	return t;
-}
-
-void PhysxManager::debugTime()
-{
-	std::cout << "PCFreq : " << PCFreq << std::endl;
-	std::cout << "CounterStart : " << CounterStart << std::endl;
-	std::cout << "CounterLast : " << CounterLast << std::endl;
-	std::cout << "GetLastTime() = " << GetLastTime() << std::endl;
-	std::cout << "GlobalTimer : " << GlobalTimer << std::endl;
 }
 
 // ------------ MAIN SINGLETON -------------------------------------------------------
@@ -149,7 +142,7 @@ void PhysxManager::init()
 	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 	mScene->addActor(*groundPlane);
 
-	//testBALL = createBall();
+	testBALL = createBall();
 	StartCounter();
 }
 
@@ -161,16 +154,16 @@ void PhysxManager::update(bool interactive, double t)
 		return;
 	//gOneFrame = false;
 
+	// Actualiza las fisicas de movimiento y colisiones
 	stepPhysics(interactive, 1.0f/60.0f);
 
-	//debugBall();
-
-	//spawn objects
-	///....
-	//update objects
-	///....
-	//delete objects that reached max. TTL seconds
-	///....
+	// Actualiza las posiciones: PxTransform --> Transform global
+	for (auto& id : ids_) {
+		Entidad* e = em().getEntidadByID(id);
+		RigidBody* body = e->getComponent<RigidBody>();
+		setPhysxToGlobalTR(*e, *body->getBody());
+		debugBuddy(e);
+	}
 }
 
 // Function to clean data
@@ -216,11 +209,6 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	PX_UNUSED(actor2);
 }
 
-std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
-	os << "(" << v.x << "," << v.y << "," << v.z << ")";
-	return os;
-}
-
 // Copia los valores de un transform global a uno propio de physx
 PxTransform PhysxManager::globalToPhysxTR(Transform& tr)
 {
@@ -233,7 +221,7 @@ PxTransform PhysxManager::globalToPhysxTR(Transform& tr)
 	PxVec3 pos = PxVec3(trPos.getX(), trPos.getY(), trPos.getZ());
 	bodyTr.p = pos;
 
-	PxQuat rot = PxQuat(trRot.s, trRot.v.getX(), trRot.v.getY(), trRot.v.getZ());
+	PxQuat rot = PxQuat(trRot.v.getX(), trRot.v.getY(), trRot.v.getZ(), trRot.s);
 	bodyTr.q = rot;
 
 	return bodyTr;
@@ -253,20 +241,23 @@ Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
 	Vectola3D pos = Vectola3D(bodyPos.x, bodyPos.y, bodyPos.z);
 	tr.setPosition(pos);
 
-	Quaterniola rot = Quaterniola(bodyRot.x, bodyRot.y, bodyRot.z, bodyRot.w);
+	Quaterniola rot = Quaterniola(bodyRot.w, bodyRot.x, bodyRot.y, bodyRot.z);
 	tr.setRotation(rot);
 
 	return tr;
 }
 
+// Realiza la conversión de datos: Transform global --> PxTransform
 void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
 {
 	Transform* tr = e.getComponent<Transform>();
 	PxTransform bodyTR = globalToPhysxTR(*tr);
-	body.getGlobalPose().p = bodyTR.p;
-	body.getGlobalPose().q = bodyTR.q;
+	body.setGlobalPose(bodyTR);
+	/*body.getGlobalPose().p = bodyTR.p;
+	body.getGlobalPose().q = bodyTR.q;*/
 }
 
+// Realiza la conversión de datos: PxTransform --> Transform global
 void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body)
 {
 	Transform auxTR = physxToGlobalTR(body);
@@ -276,6 +267,14 @@ void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body)
 }
 
 // ---------------- FACTORY --------------------------------------------------
+
+PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, const PxVec3& velocity)
+{
+	PxRigidDynamic* dynamic = physX()->createRigidDynamic(transform);
+	dynamic->setLinearVelocity(velocity);
+	mScene->addActor(*dynamic);
+	return dynamic;
+}
 
 PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity)
 {
@@ -295,12 +294,19 @@ PxRigidDynamic* PhysxManager::createDynamic(const PxTransform& transform, PxShap
 	return dynamic;
 }
 
+PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform)
+{
+	PxRigidStatic* body = physX()->createRigidStatic(transform);
+	mScene->addActor(*body);
+	return body;
+}
+
 PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material)
 {
 	PxShape* shape = createTriggerShape(geom, material, false);
 	PxRigidStatic* body = createStaticRigid(transform, shape);
 	shape->release(); // importante! (cuando ya se ha usado hay que borrarlo)
-	return nullptr;
+	return body;
 }
 
 PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, PxShape* shape)
@@ -352,20 +358,6 @@ PxRigidDynamic* PhysxManager::createBall()
 	return ball;
 }
 
-void PhysxManager::debugBall()
-{
-	// GetLastTime() 
-	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
-	// pero su uso real es llevar el tiempo real de la app activa.
-	if (GetLastTime() - GlobalTimer > 1.0) {
-		PxVec3 v = testBALL->getGlobalPose().p;
-		std::cout << "PhyBALL position : ";
-		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
-		//debugTime();
-		GlobalTimer = GetLastTime();
-	}
-}
-
 void PhysxManager::createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent)
 {
 	PxShape* shape = createShape(PxBoxGeometry(halfExtent, halfExtent, halfExtent), *mMaterial);
@@ -387,6 +379,44 @@ void PhysxManager::tiledStacks(PxReal num, PxReal sideLength)
 {
 	for (PxU32 i = 0; i < num; i++)
 		createStackBoxes(PxTransform(PxVec3(0, 0, stackZ -= 10.0f)), 20 / sideLength, sideLength);
+}
+
+// ---------------- DEBUG --------------------------------------------------
+
+void PhysxManager::debugTime()
+{
+	std::cout << "PCFreq : " << PCFreq << std::endl;
+	std::cout << "CounterStart : " << CounterStart << std::endl;
+	std::cout << "CounterLast : " << CounterLast << std::endl;
+	std::cout << "GetLastTime() = " << GetLastTime() << std::endl;
+	std::cout << "GlobalTimer : " << GlobalTimer << std::endl;
+}
+
+void PhysxManager::debugBall()
+{
+	// GetLastTime() 
+	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
+	// pero su uso real es llevar el tiempo real de la app activa.
+	if (GetLastTime() - GlobalTimer > 1.0) {
+		PxVec3 v = testBALL->getGlobalPose().p;
+		std::cout << "PhyBALL position : ";
+		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
+		//debugTime();
+		GlobalTimer = GetLastTime();
+	}
+}
+
+#include "RigidBody.h"
+void PhysxManager::debugBuddy(Entidad* e)
+{
+	if (GetLastTime() - GlobalTimer > 2.0) {
+		RigidBody* body = e->getComponent<RigidBody>();
+		PxTransform tr = body->getBody()->getGlobalPose();
+		std::cout << "Position RB = " << tr.p << std::endl;
+		std::cout << "Orientation RB = " << tr.q << std::endl;
+		//debugTime();
+		GlobalTimer = GetLastTime();
+	}
 }
 
 ////----

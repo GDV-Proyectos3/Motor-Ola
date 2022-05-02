@@ -11,9 +11,18 @@
 
 using namespace physx;
 
+inline std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
+	os << "(" << v.x << "," << v.y << "," << v.z << ")";
+	return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const physx::PxQuat& q) {
+	os << "(" << q.x << "," << q.y << "," << q.z << "," << q.w << ")";
+	return os;
+}
+
 class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
-	friend std::ostream& operator<<(std::ostream& os, const PxVec3& v);
 public:	
 	~PhysxManager();
 
@@ -45,11 +54,14 @@ public:
 	// testing debug
 	void debugTime();
 	void debugBall();
+	void debugBuddy(Entidad* e);
 
 	// FACTORY
-	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(0));
-	PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(0));
+	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxVec3& velocity = PxVec3(PxZero));
+	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(PxZero));
+	PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(PxZero));
 	
+	PxRigidStatic* createStaticRigid(const PxTransform& transform);
 	PxRigidStatic* createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material);
 	PxRigidStatic* createStaticRigid(const PxTransform& transform, PxShape* shape);
 
@@ -63,11 +75,15 @@ public:
 	void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
 
 	// Getters
+	int getID(int k) { return ids_[k]; };
+	std::vector<int>* getIDs() { return &ids_; };
 	PxPhysics* getPhysX() { return mPhysics; };
 	PxRigidDynamic* getBall() { return testBALL; };
 	PxMaterial* getMaterial() { return mMaterial; };
 
 	// Setters
+	void addEntityID(int id) { ids_.push_back(id); };
+	void addEntityToEraseID(int id) { ids_erase.push_back(id); };
 	void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
 	void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
 
@@ -112,6 +128,10 @@ private:
 	PxCooking* mCooking = NULL;
 
 	PxCudaContextManager* mCuda = NULL;
+
+	// vector para identificar entidades
+	std::vector<int> ids_;
+	std::vector<int> ids_erase;
 };
 
 // Esta macro define una forma compacta para usar el Singleton PhysxManager, 
