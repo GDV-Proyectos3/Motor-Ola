@@ -1,4 +1,11 @@
 #pragma once
+
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include <string>
@@ -16,7 +23,7 @@ class EntidadManager;
 class Entity;
 class OverlayManager;
 
-class Motor
+MOTOR_API class Motor
 {
 private:
 	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
@@ -31,10 +38,10 @@ private:
 	Entidad* cuboTest = nullptr;
 
 public:
-	Motor();
-	~Motor();
+	MOTOR_API Motor();
+	MOTOR_API ~Motor();
 
-	void initSystems();
+	MOTOR_API void initSystems();
 
 	/// <summary>
 	/// Añadir aqui todos los componentes que se hagan
@@ -44,7 +51,7 @@ public:
 	/// <summary>
 	/// Bucle principal de la ejecucion del motor
 	/// </summary>
-	void mainLoop();
+	MOTOR_API void mainLoop();
 
 	/// <summary>
 	/// Carga Juego.dll y llama a la funcion LoadGame()
@@ -55,27 +62,24 @@ public:
 	/// Carga una escena del juego
 	/// </summary>
 	/// <param name="name">name es el archivo "scene.lua"</param>
-	bool loadScene(std::string name);
-	bool loadMainMenu(std::string name,const char* get);
+	MOTOR_API bool loadScene(std::string name);
+	MOTOR_API bool loadMenu(std::string name,const char* get);
 
 	/// <summary>
 	/// Funcion para hacer pruebas dentro del motor
 	/// </summary>
 	void loadTestMotorGame();
 
-	/// <summary>
-	/// Mini-juego de prueba del motor
-	/// </summary>
-	//void loadPong();
+
 
 	// Getters and Setters
-	void setStop(bool s);
+	MOTOR_API void setStop(bool s);
 	bool getStop();
 
 
-	static void salir(Motor* m);
-	static void newGame(Motor* m);
-	static void options(Motor* m);
+	//static void salir(Motor* m);
+	//static void newGame(Motor* m);
+	//static void options(Motor* m);
 	//static void deleteOverlay(Motor* m);
 };
 

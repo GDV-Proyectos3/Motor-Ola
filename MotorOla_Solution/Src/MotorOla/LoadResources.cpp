@@ -1,5 +1,7 @@
 #include "LoadResources.h"
 
+std::unique_ptr<LoadResources> Singleton<LoadResources>::instance_ = nullptr;
+
 LoadResources::LoadResources()
 {
 }
@@ -37,6 +39,12 @@ string LoadResources::scene(string scene)
 	return it->second;
 }
 
+string LoadResources::prefab(string prefab)
+{
+	auto it = prefabs.find(prefab);
+	return it->second;
+}
+
 void LoadResources::search(path p)
 {
 	//Recorre los directorios cargando los archivos en los diferentes map
@@ -69,5 +77,8 @@ void LoadResources::load(path p, size_t end, size_t pathLenght)
 	}
 	else if (extension == ".lua") {
 		scenes.insert(std::pair<std::string, std::string>(name, p.string()));
+	}
+	else if (extension == ".prefab") {
+		prefabs.insert(std::pair<std::string, std::string>(name, p.string()));
 	}
 }

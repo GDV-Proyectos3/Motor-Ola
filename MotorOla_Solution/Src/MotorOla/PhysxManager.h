@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #include "utils\Singleton.h"
 #include <PxPhysicsAPI.h>
 #include <vector>
@@ -11,81 +17,81 @@
 
 using namespace physx;
 
-inline std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
+MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxVec3& v) {
 	os << "(" << v.x << "," << v.y << "," << v.z << ")";
 	return os;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const physx::PxQuat& q) {
+MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxQuat& q) {
 	os << "(" << q.x << "," << q.y << "," << q.z << "," << q.w << ")";
 	return os;
 }
 
-class PhysxManager : public Singleton<PhysxManager> {
+MOTOR_API class PhysxManager : public Singleton<PhysxManager> {
 	friend Singleton<PhysxManager>;
 public:	
 	~PhysxManager();
 
 	// main resources
-	void runPhysX();
+	MOTOR_API void runPhysX();
 
 	// transform
-	PxTransform globalToPhysxTR(Transform& tr);
-	Transform physxToGlobalTR(const PxRigidActor& body);
+	MOTOR_API PxTransform globalToPhysxTR(Transform& tr);
+	MOTOR_API Transform physxToGlobalTR(const PxRigidActor& body);
 	
 	// elimina memoria
-	void releaseScene();
-	void releaseBody(PxActor& body);
+	MOTOR_API void releaseScene();
+	MOTOR_API void releaseBody(PxActor& body);
 
 	// MAIN SINGLETON
-	void init();
-	void update(bool interactive, double t);
-	void close(bool interactive);
+	MOTOR_API void init();
+	MOTOR_API void update(bool interactive, double t);
+	MOTOR_API void close(bool interactive);
 
 	// utils
-	void stepPhysics(bool interactive, double t);
-	void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+	MOTOR_API void stepPhysics(bool interactive, double t);
+	MOTOR_API void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 
 	// TIMER
-	void StartCounter();
-	double GetCounter();
-	double GetLastTime();
+	MOTOR_API void StartCounter();
+	MOTOR_API double GetCounter();
+	MOTOR_API double GetLastTime();
 
 	// testing debug
-	void debugTime();
-	void debugBall();
-	void debugBuddy(Entidad* e);
+	MOTOR_API void debugTime();
+	MOTOR_API void debugBall();
+	MOTOR_API void debugBuddy(Entidad* e);
 
 	// FACTORY
-	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxVec3& velocity = PxVec3(PxZero));
-	PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(PxZero));
-	PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(PxZero));
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, const PxVec3& velocity = PxVec3(PxZero));
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, const PxGeometry& geometry, PxMaterial& material, const PxVec3& velocity = PxVec3(PxZero));
+	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, PxShape* shape, const PxVec3& velocity = PxVec3(PxZero));
 	
-	PxRigidStatic* createStaticRigid(const PxTransform& transform);
-	PxRigidStatic* createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material);
-	PxRigidStatic* createStaticRigid(const PxTransform& transform, PxShape* shape);
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform);
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform, const PxGeometry& geom, PxMaterial& material);
+	MOTOR_API PxRigidStatic* createStaticRigid(const PxTransform& transform, PxShape* shape);
 
-	PxShape* createShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
-	PxShape* createTriggerShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+	MOTOR_API PxShape* createShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
+	MOTOR_API PxShape* createTriggerShape(const PxGeometry& geom, PxMaterial& material, bool isExclusive = false);
 
 	// factory prefabs
-	PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
-	PxRigidDynamic* createBall();
-	void createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent);
-	void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
+	MOTOR_API PxRigidStatic* createTriggerStaticBox(const PxVec3 halfExtent = PxVec3(10.0f, 1.0f, 10.0f), const PxTransform& transform = PxTransform(0.0f, 10.0f, 0.0f));
+	MOTOR_API PxRigidDynamic* createBall();
+	MOTOR_API void createStackBoxes(const PxTransform& t, PxU32 size, PxReal halfExtent);
+	MOTOR_API void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
 
 	// Getters
-	int getID(int k) { return ids_[k]; };
-	std::vector<int>* getIDs() { return &ids_; };
-	PxPhysics* getPhysX() { return mPhysics; };
-	PxRigidDynamic* getBall() { return testBALL; };
-	PxMaterial* getMaterial() { return mMaterial; };
+	MOTOR_API int getID(int k) { return ids_[k]; };
+	MOTOR_API std::vector<int>* getIDs() { return &ids_; };
+	MOTOR_API PxPhysics* getPhysX() { return mPhysics; };
+	MOTOR_API PxRigidDynamic* getBall() { return testBALL; };
+	MOTOR_API PxMaterial* getMaterial() { return mMaterial; };
 
 	// Setters
-	void addEntityID(int id) { ids_.push_back(id); };
-	void addEntityToEraseID(int id) { ids_erase.push_back(id); };
-	void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
-	void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
+	MOTOR_API void addEntityID(int id) { ids_.push_back(id); };
+	MOTOR_API void addEntityToEraseID(int id) { ids_erase.push_back(id); };
+	MOTOR_API void setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body);
+	MOTOR_API void setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body);
 
 private:
 	PhysxManager(/*...*/);

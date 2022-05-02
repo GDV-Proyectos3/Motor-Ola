@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\App\MotorOla_Project.cpp" />
+    <ClCompile Include="..\..\Src\App\MotorOla_Project.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MotorOla_Project\MotorOla_Project.vcxproj">
@@ -127,7 +130,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\Lua\include;</AdditionalIncludeDirectories>
@@ -145,7 +148,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MOTOR_EXPORTS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(solutionDir)Dependencies\Ogre\Build\SDL-main\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-2.0.20\include\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\include\;$(solutionDir)Dependencies\Ogre\Src\OgreMain\include;$(solutionDir)Dependencies\Ogre\Build\include;$(solutionDir)Src\MotorOla\;$(solutionDir)Dependencies\FMOD\inc;$(SolutionDir)Dependencies\PhysX-4.1\Src\physx\include;$(SolutionDir)Dependencies\PhysX-4.1\Src\pxshared\include;$(SolutionDir)Dependencies\Lua\include;</AdditionalIncludeDirectories>
@@ -156,7 +159,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Exes\;$(solutionDir)Dependencies\Ogre\Build\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\Ogre\Build\SDL2-build\$(Configuration)\;$(solutionDir)Dependencies\FMOD\libreria\$(Platform);$(solutionDir)Dependencies\PhysX-4.1\Build\$(Platform)\lib\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\bin\win.x86_64.vc142.mt\$(Configuration)\;$(solutionDir)Dependencies\PhysX-4.1\Src\physx\snippets\graphics\lib\win64\glut;$(solutionDir)Dependencies\Lua\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>MotorOla_Project.lib;OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib;PhysXProject.lib;OgreOverlay.lib;Lua_d.lib;(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>MotorOla_Project.lib;OgreProject.lib;OgreMain.lib;SDL2.lib;SDL2main.lib;fmodL_vc.lib;fmod_vc.lib;PhysXProject.lib;OgreOverlay.lib;Lua.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

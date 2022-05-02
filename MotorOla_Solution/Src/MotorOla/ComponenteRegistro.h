@@ -1,4 +1,12 @@
 #pragma once
+
+//
+//#ifdef MOTOR_EXPORTS
+//#define MOTOR_API __declspec(dllexport)
+//#else
+//#define MOTOR_API __declspec(dllimport)
+//#endif
+
 #include "ComponenteFactoria.h"
 #include "ECS.h"
 #include "utils/Singleton.h"

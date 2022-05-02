@@ -1,6 +1,10 @@
 #pragma once
 
-// NO ENCUENTRA UNA SERIE DE INCLUDES QUE DEBERÍA ENCONTRAR
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 
 #include <string>
 #include "./utils/Singleton.h"
@@ -29,24 +33,23 @@
 class Motor;
 using CallBackOnClick = void(Motor* m);
 
-class OverlayManager : public Singleton<OverlayManager> {
+MOTOR_API class OverlayManager : public Singleton<OverlayManager> {
 	
 public:
 	OverlayManager() {  };
 	virtual ~OverlayManager();
-	void init(OgreManager* om_,Motor* m);
-	//virtual void init();
-	//virtual void update() = 0;
-	void update();
+	MOTOR_API void init(OgreManager* om_,Motor* m);
+	MOTOR_API void update();
 
-	void test() {
-		//Singleton<OgreManager>().instance()->getSceneManager()->createOverlay();
-	}
-	void creaBoton(float x,float y,const std::string& texto, const std::string& nombrePanel, const std::string& nombreTexto,float tamLetra,const std::string& material,float dimX,float dimY/*, CallBackOnClick* click_*/);
-	void setCallBackToButton(std::string p, CallBackOnClick* click_);
-	void creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel);
-	void creaPanel(float x, float y,  const std::string& nombrePanel, const std::string& material, float dimX, float dimY);
-	void clear();
+	MOTOR_API void creaBoton(float x,float y,const std::string& texto, const std::string& nombrePanel, const std::string& nombreTexto,float tamLetra,const std::string& material,float dimX,float dimY/*, CallBackOnClick* click_*/);
+	MOTOR_API void setCallBackToButton(std::string p, CallBackOnClick* click_);
+	MOTOR_API void creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel);
+	MOTOR_API void creaPanel(float x, float y,  const std::string& nombrePanel, const std::string& material, float dimX, float dimY);
+	MOTOR_API Ogre::TextAreaOverlayElement* getTexto(std::string panelName, std::string textName);
+	MOTOR_API Ogre::PanelOverlayElement* getPanel(std::string name);
+	MOTOR_API Ogre::PanelOverlayElement* getBoton(std::string name);
+	MOTOR_API void clear();
+	MOTOR_API Motor* getMotor();
 
 
 private:

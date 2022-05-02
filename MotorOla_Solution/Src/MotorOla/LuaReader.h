@@ -1,25 +1,25 @@
 #pragma once
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 #include <string>
 
 extern "C"
 {
     struct lua_State;
-   
 }
 
-
-
-
-
-void readFile(std::string file);
-void readFileMenus(std::string file,const char* get);
+MOTOR_API void readFile(std::string file);
+MOTOR_API void readFileMenus(std::string file,const char* get);
 
 void PrintTable(lua_State* L);
 
 void readFileTest(std::string file);
 
 class Entidad;
-Entidad* readPrefab(std::string file);
+MOTOR_API Entidad* readPrefab(std::string file);
 
 class LuaScript
 {

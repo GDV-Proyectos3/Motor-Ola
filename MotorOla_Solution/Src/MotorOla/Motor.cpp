@@ -1,3 +1,7 @@
+#include "pch.h" // use stdafx.h in Visual Studio 2017 and earlier
+#include <utility>
+#include <limits.h>
+
 #include "Motor.h"
 #include <Windows.h>
 #include "LuaReader.h"
@@ -29,8 +33,10 @@
 #include "AudioSource.h"
 #include "Collider.h"
 #include "RigidBody.h"
+#include <iostream>
 
 typedef HRESULT(CALLBACK* LPFNDLLFUNC1)(DWORD, UINT*);
+HINSTANCE hDLL;               // Handle to DLL
 
 Motor::Motor()
 {
@@ -38,7 +44,6 @@ Motor::Motor()
 	Singleton<LoadResources>::instance();
 	Singleton<OgreManager>::instance();	
 	Singleton<EntidadManager>::instance();
-	
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::instance();
@@ -53,6 +58,7 @@ Motor::~Motor()
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
 	if (Singleton<OgreManager>::instance() != nullptr) delete Singleton<OgreManager>::instance();
 	if (Singleton<LoadResources>::instance() != nullptr) delete Singleton<LoadResources>::instance();
+	FreeLibrary(hDLL);
 
 	//if (_overlayManager) delete _overlayManager;
 	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
@@ -66,9 +72,13 @@ void Motor::initSystems()
 	Singleton<FMODAudioManager>::instance()->init();
 	Singleton<OverlayManager>::instance()->init(Singleton<OgreManager>::instance(),this);
 	pm().init();
-	
+
 	// Se registran los componentes que conoce el motor
 	registryComponents();
+
+	std::cout << "EM: " << Singleton<EntidadManager>::instance() << "\n";
+	std::cout << "LR " << Singleton<LoadResources>::instance() << "\n";
+	std::cout << "FMOD: " << Singleton<FMODAudioManager>::instance() << "\n";
 
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
@@ -77,12 +87,11 @@ void Motor::initSystems()
 	catch (const char* error) {
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
-		//loadPong();
 	}
 
 	// Carga una escena con Lua
 	//if(!loadScene("TestScene.lua"))
-	/*if(!loadMainMenu("MainMenuScene.lua","GetMainMenu"))
+	/*if (!loadMainMenu("MainMenuScene.lua", "GetMainMenu"))
 		throw "Error loading a Scene\n";*/
 }
 
@@ -111,7 +120,7 @@ void Motor::mainLoop()
 
 	while (!stop) {
 		// Recoger el Input
-		
+		Singleton<EntidadManager>::instance()->refresh();
 		ih().clearState();
 
 		while (SDL_PollEvent(&event))
@@ -149,6 +158,7 @@ void Motor::mainLoop()
 		if (Singleton<OverlayManager>::instance() != nullptr) {
 			Singleton<OverlayManager>::instance()->update();
 		}
+
 		// Actualiza el resto de componentes (tambien los del juego)
 		Singleton<EntidadManager>::instance()->update();
 
@@ -157,7 +167,13 @@ void Motor::mainLoop()
 
 		// Contador de frames que los muestra cada 100 frames
 #if (defined _DEBUG)
-		if (++frame % 100 == 0) {
+		if (++frame % 1000 == 0) {
+			//// Prueba de los prefabs
+			//float x = rand() % 800 - 400;
+			//float y = rand() % 600 - 300;
+			//Entidad::instantiate("Bala.prefab", Vectola3D(x,y,0));
+			EntidadManager* dep = Singleton<EntidadManager>::instance();
+			//std::cout << aux << std::endl;
 			std::cout << "FrameCount: " << frame << "\n";
 		}
 #endif
@@ -166,11 +182,15 @@ void Motor::mainLoop()
 
 void Motor::loadDLLGame()
 {
-	HINSTANCE hDLL;               // Handle to DLL
+	HINSTANCE hDLL;
 	LPFNDLLFUNC1 lpfnDllFunc1;    // Function pointer
 	HRESULT hrReturnVal;
-
+	std::cout<<"Entra en loadDLL"<<std::endl;
+#ifdef NDEBUG
 	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+#else
+	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+#endif
 
 	if (NULL != hDLL)
 	{
@@ -182,7 +202,7 @@ void Motor::loadDLLGame()
 		else throw "Function LoadGame not found in DLL";
 
 		// Libera la memoria de la DLL cargada explicitamente
-		FreeLibrary(hDLL);
+		//FreeLibrary(hDLL);
 	}
 	else throw "DLL not found";
 }
@@ -206,7 +226,7 @@ bool Motor::loadScene(std::string name) {
 	}
 	return true;
 }
-bool Motor::loadMainMenu(std::string name,const char*get) {
+bool Motor::loadMenu(std::string name,const char*get) {
 	try {
 		// Borra las entidades de la escena actual
 		Singleton<EntidadManager>::instance()->pauseEntidades();
@@ -216,9 +236,9 @@ bool Motor::loadMainMenu(std::string name,const char*get) {
 
 		// Lee la escena cargando todas las entidades y sus componentes
 		readFileMenus(sceneRoute,get);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
+		/*Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
 		Singleton<OverlayManager>::instance()->setCallBackToButton("OptionsPanel",options);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);
+		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);*/
 	}
 	catch (std::exception e) {
 #if (defined _DEBUG)
@@ -236,7 +256,7 @@ void Motor::loadTestMotorGame()
 	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	//map<string, string> m;
 	//ent->addComponent("transform", m);
-	cuboTest = Singleton<EntidadManager>::instance()->getEntidadByID(2);	
+	//cuboTest = Singleton<EntidadManager>::instance()->getEntidadByID(2);	
 	//pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
 	//pm().setGlobalToPhysxTR(*cuboTest, *pm().getBall());
 }
@@ -246,7 +266,7 @@ bool Motor::getStop()
 	return stop;
 }
 
-void Motor::salir(Motor* m)
+/*void Motor::salir(Motor* m)
 {
 	m->stop = true;
 }
@@ -267,7 +287,7 @@ void Motor::options(Motor* m)
 	//Singleton<OverlayManager>::close();
 	Singleton<OverlayManager>::instance()->clear();
 	m->loadMainMenu("Options.lua","GetOptions");
-}
+}*/
 
 //void Motor::deleteOverlay(Motor* m)
 //{

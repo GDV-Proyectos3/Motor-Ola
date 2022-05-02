@@ -1,5 +1,4 @@
 #include "LuaReader.h"
-
 #include <vector>
 #include <iostream>
 #include <map>
@@ -12,15 +11,12 @@
 #include "OverlayManager.h"
 #include <stdio.h>
 
-
-
 extern "C"
 {
     #include "lua.h"
     #include "lauxlib.h"
     #include "lualib.h"
 }
-
 
 static const luaL_Reg lualibs[] = {
 		{ "base",       luaopen_base },
@@ -35,9 +31,6 @@ void openlualibs(lua_State* l) {
 		lua_settop(l, 0);
 	}
 }
-
-
-
 
 void readFile(std::string file) {
 	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
@@ -87,8 +80,59 @@ void readFile(std::string file) {
 
 		// Modifica la gravedad de la escena
 		lua_getfield(l, -1, "gravity");
-		aux = lua_tostring(l, -1);
-		//Singleton<Physx> cambiar gravedad
+		std::string aux3 = lua_tostring(l, -1);
+		sz = 0, sa = 0;
+		a = std::stof(aux3, &sz); b = std::stof(aux3.substr(sz + 1), &sa); c = std::stof(aux3.substr(sz + sa + 2));
+		//AQUE CUBELLS Singleton<Physx> cambiar gravedad
+		lua_pop(l, 1);
+
+		// Modifica la camara de la escena
+		lua_getfield(l, -1, "camera");
+		//lua_pushnil(l);
+
+		// Obtenemos la camara y su nodo
+		Ogre::Camera* cam = Singleton<OgreManager>::instance()->getCam();
+		Ogre::SceneNode* camNode = Singleton<OgreManager>::instance()->getCamNode();
+
+		// Ajustamos sus parametros
+		lua_getfield(l, -1, "nearClipDistance");
+		int nCD = lua_tonumber(l, -1);
+		cam->setNearClipDistance(nCD);
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "farClipDistance");
+		int fCD = lua_tonumber(l, -1);
+		cam->setFarClipDistance(fCD);
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "camPosition");
+		sz = 0, sa = 0;
+		std::string camPos = lua_tostring(l, -1);
+		float cx, cy, cz;
+		cx = stof(camPos, &sz);
+		std::string temp = camPos.substr(sz + 1);
+		cy = stof(temp, &sa);
+		cz = stof(camPos.substr(sz + sa + 2));
+		camNode->setPosition(cx, cy, cz);
+		lua_pop(l, 1);
+
+		lua_getfield(l, -1, "camRotation");
+		sz = 0; sa = 0;
+		std::string camRot = lua_tostring(l, -1);
+		cx = stof(camRot, &sz);
+		temp = camRot.substr(sz + 1);
+		cy = stof(temp, &sa);
+		cz = stof(camRot.substr(sz + sa + 2));
+		camNode->lookAt(Ogre::Vector3(cx, cy, cz), Ogre::Node::TS_WORLD);
+		//Vectola3D vaux(cx, cy, cz);
+		//Quaterniola qaux;
+		//qaux = qaux.Euler(vaux);
+		//camNode->setOrientation(qaux.operator Ogre::Quaternion());
+		lua_pop(l, 1);	
+
+		Singleton<OgreManager>::instance()->getRenderWindow()->getViewport(0)->update();
+		//getRenderWindow()->getViewport(0)->update();
+
 		lua_pop(l, 1);
 
 		// Después lee todas las entidades y los componentes de cada una
@@ -146,6 +190,15 @@ void readFile(std::string file) {
 #endif
 		lua_close(l);
 
+		int initTotales = 0;
+
+		//for (int i = 0; i < ents.size(); i++)
+		//{
+		//	ents[i]->init();
+		//	std::cout << "Entidad " << i << " iniciada\n";
+		//	initTotales++;
+		//} 
+
 		int i = 0;
 		int numEnts = ents.size();
 		int initedEnts = 0;
@@ -153,11 +206,14 @@ void readFile(std::string file) {
 			if (!entInits[i] && ents[i]->init()) {
 				++initedEnts;
 				entInits[i] = true;
-				//SceneManager::GetInstance()->addEntity(ents[i]);
+				std::cout << "Entidad " << i << " iniciada\n";
+				initTotales++;
 			}
 			++i;
 			i %= numEnts;
 		}
+
+		std::cout << "Init Totales "<< initTotales << "\n";
 	}
 	catch (...) {
 		throw std::exception("Lua file has incorrect formatting\n");
@@ -260,11 +316,6 @@ void readFileMenus(std::string file,const char* get)
 			lua_getfield(l, -1, "dimensionY");
 			float dimensionY = lua_tonumber(l, -1);
 			lua_pop(l, 1);
-
-			
-			
-
-
 
 			Singleton<OverlayManager>::instance()->creaBoton(positionX, positionY, texto, nombrePanel, nombreTexto, tamLetra, material, dimensionX, dimensionY);
 			//ents.push_back(ent);
@@ -427,7 +478,7 @@ Entidad* readPrefab(std::string file) {
 			lua_pop(l, 1);
 		}
 
-		//ent->init();
+		ent->init();
 
 		lua_pop(l, 1);
 		// Entity is no longer here, only key to be removed by lua_next

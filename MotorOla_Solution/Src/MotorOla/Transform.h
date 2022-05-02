@@ -1,4 +1,9 @@
 #pragma once
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 #include "Componente.h"
 #include "utils/Vectola3D.h"
 #include "utils/Quaterniola.h"
@@ -16,55 +21,55 @@ public:
 	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Movimientos
-	enum class Space { Self, World,	Parent };
-	void translate(double x, double y, double z);
-	void rotate(float xAngle, float yAngle, float zAngle, Space relativeTo = Space::Self);
+	MOTOR_API enum class Space { Self, World,	Parent };
+	MOTOR_API void translate(double x, double y, double z);
+	MOTOR_API void rotate(float xAngle, float yAngle, float zAngle, Space relativeTo = Space::Self);
 
 	// Getters
-	Transform* getParent() { return _parent; }
-	Transform* findChild(char* name);
+	MOTOR_API Transform* getParent() { return _parent; }
+	MOTOR_API Transform* findChild(char* name);
 
-	Vectola3D getPosition() { getParentData(); return _position; }
-	Quaterniola getRotation() { getParentData(); return _rotation; }
-	Vectola3D getScale() { getParentData(); return _scale; }
+	MOTOR_API Vectola3D getPosition() { getParentData(); return _position; }
+	MOTOR_API Quaterniola getRotation() { getParentData(); return _rotation; }
+	MOTOR_API Vectola3D getScale() { getParentData(); return _scale; }
 
-	Vectola3D getLocalPosition() { return _localPosition; }
-	Quaterniola getLocalRotation() { return _localRotation; }
-	Vectola3D getLocalScale() { return _localScale; }
+	MOTOR_API Vectola3D getLocalPosition() { return _localPosition; }
+	MOTOR_API Quaterniola getLocalRotation() { return _localRotation; }
+	MOTOR_API Vectola3D getLocalScale() { return _localScale; }
 
 	// Setter
-	void setParent(Transform* par);
+	MOTOR_API void setParent(Transform* par);
 
-	void setPosition(Vectola3D v);
-	void setPosition(float x, float y, float z);
+	MOTOR_API void setPosition(Vectola3D v);
+	MOTOR_API void setPosition(float x, float y, float z);
 
-	void setRotation(Quaterniola q);
-	Quaterniola inverseTransformRotation(Quaterniola q);
-	void setRotation(float x, float y, float z);
+	MOTOR_API void setRotation(Quaterniola q);
+	MOTOR_API Quaterniola inverseTransformRotation(Quaterniola q);
+	MOTOR_API void setRotation(float x, float y, float z);
 
-	void setScale(Vectola3D v);
-	void setScale(float x, float y, float z);
+	MOTOR_API void setScale(Vectola3D v);
+	MOTOR_API void setScale(float x, float y, float z);
 
-	void setLocalPosition(Vectola3D v);
-	void setLocalPosition(float x, float y, float z);
+	MOTOR_API void setLocalPosition(Vectola3D v);
+	MOTOR_API void setLocalPosition(float x, float y, float z);
+	
+	MOTOR_API void setLocalRotation(Quaterniola q);
+	MOTOR_API Quaterniola transformRotation(Quaterniola q);
+	MOTOR_API void setLocalRotation(float x, float y, float z);
 
-	void setLocalRotation(Quaterniola q);
-	Quaterniola transformRotation(Quaterniola q);
-	void setLocalRotation(float x, float y, float z);
-
-	void setLocalScale(Vectola3D v);
-	void setLocalScale(float x, float y, float z);
+	MOTOR_API void setLocalScale(Vectola3D v);
+	MOTOR_API void setLocalScale(float x, float y, float z);
 
 
 	// Transforma el vector direction del espacio local al espacio global
-	Vectola3D transformDirection(Vectola3D direction);
+	MOTOR_API Vectola3D transformDirection(Vectola3D direction);
 	// Transforma la posicion x, y, z del espacio local al espacio global
-	Vectola3D transformDirection(float x, float y, float z);
+	MOTOR_API Vectola3D transformDirection(float x, float y, float z);
 
 	// Transforma el vector direction del espacio global al espacio local
-	Vectola3D inverseTransformDirection(Vectola3D direction);
+	MOTOR_API Vectola3D inverseTransformDirection(Vectola3D direction);
 	// Transforma la posicion x, y, z del espacio global al espacio local
-	Vectola3D inverseTransformDirection(float x, float y, float z);
+	MOTOR_API Vectola3D inverseTransformDirection(float x, float y, float z);
 
 private:
 	Transform* _parent = nullptr;

@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
+
 #include "utils\Singleton.h"
 
 #include <string>
@@ -31,7 +37,7 @@ struct NativeWindowPair
 };
 
 //class OgreManager : public Singleton<OgreManager>, Ogre::FrameListener {	// Creo que esto va a ser InputManager
-class OgreManager : public Singleton<OgreManager> {
+MOTOR_API class OgreManager : public Singleton<OgreManager> {
 	friend Singleton<OgreManager>;
 public:
 	/// <summary>
@@ -46,43 +52,46 @@ public:
 	~OgreManager();
 
 	// Getters
-	Ogre::RenderWindow* getRenderWindow() const { return _window.render; }
-	Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
-	Ogre::Viewport* getViewPort() const { return _vp; }
-	Ogre::Root* getRoot() const { return _root; }
-	Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
+	MOTOR_API Ogre::Camera* getCam() const { return cam; };
+	MOTOR_API Ogre::SceneNode* getCamNode() const { return camNode; };
+	MOTOR_API Ogre::RenderWindow* getRenderWindow() const { return _window.render; }
+	MOTOR_API Ogre::SceneManager* getSceneManager() const { return _sceneManager; }
+	MOTOR_API Ogre::Viewport* getViewPort() const { return _vp; }
+	MOTOR_API Ogre::Root* getRoot() const { return _root; }
+	MOTOR_API Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
 	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
-
-	void init();
-	void update();
-	void close();
+	MOTOR_API int getWindowWidth() const { return _window.render->getWidth(); }
+	MOTOR_API int getWindowHeight() const { return _window.render->getHeight(); }
+	MOTOR_API void init();
+	MOTOR_API void update();
+	MOTOR_API void close();
 
 	// callback interface copied from various listeners to be used by ApplicationContext
 	//virtual bool frameStarted(const Ogre::FrameEvent& evt) { pollEvents(); return true; }
 	//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 	//virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
-	virtual void windowMoved(Ogre::RenderWindow* rw) {}
-	virtual void windowResized(Ogre::RenderWindow* rw) {}
-	virtual bool windowClosing(Ogre::RenderWindow* rw) { return true; }
-	virtual void windowClosed(Ogre::RenderWindow* rw) {}
-	virtual void windowFocusChange(Ogre::RenderWindow* rw) {}
+	MOTOR_API virtual void windowMoved(Ogre::RenderWindow* rw) {}
+	MOTOR_API virtual void windowResized(Ogre::RenderWindow* rw) {}
+	MOTOR_API virtual bool windowClosing(Ogre::RenderWindow* rw) { return true; }
+	MOTOR_API virtual void windowClosed(Ogre::RenderWindow* rw) {}
+	MOTOR_API virtual void windowFocusChange(Ogre::RenderWindow* rw) {}
 
 	// Funciones
 
 	//bool initialiseRTShaderSystem();
 	//void destroyRTShaderSystem();
 
-	void setup();
-	void createRoot();
-	bool oneTimeConfig();
-	void setWindowGrab(bool grab);
-	void locateResources();
-	void loadResources();
-	void shutdown();
+	MOTOR_API void setup();
+	MOTOR_API void createRoot();
+	MOTOR_API bool oneTimeConfig();
+	MOTOR_API void setWindowGrab(bool grab);
+	MOTOR_API void locateResources();
+	MOTOR_API void loadResources();
+	MOTOR_API void shutdown();
 
 	//void pollEvents();
 
-	virtual NativeWindowPair createWindow(const Ogre::String& name);
+	MOTOR_API virtual NativeWindowPair createWindow(const Ogre::String& name);
 private:
 	// Variables
 	Ogre::Root* _root = nullptr;
@@ -91,6 +100,8 @@ private:
 	Ogre::OverlaySystem* _overlaySystem=nullptr;  // Overlay system
 	Ogre::SceneManager* _sceneManager = nullptr;
 	Ogre::Viewport* _vp = nullptr;
+	Ogre::Camera* cam = nullptr;
+	Ogre::SceneNode* camNode = nullptr;
 	bool _firstRun;
 	Ogre::String _appName = "MotorOla";
 	Ogre::String _solutionPath;

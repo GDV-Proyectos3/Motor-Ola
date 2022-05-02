@@ -12,6 +12,8 @@
 #include "EntidadManager.h"
 #include "RigidBody.h"
 
+std::unique_ptr<PhysxManager> Singleton<PhysxManager>::instance_ = nullptr;
+
 PhysxManager::PhysxManager() : _patata(false)
 {
 	//StartCounter();
@@ -136,7 +138,7 @@ void PhysxManager::init()
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, false);
 	}
 
-	// Inicialización de variables dependientes --------------------------------------
+	// Inicializaciï¿½n de variables dependientes --------------------------------------
 	mMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
@@ -202,7 +204,7 @@ void PhysxManager::stepPhysics(bool interactive, double frameTime)
 	mScene->fetchResults(true);
 }
 
-// TODO: ¿que pasa cuando esto se detecta?
+// TODO: ï¿½que pasa cuando esto se detecta?
 void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
@@ -247,7 +249,7 @@ Transform PhysxManager::physxToGlobalTR(const PxRigidActor& body)
 	return tr;
 }
 
-// Realiza la conversión de datos: Transform global --> PxTransform
+// Realiza la conversiï¿½n de datos: Transform global --> PxTransform
 void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
 {
 	Transform* tr = e.getComponent<Transform>();
@@ -257,7 +259,7 @@ void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidDynamic& body)
 	body.getGlobalPose().q = bodyTR.q;*/
 }
 
-// Realiza la conversión de datos: PxTransform --> Transform global
+// Realiza la conversiï¿½n de datos: PxTransform --> Transform global
 void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidDynamic& body)
 {
 	Transform auxTR = physxToGlobalTR(body);
@@ -354,7 +356,7 @@ PxRigidDynamic* PhysxManager::createBall()
 	PxTransform transform = PxTransform(PxVec3(0, 400, 100));
 	PxVec3 velocity = PxVec3(0, -50, -100);
 	PxRigidDynamic* ball = createDynamic(transform, PxSphereGeometry(10), *mMaterial, velocity);
-	PxRigidBodyExt::updateMassAndInertia(*ball, 1000.f); //density = 1000 ¡arrasa con todo!
+	PxRigidBodyExt::updateMassAndInertia(*ball, 1000.f); //density = 1000 ï¿½arrasa con todo!
 	return ball;
 }
 

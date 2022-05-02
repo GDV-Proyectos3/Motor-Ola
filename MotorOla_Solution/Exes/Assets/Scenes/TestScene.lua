@@ -1,15 +1,21 @@
 local level = {
     backgroundColor="0.6,1.0,0.0",
     ambient="0.1,0.1,0.1",
-    gravity="0 -9.8 0",
+    gravity="0.0,-9.8,0.0",
+    camera = {
+        nearClipDistance="1",
+        farClipDistance="10000",
+        camPosition="0,0,0",
+        camRotation="0,0,0"
+    },
     entidades = {
         {
-            name="Pala1",
+            name="CentroEscena",
             id=1,
             components={
                 transform={
                     parent="-1",
-                    position="100,10,0",
+                    position="0,0,0",
                     rotation="0,0,0",
                     scale="5,5,5"
                 },
@@ -17,16 +23,17 @@ local level = {
                     mesh="ogrehead.mesh",
                     material="Ogre/Skin",
                     visible="true"
-                }
+                },
+				
             }
         },
         {
-            name="Ball",
+            name="Vista1",
             id=2,
             components={
                 transform={
                     parent="-1",
-                    position="0 0 0",
+                    position="1000,0,0",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
@@ -35,6 +42,109 @@ local level = {
                     material="Rojo",
                     visible="true"
                 },
+				
+            }
+        },
+        {
+            name="Vista1",
+            id=3,
+            components={
+                transform={
+                    parent="-1",
+                    position="-1000,0,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rojo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Vista1",
+            id=4,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,1000,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rojo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Abajo",
+            id=5,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,-1000,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Azul",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Vista1",
+            id=6,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,0,1000",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rojo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Vista1",
+            id=7,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,0,-1000",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rojo",
+                    visible="true"
+                }
+            }
+        },
+        {
+            name="Ball",
+            id=8,
+            components={
+                transform={
+                    parent="-1",
+                    position="0,0,0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rojo",
+                    visible="true"
+                },  
                 collider={
                     type="sphere",
                     radius="10",

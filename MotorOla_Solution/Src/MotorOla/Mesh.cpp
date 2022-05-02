@@ -148,18 +148,6 @@ void Mesh::setMaterial(std::string material)
 //	luzFoco->setVisible(true);
 //}
 
-void Mesh::init() //en funcion de si el eje sobre el que esta el suelo es x,y o xz comentar/descomentar algunas de estas lineas
-{
-	//if (entity_->hasComponent<Transform>())
-	//{
-	//	Transform* tr = entity_->getComponent<Transform>();
-
-	//	_nodo->setPosition(tr->getPos().getX(), tr->getPos().getY(), tr->getPos().getZ());
-	//	//_nodo->setOrientation // Hace falta un Quaternion 
-	//	_nodo->setScale(tr->getScale().getX(), tr->getScale().getY(), tr->getScale().getZ());
-	//}
-}
-
 void Mesh::update()
 {
 

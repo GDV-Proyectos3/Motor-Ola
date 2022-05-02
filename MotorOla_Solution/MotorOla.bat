@@ -2,7 +2,7 @@
 ::en Command Line
 
 :: Se crea la carpeta Bin para meter las dlls
-mkdir Bin
+::mkdir Bin
 
 
 
@@ -24,41 +24,49 @@ cd Build
 
 :: Se copian las dlls de Ogre a Bin
 cd bin/debug
-copy /Y Codec_STBI_d.dll "../../../../../Bin/Codec_STBI_d.dll"
+::copy /Y Codec_STBI_d.dll "../../../../../Bin/Codec_STBI_d.dll"
 copy /Y Codec_STBI_d.dll "../../../../../Exes/Codec_STBI_d.dll"
-copy /Y OgreMain_d.dll "../../../../../Bin/OgreMain_d.dll"
+::copy /Y OgreMain_d.dll "../../../../../Bin/OgreMain_d.dll"
 copy /Y OgreMain_d.dll "../../../../../Exes/OgreMain_d.dll"
-copy /Y OgreMeshLodGenerator_d.dll "../../../../../Bin/OgreMeshLodGenerator_d.dll"
-copy /Y OgreOverlay_d.dll "../../../../../Bin/OgreOverlay_d.dll"
+::copy /Y OgreMeshLodGenerator_d.dll "../../../../../Bin/OgreMeshLodGenerator_d.dll"
+copy /Y OgreMeshLodGenerator_d.dll "../../../../../Exes/OgreMeshLodGenerator_d.dll"
+::copy /Y OgreOverlay_d.dll "../../../../../Bin/OgreOverlay_d.dll"
 copy /Y OgreOverlay_d.dll "../../../../../Exes/OgreOverlay_d.dll"
-copy /Y OgrePaging_d.dll "../../../../../Bin/OgrePaging_d.dll"
-copy /Y OgreProperty_d.dll "../../../../../Bin/OgreProperty_d.dll"
-copy /Y OgreRTShaderSystem_d.dll "../../../../../Bin/OgreRTShaderSystem_d.dll"
-copy /Y Plugin_ParticleFX_d.dll "../../../../../Bin/Plugin_ParticleFX_d.dll"
+::copy /Y OgrePaging_d.dll "../../../../../Bin/OgrePaging_d.dll"
+copy /Y OgrePaging_d.dll "../../../../../Exes/OgrePaging_d.dll"
+::copy /Y OgreProperty_d.dll "../../../../../Bin/OgreProperty_d.dll"
+copy /Y OgreProperty_d.dll "../../../../../Exes/OgreProperty_d.dll"
+::copy /Y OgreRTShaderSystem_d.dll "../../../../../Bin/OgreRTShaderSystem_d.dll"
+copy /Y OgreRTShaderSystem_d.dll "../../../../../Exes/OgreRTShaderSystem_d.dll"
+::copy /Y Plugin_ParticleFX_d.dll "../../../../../Bin/Plugin_ParticleFX_d.dll"
 copy /Y Plugin_ParticleFX_d.dll "../../../../../Exes/Plugin_ParticleFX_d.dll"
-copy /Y RenderSystem_GL_d.dll "../../../../../Bin/RenderSystem_GL_d.dll"
+::copy /Y RenderSystem_GL_d.dll "../../../../../Bin/RenderSystem_GL_d.dll"
 copy /Y RenderSystem_GL_d.dll "../../../../../Exes/RenderSystem_GL_d.dll"
 
-copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
+::copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
 copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
-copy /Y zlib.dll "../../../../../Bin/zlib.dll"
+::copy /Y zlib.dll "../../../../../Bin/zlib.dll"
 copy /Y zlib.dll "../../../../../Exes/zlib.dll"
 
 :: Ojo que hay alguna dll más en release
 cd ../release
-copy /Y Codec_STBI.dll "../../../../../Bin/Codec_STBI.dll"
+::copy /Y Codec_STBI.dll "../../../../../Bin/Codec_STBI.dll"
 copy /Y Codec_STBI.dll "../../../../../Exes/Codec_STBI.dll"
-copy /Y OgreMain.dll "../../../../../Bin/OgreMain.dll"
+::copy /Y OgreMain.dll "../../../../../Bin/OgreMain.dll"
 copy /Y OgreMain.dll "../../../../../Exes/OgreMain.dll"
-copy /Y OgreMeshLodGenerator.dll "../../../../../Bin/OgreMeshLodGenerator.dll"
-copy /Y OgreOverlay.dll "../../../../../Bin/OgreOverlay.dll"
+::copy /Y OgreMeshLodGenerator.dll "../../../../../Bin/OgreMeshLodGenerator.dll"
+copy /Y OgreMeshLodGenerator.dll "../../../../../Exes/OgreMeshLodGenerator.dll"
+::copy /Y OgreOverlay.dll "../../../../../Bin/OgreOverlay.dll"
 copy /Y OgreOverlay.dll "../../../../../Exes/OgreOverlay.dll"
-copy /Y OgrePaging.dll "../../../../../Bin/OgrePaging.dll"
-copy /Y OgreProperty.dll "../../../../../Bin/OgreProperty.dll"
-copy /Y OgreRTShaderSystem.dll "../../../../../Bin/OgreRTShaderSystem.dll"
-copy /Y Plugin_ParticleFX.dll "../../../../../Bin/Plugin_ParticleFX.dll"
+::copy /Y OgrePaging.dll "../../../../../Bin/OgrePaging.dll"
+copy /Y OgrePaging.dll "../../../../../Exes/OgrePaging.dll"
+::copy /Y OgreProperty.dll "../../../../../Bin/OgreProperty.dll"
+copy /Y OgreProperty.dll "../../../../../Exes/OgreProperty.dll"
+::copy /Y OgreRTShaderSystem.dll "../../../../../Bin/OgreRTShaderSystem.dll"
+copy /Y OgreRTShaderSystem.dll "../../../../../Exes/OgreRTShaderSystem.dll"
+::copy /Y Plugin_ParticleFX.dll "../../../../../Bin/Plugin_ParticleFX.dll"
 copy /Y Plugin_ParticleFX.dll "../../../../../Exes/Plugin_ParticleFX.dll"
-copy /Y RenderSystem_GL.dll "../../../../../Bin/RenderSystem_GL.dll"
+::copy /Y RenderSystem_GL.dll "../../../../../Bin/RenderSystem_GL.dll"
 copy /Y RenderSystem_GL.dll "../../../../../Exes/RenderSystem_GL.dll"
 
 :: Mensaje de verificación: OGRE
@@ -69,16 +77,17 @@ echo: && Echo ::::: BUILD [ OGRE ] COMPLETADA :::::
 
 :: BUILD SDL
 :: Estas están repetidas pero por si acaso
-copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
+::copy /Y SDL2.dll "../../../../../Bin/SDL2.dll"
 copy /Y SDL2.dll "../../../../../Exes/SDL2.dll"
-copy /Y zlib.dll "../../../../../Bin/zlib.dll"
+::copy /Y zlib.dll "../../../../../Bin/zlib.dll"
+copy /Y zlib.dll "../../../../../Exes/zlib.dll"
 :: Copia SDL2d.dll en Bin y en Exes
 cd ..\..\SDL2-build 
 ..\..\..\CMake\Src\bin\cmake.exe --build . --config release 
 ..\..\..\CMake\Src\bin\cmake.exe --build . --config debug
 
 cd Debug
-copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
+::copy /Y SDL2d.dll "../../../../../Bin/SDL2d.dll"
 copy /Y SDL2d.dll "../../../../../Exes/SDL2d.dll"
 
 :: Mensaje de verificación: SDL
@@ -90,9 +99,9 @@ echo: && Echo ::::: BUILD [ SDL ] COMPLETADA :::::
 :: BUILD FMOD
 :: Copia fmod.dll y fmodL.dll en Bin y en Exes
 cd ..\..\..\..\FMOD\libreria\x64
-copy /Y fmod.dll "../../../../Bin/fmod.dll"
+::copy /Y fmod.dll "../../../../Bin/fmod.dll"
 copy /Y fmod.dll "../../../../Exes/fmod.dll"
-copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
+::copy /Y fmodL.dll "../../../../Bin/fmodL.dll"
 copy /Y fmodL.dll "../../../../Exes/fmodL.dll"
 :: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
 cd ..\..\..\..\
@@ -125,11 +134,11 @@ msbuild -p:Configuration=Release
 
 :: Me meto en la carpeta de Debug que se ha generado al hacer la build y copio Lua_d.dll en Bin y Exes
 cd x64/Debug
-copy /Y Lua_d.dll "../../../../Bin/Lua_d.dll"
+::copy /Y Lua_d.dll "../../../../Bin/Lua_d.dll"
 copy /Y Lua_d.dll "../../../../Exes/Lua_d.dll"
 :: Me muevo a la carpeta Release y copio Lua.dll en Bin y Exes
 cd ../Release
-copy /Y Lua.dll "../../../../Bin/Lua.dll"
+::copy /Y Lua.dll "../../../../Bin/Lua.dll"
 copy /Y Lua.dll "../../../../Exes/Lua.dll"
 :: Vuelta a la carpeta principal del proyecto (En la que se encuentra MotorOla.bat)
 cd ..\..\..\..\

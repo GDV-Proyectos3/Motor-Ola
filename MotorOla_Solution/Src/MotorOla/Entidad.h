@@ -1,10 +1,18 @@
 #pragma once
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 #include <vector>
 #include "Componente.h"
 #include "utils/Singleton.h"
 #include "ComponenteFactoria.h"
+#include "utils/Vectola3D.h"
+#include "utils/Quaterniola.h"
 
 class EntidadManager;
+
 class Entidad
 {
 	using uptr_cmp = std::unique_ptr<Componente>;
@@ -21,7 +29,7 @@ public:
 
 	inline EntidadManager* getEntityMngr() const { return entManager_; }
 
-	inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
+	MOTOR_API inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
 
 	inline int getID() { return _id; }
 
@@ -98,6 +106,8 @@ public:
 
 	bool init();
 
+	MOTOR_API static Entidad* instantiate(std::string name, Vectola3D position = Vectola3D(), Quaterniola rotation = Quaterniola());
+
 
 private:
 	std::string _name;
@@ -121,5 +131,6 @@ private:
 
 	//numero de veces que puedes intentar iniciar tus componentes (para evitar bucle infinito)
 	int _numTriesToLoad;
+	int j;
 };
 

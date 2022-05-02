@@ -1,10 +1,19 @@
 #include "EntidadManager.h"
 #include "Entidad.h"
 
+std::unique_ptr<EntidadManager> Singleton<EntidadManager>::instance_ = nullptr;
 void EntidadManager::update()
 {
-	for (auto& e : entitys_)
-		e->update();
+	//for (auto& e : entitys_) 
+	//	if (e != nullptr) e->update();
+
+
+	for (int i = 0; i < entitys_.size(); i++)
+	{
+		if (entitys_.at(i) != nullptr) {
+			(*entitys_.at(i)).update();
+		}
+	}
 }
 
 void EntidadManager::draw()
@@ -21,7 +30,6 @@ void EntidadManager::refresh()
 		[](const uptr_ent& e) { return !e->isActive();	}),
 		entitys_.end()
 	);
-
 }
 
 void EntidadManager::pauseEntidades()
@@ -34,6 +42,11 @@ void EntidadManager::reanudeEntidades()
 {
 	for (auto& e : entitys_)
 		e->setActive(false);
+}
+
+void EntidadManager::sincronizaVectorEnt()
+{
+	entitys_.resize(entitys_.size());
 }
 
 Entidad* EntidadManager::getEntidadByID(int id)

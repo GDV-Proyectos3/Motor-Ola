@@ -10,10 +10,11 @@
 #include <OgreOverlaySystem.h>
 #include <OgreOverlayManager.h>
 
-
-
 #include <SDL_video.h>
 #include <SDL_syswm.h>
+
+std::unique_ptr<OgreManager> Singleton<OgreManager>::instance_ = nullptr;
+
 
 OgreManager::OgreManager(const Ogre::String& appName)
 {
@@ -48,16 +49,16 @@ void OgreManager::init()
 	
 	
 	// Create the camera
-	Ogre::Camera* cam = _sceneManager->createCamera("Cam");
+	cam = _sceneManager->createCamera("Cam");
 	cam->setNearClipDistance(1);
 	cam->setFarClipDistance(10000);
 	cam->setAutoAspectRatio(true);
 	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
-	Ogre::SceneNode* camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
+	camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
 	camNode->attachObject(cam);
-	camNode->setPosition(0, 0, 1000);
-	camNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+	camNode->setPosition(0, 2000, 0);
+	camNode->lookAt(Ogre::Vector3(0, -1, 0), Ogre::Node::TS_WORLD);
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
 
 	// and tell it to render into the main window
@@ -81,8 +82,6 @@ void OgreManager::init()
 	
 	_root->getSceneManager("SceneManagerInstance1")->addRenderQueueListener(_overlaySystem);
 	
-	
-
 	std::cout << "OgreManager iniciado\n";
 }
 
@@ -265,7 +264,7 @@ void OgreManager::setWindowGrab(bool _grab)
 	SDL_SetWindowGrab(_window.native, grab);
 	//SDL_SetRelativeMouseMode(grab);
 	//SDL_ShowCursor(grab);
-	SDL_ShowCursor(grab);
+	SDL_ShowCursor(true);
 }
 
 //void OgreManager::pollEvents()

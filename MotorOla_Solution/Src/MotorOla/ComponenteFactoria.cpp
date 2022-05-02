@@ -1,5 +1,7 @@
 #include "ComponenteFactoria.h"
 
+std::unique_ptr<ComponenteFactoria> Singleton<ComponenteFactoria>::instance_ = nullptr;
+
 Componente* ComponenteFactoria::getComponent(std::string name)
 {
 	auto it = _mGenerators.find(name);

@@ -3,6 +3,9 @@
 #include "InputManager.h"
 #include "Motor.h"
 
+std::unique_ptr<OverlayManager> Singleton<OverlayManager>::instance_ = nullptr;
+
+
 
 OverlayManager::~OverlayManager()
 {
@@ -42,6 +45,7 @@ void OverlayManager::init(OgreManager*om,Motor* m)
 		mOverlay->setZOrder(100);
 		og = om;//Usar Singleton cuando funcione
 		motor = m;
+		std::cout << motor << std::endl;
 		
 		
 		
@@ -132,7 +136,6 @@ void OverlayManager::creaTexto(float x, float y, const std::string& texto, const
 	Ogre::TextAreaOverlayElement* text = static_cast<Ogre::TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", nombreTexto));
 
-
 	text->setMetricsMode(Ogre::GMM_RELATIVE);
 	text->setAlignment(Ogre::TextAreaOverlayElement::Alignment::Center);
 	text->setPosition((textos.back()->getWidth() / 2), ((textos.back()->getHeight()) / 2) - (tamLetra / 2));
@@ -145,8 +148,6 @@ void OverlayManager::creaTexto(float x, float y, const std::string& texto, const
 	textos.back()->addChild(text);
 	mOverlay->add2D(textos.back());
 	mOverlay->show();
-	
-	
 }
 
 void OverlayManager::creaPanel(float x, float y, const std::string& nombrePanel, const std::string& material, float dimX, float dimY)
@@ -158,6 +159,55 @@ void OverlayManager::creaPanel(float x, float y, const std::string& nombrePanel,
 	paneles.back()->setDimensions(dimX, dimY);
 	paneles.back()->setMaterialName(material); // Optional background material
 	mOverlay->add2D(paneles.back());
+	mOverlay->show();
+}
+
+Ogre::TextAreaOverlayElement* OverlayManager::getTexto(std::string panelName, std::string textName)
+{
+	Ogre::TextAreaOverlayElement* text = nullptr;
+	Ogre::PanelOverlayElement* panel = nullptr;
+	auto it = textos.begin();
+	bool find = false;
+	while (!find && it != textos.end()) {
+		std::string n = (*it)->getName();
+		if ((*it)->getName() == panelName) {
+			panel = (*it);
+			text = static_cast<Ogre::TextAreaOverlayElement*>(panel->getChild(textName));
+			find = true;
+		}
+		it++;
+	}
+	return text;
+}
+
+MOTOR_API Ogre::PanelOverlayElement* OverlayManager::getPanel(std::string name)
+{
+	Ogre::PanelOverlayElement* panel = nullptr;
+	auto it = textos.begin();
+	bool find = false;
+	while (!find && it != textos.end()) {
+		if ((*it)->getName() == name) {
+			panel = (*it);
+			find = true;
+		}
+		it++;
+	}
+	return panel;
+}
+
+MOTOR_API Ogre::PanelOverlayElement* OverlayManager::getBoton(std::string name)
+{
+	Ogre::PanelOverlayElement* boton = nullptr;
+	auto it = textos.begin();
+	bool find = false;
+	while (!find && it != textos.end()) {
+		if ((*it)->getName() == name) {
+			boton = (*it);
+			find = true;
+		}
+		it++;
+	}
+	return boton;
 }
 
 void OverlayManager::clear()
@@ -180,6 +230,11 @@ void OverlayManager::clear()
 	textos.clear();
 	callbacks.clear();
 	overlayManager.destroyAllOverlayElements();
+}
+
+ Motor* OverlayManager::getMotor()
+{
+	return motor;
 }
 
 

@@ -33,7 +33,6 @@ public:
 	//void setLight();
 	//void toggleLight();
 
-	void init();
 	void update();
 	//void draw();
 
