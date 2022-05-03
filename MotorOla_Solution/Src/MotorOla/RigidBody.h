@@ -1,6 +1,9 @@
 #pragma once
-#pragma once
-
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif 
 #include "Componente.h"
 #include "PxRigidDynamic.h"
 
@@ -18,14 +21,14 @@ public:
 	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Getter
-	PxRigidDynamic* getBody() { return body; };
-	PxRigidStatic* getStBody() { return stBody; };
-	PxVec3 getVelocity() { return vel_; };
-	PxVec3 getAngularVelocity() { return body->getAngularVelocity(); };
+	MOTOR_API PxRigidDynamic* getBody() { return body; };
+	MOTOR_API PxRigidStatic* getStBody() { return stBody; };
+	MOTOR_API PxVec3 getVelocity() { return vel_; };
+	MOTOR_API PxVec3 getAngularVelocity() { return body->getAngularVelocity(); };
 
 	// Setter
-	void setVelocity(PxVec3 v);
-	void setAngularVelocity(PxVec3 av);
+	MOTOR_API void setVelocity(PxVec3 v);
+	MOTOR_API void setAngularVelocity(PxVec3 av);
 
 private:
 	PxRigidDynamic* body = nullptr;

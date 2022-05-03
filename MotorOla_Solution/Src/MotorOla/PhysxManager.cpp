@@ -165,11 +165,8 @@ void PhysxManager::update(bool interactive, double t)
 	while (it != em().getAllEntidades().end()) {
 		Entidad* e = (*it).get();
 		it++;
-
 		if (e->getComponent<RigidBody>() == nullptr) continue;
-
 		RigidBody* body = e->getComponent<RigidBody>();
-
 		if (body->getBody()) setGlobalToPhysxTR(*e, *body->getBody());
 		//debugBuddy(e);
 	}
@@ -185,22 +182,11 @@ void PhysxManager::update(bool interactive, double t)
 	while (it != em().getAllEntidades().end()) {
 		Entidad* e = (*it).get();
 		it++;
-
 		if (e->getComponent<RigidBody>() == nullptr) continue;
-
 		RigidBody* body = e->getComponent<RigidBody>();
-
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
 		//debugBuddy(e);
 	}
-
-	//for (auto& id : ids_) {
-	//	Entidad* e = em().getEntidadByID(id);
-	//	RigidBody* body = e->getComponent<RigidBody>();
-	//	if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-	//	//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
-	//	debugBuddy(e);
-	//}
 }
 
 // Function to clean data
@@ -409,8 +395,8 @@ PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, PxS
 	if (shape)
 	{
 		body = mPhysics->createRigidStatic(transform);
-		body->attachShape(*shape);
-		mScene->addActor(*body);
+		if(body) body->attachShape(*shape);
+		if(body) mScene->addActor(*body);
 	}
 
 	return body;

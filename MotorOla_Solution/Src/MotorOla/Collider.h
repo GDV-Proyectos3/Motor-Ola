@@ -1,5 +1,9 @@
 #pragma once
-
+#ifdef MOTOR_EXPORTS
+#define MOTOR_API __declspec(dllexport)
+#else
+#define MOTOR_API __declspec(dllimport)
+#endif
 #include "Componente.h"
 #include "PxShape.h"
 
@@ -17,7 +21,7 @@ public:
 	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Getter
-	PxShape* getShape() { return shape; };
+	MOTOR_API PxShape* getShape() { return shape; };
 
 private:
 	PxShape* shape = nullptr;
