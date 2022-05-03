@@ -52,7 +52,7 @@ Motor::Motor()
 Motor::~Motor()
 {
 	// Destruye los managers en orden inverso a la creaci�n (PC: puede que esto no sea necesario porque al cerrar se borran solos)
-	//if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
+	if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
 	if (Singleton<OverlayManager>::instance() != nullptr) delete Singleton<OverlayManager>::instance();
 	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();

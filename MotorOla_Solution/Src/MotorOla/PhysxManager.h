@@ -23,7 +23,7 @@ MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxVec3&
 }
 
 MOTOR_API inline std::ostream& operator<<(std::ostream& os, const physx::PxQuat& q) {
-	os << "(" << q.x << "," << q.y << "," << q.z << "," << q.w << ")";
+	os << "(" << q.x << ", " << q.y << ", " << q.z << ", " << q.w << ")";
 	return os;
 }
 
@@ -34,6 +34,7 @@ public:
 
 	// main resources
 	MOTOR_API void runPhysX();
+	MOTOR_API void togglePause() { mPause != mPause; };
 
 	// transform
 	MOTOR_API PxTransform globalToPhysxTR(Transform& tr);

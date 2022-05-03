@@ -28,8 +28,9 @@ PhysxManager::PhysxManager() : _patata(false)
 
 PhysxManager::~PhysxManager()
 {
-	/*PX_RELEASE(mPhysics);
-	PX_RELEASE(mFoundation);*/
+	std::cout << "\n - Cerrando PhysXmanager - " << std::endl;
+	close(false);
+	std::cout << " - - - - - - - - - - - - - " << std::endl;
 }
 
 // -------------- TIMER ----------------------------------------------------------------
@@ -117,7 +118,7 @@ void PhysxManager::init()
 	mDispatcher = PxDefaultCpuDispatcherCreate(4);					//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
 
-	//sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
+	sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
 	sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
 
 	sceneDesc.cudaContextManager = mCuda;							//Set the CUDA context manager, used by GRB.
@@ -205,15 +206,16 @@ void PhysxManager::close(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	releaseScene();
-	//PX_RELEASE(mScene);
+	//releaseScene();
+	PX_RELEASE(mScene);
 	PX_RELEASE(mDispatcher);
+	PxCloseExtensions();
 	PX_RELEASE(mPhysics);
 
 	if (mPvd)
 	{
 		PxPvdTransport* transport = mPvd->getTransport();
-		mPvd->release();	mPvd = NULL;
+		PX_RELEASE(mPvd);
 		PX_RELEASE(transport);
 	}
 
