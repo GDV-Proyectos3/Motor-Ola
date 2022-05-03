@@ -231,7 +231,7 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	if (a != b) 
 	{
 		a->OnCollisionEnter(b);
-		b->OnCollisionEnter(a);
+		if (a != nullptr && b != nullptr) b->OnCollisionEnter(a);
 	}
 
 	std::cout << "COLLIDERS COLLISION detected!\n";
@@ -247,7 +247,7 @@ void PhysxManager::onTrigger(physx::PxActor* actor1, physx::PxActor* actor2)
 	if (a != b)
 	{
 		a->OnTriggerEnter(b);
-		b->OnTriggerEnter(a);
+		if(a != nullptr && b != nullptr) b->OnTriggerEnter(a);
 	}
 
 	std::cout << "TRIGGER COLLISION detected!\n";
