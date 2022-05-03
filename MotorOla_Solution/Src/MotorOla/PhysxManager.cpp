@@ -118,8 +118,9 @@ void PhysxManager::init()
 	mDispatcher = PxDefaultCpuDispatcherCreate(4);					//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
 
+	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
-	sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
+	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
 
 	sceneDesc.cudaContextManager = mCuda;							//Set the CUDA context manager, used by GRB.
 
