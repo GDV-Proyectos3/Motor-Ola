@@ -30,16 +30,16 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 	float oriX=0.f, oriY=0.f, oriZ=0.f, oriW=1.f;
 	float velX=0.f, velY=0.f, velZ=0.f;
 
-	// Valores auxiliares para guardar el tamaño de cada string
+	// Valores auxiliares para guardar el tamaï¿½o de cada string
 	std::string::size_type sact = 0, stot = 0;
 	std::string tempString; // string auxiliar para guardar la subcadena actual
 
 	// Si no existe / no tiene el componente Transform, lee los datos de LUA
 	if (!tr) {
-		// comprobar que la sección existe
+		// comprobar que la secciï¿½n existe
 		if (mapa.find("position") != mapa.end())
 		{
-			// Lee los datos de la posición
+			// Lee los datos de la posiciï¿½n
 			std::string posString = mapa.at("position");
 			posX = stof(posString, &sact); stot = sact + 1; sact = 0;
 			tempString = posString.substr(stot);
@@ -52,10 +52,10 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 			if (debugCom) std::cout << "Position RB = " << pos_ << std::endl;
 		}
 
-		// comprobar que la sección existe
+		// comprobar que la secciï¿½n existe
 		if (mapa.find("orientation") != mapa.end())
 		{
-			// Lee los datos de la orientación
+			// Lee los datos de la orientaciï¿½n
 			std::string oriString = mapa.at("orientation");
 			oriX = stof(oriString, &sact); stot = sact + 1; sact = 0;
 			tempString = oriString.substr(stot);
@@ -74,20 +74,16 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		if (debugCom) std::cout << "\nLectura directa de Transform  para RigidBody" << std::endl;
 		Vectola3D pos = tr->getLocalPosition();
 		Quaterniola rot = tr->getLocalRotation();
-<<<<<<< Updated upstream
-		if (debugCom) std::cout << "\nPosition TR = " << pos << std::endl;
-		if (debugCom) std::cout << "Orientation TR = " << rot;// << std::endl;
-=======
 		//std::cout << "Position TR = " << pos << std::endl;
 		//std::cout << "Orientation TR = " << rot << std::endl;
->>>>>>> Stashed changes
+		//if (debugCom) std::cout << "Orientation TR = " << rot;// << std::endl;
 		pos_ = PxVec3(pos.getX(), pos.getY(), pos.getZ());
 		ori_ = PxQuat(rot.v.getX(), rot.v.getX(), rot.v.getX(), rot.s);
 		if (debugCom) std::cout << "Position RB = " << pos_ << std::endl;
 		if (debugCom) std::cout << "Orientation RB = " << ori_ << std::endl << std::endl;
 	}
 
-	// comprobar que la sección existe
+	// comprobar que la secciï¿½n existe
 	if (mapa.find("velocity") != mapa.end())
 	{
 		// Lee los datos de la velocidad
@@ -147,7 +143,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		}
 	}
 
-	// Añade la entidad asociado al manager de phyx
+	// Aï¿½ade la entidad asociado al manager de phyx
 	int id_ = getEntidad()->getID();
 	pm().addEntityID(id_);
 
