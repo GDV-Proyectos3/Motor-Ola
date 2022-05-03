@@ -176,6 +176,9 @@ void PhysxManager::update(bool interactive, double t)
 	// Actualiza las fisicas de movimiento y colisiones
 	stepPhysics(interactive, 1.5f/60.0f);
 
+	//debugBody(groundB);
+
+
 	// Actualiza las posiciones: PxTransform --> Transform global
 	it = em().getAllEntidades().begin();
 	while (it != em().getAllEntidades().end()) {
@@ -501,6 +504,17 @@ void PhysxManager::debugBuddy(Entidad* e)
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		RigidBody* body = e->getComponent<RigidBody>();
 		PxTransform tr = body->getBody()->getGlobalPose();
+		std::cout << "Position RB = " << tr.p << std::endl;
+		std::cout << "Orientation RB = " << tr.q << std::endl;
+		//debugTime();
+		GlobalTimer = GetLastTime();
+	}
+}
+
+MOTOR_API void PhysxManager::debugBody(PxRigidDynamic* rd)
+{
+	if (GetLastTime() - GlobalTimer > 2.0) {
+		PxTransform tr = rd->getGlobalPose();
 		std::cout << "Position RB = " << tr.p << std::endl;
 		std::cout << "Orientation RB = " << tr.q << std::endl;
 		//debugTime();

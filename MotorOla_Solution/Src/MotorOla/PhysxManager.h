@@ -63,6 +63,7 @@ public:
 	MOTOR_API void debugTime();
 	MOTOR_API void debugBall();
 	MOTOR_API void debugBuddy(Entidad* e);
+	MOTOR_API void debugBody(PxRigidDynamic* rd);
 
 	// FACTORY
 	MOTOR_API PxRigidDynamic* createDynamic(const PxTransform& transform, const PxVec3& velocity = PxVec3(PxZero));

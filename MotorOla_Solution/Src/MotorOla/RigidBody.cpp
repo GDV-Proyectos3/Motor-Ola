@@ -35,7 +35,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 	std::string tempString; // string auxiliar para guardar la subcadena actual
 
 	// Si no existe / no tiene el componente Transform, lee los datos de LUA
-	if (!tr) {
+	if (!tr || tr->getLocalPosition() == Vectola3D()) {
 		// comprobar que la secci�n existe
 		if (mapa.find("position") != mapa.end())
 		{
