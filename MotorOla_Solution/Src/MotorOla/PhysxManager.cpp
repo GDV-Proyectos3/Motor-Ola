@@ -158,7 +158,6 @@ void PhysxManager::update(bool interactive, double t)
 {
 	if (mPause/* && !gOneFrame*/)
 		return;
-	//gOneFrame = false;
 
 	// Actualiza las posiciones: Transform global --> PxTransform
 	auto it = em().getAllEntidades().begin();
@@ -168,14 +167,10 @@ void PhysxManager::update(bool interactive, double t)
 		if (e->getComponent<RigidBody>() == nullptr) continue;
 		RigidBody* body = e->getComponent<RigidBody>();
 		if (body->getBody()) setGlobalToPhysxTR(*e, *body->getBody());
-		//debugBuddy(e);
 	}
 
 	// Actualiza las fisicas de movimiento y colisiones
 	stepPhysics(interactive, 1.5f/60.0f);
-
-	//debugBody(groundB);
-
 
 	// Actualiza las posiciones: PxTransform --> Transform global
 	it = em().getAllEntidades().begin();
@@ -185,7 +180,6 @@ void PhysxManager::update(bool interactive, double t)
 		if (e->getComponent<RigidBody>() == nullptr) continue;
 		RigidBody* body = e->getComponent<RigidBody>();
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-		//debugBuddy(e);
 	}
 }
 

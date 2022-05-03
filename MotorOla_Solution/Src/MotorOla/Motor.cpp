@@ -118,8 +118,10 @@ void Motor::mainLoop()
 	std::cout << Singleton<EntidadManager>::instance() << "\n";
 
 	while (!stop) {
-		// Recoger el Input
+		
 		Singleton<EntidadManager>::instance()->refresh();
+
+		// Recoger el Input
 		ih().clearState();
 
 		while (SDL_PollEvent(&event))
@@ -147,7 +149,7 @@ void Motor::mainLoop()
 
 		// Contador de frames que los muestra cada 100 frames
 #if (defined _DEBUG)
-		if (++frame % 1000 == 0) {
+		if (++frame % 600 == 0) {
 			//// Prueba de los prefabs
 			//float x = rand() % 800 - 400;
 			//float y = rand() % 600 - 300;

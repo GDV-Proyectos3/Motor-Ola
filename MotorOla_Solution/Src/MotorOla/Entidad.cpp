@@ -5,6 +5,7 @@
 #include "PhysxManager.h"
 #include "LuaReader.h"
 #include "RigidBody.h"
+#include "Mesh.h"
 
 Entidad::Entidad():
 	entManager_(nullptr),
@@ -21,8 +22,6 @@ void Entidad::update()
 {
 	for (auto& c : components)
 	{
-		// de aqui hay que quitar el update de physx
-
 		c->update();
 	}
 }
@@ -42,7 +41,7 @@ void Entidad::OnCollisionEnter(Entidad* other)
 	std::cout << "OnCollisionEnter\n";
 	for (auto& c : components)
 	{
-		c->onCollisionStart(other);
+		if (c.get() != nullptr) c->onCollisionStart(other);
 	}
 }
 
@@ -51,8 +50,26 @@ void Entidad::OnTriggerEnter(Entidad* other)
 	std::cout << "OnTriggerEnter\n";
 	for (auto& c : components)
 	{
-		c->onTriggerStart(other);
+		if (c != nullptr) c->onTriggerStart(other);
 	}
+}
+
+Entidad::~Entidad()
+{
+	int n = components.size();
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << "Borrada componente " << i << "\n";
+		if (components.at(i) != nullptr) {
+			components.at(i).reset();
+		}
+	}
+}
+
+inline void Entidad::setActive(bool state)
+{
+	active = state;
+	if (hasComponent<Mesh>()) getComponent<Mesh>()->setVisible(state);
 }
 
 bool Entidad::init()
