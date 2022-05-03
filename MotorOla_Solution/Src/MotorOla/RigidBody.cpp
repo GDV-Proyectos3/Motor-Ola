@@ -75,7 +75,7 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		Vectola3D pos = tr->getLocalPosition();
 		Quaterniola rot = tr->getLocalRotation();
 		if (debugCom) std::cout << "\nPosition TR = " << pos << std::endl;
-		if (debugCom) std::cout << "Orientation TR = " << rot;// << std::endl;
+		//if (debugCom) std::cout << "Orientation TR = " << rot;// << std::endl;
 		pos_ = PxVec3(pos.getX(), pos.getY(), pos.getZ());
 		ori_ = PxQuat(rot.v.getX(), rot.v.getX(), rot.v.getX(), rot.s);
 		if (debugCom) std::cout << "Position RB = " << pos_ << std::endl;
