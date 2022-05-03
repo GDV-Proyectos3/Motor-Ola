@@ -47,6 +47,7 @@ Motor::Motor()
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::instance();
+	std::cout << "MANAGERS INSTANCIADOS CORRECTAMENTE\n";
 }
 
 Motor::~Motor()
@@ -76,9 +77,7 @@ void Motor::initSystems()
 	// Se registran los componentes que conoce el motor
 	registryComponents();
 
-	std::cout << "EM: " << Singleton<EntidadManager>::instance() << "\n";
-	std::cout << "LR " << Singleton<LoadResources>::instance() << "\n";
-	std::cout << "FMOD: " << Singleton<FMODAudioManager>::instance() << "\n";
+	std::cout << "ANTES DE CARGAR JUEGO TRY\n";
 
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
@@ -88,6 +87,8 @@ void Motor::initSystems()
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
 	}
+	std::cout << "DESPUES DE CARGAR JUEGO TRY\n";
+
 
 	// Carga una escena con Lua
 	//if(!loadScene("TestScene.lua"))
@@ -166,9 +167,9 @@ void Motor::loadDLLGame()
 	HRESULT hrReturnVal;
 	std::cout<<"Entra en loadDLL"<<std::endl;
 #ifdef NDEBUG
-	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+	hDLL = LoadLibrary(L".\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 #else
-	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+	hDLL = LoadLibrary(L".\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 #endif
 
 	if (NULL != hDLL)
