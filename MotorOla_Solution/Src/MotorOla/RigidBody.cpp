@@ -10,6 +10,8 @@ RigidBody::RigidBody()
 
 RigidBody::~RigidBody()
 {
+	if (body) body->release();
+	if (stBody) stBody->release();
 }
 
 bool RigidBody::init(const std::map<std::string, std::string>& mapa)
