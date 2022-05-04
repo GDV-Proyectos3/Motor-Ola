@@ -124,10 +124,14 @@ public:
 		return mbState_[b];
 	}
 
-	MOTOR_API inline std::pair<Sint32, Sint32>& getMousePosInGame() {
+	MOTOR_API inline std::pair<Sint32, Sint32> getMousePosInGame() {
 		std::pair<Sint32, Sint32>p;
+		std::cout<<Singleton<OgreManager>::instance()->getWindowWidth() << std::endl;
+		std::cout << Singleton<OgreManager>::instance()->getWindowHeight() << std::endl;
 		p.first = mousePos_.first -(Singleton<OgreManager>::instance()->getWindowWidth() / 2);
 		p.second = mousePos_.second -(Singleton<OgreManager>::instance()->getWindowHeight() / 2);
+		std::cout<<p.first<< std::endl;
+		std::cout <<p.second << std::endl;
 		return p;
 
 	}
