@@ -31,6 +31,7 @@ public:
 	MOTOR_API int getCont();
 	MOTOR_API bool getMute();
 	MOTOR_API void setMute(bool m);
+	MOTOR_API FMOD::Channel* getChannel(int i);
 
 private:
 	FMOD::System* system;

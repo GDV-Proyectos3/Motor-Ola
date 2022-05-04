@@ -117,4 +117,25 @@ bool FMODAudioManager::getMute()
 void FMODAudioManager::setMute(bool m)
 {
 	mute = m;
+	for (int i = 0;i < Singleton<FMODAudioManager>::instance()->getCont();i++) {
+		if (Singleton<FMODAudioManager>::instance()->getMute() == false) {
+			if (Singleton<FMODAudioManager>::instance()->getChannel(i) != nullptr)
+				Singleton<FMODAudioManager>::instance()->setVolume(i, 1);
+
+
+		}
+		else {
+			Singleton<FMODAudioManager>::instance();
+			if (Singleton<FMODAudioManager>::instance()->getChannel(i) != nullptr)
+				Singleton<FMODAudioManager>::instance()->setVolume(i, 0);
+
+		}
+	}
 }
+
+ FMOD::Channel* FMODAudioManager::getChannel(int i)
+{
+	return channel[i];
+}
+
+
