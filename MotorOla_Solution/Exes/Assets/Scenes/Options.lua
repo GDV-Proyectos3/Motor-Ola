@@ -3,32 +3,27 @@ local options = {
     ambient="0.1,0.1,0.1",
     gravity="0 -9.8 0",
     botones={
-		
 		{
-			positionX="0.25",
-			positionY="0.5",
-			texto="Volume",
+			positionX="0.2",
+			positionY="0.2",
+			texto="",
 			nombrePanel="VolumePanel",
 			nombreTexto="VolumeTexto",
-			tamLetra="0.05",
-			material="Azul",
+			tamLetra="0.1",
+			material="AltavozButton",
 			dimensionX="0.25",
 			dimensionY="0.25",
-			
-			
 		},
 		{
-			positionX="0.75",
-			positionY="0.5",
+			positionX="0.55",
+			positionY="0.15",
 			texto="Return",
 			nombrePanel="ReturnPanel",
 			nombreTexto="ReturnTexto",
 			tamLetra="0.05",
-			material="Azul",
+			material="LapidaButton",
 			dimensionX="0.25",
-			dimensionY="0.25",
-			
-			
+			dimensionY="0.35",
 		},
 	}
 }

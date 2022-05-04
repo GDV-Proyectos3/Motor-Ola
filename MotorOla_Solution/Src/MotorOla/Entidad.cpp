@@ -38,7 +38,7 @@ void Entidad::destroy()
 
 void Entidad::OnCollisionEnter(Entidad* other)
 {
-	std::cout << "OnCollisionEnter\n";
+	//std::cout << "OnCollisionEnter\n";
 	if (this!=nullptr && other!=nullptr) {
 		for (auto& c : components)
 		{
@@ -49,7 +49,7 @@ void Entidad::OnCollisionEnter(Entidad* other)
 
 void Entidad::OnTriggerEnter(Entidad* other)
 {
-	std::cout << "OnTriggerEnter\n";
+	//std::cout << "OnTriggerEnter\n";
 	for (auto& c : components)
 	{
 		if (c != nullptr) c->onTriggerStart(other);

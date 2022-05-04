@@ -3,46 +3,39 @@ local mainMenu = {
     ambient="0.1,0.1,0.1",
     gravity="0 -9.8 0",
     botones={
-		
 		{
-			positionX="0.25",
-			positionY="0.75",
-			texto="Exit",
-			nombrePanel="ExitPanel",
-			nombreTexto="ExitTexto",
+			positionX="0.10",
+			positionY="0.375",
+			texto="Play",
+			nombrePanel="NewGamePanel",
+			nombreTexto="NewGameTexto",
 			tamLetra="0.05",
-			material="Azul",
+			material="LapidaButton",
 			dimensionX="0.25",
-			dimensionY="0.25",
-			
-			
+			dimensionY="0.35",
 		},
 		{
-			positionX="0.25",
-			positionY="0.5",
+			positionX="0.375",
+			positionY="0.375",
 			texto="Options",
 			nombrePanel="OptionsPanel",
 			nombreTexto="OptionsTexto",
 			tamLetra="0.05",
-			material="Azul",
+			material="LapidaButton",
 			dimensionX="0.25",
-			dimensionY="0.25",
-			
+			dimensionY="0.35",
 		},
 		{
-			positionX="0.25",
-			positionY="0.25",
-			texto="NewGame",
-			nombrePanel="NewGamePanel",
-			nombreTexto="NewGameTexto",
+			positionX="0.65",
+			positionY="0.375",
+			texto="Exit",
+			nombrePanel="ExitPanel",
+			nombreTexto="ExitTexto",
 			tamLetra="0.05",
-			material="Azul",
+			material="LapidaButton",
 			dimensionX="0.25",
-			dimensionY="0.25",
-			
+			dimensionY="0.35",
 		},
-		
-		
     }
 }
 

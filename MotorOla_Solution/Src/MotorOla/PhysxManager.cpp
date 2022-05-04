@@ -515,8 +515,8 @@ MOTOR_API void PhysxManager::debugAllBodies()
 			if (e->getComponent<RigidBody>() == nullptr) continue;
 			RigidBody* body = e->getComponent<RigidBody>();
 			if (body->getBody()) {
-				std::cout << "> Dynamic pos: " << body->getBody()->getGlobalPose().p << std::endl;
-				std::cout << "> Dynamic rot: " << body->getBody()->getGlobalPose().q << std::endl;
+				//std::cout << "> Dynamic pos: " << body->getBody()->getGlobalPose().p << std::endl;
+				//std::cout << "> Dynamic rot: " << body->getBody()->getGlobalPose().q << std::endl;
 			}
 		}
 	}

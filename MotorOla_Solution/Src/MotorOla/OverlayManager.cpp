@@ -5,8 +5,6 @@
 
 std::unique_ptr<OverlayManager> Singleton<OverlayManager>::instance_ = nullptr;
 
-
-
 OverlayManager::~OverlayManager()
 {
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
@@ -36,20 +34,16 @@ OverlayManager::~OverlayManager()
 
 void OverlayManager::init(OgreManager*om,Motor* m)
 {
-
+	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
+	mOverlay = 0;
 		
-		Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
-		mOverlay = 0;
-		
-		mOverlay = overlayManager.create("PanelOverlay");
-		mOverlay->setZOrder(100);
-		og = om;//Usar Singleton cuando funcione
-		motor = m;
-		std::cout << motor << std::endl;
-		
-		
-		
+	mOverlay = overlayManager.create("PanelOverlay");
+	mOverlay->setZOrder(100);
+	og = om;//Usar Singleton cuando funcione
+	motor = m;
+	std::cout << motor << std::endl;		
 }
+
 void OverlayManager::update() {
     
 	auto it=botones.begin();
@@ -60,21 +54,19 @@ void OverlayManager::update() {
 		if (ih().getMousePos().first*1.0f / og->getRenderWindow()->getWidth() >(*it)->getLeft() && ih().getMousePos().first * 1.0f / og->getRenderWindow()->getWidth() <(*it)->getLeft() + (*it)->getWidth() &&
 			ih().getMousePos().second*1.0f / og->getRenderWindow()->getHeight() >(*it)->getTop() && ih().getMousePos().second*1.0f / og->getRenderWindow()->getHeight() < (*it)->getTop() + (*it)->getHeight())
 		{
-			(*it)->setMaterialName("Rojo");
+			(*it)->setMaterialName((*it)->getMaterialName());
 			if (ih().getMouseButtonState(ih().LEFT)) {
 				callbacks.at((*it))(motor);
 				dado = true;
 			}
 		}
 		else {
-			(*it)->setMaterialName("Azul");
+			(*it)->setMaterialName((*it)->getMaterialName());
 		}
 		if (dado == false) {
 			it++;
-		}
-		
+		}	
 	}
-
 }
 
 void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,const std::string& nombrePanel,const std::string& nombreTexto,float tamLetra, const std::string& material, float dimX, float dimY/*, CallBackOnClick* click_*/)
@@ -88,24 +80,15 @@ void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,c
 	botones.back()->setPosition(x, y);
 	botones.back()->setDimensions(dimX,dimY);
 	botones.back()->setMaterialName(material); // Optional background material
-	
-	//container->addChild(paneles[0]);
 
-
-	// Ensures that the material exists
-	//panel->setUV(0, 0, 0.5, 1);
-
-
-	
 	// Create an overlay, and add the panel
 	Ogre::TextAreaOverlayElement* text = static_cast<Ogre::TextAreaOverlayElement*>(
 		overlayManager.createOverlayElement("TextArea", nombreTexto));
 	
-
 	text->setMetricsMode(Ogre::GMM_RELATIVE);
 	text->setAlignment(Ogre::TextAreaOverlayElement::Alignment::Center);
 	text->setPosition((botones.back()->getWidth() / 2) , ((botones.back()->getHeight()) / 2)-(tamLetra/2));
-	text->setMaterialName("Rojo");
+	text->setMaterialName("Verde");
 	
 	text->setFontName("DejaVu/SerifCondensedItalic");
 	text->setColour(Ogre::ColourValue::Black);
@@ -139,8 +122,6 @@ void OverlayManager::creaTexto(float x, float y, const std::string& texto, const
 	text->setMetricsMode(Ogre::GMM_RELATIVE);
 	text->setAlignment(Ogre::TextAreaOverlayElement::Alignment::Center);
 	text->setPosition((textos.back()->getWidth() / 2), ((textos.back()->getHeight()) / 2) - (tamLetra / 2));
-	//text->setMaterialName("Rojo");
-
 	text->setFontName("DejaVu/SerifCondensedItalic");
 	text->setColour(Ogre::ColourValue::Black);
 	text->setCaption(texto);
@@ -178,6 +159,26 @@ Ogre::TextAreaOverlayElement* OverlayManager::getTexto(std::string panelName, st
 		it++;
 	}
 	return text;
+}
+
+
+MOTOR_API void OverlayManager::changeTextColor(std::string panelName, std::string textName, std::string newColor)
+{
+	Ogre::TextAreaOverlayElement* text = nullptr;
+	Ogre::PanelOverlayElement* panel = nullptr;
+	auto it = textos.begin();
+	bool find = false;
+	while (!find && it != textos.end()) {
+		std::string n = (*it)->getName();
+		if ((*it)->getName() == panelName) {
+			panel = (*it);
+			text = static_cast<Ogre::TextAreaOverlayElement*>(panel->getChild(textName));
+			find = true;
+			if (newColor == "Red") text->setColour(Ogre::ColourValue::Red);
+			else text->setColour(Ogre::ColourValue::Black);
+		}
+		it++;
+	}
 }
 
 MOTOR_API Ogre::PanelOverlayElement* OverlayManager::getPanel(std::string name)

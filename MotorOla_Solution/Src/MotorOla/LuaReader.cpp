@@ -238,7 +238,7 @@ void readFileMenus(std::string file,const char* get)
 	openlualibs(l);
 
 #if _DEBUG
-	std::printf("now calling lua\n\n");
+	//std::printf("Now calling lua\n\n");
 #endif
 	// Intenta abrir el archivo .lua
 	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {

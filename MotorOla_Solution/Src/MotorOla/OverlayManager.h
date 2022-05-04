@@ -46,6 +46,15 @@ public:
 	MOTOR_API void creaTexto(float x, float y, const std::string& texto, const std::string& nombreTexto, float tamLetra,const std::string& nombrePanel,float dimX,float dimY);
 	MOTOR_API void creaPanel(float x, float y,  const std::string& nombrePanel, const std::string& material, float dimX, float dimY);
 	MOTOR_API Ogre::TextAreaOverlayElement* getTexto(std::string panelName, std::string textName);
+
+	/// <summary>
+	/// Solo cambia a rojo o negro
+	/// </summary>
+	/// <param name="panelName"></param>
+	/// <param name="textName"></param>
+	/// <param name="newColor">"Red" para rojo y ya</param>
+	/// <returns></returns>
+	MOTOR_API void changeTextColor(std::string panelName, std::string textName, std::string newColor);
 	MOTOR_API Ogre::PanelOverlayElement* getPanel(std::string name);
 	MOTOR_API Ogre::PanelOverlayElement* getBoton(std::string name);
 	MOTOR_API void clear();
