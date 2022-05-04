@@ -22,7 +22,7 @@ public:
 	bool init(const std::map<std::string, std::string>& mapa);
 
 	// Movimientos
-	MOTOR_API enum class Space { Self, World,	Parent };
+	MOTOR_API enum class Space { Self, World, Parent };
 	MOTOR_API void translate(double x, double y, double z);
 	MOTOR_API void rotate(float xAngle, float yAngle, float zAngle, Space relativeTo = Space::Self);
 

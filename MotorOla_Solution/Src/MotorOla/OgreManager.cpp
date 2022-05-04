@@ -58,7 +58,8 @@ void OgreManager::init()
 	camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
 	camNode->attachObject(cam);
 	camNode->setPosition(0, 2000, 0);
-	camNode->lookAt(Ogre::Vector3(0, -1, 0), Ogre::Node::TS_WORLD);
+	//camNode->lookAt(Ogre::Vector3(0, -1, 0), Ogre::Node::TS_WORLD);
+	camNode->lookAt(Ogre::Vector3(1, 0, 0), Ogre::Node::TS_WORLD);
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
 
 	// and tell it to render into the main window

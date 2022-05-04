@@ -47,8 +47,9 @@ string LoadResources::prefab(string prefab)
 
 void LoadResources::search(path p)
 {
-	//Recorre los directorios cargando los archivos en los diferentes map
+	// Recorre los directorios cargando los archivos en los diferentes map
 	for (const auto& it : directory_iterator(p)) {
+		std::cout << "\n";
 		size_t end = it.path().string().find_last_of(".");
 		if (end > 4) {
 			load(it.path(), end, p.string().length());

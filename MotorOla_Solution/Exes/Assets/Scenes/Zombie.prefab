@@ -13,7 +13,23 @@ local prefab = {
             mesh="ogrehead.mesh",
             material="Blanco",
             visible="true"
+        },
+        zombieMove={
+            speed="100"
+        },  
+        collider={
+            type="box",
+            x="0.7",
+            y="0.7",
+            z="0.7",
+            trigger="false"
+        },
+        rigidbody={
+            position="0 0 0",
+            static="false",
+            density="1000"
         }
+
     }
 }
 

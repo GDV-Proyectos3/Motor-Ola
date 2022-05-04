@@ -28,8 +28,9 @@ PhysxManager::PhysxManager() : _patata(false)
 
 PhysxManager::~PhysxManager()
 {
-	/*PX_RELEASE(mPhysics);
-	PX_RELEASE(mFoundation);*/
+	std::cout << "\n - Cerrando PhysXmanager - " << std::endl;
+	close(false);
+	std::cout << " - - - - - - - - - - - - - " << std::endl;
 }
 
 // -------------- TIMER ----------------------------------------------------------------
@@ -117,8 +118,9 @@ void PhysxManager::init()
 	mDispatcher = PxDefaultCpuDispatcherCreate(4);					//Create a CPU dispatcher using 4 worther threads
 	sceneDesc.cpuDispatcher = mDispatcher;
 
-	//sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
-	sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
+	sceneDesc.filterShader = contactReportFilterShader;
+	sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
+	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
 
 	sceneDesc.cudaContextManager = mCuda;							//Set the CUDA context manager, used by GRB.
 
@@ -156,20 +158,15 @@ void PhysxManager::update(bool interactive, double t)
 {
 	if (mPause/* && !gOneFrame*/)
 		return;
-	//gOneFrame = false;
 
 	// Actualiza las posiciones: Transform global --> PxTransform
 	auto it = em().getAllEntidades().begin();
 	while (it != em().getAllEntidades().end()) {
 		Entidad* e = (*it).get();
 		it++;
-
 		if (e->getComponent<RigidBody>() == nullptr) continue;
-
 		RigidBody* body = e->getComponent<RigidBody>();
-
 		if (body->getBody()) setGlobalToPhysxTR(*e, *body->getBody());
-		//debugBuddy(e);
 	}
 
 	// Actualiza las fisicas de movimiento y colisiones
@@ -180,22 +177,10 @@ void PhysxManager::update(bool interactive, double t)
 	while (it != em().getAllEntidades().end()) {
 		Entidad* e = (*it).get();
 		it++;
-
 		if (e->getComponent<RigidBody>() == nullptr) continue;
-
 		RigidBody* body = e->getComponent<RigidBody>();
-
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-		//debugBuddy(e);
 	}
-
-	//for (auto& id : ids_) {
-	//	Entidad* e = em().getEntidadByID(id);
-	//	RigidBody* body = e->getComponent<RigidBody>();
-	//	if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
-	//	//else if (body->getStBody()) setPhysxToGlobalTR(*e, *body->getStBody());
-	//	debugBuddy(e);
-	//}
 }
 
 // Function to clean data
@@ -205,15 +190,16 @@ void PhysxManager::close(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	releaseScene();
-	//PX_RELEASE(mScene);
+	//releaseScene();
+	PX_RELEASE(mScene);
 	PX_RELEASE(mDispatcher);
+	PxCloseExtensions();
 	PX_RELEASE(mPhysics);
 
 	if (mPvd)
 	{
 		PxPvdTransport* transport = mPvd->getTransport();
-		mPvd->release();	mPvd = NULL;
+		PX_RELEASE(mPvd);
 		PX_RELEASE(transport);
 	}
 
@@ -245,7 +231,7 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	if (a != b) 
 	{
 		a->OnCollisionEnter(b);
-		b->OnCollisionEnter(a);
+		if (a != nullptr && b != nullptr) b->OnCollisionEnter(a);
 	}
 
 	std::cout << "COLLIDERS COLLISION detected!\n";
@@ -261,7 +247,7 @@ void PhysxManager::onTrigger(physx::PxActor* actor1, physx::PxActor* actor2)
 	if (a != b)
 	{
 		a->OnTriggerEnter(b);
-		b->OnTriggerEnter(a);
+		if(a != nullptr && b != nullptr) b->OnTriggerEnter(a);
 	}
 
 	std::cout << "TRIGGER COLLISION detected!\n";
@@ -403,8 +389,8 @@ PxRigidStatic* PhysxManager::createStaticRigid(const PxTransform& transform, PxS
 	if (shape)
 	{
 		body = mPhysics->createRigidStatic(transform);
-		body->attachShape(*shape);
-		mScene->addActor(*body);
+		if(body) body->attachShape(*shape);
+		if(body) mScene->addActor(*body);
 	}
 
 	return body;
@@ -499,6 +485,17 @@ void PhysxManager::debugBuddy(Entidad* e)
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		RigidBody* body = e->getComponent<RigidBody>();
 		PxTransform tr = body->getBody()->getGlobalPose();
+		std::cout << "Position RB = " << tr.p << std::endl;
+		std::cout << "Orientation RB = " << tr.q << std::endl;
+		//debugTime();
+		GlobalTimer = GetLastTime();
+	}
+}
+
+MOTOR_API void PhysxManager::debugBody(PxRigidDynamic* rd)
+{
+	if (GetLastTime() - GlobalTimer > 2.0) {
+		PxTransform tr = rd->getGlobalPose();
 		std::cout << "Position RB = " << tr.p << std::endl;
 		std::cout << "Orientation RB = " << tr.q << std::endl;
 		//debugTime();

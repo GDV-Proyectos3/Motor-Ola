@@ -47,12 +47,13 @@ Motor::Motor()
 	Singleton<FMODAudioManager>::instance();
 	Singleton<OverlayManager>::instance();
 	Singleton<PhysxManager>::instance();
+	std::cout << "MANAGERS INSTANCIADOS CORRECTAMENTE\n";
 }
 
 Motor::~Motor()
 {
 	// Destruye los managers en orden inverso a la creaci�n (PC: puede que esto no sea necesario porque al cerrar se borran solos)
-	//if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
+	if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
 	if (Singleton<OverlayManager>::instance() != nullptr) delete Singleton<OverlayManager>::instance();
 	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
@@ -76,9 +77,7 @@ void Motor::initSystems()
 	// Se registran los componentes que conoce el motor
 	registryComponents();
 
-	std::cout << "EM: " << Singleton<EntidadManager>::instance() << "\n";
-	std::cout << "LR " << Singleton<LoadResources>::instance() << "\n";
-	std::cout << "FMOD: " << Singleton<FMODAudioManager>::instance() << "\n";
+	std::cout << "ANTES DE CARGAR JUEGO TRY\n";
 
 	// El motor intenta cargar un juego, pero si hay algun error se arranca con la funcion loadTestMotorGame
 	try {
@@ -88,6 +87,8 @@ void Motor::initSystems()
 		std::cout << "Error: " << error << "\n";
 		loadTestMotorGame();
 	}
+	std::cout << "DESPUES DE CARGAR JUEGO TRY\n";
+
 
 	// Carga una escena con Lua
 	//if(!loadScene("TestScene.lua"))
@@ -117,8 +118,10 @@ void Motor::mainLoop()
 	std::cout << Singleton<EntidadManager>::instance() << "\n";
 
 	while (!stop) {
-		// Recoger el Input
+		
 		Singleton<EntidadManager>::instance()->refresh();
+
+		// Recoger el Input
 		ih().clearState();
 
 		while (SDL_PollEvent(&event))
@@ -146,7 +149,7 @@ void Motor::mainLoop()
 
 		// Contador de frames que los muestra cada 100 frames
 #if (defined _DEBUG)
-		if (++frame % 1000 == 0) {
+		if (++frame % 600 == 0) {
 			//// Prueba de los prefabs
 			//float x = rand() % 800 - 400;
 			//float y = rand() % 600 - 300;
@@ -166,9 +169,9 @@ void Motor::loadDLLGame()
 	HRESULT hrReturnVal;
 	std::cout<<"Entra en loadDLL"<<std::endl;
 #ifdef NDEBUG
-	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+	hDLL = LoadLibrary(L".\\Juego");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 #else
-	hDLL = LoadLibrary(L"..\\GameToLoad\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
+	hDLL = LoadLibrary(L".\\Juego_d");	// typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 #endif
 
 	if (NULL != hDLL)

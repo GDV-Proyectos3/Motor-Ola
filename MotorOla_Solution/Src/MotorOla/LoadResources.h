@@ -9,14 +9,13 @@
 #include <map>
 #include <string>
 #include "utils/Singleton.h"
-//#include <experimental/filesystem>
 #include <filesystem>
-//using namespace std::experimental::filesystem;
+
 using namespace std::filesystem;
 using namespace std;
-//using namespace filesystem;
-//static const std::string ASSETS = "../../Exes/Assets/";
-static const std::string ASSETS = "../../Exes/Assets";
+
+//static const std::string ASSETS = "./Assets";	// Codigo unico para la entrega, perdonanos Pedro P.
+static const std::string ASSETS = "../../Exes/Assets/";
 
 
 MOTOR_API class LoadResources : public Singleton<LoadResources> {

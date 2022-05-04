@@ -50,6 +50,7 @@ public:
 		return Vectola3D(nx, ny, nz);
 	}
 
+	MOTOR_API bool operator==(const Vectola3D& quat) const;
 	MOTOR_API inline Vectola3D operator-(const Vectola3D& v) const { return Vectola3D(x_ - v.x_, y_ - v.y_, z_ - v.z_); }
 	MOTOR_API inline Vectola3D operator+(const Vectola3D& v) const { return Vectola3D(x_ + v.x_, y_ + v.y_, z_ + v.z_); }
 	MOTOR_API inline Vectola3D operator*(double d) const { return Vectola3D(x_ * d, y_ * d, z_ * d); }

@@ -4,10 +4,6 @@
 std::unique_ptr<EntidadManager> Singleton<EntidadManager>::instance_ = nullptr;
 void EntidadManager::update()
 {
-	//for (auto& e : entitys_) 
-	//	if (e != nullptr) e->update();
-
-
 	for (int i = 0; i < entitys_.size(); i++)
 	{
 		if (entitys_.at(i) != nullptr) {
@@ -24,12 +20,7 @@ void EntidadManager::draw()
 
 void EntidadManager::refresh()
 {
-	entitys_.erase( std::remove_if ( 
-		entitys_.begin(),
-		entitys_.end(), 
-		[](const uptr_ent& e) { return !e->isActive();	}),
-		entitys_.end()
-	);
+	entitys_.erase( std::remove_if ( entitys_.begin(), entitys_.end(), [](const uptr_ent& e) { return !e->isActive(); }), entitys_.end());
 }
 
 void EntidadManager::pauseEntidades()
@@ -62,8 +53,6 @@ Entidad* EntidadManager::getEntidadByID(int id)
 	}
 	return e;
 }
-
-
 
 Entidad* EntidadManager::addEntidad()
 {

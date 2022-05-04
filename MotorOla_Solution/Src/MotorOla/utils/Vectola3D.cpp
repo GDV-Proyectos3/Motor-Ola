@@ -79,6 +79,11 @@ Vectola3D Vectola3D::normalize() const {
 	return r;
 }
 
+MOTOR_API bool Vectola3D::operator==(const Vectola3D& v) const
+{
+	return (x_ == v.getX() && y_ == v.getY() && z_ == v.getZ());
+}
+
 Ogre::Vector3 Vectola3D::convertOgreVector(const Vectola3D& v) const
 {
 	return Ogre::Vector3(v.getX(), v.getX(), v.getZ());

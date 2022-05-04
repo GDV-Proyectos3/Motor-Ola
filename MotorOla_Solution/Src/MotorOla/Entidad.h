@@ -20,21 +20,21 @@ public:
 	Entidad();
 	Entidad(std::string entityName, int id);
 
-	void update();
-	void draw() {};
-	bool isActive() const;
-	void destroy();
+	MOTOR_API void update();
+	MOTOR_API void draw() {};
+	MOTOR_API bool isActive() const;
+	MOTOR_API void destroy();
 
-	void OnCollisionEnter(Entidad* other);
-	void OnTriggerEnter(Entidad* other);
+	MOTOR_API void OnCollisionEnter(Entidad* other);
+	MOTOR_API void OnTriggerEnter(Entidad* other);
 
-	virtual ~Entidad() {};
+	virtual ~Entidad();
 
-	inline EntidadManager* getEntityMngr() const { return entManager_; }
+	MOTOR_API inline EntidadManager* getEntityMngr() const { return entManager_; }
 
 	MOTOR_API inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
 
-	inline int getID() { return _id; }
+	MOTOR_API inline int getID() { return _id; }
 
 
 	template<typename T>
@@ -73,12 +73,12 @@ public:
 		throw std::exception("Error de carga del componente ");
 	}
 
-	inline void setActive(bool state) { active = state; }
-	inline void setName(std::string n) { _name = n; }
+	MOTOR_API inline void setActive(bool state);
+	MOTOR_API inline void setName(std::string n) { _name = n; }
 
-	std::string getName() const { return _name; }
+	MOTOR_API std::string getName() const { return _name; }
 
-	bool init();
+	MOTOR_API bool init();
 
 	MOTOR_API static Entidad* instantiate(std::string name, Vectola3D position = Vectola3D(), Quaterniola rotation = Quaterniola());
 

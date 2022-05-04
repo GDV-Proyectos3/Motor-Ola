@@ -151,6 +151,7 @@ local level = {
                     trigger="false"
                 },
                 rigidbody={
+                    position="0 0 0",
                     static="false",
                     -- velocity="-100 0 0",
                     density="1000"
@@ -234,6 +235,33 @@ local level = {
                     trigger="false"
                 },
                 rigidbody={
+                    position="0 -1000 0",
+                    static="true"
+                }
+            }
+        },
+        {
+            name="Ball3",
+            id=10,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 -1010 0",
+                    rotation="0,0,0",
+                    scale="1,1,1"
+                },
+                mesh={
+                    mesh="sphere.mesh",
+                    material="Rojo",
+                    visible="true"
+                },  
+                collider={
+                    type="sphere",
+                    radius="15",
+                    trigger="false"
+                },
+                rigidbody={
+                    position="0 -1010 0",
                     static="true"
                 }
             }
