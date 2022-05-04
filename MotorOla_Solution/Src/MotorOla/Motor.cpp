@@ -136,6 +136,8 @@ void Motor::mainLoop()
 		// Actualizar las fisicas de las entidades
 		pm().runPhysX();
 
+		Singleton<EntidadManager>::instance()->refresh();
+
 		// Actualiza los transforms de las entitys despues de las fisicas
 		if (Singleton<OverlayManager>::instance() != nullptr) {
 			Singleton<OverlayManager>::instance()->update();
