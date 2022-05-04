@@ -138,16 +138,16 @@ local level = {
                     parent="-1",
                     position="0 0 0",
                     rotation="0,0,0",
-                    scale="1,1,1"
+                    scale="0.8,0.8,0.8" -- /!\ deberían ser los tres iguales (más cómodo y se preserva la forma esférica)
                 },
                 mesh={
-                    mesh="cube.mesh",
+                    mesh="sphere.mesh",
                     material="Cian",
                     visible="true"
                 },  
                 collider={
                     type="sphere",
-                    radius="10",
+                    radius="80", -- /!\ = escala * 100; (podría ajustarse automáticamente)
                     trigger="false"
                 },
                 rigidbody={
@@ -165,16 +165,16 @@ local level = {
                     parent="-1",
                     position="0 -1000 0",
                     rotation="0,0,0",
-                    scale="1,1,1"
+                    scale="1.5,1.5,1.5" -- /!\ deberían ser los tres iguales (más cómodo y se preserva la forma esférica)
                 },
                 mesh={
-                    mesh="cube.mesh",
+                    mesh="sphere.mesh",
                     material="Rosa",
                     visible="true"
                 },  
                 collider={
                     type="sphere",
-                    radius="10",
+                    radius="150", -- /!\ = escala * 100; (podría ajustarse automáticamente)
                     trigger="false"
                 },
                 rigidbody={
