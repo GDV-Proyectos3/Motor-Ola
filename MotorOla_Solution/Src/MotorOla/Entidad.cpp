@@ -39,9 +39,11 @@ void Entidad::destroy()
 void Entidad::OnCollisionEnter(Entidad* other)
 {
 	std::cout << "OnCollisionEnter\n";
-	for (auto& c : components)
-	{
-		if (c.get() != nullptr) c->onCollisionStart(other);
+	if (this!=nullptr && other!=nullptr) {
+		for (auto& c : components)
+		{
+			if (c.get()->entity_->isActive() && other->isActive()) c->onCollisionStart(other);
+		}
 	}
 }
 
@@ -62,6 +64,7 @@ Entidad::~Entidad()
 		std::cout << "Borrada componente " << i << "\n";
 		if (components.at(i) != nullptr) {
 			components.at(i).reset();
+			components.at(i) = nullptr;
 		}
 	}
 }
