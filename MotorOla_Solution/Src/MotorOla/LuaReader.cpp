@@ -117,6 +117,7 @@ void readFile(std::string file) {
 		cy = stof(temp, &sa);
 		cz = stof(camPos.substr(sz + sa + 2));
 		camNode->setPosition(cx, cy, cz);
+		////////////////camNode->setPosition(0, -800, 1200);////////_test_caidas_forma_javi_////////
 		lua_pop(l, 1);
 
 		lua_getfield(l, -1, "camRotation");
@@ -127,6 +128,7 @@ void readFile(std::string file) {
 		cy = stof(temp, &sa);
 		cz = stof(camRot.substr(sz + sa + 2));
 		camNode->lookAt(Ogre::Vector3(cx, cy, cz), Ogre::Node::TS_WORLD);
+		////////////////camNode->lookAt(Ogre::Vector3(0, -800, 0), Ogre::Node::TS_WORLD);////////_test_caidas_forma_javi_////////
 		//Vectola3D vaux(cx, cy, cz);
 		//Quaterniola qaux;
 		//qaux = qaux.Euler(vaux);

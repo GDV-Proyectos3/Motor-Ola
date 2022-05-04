@@ -151,7 +151,7 @@ local level = {
                     trigger="false"
                 },
                 rigidbody={
-                    position="0 0 0",
+                    position="500 0 0",
                     static="false",
                     -- velocity="-100 0 0",
                     density="1000"
@@ -179,6 +179,7 @@ local level = {
                     trigger="false"
                 },
                 rigidbody={
+                    position="500 -1000 0",
                     static="true"
                 }
             }
@@ -207,6 +208,7 @@ local level = {
                 },
                 rigidbody={
                     static="false",
+                    position="0 0 0",
                     -- velocity="-100 0 0",
                     density="1000"
                 }
@@ -242,11 +244,11 @@ local level = {
         },
         {
             name="Ball3",
-            id=10,
+            id=12,
             components={
                 transform={
                     parent="-1",
-                    position="0 -1010 0",
+                    position="-600 -1010 -600",
                     rotation="0,0,0",
                     scale="1,1,1"
                 },
@@ -257,11 +259,11 @@ local level = {
                 },  
                 collider={
                     type="sphere",
-                    radius="15",
+                    radius="100",
                     trigger="false"
                 },
                 rigidbody={
-                    position="0 -1010 0",
+                    position="-600 -1010 -600",
                     static="true"
                 }
             }
