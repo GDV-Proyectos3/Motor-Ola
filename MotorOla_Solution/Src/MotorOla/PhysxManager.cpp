@@ -143,7 +143,7 @@ void PhysxManager::init()
 	}
 
 	// Inicializaci�n de variables dependientes --------------------------------------
-	mMaterial = mPhysics->createMaterial(0.5f, 0.5f, 0.6f);
+	mMaterial = mPhysics->createMaterial(0.0f, 0.0f, 0.0f);
 
 	/*PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
 	mScene->addActor(*groundPlane);*/
@@ -170,7 +170,7 @@ void PhysxManager::update(bool interactive, double t)
 	}
 
 	// Actualiza las fisicas de movimiento y colisiones
-	stepPhysics(interactive, 1.5f/60.0f);
+	stepPhysics(interactive, 1.0f/60.0f);
 
 	// Actualiza las posiciones: PxTransform --> Transform global
 	it = em().getAllEntidades().begin();
@@ -181,6 +181,8 @@ void PhysxManager::update(bool interactive, double t)
 		RigidBody* body = e->getComponent<RigidBody>();
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
 	}
+
+	debugAllBodies();
 }
 
 // Function to clean data
@@ -234,7 +236,7 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 		if (a != nullptr && b != nullptr) b->OnCollisionEnter(a);
 	}
 
-	std::cout << "COLLIDERS COLLISION detected!\n";
+	//std::cout << "COLLIDERS COLLISION detected!\n";
 }
 
 void PhysxManager::onTrigger(physx::PxActor* actor1, physx::PxActor* actor2)
@@ -500,6 +502,23 @@ MOTOR_API void PhysxManager::debugBody(PxRigidDynamic* rd)
 		std::cout << "Orientation RB = " << tr.q << std::endl;
 		//debugTime();
 		GlobalTimer = GetLastTime();
+	}
+}
+
+MOTOR_API void PhysxManager::debugAllBodies()
+{
+	if (GetLastTime() - GlobalTimer > 2.0) {
+		auto it = em().getAllEntidades().begin();
+		while (it != em().getAllEntidades().end()) {
+			Entidad* e = (*it).get();
+			it++;
+			if (e->getComponent<RigidBody>() == nullptr) continue;
+			RigidBody* body = e->getComponent<RigidBody>();
+			if (body->getBody()) {
+				std::cout << "> Dynamic pos: " << body->getBody()->getGlobalPose().p << std::endl;
+				std::cout << "> Dynamic rot: " << body->getBody()->getGlobalPose().q << std::endl;
+			}
+		}
 	}
 }
 

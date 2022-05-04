@@ -2,6 +2,7 @@
 #include "PhysxManager.h"
 
 //extern void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+const bool debugCom = false;
 
 physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
 	physx::PxFilterObjectAttributes attributes1, physx::PxFilterData filterData1,
@@ -26,7 +27,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 {
 	//PX_UNUSED(pairs);
 	//PX_UNUSED(nbPairs);
-	printf("onContact: %d pairs\n", nbPairs);
+	if (debugCom) printf("onContact: %d pairs\n", nbPairs);
 
 	while (nbPairs--)
 	{
@@ -40,12 +41,12 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 		// in a hash-set and test the reported shape pointers against it. Many options here.
 
 		if (current.events & (PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_CCD))
-			printf("Shape is entering trigger volume\n");
+			if (debugCom) printf("Shape is entering trigger volume\n");
 		if (current.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
-			printf("Shape is leaving trigger volume\n");
+			if (debugCom) printf("Shape is leaving trigger volume\n");
 
 		if (isTriggerShape(current.shapes[0]) && isTriggerShape(current.shapes[1]))
-			printf("Trigger-trigger overlap detected\n");
+			if (debugCom) printf("Trigger-trigger overlap detected\n");
 	}	
 
 	physx::PxActor* actor1 = pairHeader.actors[0];
@@ -55,15 +56,15 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 
 void ContactReportCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
-	printf("onTrigger: %d trigger pairs\n", count);
+	if (debugCom) printf("onTrigger: %d trigger pairs\n", count);
 	
 	while (count--)
 	{
 		const PxTriggerPair& current = *pairs++;
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
-			printf("Shape is entering trigger volume\n");
+			if (debugCom) printf("Shape is entering trigger volume\n");
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_LOST)
-			printf("Shape is leaving trigger volume\n");
+			if (debugCom) printf("Shape is leaving trigger volume\n");
 
 		physx::PxActor* actor1 = current.otherActor;
 		physx::PxActor* actor2 = current.triggerActor;

@@ -143,6 +143,20 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		}
 	}
 
+	// Establece si el objeto mantiene la propiedad de ser afectado por la gravedad
+	bool gravity = true;
+	if (mapa.find("gravity") != mapa.end())
+	{
+		// Establece la gravedad en el objeto
+		std::string gravityString = mapa.at("gravity");
+		if (gravityString == "false")
+		{
+			gravity = false;
+			body->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, true);
+		}
+	}
+	if (gravity && body) body->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+
 	// A�ade la entidad asociado al manager de phyx
 	int id_ = getEntidad()->getID();
 	pm().addEntityID(id_);
