@@ -20,7 +20,7 @@ local prefab = {
 		},  
         collider={
             type="sphere",
-            radius="0.15",
+            radius="15",
             trigger="false"
         },
         rigidbody={
