@@ -7,7 +7,7 @@ local prefab = {
             parent="-1",
             position="0,0,0",
             rotation="0,0,0",
-            scale="0.7,0.7,0.7"
+            scale="1.5,1.5,1.5"
         },
         mesh={
             mesh="ogrehead.mesh",
@@ -19,9 +19,9 @@ local prefab = {
         },  
         collider={
             type="box",
-            x="0.7",
-            y="0.7",
-            z="0.7",
+            x="1.5",
+            y="1.5",
+            z="1.5",
             trigger="false"
         },
         rigidbody={
