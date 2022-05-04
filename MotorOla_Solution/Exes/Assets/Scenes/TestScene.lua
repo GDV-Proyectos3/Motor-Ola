@@ -136,7 +136,7 @@ local level = {
             components={
                 transform={
                     parent="-1",
-                    position="0 0 0",
+                    position="500 0 0",
                     rotation="0,0,0",
                     scale="0.8,0.8,0.8" -- /!\ deberían ser los tres iguales (más cómodo y se preserva la forma esférica)
                 },
@@ -163,7 +163,7 @@ local level = {
             components={
                 transform={
                     parent="-1",
-                    position="0 -1000 0",
+                    position="500 -1000 0",
                     rotation="0,0,0",
                     scale="1.5,1.5,1.5" -- /!\ deberían ser los tres iguales (más cómodo y se preserva la forma esférica)
                 },
@@ -175,6 +175,62 @@ local level = {
                 collider={
                     type="sphere",
                     radius="150", -- /!\ = escala * 100; (podría ajustarse automáticamente)
+                    trigger="false"
+                },
+                rigidbody={
+                    static="true"
+                }
+            }
+        },
+        {
+            name="Cube",
+            id=10,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 0 0",
+                    rotation="0,0,0",
+                    scale="1,1,2" -- /!\ si son los tres iguales se preserva la forma cúbica
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Cian",
+                    visible="true"
+                },  
+                collider={
+                    type="box",
+                    x="50", -- /!\ = escalaEnX * 50; (podría ajustarse automáticamente)
+                    y="50", -- "    escalaEnY "
+                    z="100", -- "   escalaEnZ "
+                    trigger="false"
+                },
+                rigidbody={
+                    static="false",
+                    -- velocity="-100 0 0",
+                    density="1000"
+                }
+            }
+        },
+        {
+            name="Cube2",
+            id=11,
+            components={
+                transform={
+                    parent="-1",
+                    position="0 -1000 0",
+                    rotation="0,0,0",
+                    scale="0.5,1.8,1" -- /!\ si son los tres iguales se preserva la forma cúbica
+                },
+                mesh={
+                    mesh="cube.mesh",
+                    material="Rosa",
+                    visible="true"
+                },  
+                collider={
+                    type="box",
+                    x="25", -- /!\ = escalaEnX * 50; (podría ajustarse automáticamente)
+                    y="90", -- "   escalaEnY "
+                    z="50", -- "   escalaEnZ "
                     trigger="false"
                 },
                 rigidbody={
