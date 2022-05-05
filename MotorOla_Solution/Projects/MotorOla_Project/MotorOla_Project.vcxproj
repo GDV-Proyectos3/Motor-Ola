@@ -76,6 +76,7 @@
     <ClInclude Include="..\..\Src\MotorOla\OverlayManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\RigidBody.h" />
     <ClInclude Include="..\..\Src\MotorOla\Transform.h" />
+    <ClInclude Include="..\..\Src\MotorOla\utils\checkML.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Quaterniola.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Singleton.h" />
     <ClInclude Include="..\..\Src\MotorOla\utils\Vectola3D.h" />

@@ -92,6 +92,4 @@ private:
 	Vectola3D _localPosition;
 	Quaterniola _localRotation;
 	Vectola3D _localScale;
-
-	bool debugCom = false;
 };

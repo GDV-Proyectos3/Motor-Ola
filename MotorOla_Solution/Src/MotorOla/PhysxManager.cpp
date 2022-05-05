@@ -29,9 +29,9 @@ PhysxManager::PhysxManager() : _patata(false)
 
 PhysxManager::~PhysxManager()
 {
-	std::cout << "\n - Cerrando PhysXmanager - " << std::endl;
+	std::cout << "\n - Cerrando PhysXmanager - \n";
 	close(false);
-	std::cout << " - - - - - - - - - - - - - " << std::endl;
+	std::cout << " - - - - - - - - - - - - - \n";
 }
 
 // -------------- TIMER ----------------------------------------------------------------
@@ -72,7 +72,7 @@ void PhysxManager::init()
 	mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, mAllocator, mErrorCallback);
 	if (!mFoundation)
 		assert("PxCreateFoundation failed!");
-	else std::cout << std::endl << "PxFoundation INICIALIZADO!!" << std::endl;
+	else std::cout << "\nPxFoundation INICIALIZADO!!\n";
 
 	// PhysX Visual Debugger ---------------------------------------------------------
 	bool recordMemoryAllocations = true;
@@ -86,13 +86,13 @@ void PhysxManager::init()
 		scale, recordMemoryAllocations, mPvd);
 	if (!mPhysics)
 		assert("PxCreatePhysics failed!");
-	else std::cout << "PxPhysX INICIALIZADO!!\n" << std::endl;
+	else std::cout << "PxPhysX INICIALIZADO!!\n\n";
 
 	// Cooking -----------------------------------------------------------------------
 	mCooking = PxCreateCooking(PX_PHYSICS_VERSION, *mFoundation, PxCookingParams(scale));
 	if (!mCooking)
 		assert("PxCreateCooking failed!");
-	else std::cout << "PxCooking INICIALIZADO!!\n" << std::endl;
+	else std::cout << "PxCooking INICIALIZADO!!\n\n";
 
 	// Cuda Context Manager ----------------------------------------------------------
 	mCuda = PxCreateCudaContextManager(*mFoundation, cudaDesc, PxGetProfilerCallback());
@@ -177,8 +177,6 @@ void PhysxManager::update(bool interactive, double t)
 		RigidBody* body = e->getComponent<RigidBody>();
 		if (body->getBody()) setPhysxToGlobalTR(*e, *body->getBody());
 	}
-
-	debugAllBodies();
 }
 
 // Function to clean data
@@ -451,11 +449,11 @@ void PhysxManager::tiledStacks(PxReal num, PxReal sideLength)
 
 void PhysxManager::debugTime()
 {
-	std::cout << "PCFreq : " << PCFreq << std::endl;
-	std::cout << "CounterStart : " << CounterStart << std::endl;
-	std::cout << "CounterLast : " << CounterLast << std::endl;
-	std::cout << "GetLastTime() = " << GetLastTime() << std::endl;
-	std::cout << "GlobalTimer : " << GlobalTimer << std::endl;
+	std::cout << "PCFreq : " << PCFreq << "\n";
+	std::cout << "CounterStart : " << CounterStart << "\n";
+	std::cout << "CounterLast : " << CounterLast << "\n";
+	std::cout << "GetLastTime() = " << GetLastTime() << "\n";
+	std::cout << "GlobalTimer : " << GlobalTimer << "\n";
 }
 
 void PhysxManager::debugBall()
@@ -466,7 +464,7 @@ void PhysxManager::debugBall()
 	if (GetLastTime() - GlobalTimer > 1.0) {
 		PxVec3 v = testBALL->getGlobalPose().p;
 		std::cout << "PhyBALL position : ";
-		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
+		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << "\n";
 		GlobalTimer = GetLastTime();
 	}
 }
@@ -477,8 +475,8 @@ void PhysxManager::debugBuddy(Entidad* e)
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		RigidBody* body = e->getComponent<RigidBody>();
 		PxTransform tr = body->getBody()->getGlobalPose();
-		std::cout << "Position RB = " << tr.p << std::endl;
-		std::cout << "Orientation RB = " << tr.q << std::endl;
+		std::cout << "Position RB = " << tr.p << "\n";
+		std::cout << "Orientation RB = " << tr.q << "\n";
 		GlobalTimer = GetLastTime();
 	}
 }
@@ -487,8 +485,8 @@ void PhysxManager::debugBody(PxRigidDynamic* rd)
 {
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		PxTransform tr = rd->getGlobalPose();
-		std::cout << "Position RB = " << tr.p << std::endl;
-		std::cout << "Orientation RB = " << tr.q << std::endl;
+		std::cout << "Position RB = " << tr.p << "\n";
+		std::cout << "Orientation RB = " << tr.q << "\n";
 		GlobalTimer = GetLastTime();
 	}
 }
@@ -503,8 +501,8 @@ void PhysxManager::debugAllBodies()
 			if (e->getComponent<RigidBody>() == nullptr) continue;
 			RigidBody* body = e->getComponent<RigidBody>();
 			if (body->getBody()) {
-				//std::cout << "> Dynamic pos: " << body->getBody()->getGlobalPose().p << std::endl;
-				//std::cout << "> Dynamic rot: " << body->getBody()->getGlobalPose().q << std::endl;
+				std::cout << "> Dynamic pos: " << body->getBody()->getGlobalPose().p << "\n";
+				std::cout << "> Dynamic rot: " << body->getBody()->getGlobalPose().q << "\n";
 			}
 		}
 	}

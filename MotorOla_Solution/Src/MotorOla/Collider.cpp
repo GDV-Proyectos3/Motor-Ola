@@ -2,6 +2,10 @@
 #include "PhysxManager.h"
 #include "RigidBody.h"
 
+#if _DEBUG
+	const bool debugCom = false;
+#endif
+
 Collider::Collider()
 {
 	
@@ -13,8 +17,6 @@ Collider::~Collider()
 
 bool Collider::init(const std::map<std::string, std::string>& mapa)
 {
-	
-
 	// comprobar que la sección existe
 	if (mapa.find("type") == mapa.end())
 		return false;
@@ -91,8 +93,14 @@ bool Collider::init(const std::map<std::string, std::string>& mapa)
 			body->getBody()->attachShape(*shape);
 		else if (body->getStBody() && body->getStBody()->getNbShapes() == 0)	// static
 			body->getStBody()->attachShape(*shape);
-		
+#if _DEBUG
+		if (debugCom) std::cout << "RB first - Collider: shape attach!\n";
+#endif
 	}
+#if _DEBUG
+	else
+		if (debugCom) std::cout << "Collider: no body, no shape attach...\n";
+#endif
 
 	return true;
 }

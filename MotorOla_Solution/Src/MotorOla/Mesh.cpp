@@ -8,11 +8,8 @@
 
 Mesh::Mesh()
 {
-	if (debugCom) std::cout << "CONSTRUCTOR VACIO MESH" << std::endl;
-
 	_sceneManager = Singleton<OgreManager>::instance()->getSceneManager();
 	_nodo = _sceneManager->getRootSceneNode()->createChildSceneNode();
-	
 }
 
 Mesh::~Mesh()
@@ -24,9 +21,7 @@ Mesh::~Mesh()
 
 
 bool Mesh::init(const std::map<std::string, std::string>& mapa)
-{
-	if (debugCom) std::cout << "init MESH, id:" << getEntidad()->getID() << std::endl;
-	
+{	
 	if (mapa.find("mesh") == mapa.end() || mapa.find("material") == mapa.end() || mapa.find("visible") == mapa.end()) return false;
 
 

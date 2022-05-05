@@ -3,6 +3,10 @@
 #include "Collider.h"
 #include "Transform.h"
 
+#if _DEBUG
+	const bool debugCom = false;
+#endif
+
 RigidBody::RigidBody()
 {
 	
@@ -106,12 +110,18 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 			stBody = pm().createStaticRigid(pose, shape);
 		else
 			body = pm().createDynamic(pose, shape, _vel);
+#if _DEBUG
+		if (debugCom) std::cout << "Shape first - Rigidbody: set collider!\n";
+#endif
 	}
 	else {
 		if (estatico)
 			stBody = pm().createStaticRigid(pose);
 		else
 			body = pm().createDynamic(pose, _vel);
+#if _DEBUG
+		if (debugCom) std::cout << "Rigidbody - sin collider...\n";
+#endif
 	}
 
 	// Establece la densidad del objeto
@@ -123,6 +133,9 @@ bool RigidBody::init(const std::map<std::string, std::string>& mapa)
 		density = stof(densityString);
 		if (body) PxRigidBodyExt::updateMassAndInertia(*body, density);
 		else {
+#if _DEBUG
+			if (debugCom) std::cout << "RigidBody - ERROR: un static no usa density!\n";
+#endif
 			return false; // solo para dynamic!
 		}
 	}

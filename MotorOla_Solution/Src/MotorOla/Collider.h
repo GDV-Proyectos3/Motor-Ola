@@ -28,6 +28,4 @@ private:
 
 	// forma geometrica por defecto
 	PxGeometryType::Enum _type = PxGeometryType::eBOX;
-
-	bool debugCom = false;
 };

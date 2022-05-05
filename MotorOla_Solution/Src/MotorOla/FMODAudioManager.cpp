@@ -98,7 +98,7 @@ void FMODAudioManager::fadeOut(int chan)
 void FMODAudioManager::checkError(FMOD_RESULT result)
 {
 	if (result != FMOD_OK) {
-		std::cout << FMOD_ErrorString(result) << std::endl;
+		std::cout << FMOD_ErrorString(result) << "\n";
 		exit(-1);
 	}
 }

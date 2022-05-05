@@ -146,6 +146,9 @@
     <ClInclude Include="..\..\Src\MotorOla\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Src\MotorOla\utils\checkML.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
