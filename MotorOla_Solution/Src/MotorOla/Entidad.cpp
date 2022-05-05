@@ -25,7 +25,6 @@ Entidad::~Entidad()
 	int n = components.size();
 	for (int i = 0; i < n; i++)
 	{
-		std::cout << "Borrada componente " << i << "\n";
 		if (components.at(i) != nullptr) {
 			components.at(i).reset();
 			components.at(i) = nullptr;
