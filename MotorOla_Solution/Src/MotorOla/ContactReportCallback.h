@@ -10,9 +10,9 @@ physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes a
 
 class ContactReportCallback : public PxSimulationEventCallback
 {
-	void onConstraintBreak(PxConstraintInfo* /*constraints*/, PxU32 /*count*/) { printf("onConstraintBreak\n"); }
-	void onWake(PxActor** /*actors*/, PxU32 /*count*/) { printf("onWake\n"); }
-	void onSleep(PxActor** /*actors*/, PxU32 /*count*/) { printf("onSleep\n"); }
+	void onConstraintBreak(PxConstraintInfo* , PxU32 ) { printf("onConstraintBreak\n"); }
+	void onWake(PxActor** , PxU32 ) { printf("onWake\n"); }
+	void onSleep(PxActor** , PxU32 ) { printf("onSleep\n"); }
 	void onAdvance(const PxRigidBody* const*, const PxTransform*, const PxU32) { printf("onAdvance\n"); }
 
 	// detecta colisiones de shape clasificado como trigger

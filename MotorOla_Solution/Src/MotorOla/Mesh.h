@@ -1,19 +1,13 @@
 #pragma once
 #include "Componente.h"
-#include "./utils/Vector2D.h"
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
 #include <OgreEntity.h>
-#include "utils/Vector2D.h"
-#include <OgreParticleSystem.h>
 
 class Mesh : public Componente
 {
 public:
 	Mesh();
-
-	//Mesh(Ogre::SceneNode* node);
-	//Mesh(Ogre::SceneNode* node, std::string mesh, std::string material);
 	virtual ~Mesh();
 
 	// Función obligatoria para inicializar el componente mediante datos serializados
@@ -26,15 +20,7 @@ public:
 	void setMesh(std::string mesh);
 	void setMaterial(std::string material);
 
-	//void setBillboard(std::string material , Vector2D pos, Vector2D scale);
-	//void toggleBillboard();
-	//void setParticle(std::string material);
-	//void toggleParticle();
-	//void setLight();
-	//void toggleLight();
-
 	void update();
-	//void draw();
 
 	/// <summary>
 	/// Devuelve si es o no visible la entidad

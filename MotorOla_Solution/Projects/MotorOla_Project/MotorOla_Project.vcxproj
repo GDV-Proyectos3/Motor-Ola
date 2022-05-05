@@ -68,7 +68,6 @@
     <ClInclude Include="..\..\Src\MotorOla\InputManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\LoadResources.h" />
     <ClInclude Include="..\..\Src\MotorOla\LuaReader.h" />
-    <ClInclude Include="..\..\Src\MotorOla\Movible.h" />
     <ClInclude Include="..\..\Src\MotorOla\OgreManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\FMODAudioManager.h" />
     <ClInclude Include="..\..\Src\MotorOla\Mesh.h" />

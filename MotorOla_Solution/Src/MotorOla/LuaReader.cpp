@@ -84,7 +84,6 @@ void readFile(std::string file) {
 		std::string aux3 = lua_tostring(l, -1);
 		sz = 0, sa = 0;
 		a = std::stof(aux3, &sz); b = std::stof(aux3.substr(sz + 1), &sa); c = std::stof(aux3.substr(sz + sa + 2));
-		//AQUE CUBELLS Singleton<Physx> cambiar gravedad
 		pm().getScene()->setGravity(PxVec3(a, b, c));
 
 		lua_pop(l, 1);
@@ -128,15 +127,9 @@ void readFile(std::string file) {
 		cy = stof(temp, &sa);
 		cz = stof(camRot.substr(sz + sa + 2));
 		camNode->lookAt(Ogre::Vector3(cx, cy, cz), Ogre::Node::TS_WORLD);
-		////////////////camNode->lookAt(Ogre::Vector3(0, -800, 0), Ogre::Node::TS_WORLD);////////_test_caidas_forma_javi_////////
-		//Vectola3D vaux(cx, cy, cz);
-		//Quaterniola qaux;
-		//qaux = qaux.Euler(vaux);
-		//camNode->setOrientation(qaux.operator Ogre::Quaternion());
 		lua_pop(l, 1);	
 
 		Singleton<OgreManager>::instance()->getRenderWindow()->getViewport(0)->update();
-		//getRenderWindow()->getViewport(0)->update();
 
 		lua_pop(l, 1);
 
@@ -196,14 +189,6 @@ void readFile(std::string file) {
 		lua_close(l);
 
 		int initTotales = 0;
-
-		//for (int i = 0; i < ents.size(); i++)
-		//{
-		//	ents[i]->init();
-		//	std::cout << "Entidad " << i << " iniciada\n";
-		//	initTotales++;
-		//} 
-
 		int i = 0;
 		int numEnts = ents.size();
 		int initedEnts = 0;
@@ -227,20 +212,14 @@ void readFile(std::string file) {
 
 void readFileMenus(std::string file,const char* get)
 {
-	
-	// Vector de entidades que creamos y vector auxiliar para marcarlas iniciadas
-	//std::vector<Entidad*> ents;
-	//std::vector<bool> entInits;
 
 	// Preparamos un LuaState para leer el fichero
 	lua_State* l;
 	l = luaL_newstate();
 	openlualibs(l);
 
-#if _DEBUG
-	//std::printf("Now calling lua\n\n");
-#endif
-	// Intenta abrir el archivo .lua
+
+	
 	if (!luaL_loadfile(l, file.c_str()) && lua_pcall(l, 0, 0, 0)) {
 		std::cout << lua_tostring(l, -1) << "\n";
 		std::cout << "Error reading .lua\n";
@@ -323,35 +302,7 @@ void readFileMenus(std::string file,const char* get)
 			lua_pop(l, 1);
 
 			Singleton<OverlayManager>::instance()->creaBoton(positionX, positionY, texto, nombrePanel, nombreTexto, tamLetra, material, dimensionX, dimensionY);
-			//ents.push_back(ent);
-			//entInits.push_back(false);
-
-			// Components
-			// Calls a similar while loop, creating a set<string, string> with each pair
-			// Knows which component is by key name and a translator function
-			//lua_getfield(l, -1, "components");
-			//lua_pushnil(l);
-			//while (lua_next(l, 5) != 0) { // stack: mapa-entities-indEntity-Entity-compTabla
-
-				//char* compName = (char*)lua_tostring(l, -2);
-
-				//std::map<std::string, std::string> compMap;
-				//lua_pushnil(l);
-				/*while (lua_next(l, 7) != 0) { // stack: mapa-entities-indEntity-Entity-compTabla-indComp-Component
-					char* attrName = (char*)lua_tostring(l, -2);
-					std::string s1(attrName);
-					char* attrValue = (char*)lua_tostring(l, -1);
-					std::string s2(attrValue);
-					compMap.insert((std::pair<std::string, std::string>(s1, s2)));
-					lua_pop(l, 1);
-				}*/
-
-				// Funcion de traduccion
-				//ent->addComponent(compName, compMap);
-				//lua_pop(l, 1);
-			//}
-
-			//lua_pop(l, 1);
+			
 			// Entity is no longer here, only key to be removed by lua_next
 			lua_pop(l, 1);
 		}
@@ -361,19 +312,6 @@ void readFileMenus(std::string file,const char* get)
 		std::printf("\ndo something else\n\n");
 #endif
 		lua_close(l);
-
-		//int i = 0;
-		//int numEnts = ents.size();
-		//int initedEnts = 0;
-		/*while (initedEnts != numEnts) {
-			if (!entInits[i] && ents[i]->init()) {
-				++initedEnts;
-				entInits[i] = true;
-				//SceneManager::GetInstance()->addEntity(ents[i]);
-			}
-			++i;
-			i %= numEnts;
-		}*/
 	}
 	catch (...) {
 		throw std::exception("Lua file has incorrect formatting\n");
@@ -454,7 +392,7 @@ Entidad* readPrefab(std::string file) {
 		lua_getfield(l, -1, "cursor");
 		int cursor = lua_tonumber(l, -1);
 		lua_pop(l, 1);
-		//Gui::GetInstance()->setMouseVisibility(cursor);
+		
 
 		Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad(name, id);
 

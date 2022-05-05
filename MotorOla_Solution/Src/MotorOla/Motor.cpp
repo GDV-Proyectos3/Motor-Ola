@@ -88,12 +88,6 @@ void Motor::initSystems()
 		loadTestMotorGame();
 	}
 	std::cout << "DESPUES DE CARGAR JUEGO TRY\n";
-
-
-	// Carga una escena con Lua
-	//if(!loadScene("TestScene.lua"))
-	/*if (!loadMainMenu("MainMenuScene.lua", "GetMainMenu"))
-		throw "Error loading a Scene\n";*/
 }
 
 void Motor::registryComponents()
@@ -148,19 +142,6 @@ void Motor::mainLoop()
 
 		// Renderiza las entidades
 		Singleton<OgreManager>::instance()->update();
-
-		// Contador de frames que los muestra cada 100 frames
-#if (defined _DEBUG)
-		if (++frame % 600 == 0) {
-			//// Prueba de los prefabs
-			//float x = rand() % 800 - 400;
-			//float y = rand() % 600 - 300;
-			//Entidad::instantiate("Bala.prefab", Vectola3D(x,y,0));
-			EntidadManager* dep = Singleton<EntidadManager>::instance();
-			//std::cout << aux << std::endl;
-			std::cout << "FrameCount: " << frame << "\n";
-		}
-#endif
 	}
 }
 
@@ -184,9 +165,6 @@ void Motor::loadDLLGame()
 			lpfnDllFunc1(NULL, NULL);
 		}
 		else throw "Function LoadGame not found in DLL";
-
-		// Libera la memoria de la DLL cargada explicitamente
-		//FreeLibrary(hDLL);
 	}
 	else throw "DLL not found";
 }
@@ -220,9 +198,6 @@ bool Motor::loadMenu(std::string name,const char*get) {
 
 		// Lee la escena cargando todas las entidades y sus componentes
 		readFileMenus(sceneRoute,get);
-		/*Singleton<OverlayManager>::instance()->setCallBackToButton("NewGamePanel", newGame);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("OptionsPanel",options);
-		Singleton<OverlayManager>::instance()->setCallBackToButton("ExitPanel", salir);*/
 	}
 	catch (std::exception e) {
 #if (defined _DEBUG)
@@ -236,13 +211,6 @@ bool Motor::loadMenu(std::string name,const char*get) {
 void Motor::loadTestMotorGame() 
 {
 	loadScene("TestScene.lua");
-	//// Entidad con un transform
-	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
-	//map<string, string> m;
-	//ent->addComponent("transform", m);
-	//cuboTest = Singleton<EntidadManager>::instance()->getEntidadByID(2);	
-	//pm().setPhysxToGlobalTR(*cuboTest, *pm().getBall());
-	//pm().setGlobalToPhysxTR(*cuboTest, *pm().getBall());
 }
 
 bool Motor::getStop()
@@ -250,34 +218,7 @@ bool Motor::getStop()
 	return stop;
 }
 
-/*void Motor::salir(Motor* m)
-{
-	m->stop = true;
-}
 
-void Motor::newGame(Motor* m)
-{
-	//OverlayManager* o = Singleton<OverlayManager>::instance();
-	//delete o;
-	//o = nullptr;
-	Singleton<OverlayManager>::close();
-	m->loadScene("TestScene.lua");
-}
-void Motor::options(Motor* m)
-{
-	//OverlayManager* o = Singleton<OverlayManager>::instance();
-	//delete o;
-	//o = nullptr;
-	//Singleton<OverlayManager>::close();
-	Singleton<OverlayManager>::instance()->clear();
-	m->loadMainMenu("Options.lua","GetOptions");
-}*/
-
-//void Motor::deleteOverlay(Motor* m)
-//{
-//	delete m->_overlayManager;
-//	m->_overlayManager = nullptr;
-//}
 
 void Motor::setStop(bool s)
 {

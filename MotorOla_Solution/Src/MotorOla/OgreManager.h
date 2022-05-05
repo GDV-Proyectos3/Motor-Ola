@@ -17,7 +17,6 @@
 #include <OgreFileSystemLayer.h>
 #include <OgreFrameListener.h>
 #include <OgreOverlayPrerequisites.h> 
-#include <OgreFrameListener.h>
 #include <SDL.h> 
 
 namespace Ogre {
@@ -59,17 +58,15 @@ public:
 	MOTOR_API Ogre::Viewport* getViewPort() const { return _vp; }
 	MOTOR_API Ogre::Root* getRoot() const { return _root; }
 	MOTOR_API Ogre::OverlaySystem* getOverlaySystem() const { return _overlaySystem; }
-	//void setOverlaySystem(Ogre::OverlaySystem* overlay) { _overlaySystem = overlay; }
 	MOTOR_API int getWindowWidth() const { return _window.render->getWidth(); }
 	MOTOR_API int getWindowHeight() const { return _window.render->getHeight(); }
+
 	MOTOR_API void init();
 	MOTOR_API void update();
 	MOTOR_API void close();
 
 	// callback interface copied from various listeners to be used by ApplicationContext
-	//virtual bool frameStarted(const Ogre::FrameEvent& evt) { pollEvents(); return true; }
-	//virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-	//virtual bool frameEnded(const Ogre::FrameEvent& evt) { return true; }
+	
 	MOTOR_API virtual void windowMoved(Ogre::RenderWindow* rw) {}
 	MOTOR_API virtual void windowResized(Ogre::RenderWindow* rw) {}
 	MOTOR_API virtual bool windowClosing(Ogre::RenderWindow* rw) { return true; }
@@ -77,9 +74,6 @@ public:
 	MOTOR_API virtual void windowFocusChange(Ogre::RenderWindow* rw) {}
 
 	// Funciones
-
-	//bool initialiseRTShaderSystem();
-	//void destroyRTShaderSystem();
 
 	MOTOR_API void setup();
 	MOTOR_API void createRoot();
@@ -89,7 +83,7 @@ public:
 	MOTOR_API void loadResources();
 	MOTOR_API void shutdown();
 
-	//void pollEvents();
+	
 
 	MOTOR_API virtual NativeWindowPair createWindow(const Ogre::String& name);
 private:
@@ -106,10 +100,5 @@ private:
 	Ogre::String _appName = "MotorOla";
 	Ogre::String _solutionPath;
 
-	//Ogre::String _renderStateShaderLibPath;
-	//Ogre::RTShader::ShaderGenerator* _shaderGenerator;
-	//SGTechniqueResolverListener* _materialMgrListener; // Shader generator material manager listener.
 };
-/*inline OgreManager& og() {
-	return *OgreManager::instance();
-}*/
+

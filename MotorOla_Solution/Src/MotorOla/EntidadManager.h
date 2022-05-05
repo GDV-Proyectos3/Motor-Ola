@@ -33,16 +33,12 @@ public:
 	MOTOR_API void sincronizaVectorEnt();
 	
 	MOTOR_API std::vector<uptr_ent>& getAllEntidades() {
-		return entitys_;
+		return _entitys;
 	}
 	MOTOR_API Entidad* getEntidadByID(int id);
 
 private:
-	std::vector<uptr_ent> entitys_;
-	//std::vector<uptr_ent> entitiesToLoad_;		// Vector con las entidades a cargar al final del frame
-
-	// Idea para guardar las entidades al poner nuevas escenas
-	//std::stack <std::vector<uptr_ent>> pilaEntidades_;
+	std::vector<uptr_ent> _entitys;
 };
 
 // Esta macro define una forma compacta para usar el Singleton EntidadManager, 

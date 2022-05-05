@@ -10,7 +10,7 @@
 #include "./utils/Singleton.h"
 #include <Ogre.h>
 #include "OverlayManager.h"
-#include "OgreManager.h"
+
 
 
 #include <OgreOverlayElement.h>
@@ -27,10 +27,11 @@
 #include "OgreOverlayPrerequisites.h"
 #include <OgrePanelOverlayElement.h>
 #include <OgreOverlay.h>
-//#include <OgreRenderWindow.h>
+
 
 #include <vector>
 class Motor;
+class OgreManager;
 using CallBackOnClick = void(Motor* m);
 
 MOTOR_API class OverlayManager : public Singleton<OverlayManager> {
@@ -62,14 +63,14 @@ public:
 
 
 private:
-	//Ogre::Overlay* _overlay = nullptr;
+	
 
 	std::vector< Ogre::PanelOverlayElement*>botones;
 	std::vector< Ogre::PanelOverlayElement*>paneles;
 	std::vector< Ogre::PanelOverlayElement*>textos;
 	std::map < Ogre::PanelOverlayElement*, CallBackOnClick*>callbacks;
 	Ogre::Overlay* mOverlay=nullptr;
-	//Usar Singleton cuando funcione
+	
 	OgreManager* og;
 	Motor* motor;
 	

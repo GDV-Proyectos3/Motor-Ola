@@ -7,15 +7,15 @@
 #endif
 
 Vectola3D::Vectola3D() :
-	x_(), y_(), z_() {
+	_x(), _y(), _z() {
 }
 
 Vectola3D::Vectola3D(const Vectola3D& v) :
-	x_(v.getX()), y_(v.getY()), z_(v.getZ()) {
+	_x(v.getX()), _y(v.getY()), _z(v.getZ()) {
 }
 
 Vectola3D::Vectola3D(double x, double y, double z) :
-	x_(x), y_(y), z_(z) {
+	_x(x), _y(y), _z(z) {
 }
 
 Vectola3D::~Vectola3D() {
@@ -42,11 +42,11 @@ Vectola3D Vectola3D::rotate(double degrees) const {
 	////rotation matix
 	//double matrix[2][2] = { { cosine, -sine }, { sine, cosine } };
 
-	//double x = x_;
-	//double y = y_;
+	//double x = _x;
+	//double y = _y;
 
-	//r.x_ = matrix[0][0] * x + matrix[0][1] * y;
-	//r.y_ = matrix[1][0] * x + matrix[1][1] * y;
+	//r._x = matrix[0][0] * x + matrix[0][1] * y;
+	//r._y = matrix[1][0] * x + matrix[1][1] * y;
 
 	return r;
 
@@ -56,7 +56,7 @@ Vectola3D Vectola3D::rotate(double degrees) const {
 double Vectola3D::angle(const Vectola3D& v) const {
 
 	double a2 = atan2(v.getX(), v.getY());
-	double a1 = atan2(x_, y_);
+	double a1 = atan2(_x, _y);
 	//double sign = a1 > a2 ? 1 : -1;
 	double angle = a1 - a2;
 	//double K = -sign * M_PI * 2;
@@ -66,14 +66,14 @@ double Vectola3D::angle(const Vectola3D& v) const {
 
 Vectola3D Vectola3D::normalize() const {
 	Vectola3D r;
-	r.x_ = x_;
-	r.y_ = y_;
-	r.z_ = z_;
+	r._x = _x;
+	r._y = _y;
+	r._z = _z;
 	double mag = magnitude();
 	if (mag > 0.0) {
-		r.x_ = r.x_ / mag;
-		r.y_ = r.y_ / mag;
-		r.z_ = r.z_ / mag;
+		r._x = r._x / mag;
+		r._y = r._y / mag;
+		r._z = r._z / mag;
 		
 	}
 	return r;
@@ -81,7 +81,7 @@ Vectola3D Vectola3D::normalize() const {
 
 MOTOR_API bool Vectola3D::operator==(const Vectola3D& v) const
 {
-	return (x_ == v.getX() && y_ == v.getY() && z_ == v.getZ());
+	return (_x == v.getX() && _y == v.getY() && _z == v.getZ());
 }
 
 Ogre::Vector3 Vectola3D::convertOgreVector(const Vectola3D& v) const

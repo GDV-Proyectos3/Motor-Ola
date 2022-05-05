@@ -7,7 +7,7 @@
 Transform::Transform() :
 	_position(), _scale({ 1,1,1 }), _rotation()
 {
-	if (debugCom) std::cout << "CONSTRUCTOR VACIO TRANSFORM" << std::endl;
+	
 }
 
 Transform::~Transform()
@@ -16,7 +16,7 @@ Transform::~Transform()
 
 bool Transform::init(const std::map<std::string, std::string>& mapa)
 {
-	if (debugCom) std::cout << "init TRANSFORM, id:" << getEntidad()->getID() << std::endl;
+	
 
 	if (mapa.find("parent") == mapa.end()
 		|| mapa.find("position") == mapa.end()
@@ -49,7 +49,7 @@ bool Transform::init(const std::map<std::string, std::string>& mapa)
 		_scale = _localScale;
 	}
 
-	inicializado_ = true;
+	_inicializado = true;
 	return true;
 }
 

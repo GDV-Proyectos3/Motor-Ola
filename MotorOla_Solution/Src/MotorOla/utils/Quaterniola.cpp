@@ -132,11 +132,7 @@ Vectola3D Quaterniola::toEuler() {
 	return vec * 180 / M_PI;
 }
 
-//Vectola3D Quaternion::toVector()
-//{
-//	Matrix3 ang = toMatrix();
-//	return { -ang.getColumn(2).x, -ang.getColumn(2).y, -ang.getColumn(2).z };;
-//}
+
 
 float Quaterniola::dotProduct(const Quaterniola& q)
 {

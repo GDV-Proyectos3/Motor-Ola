@@ -1,7 +1,7 @@
 #include "ContactReportCallback.h"
 #include "PhysxManager.h"
 
-//extern void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
+
 const bool debugCom = false;
 
 physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes attributes0, physx::PxFilterData filterData0,
@@ -25,8 +25,6 @@ physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes a
 
 void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
 {
-	//PX_UNUSED(pairs);
-	//PX_UNUSED(nbPairs);
 	if (debugCom) printf("onContact: %d pairs\n", nbPairs);
 
 	while (nbPairs--)

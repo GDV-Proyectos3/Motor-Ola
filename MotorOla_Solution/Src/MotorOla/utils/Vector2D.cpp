@@ -7,15 +7,15 @@
 #endif
 
 Vector2D::Vector2D() :
-	x_(), y_() {
+	_x(), _y() {
 }
 
 Vector2D::Vector2D(const Vector2D& v) :
-	x_(v.getX()), y_(v.getY()) {
+	_x(v.getX()), _y(v.getY()) {
 }
 
 Vector2D::Vector2D(double x, double y) :
-	x_(x), y_(y) {
+	_x(x), _y(y) {
 }
 
 Vector2D::~Vector2D() {
@@ -41,11 +41,11 @@ Vector2D Vector2D::rotate(double degrees) const {
 	//rotation matix
 	double matrix[2][2] = { { cosine, -sine }, { sine, cosine } };
 
-	double x = x_;
-	double y = y_;
+	double x = _x;
+	double y = _y;
 
-	r.x_ = matrix[0][0] * x + matrix[0][1] * y;
-	r.y_ = matrix[1][0] * x + matrix[1][1] * y;
+	r._x = matrix[0][0] * x + matrix[0][1] * y;
+	r._y = matrix[1][0] * x + matrix[1][1] * y;
 
 	return r;
 
@@ -54,7 +54,7 @@ Vector2D Vector2D::rotate(double degrees) const {
 double Vector2D::angle(const Vector2D& v) const {
 
 	double a2 = atan2(v.getX(), v.getY());
-	double a1 = atan2(x_, y_);
+	double a1 = atan2(_x, _y);
 	double sign = a1 > a2 ? 1 : -1;
 	double angle = a1 - a2;
 	double K = -sign * M_PI * 2;
@@ -64,12 +64,12 @@ double Vector2D::angle(const Vector2D& v) const {
 
 Vector2D Vector2D::normalize() const {
 	Vector2D r;
-	r.x_ = x_;
-	r.y_ = y_;
+	r._x = _x;
+	r._y = _y;
 	double mag = magnitude();
 	if (mag > 0.0) {
-		r.x_ = r.x_ / mag;
-		r.y_ = r.y_ / mag;
+		r._x = r._x / mag;
+		r._y = r._y / mag;
 	}
 	return r;
 }

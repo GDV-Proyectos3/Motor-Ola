@@ -6,16 +6,31 @@
 #include "LuaReader.h"
 #include "RigidBody.h"
 #include "Mesh.h"
+#include "ComponenteFactoria.h"
+
 
 Entidad::Entidad():
-	entManager_(nullptr),
+	_entManager(nullptr),
 	active(true)
 {
 }
 
 Entidad::Entidad(std::string entityName, int id) :
-	entManager_(nullptr), active(true), _name(entityName), _id(id)
+	_entManager(nullptr), active(true), _name(entityName), _id(id)
 {
+}
+
+Entidad::~Entidad()
+{
+	int n = components.size();
+	for (int i = 0; i < n; i++)
+	{
+		std::cout << "Borrada componente " << i << "\n";
+		if (components.at(i) != nullptr) {
+			components.at(i).reset();
+			components.at(i) = nullptr;
+		}
+	}
 }
 
 void Entidad::update()
@@ -38,35 +53,37 @@ void Entidad::destroy()
 
 void Entidad::OnCollisionEnter(Entidad* other)
 {
-	//std::cout << "OnCollisionEnter\n";
 	if (this!=nullptr && other!=nullptr) {
 		for (auto& c : components)
 		{
-			if (c.get()->entity_->isActive() && other->isActive()) c->onCollisionStart(other);
+			if (c.get()->_entity->isActive() && other->isActive()) c->onCollisionStart(other);
 		}
 	}
 }
 
 void Entidad::OnTriggerEnter(Entidad* other)
 {
-	//std::cout << "OnTriggerEnter\n";
-	for (auto& c : components)
-	{
-		if (c != nullptr) c->onTriggerStart(other);
+	if (this != nullptr && other != nullptr) {
+		for (auto& c : components)
+		{
+			if (c.get()->_entity->isActive() && other->isActive()) c->onTriggerStart(other);
+		}
 	}
 }
 
-Entidad::~Entidad()
-{
-	int n = components.size();
-	for (int i = 0; i < n; i++)
-	{
-		std::cout << "Borrada componente " << i << "\n";
-		if (components.at(i) != nullptr) {
-			components.at(i).reset();
-			components.at(i) = nullptr;
-		}
+
+Componente* Entidad::addComponent(const std::string& compName, const std::map<std::string, std::string>& map) {
+	Componente* t = Singleton<ComponenteFactoria>::instance()->getComponent(compName);
+	if (t != nullptr) {
+		t->_entity = this;//ponemos la entidad en el componente
+		std::unique_ptr<Componente> upt(t);
+		components.push_back(std::move(upt));
+		compMaps.push_back(map);
+		compinits.push_back(false);
+
+		return t;
 	}
+	throw std::exception("Error de carga del componente ");
 }
 
 inline void Entidad::setActive(bool state)
@@ -111,7 +128,6 @@ bool Entidad::init()
 Entidad* Entidad::instantiate(std::string name, Vectola3D position, Quaterniola rotation)
 {
 	std::string path = Singleton<LoadResources>::instance()->prefab(name);
-	//Entidad* ent = Singleton<EntidadManager>::instance()->addEntidad();
 	Entidad* ent = readPrefab(path);
 	ent->getComponent<Transform>()->setPosition(position);
 	ent->getComponent<Transform>()->setRotation(rotation);

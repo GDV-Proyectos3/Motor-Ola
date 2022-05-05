@@ -2,6 +2,7 @@
 #include <string>
 #include "InputManager.h"
 #include "Motor.h"
+#include "OgreManager.h"
 
 std::unique_ptr<OverlayManager> Singleton<OverlayManager>::instance_ = nullptr;
 
@@ -13,22 +14,6 @@ OverlayManager::~OverlayManager()
 	paneles.clear();
 	textos.clear();
 	callbacks.clear();
-	/*for (int i = 0;i < botones.size();i++) {
-		delete botones[i];
-		botones[i] = nullptr;
-	}
-	botones.clear();
-	callbacks.clear();
-	for (int i = 0;i < paneles.size();i++) {
-		delete paneles[i];
-		paneles[i] = nullptr;
-	}
-	paneles.clear();
-	for (int i = 0;i < textos.size();i++) {
-		delete textos[i];
-		textos[i] = nullptr;
-	}
-	textos.clear();*/
 	overlayManager.destroyAllOverlayElements();
 }
 
@@ -39,9 +24,9 @@ void OverlayManager::init(OgreManager*om,Motor* m)
 		
 	mOverlay = overlayManager.create("PanelOverlay");
 	mOverlay->setZOrder(100);
-	og = om;//Usar Singleton cuando funcione
+	og = om;
 	motor = m;
-	std::cout << motor << std::endl;		
+			
 }
 
 void OverlayManager::update() {
@@ -97,7 +82,7 @@ void OverlayManager::creaBoton(float x, float y, const std::string& textoBoton,c
 	botones.back()->addChild(text);
 	mOverlay->add2D(botones.back());
 	mOverlay->show();
-	//callbacks.insert(std::pair(botones.back(), click_));
+	
 }
 
 void OverlayManager::setCallBackToButton(std::string p, CallBackOnClick* click)
@@ -214,20 +199,8 @@ MOTOR_API Ogre::PanelOverlayElement* OverlayManager::getBoton(std::string name)
 void OverlayManager::clear()
 {
 	Ogre::OverlayManager& overlayManager = Ogre::OverlayManager::getSingleton();
-	/*for (auto it = botones.begin(); it != botones.end(); it++) {
-		delete(*it);
-		(*it) = nullptr;
-	}*/
 	botones.clear();
-	/*for (auto it = paneles.begin(); it != paneles.end(); it++) {
-		delete(*it);
-		(*it) = nullptr;
-	}*/
 	paneles.clear();
-	/*for (auto it = textos.begin(); it != textos.end(); it++) {
-		delete(*it);
-		(*it) = nullptr;
-	}*/
 	textos.clear();
 	callbacks.clear();
 	overlayManager.destroyAllOverlayElements();

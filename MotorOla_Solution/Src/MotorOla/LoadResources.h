@@ -14,6 +14,8 @@
 using namespace std::filesystem;
 using namespace std;
 
+
+//RUTA PARA BUSCAR LOS ASSETS
 //static const std::string ASSETS = "./Assets";	// Codigo unico para la entrega, perdonanos Pedro P.
 static const std::string ASSETS = "../../Exes/Assets/";
 

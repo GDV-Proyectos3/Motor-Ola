@@ -10,27 +10,16 @@ extern "C"
 {
     struct lua_State;
 }
-
-MOTOR_API void readFile(std::string file);
-MOTOR_API void readFileMenus(std::string file,const char* get);
-
-void PrintTable(lua_State* L);
-
-void readFileTest(std::string file);
-
-class Entidad;
-MOTOR_API Entidad* readPrefab(std::string file);
-
 class LuaScript
 {
 public:
-	LuaScript(const std::string&  filename);
-	~LuaScript();
+    LuaScript(const std::string& filename);
+    ~LuaScript();
 
-	void printError(const std::string& variableName, const std::string& reason);
+    void printError(const std::string& variableName, const std::string& reason);
 
     template<typename... Targs>
-    void callFunction(std::string functionName , int nArg, Targs... args);
+    void callFunction(std::string functionName, int nArg, Targs... args);
 
     template<typename T>
     T get(const std::string& variableName);
@@ -49,15 +38,24 @@ public:
     T lua_getdefault() {
         return 0;
     }
-   
+
 
 private:
     lua_State* L;
     int level = 0;
 
-    //Motor* m = nullptr;
-    //static void exit(Motor* m);
-
 };
+
+MOTOR_API void readFile(std::string file);
+MOTOR_API void readFileMenus(std::string file,const char* get);
+
+void PrintTable(lua_State* L);
+
+void readFileTest(std::string file);
+
+class Entidad;
+MOTOR_API Entidad* readPrefab(std::string file);
+
+
 
 

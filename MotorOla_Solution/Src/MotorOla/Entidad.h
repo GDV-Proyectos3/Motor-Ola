@@ -6,8 +6,6 @@
 #endif
 #include <vector>
 #include "Componente.h"
-#include "utils/Singleton.h"
-#include "ComponenteFactoria.h"
 #include "utils/Vectola3D.h"
 #include "utils/Quaterniola.h"
 
@@ -20,6 +18,8 @@ public:
 	Entidad();
 	Entidad(std::string entityName, int id);
 
+	virtual ~Entidad();
+
 	MOTOR_API void update();
 	MOTOR_API void draw() {};
 	MOTOR_API bool isActive() const;
@@ -28,11 +28,11 @@ public:
 	MOTOR_API void OnCollisionEnter(Entidad* other);
 	MOTOR_API void OnTriggerEnter(Entidad* other);
 
-	virtual ~Entidad();
+	
 
-	MOTOR_API inline EntidadManager* getEntityMngr() const { return entManager_; }
+	MOTOR_API inline EntidadManager* getEntityMngr() const { return _entManager; }
 
-	MOTOR_API inline void setEntityMngr(EntidadManager* mngr) { entManager_ = mngr; }
+	MOTOR_API inline void setEntityMngr(EntidadManager* mngr) { _entManager = mngr; }
 
 	MOTOR_API inline int getID() { return _id; }
 
@@ -59,19 +59,7 @@ public:
 	}
 
 
-	Componente* addComponent(const std::string& compName, const std::map<std::string, std::string>& map) {
-		Componente* t = Singleton<ComponenteFactoria>::instance()->getComponent(compName);
-		if (t != nullptr) {
-			t->entity_ = this;//ponemos la entidad en el componente
-			std::unique_ptr<Componente> upt(t);
-			components.push_back(std::move(upt));
-			compMaps.push_back(map);
-			compinits.push_back(false);
-
-			return t;
-		}
-		throw std::exception("Error de carga del componente ");
-	}
+	Componente* addComponent(const std::string& compName, const std::map<std::string, std::string>& map);
 
 	MOTOR_API inline void setActive(bool state);
 	MOTOR_API inline void setName(std::string n) { _name = n; }
@@ -86,14 +74,13 @@ private:
 	std::string _name;
 	int _id;
 
-	EntidadManager* entManager_;
+	EntidadManager* _entManager;
 
 	std::vector<uptr_cmp> components;
 	bool active = true;
 
 
 	// Aqui estaran los componentes de esta entidad
-	//std::vector<std::unique_ptr<Componente>> compUnique;
 	std::vector<std::map<std::string, std::string>> compMaps;
 	std::vector<bool> compinits;
 

@@ -5,8 +5,7 @@
 #define MOTOR_API __declspec(dllimport)
 #endif
 #include "utils/Vectola3D.h"
-//#include "Matrix3.h"
-//#include "LinearMath/btQuaternion.h"
+
 
 class Quaterniola {
 public:
@@ -56,7 +55,6 @@ public:
 	///	Convierte el Quaternion en un vector unitario que apunta en su direccion.
 	/// </summary>
 	/// <returns></returns>
-	//Vectola3D toVector();
 
 	MOTOR_API float dotProduct(const Quaterniola& q);
 

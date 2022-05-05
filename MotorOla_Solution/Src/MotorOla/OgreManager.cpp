@@ -23,9 +23,6 @@ OgreManager::OgreManager(const Ogre::String& appName)
 	_root = nullptr;
 	_overlaySystem = nullptr;
 	_firstRun = true;
-
-	//_shaderGenerator = nullptr;
-	//_materialMgrListener = nullptr;
 }
 
 OgreManager::~OgreManager()
@@ -53,20 +50,18 @@ void OgreManager::init()
 	cam->setNearClipDistance(1);
 	cam->setFarClipDistance(10000);
 	cam->setAutoAspectRatio(true);
-	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
 	camNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nCam");
 	camNode->attachObject(cam);
 	camNode->setPosition(0, 2000, 0);
-	//camNode->lookAt(Ogre::Vector3(0, -1, 0), Ogre::Node::TS_WORLD);
 	camNode->lookAt(Ogre::Vector3(1, 0, 0), Ogre::Node::TS_WORLD);
-	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));
+	
 
 	// and tell it to render into the main window
 	_vp = getRenderWindow()->addViewport(cam);
 	_vp->setBackgroundColour(Ogre::ColourValue(1.0, 1.0, 0.0, 1.0));
 
-	// Esto todavía no funciona porque falta el Resource Manager
+	
 
 	// Luz de prueba
 	Ogre::Light* luz = _sceneManager->createLight("Luz");	//Cada luz tiene que tener un nombre diferente
@@ -74,7 +69,6 @@ void OgreManager::init()
 	luz->setDiffuseColour(1, 1, 1);
 
 	Ogre::SceneNode* mLightNode = _sceneManager->getRootSceneNode()->createChildSceneNode("nLuz");
-	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 	mLightNode->setDirection(Ogre::Vector3(0.4, 0.2, -1));
 
@@ -88,7 +82,6 @@ void OgreManager::init()
 
 void OgreManager::update()
 {
-	//std::cout << "OgreManager actualizandose\n";
 
 	// Renderiza el frame actual
 	_root->renderOneFrame();
@@ -116,10 +109,10 @@ void OgreManager::createRoot()
 		OGRE_EXCEPT(Ogre::Exception::ERR_FILE_NOT_FOUND, "plugins.cfg", "Error buscando el archivo plugins.cfg");
 	}
 
-	_solutionPath = pluginsPath;    // IG2: añadido para definir directorios relativos al de la solución 
+	_solutionPath = pluginsPath;    //  añadido para definir directorios relativos al de la solución 
 	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);
-	_fileSystemLayer->setHomePath(_solutionPath);   // IG2: para los archivos de configuración ogre. (en el bin de la solubión)
-	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   // IG2: Quito /bin
+	_fileSystemLayer->setHomePath(_solutionPath);   //  para los archivos de configuración ogre. (en el bin de la solubión)
+	_solutionPath.erase(_solutionPath.find_last_of("\\") + 1, _solutionPath.size() - 1);   //  Quito /bin
 
 	_root = new Ogre::Root(pluginsPath, _fileSystemLayer->getWritablePath("ogre.cfg"), _fileSystemLayer->getWritablePath("ogre.log"));
 
@@ -128,8 +121,7 @@ void OgreManager::createRoot()
 
 void OgreManager::shutdown()
 {
-	// Destroy the RT Shader System.
-	//destroyRTShaderSystem();
+	
 
 	// Borra la ventana
 	if (_window.render != nullptr)
@@ -148,12 +140,8 @@ void OgreManager::shutdown()
 
 	if (_window.native != nullptr)
 	{
-		
-		
-		//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 		SDL_DestroyWindow(_window.native);
 		_window.native = nullptr;
-		
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 }
@@ -167,11 +155,7 @@ void OgreManager::setup()
 	_overlaySystem = new Ogre::OverlaySystem();
 	
 	locateResources();
-	//initialiseRTShaderSystem();
 	loadResources();
-
-	// adds context as listener to process context-level (above the sample level) events
-	//_root->addFrameListener(this);
 }
 
 bool OgreManager::oneTimeConfig()
@@ -183,44 +167,7 @@ bool OgreManager::oneTimeConfig()
 	else return true;
 }
 
-//bool OgreManager::initialiseRTShaderSystem()
-//{
-//	if (Ogre::RTShader::ShaderGenerator::initialize())
-//	{
-//		mShaderGenerator = Ogre::RTShader::ShaderGenerator::getSingletonPtr();
-//		// Core shader libs not found -> shader generating will fail.
-//		if (mRTShaderLibPath.empty())
-//			return false;
-//		// Create and register the material manager listener if it doesn't exist yet.
-//		if (!mMaterialMgrListener) {
-//			mMaterialMgrListener = new SGTechniqueResolverListener(mShaderGenerator);
-//			Ogre::MaterialManager::getSingleton().addListener(mMaterialMgrListener);
-//		}
-//	}
-//
-//	return true;
-//}
-//
-//void OgreManager::destroyRTShaderSystem()
-//{
-//	// Restore default scheme.
-//	Ogre::MaterialManager::getSingleton().setActiveScheme(Ogre::MaterialManager::DEFAULT_SCHEME_NAME);
-//
-//	// Unregister the material manager listener.
-//	if (mMaterialMgrListener != nullptr)
-//	{
-//		Ogre::MaterialManager::getSingleton().removeListener(mMaterialMgrListener);
-//		delete mMaterialMgrListener;
-//		mMaterialMgrListener = nullptr;
-//	}
-//
-//	// Destroy RTShader system.
-//	if (mShaderGenerator != nullptr)
-//	{
-//		Ogre::RTShader::ShaderGenerator::destroy();
-//		mShaderGenerator = nullptr;
-//	}
-//}
+
 
 NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
 {
@@ -260,99 +207,13 @@ NativeWindowPair OgreManager::createWindow(const Ogre::String& name)
 
 void OgreManager::setWindowGrab(bool _grab)
 {
-	//SDL_bool grab = SDL_bool(_grab);
 	SDL_bool grab = SDL_bool(_grab);
 	SDL_SetWindowGrab(_window.native, grab);
-	//SDL_SetRelativeMouseMode(grab);
 	//SDL_ShowCursor(grab);
 	SDL_ShowCursor(true);
 }
 
-//void OgreManager::pollEvents()
-//{
-//	if (_window.native == nullptr)
-//		return;  // SDL events not initialized
-//
-//	SDL_Event event;
-//	while (SDL_PollEvent(&event))
-//	{
-//		switch (event.type)
-//		{
-//		case SDL_QUIT:
-//			_root->queueEndRendering();
-//			break;
-//		case SDL_WINDOWEVENT:
-//			if (event.window.windowID == SDL_GetWindowID(_window.native)) {
-//				if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-//				{
-//					Ogre::RenderWindow* win = mWindow.render;
-//					//win->resize(event.window.data1, event.window.data2);  // IG2: ERROR 
-//					win->windowMovedOrResized();
-//					windowResized(win);
-//				}
-//			}
-//			break;
-//		default:
-//			_fireInputEvent(convert(event));
-//			break;
-//		}
-//	}
-//
-//	// just avoid "window not responding"
-//	WindowEventUtilities::messagePump();
-//}
-//
-//void IG2ApplicationContext::_fireInputEvent(const Event& event) const
-//{
-//	for (std::set<InputListener*>::iterator it = mInputListeners.begin(); it != mInputListeners.end(); ++it)
-//	{
-//		InputListener& l = **it;
-//
-//		switch (event.type)
-//		{
-//		case KEYDOWN:
-//			l.keyPressed(event.key);
-//			break;
-//		case KEYUP:
-//			l.keyReleased(event.key);
-//			break;
-//		case MOUSEBUTTONDOWN:
-//			l.mousePressed(event.button);
-//			break;
-//		case MOUSEBUTTONUP:
-//			l.mouseReleased(event.button);
-//			break;
-//		case MOUSEWHEEL:
-//			l.mouseWheelRolled(event.wheel);
-//			break;
-//		case MOUSEMOTION:
-//			l.mouseMoved(event.motion);
-//			break;
-//		case FINGERDOWN:
-//			// for finger down we have to move the pointer first
-//			l.touchMoved(event.tfinger);
-//			l.touchPressed(event.tfinger);
-//			break;
-//		case FINGERUP:
-//			l.touchReleased(event.tfinger);
-//			break;
-//		case FINGERMOTION:
-//			l.touchMoved(event.tfinger);
-//			break;
-//		}
-//
-//	}
-//}
 
-//bool OgreManager::frameRenderingQueued(const Ogre::FrameEvent& evt)
-//{
-//	for (std::set<InputListener*>::iterator it = mInputListeners.begin(); it != mInputListeners.end(); ++it)
-//	{
-//		(*it)->frameRendered(evt);
-//	}
-//
-//	return true;
-//}
 
 void OgreManager::loadResources()
 {
@@ -412,7 +273,7 @@ void OgreManager::locateResources()
 	sec = Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME;
 	const Ogre::ResourceGroupManager::LocationList genLocs = Ogre::ResourceGroupManager::getSingleton().getResourceLocationList(sec);
 
-	//OgreAssert(!genLocs.empty(), ("Resource Group '" + sec + "' must contain at least one entry").c_str());
+	
 
 	arch = genLocs.front().archive->getName();
 	type = genLocs.front().archive->getType();

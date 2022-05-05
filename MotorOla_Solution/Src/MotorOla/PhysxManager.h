@@ -11,9 +11,10 @@
 #include <vector>
 #include <cassert>
 
-#include "Transform.h"
 #include "Entidad.h"
 #include "ContactReportCallback.h"
+class Transform;
+
 
 using namespace physx;
 
@@ -85,8 +86,8 @@ public:
 	MOTOR_API void tiledStacks(PxReal num = 5, PxReal sideLength = 1.0f);
 
 	// Getters
-	MOTOR_API int getID(int k) { return ids_[k]; };
-	MOTOR_API std::vector<int>* getIDs() { return &ids_; };
+	MOTOR_API int getID(int k) { return _ids[k]; };
+	MOTOR_API std::vector<int>* getIDs() { return &_ids; };
 	MOTOR_API PxPhysics* getPhysX() { return mPhysics; };
 	MOTOR_API PxRigidDynamic* getBall() { return testBALL; };
 	MOTOR_API PxScene* getScene() { return mScene; };
@@ -94,7 +95,7 @@ public:
 	MOTOR_API Entidad* findEntityByPxActor(PxActor* actor);
 
 	// Setters
-	MOTOR_API void addEntityID(int id) { ids_.push_back(id); };
+	MOTOR_API void addEntityID(int id) { _ids.push_back(id); };
 	MOTOR_API void addEntityToEraseID(int id) { ids_erase.push_back(id); };
 	MOTOR_API void setGlobalToPhysxTR(Entidad& e, PxRigidActor& body);
 	MOTOR_API void setPhysxToGlobalTR(Entidad& e, PxRigidActor& body);
@@ -142,7 +143,7 @@ private:
 	PxCudaContextManager* mCuda = NULL;
 
 	// vector para identificar entidades
-	std::vector<int> ids_;
+	std::vector<int> _ids;
 	std::vector<int> ids_erase;
 };
 

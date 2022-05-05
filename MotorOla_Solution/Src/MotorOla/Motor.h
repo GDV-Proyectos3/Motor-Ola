@@ -26,7 +26,6 @@ class OverlayManager;
 MOTOR_API class Motor
 {
 private:
-	//LPCWSTR gameDLLRoute = L"..\\GameToLoad\\Juego"; // typedef const wchar_t* LPCWSTR, L"..." para indicar que se trata de un long char
 
 	bool stop = false;
 
@@ -75,11 +74,5 @@ public:
 	// Getters and Setters
 	MOTOR_API void setStop(bool s);
 	bool getStop();
-
-
-	//static void salir(Motor* m);
-	//static void newGame(Motor* m);
-	//static void options(Motor* m);
-	//static void deleteOverlay(Motor* m);
 };
 

@@ -64,10 +64,8 @@ public:
 	// can call this method at the beginning of the program.
 	template<typename ...Targs>
 	MOTOR_API inline static T* init(Targs &&...args) {
-		//std::cout << "Initializing Resources..." << std::endl;
 		assert(instance_.get() == nullptr);
 		instance_.reset(new T(std::forward<Targs>(args)...));
-		//std::cout << "Resources done!" << std::endl;
 		return instance_.get();
 	}
 
@@ -91,8 +89,5 @@ private:
 
 	MOTOR_API static std::unique_ptr<T> instance_;
 };
-/*
-template<typename T>
-std::unique_ptr<T> Singleton<T>::instance_;
-*/
+
 #endif // !_SINGLETON_

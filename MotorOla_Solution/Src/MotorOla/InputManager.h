@@ -30,14 +30,11 @@ public:
 
 	// clear the state
 	MOTOR_API inline void clearState() {
-		isCloseWindoEvent_ = false;
-		isKeyDownEvent_ = false;
-		isKeyUpEvent_ = false;
-		isMouseButtonEvent_ = false;
-		isMouseMotionEvent_ = false;
-		//for (auto i = 0u; i < 3; i++) {
-		//	mbState_[i] = false;
-		//}
+		_isCloseWindoEvent = false;
+		_isKeyDownEvent = false;
+		_isKeyUpEvent = false;
+		_isMouseButtonEvent = false;
+		_isMouseMotionEvent = false;
 	}
 
 
@@ -79,20 +76,20 @@ public:
 
 	// close window event
 	MOTOR_API inline bool closeWindowEvent() {
-		return isCloseWindoEvent_;
+		return _isCloseWindoEvent;
 	}
 
 	// keyboard
 	MOTOR_API inline bool keyDownEvent() {
-		return isKeyDownEvent_;
+		return _isKeyDownEvent;
 	}
 
 	MOTOR_API inline bool keyUpEvent() {
-		return isKeyUpEvent_;
+		return _isKeyUpEvent;
 	}
 
 	MOTOR_API inline bool isKeyDown(SDL_Scancode key) {
-		return keyDownEvent() && kbState_[key] == 1;
+		return keyDownEvent() && _kbState[key] == 1;
 	}
 
 	MOTOR_API inline bool isKeyDown(SDL_Keycode key) {
@@ -100,7 +97,7 @@ public:
 	}
 
 	MOTOR_API inline bool isKeyUp(SDL_Scancode key) {
-		return keyUpEvent() && kbState_[key] == 0;
+		return keyUpEvent() && _kbState[key] == 0;
 	}
 
 	MOTOR_API inline bool isKeyUp(SDL_Keycode key) {
@@ -109,67 +106,61 @@ public:
 
 	// mouse
 	MOTOR_API inline bool mouseMotionEvent() {
-		return isMouseMotionEvent_;
+		return _isMouseMotionEvent;
 	}
 
 	MOTOR_API inline bool mouseButtonEvent() {
-		return isMouseButtonEvent_;
+		return _isMouseButtonEvent;
 	}
 
 	MOTOR_API inline const std::pair<Sint32, Sint32>& getMousePos() {
-		return mousePos_;
+		return _mousePos;
 	}
 
 	MOTOR_API inline int getMouseButtonState(MOUSEBUTTON b) {
-		return mbState_[b];
+		return _mbState[b];
 	}
 
 	MOTOR_API inline std::pair<Sint32, Sint32> getMousePosInGame() {
 		std::pair<Sint32, Sint32>p;
-		//std::cout<<Singleton<OgreManager>::instance()->getWindowWidth() << std::endl;
-		//std::cout << Singleton<OgreManager>::instance()->getWindowHeight() << std::endl;
-		p.first = mousePos_.first -(Singleton<OgreManager>::instance()->getWindowWidth() / 2);
-		p.second = mousePos_.second -(Singleton<OgreManager>::instance()->getWindowHeight() / 2);
-		//std::cout<<p.first<< std::endl;
-		//std::cout <<p.second << std::endl;
+		p.first = _mousePos.first -(Singleton<OgreManager>::instance()->getWindowWidth() / 2);
+		p.second = _mousePos.second -(Singleton<OgreManager>::instance()->getWindowHeight() / 2);
 		return p;
 
 	}
-	// TODO add support for Joystick, see Chapter 4 of
-	// the book 'SDL Game Development'
 
 private:
 	InputManager() {
-		kbState_ = SDL_GetKeyboardState(0);
+		_kbState = SDL_GetKeyboardState(0);
 		clearState();
 	}
 
 	inline void onKeyDown(const SDL_Event&) {
-		isKeyDownEvent_ = true;
+		_isKeyDownEvent = true;
 	}
 
 	inline void onKeyUp(const SDL_Event&) {
-		isKeyUpEvent_ = true;
+		_isKeyUpEvent = true;
 	}
 
 	inline void onMouseMotion(const SDL_Event& event) {
-		isMouseMotionEvent_ = true;
-		mousePos_.first = event.motion.x;
-		mousePos_.second = event.motion.y;
+		_isMouseMotionEvent = true;
+		_mousePos.first = event.motion.x;
+		_mousePos.second = event.motion.y;
 
 	}
 
 	inline void onMouseButtonChange(const SDL_Event& event, bool isDown) {
-		isMouseButtonEvent_ = true;
+		_isMouseButtonEvent = true;
 		switch (event.button.button) {
 		case SDL_BUTTON_LEFT:
-			mbState_[LEFT] = isDown;
+			_mbState[LEFT] = isDown;
 			break;
 		case SDL_BUTTON_MIDDLE:
-			mbState_[MIDDLE] = isDown;
+			_mbState[MIDDLE] = isDown;
 			break;
 		case SDL_BUTTON_RIGHT:
-			mbState_[RIGHT] = isDown;
+			_mbState[RIGHT] = isDown;
 			break;
 		default:
 			break;
@@ -179,21 +170,21 @@ private:
 	inline void handleWindowEvent(const SDL_Event& event) {
 		switch (event.window.event) {
 		case SDL_WINDOWEVENT_CLOSE:
-			isCloseWindoEvent_ = true;
+			_isCloseWindoEvent = true;
 			break;
 		default:
 			break;
 		}
 	}
 
-	bool isCloseWindoEvent_;
-	bool isKeyUpEvent_;
-	bool isKeyDownEvent_;
-	bool isMouseMotionEvent_;
-	bool isMouseButtonEvent_;
-	std::pair<Sint32, Sint32> mousePos_;
-	std::array<bool, 3> mbState_;
-	const Uint8* kbState_;
+	bool _isCloseWindoEvent;
+	bool _isKeyUpEvent;
+	bool _isKeyDownEvent;
+	bool _isMouseMotionEvent;
+	bool _isMouseButtonEvent;
+	std::pair<Sint32, Sint32> _mousePos;
+	std::array<bool, 3> _mbState;
+	const Uint8* _kbState;
 }
 ;
 

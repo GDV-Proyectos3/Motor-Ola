@@ -2,8 +2,7 @@
 #include "PsArray.h"
 
 #include <windows.h> // LARGE_INTEGER ...
-////#include <winnt.h>
-////#include <profileapi.h>
+
 
 #define PVD_HOST "127.0.0.1"	//Set this to the IP address of the system running the PhysX Visual Debugger that you want to connect to.
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
@@ -11,15 +10,17 @@
 ///#include "callbacks.hpp"
 #include "EntidadManager.h"
 #include "RigidBody.h"
+#include "Transform.h"
+
 
 std::unique_ptr<PhysxManager> Singleton<PhysxManager>::instance_ = nullptr;
 
 PhysxManager::PhysxManager() : _patata(false)
 {
-	//StartCounter();
+	
 
 	PX_UNUSED(true);
-	//PX_UNUSED(_patata);
+	
 
 	// General settings
 	scale.length = 100;        // typical length of an object
@@ -41,7 +42,7 @@ void PhysxManager::StartCounter()
 	if (!QueryPerformanceFrequency(&li))
 		return;
 
-	PCFreq = double(li.QuadPart) /*/ 1000.0*/;
+	PCFreq = double(li.QuadPart);
 
 	QueryPerformanceCounter(&li);
 	CounterStart = li.QuadPart;
@@ -120,7 +121,7 @@ void PhysxManager::init()
 
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &mContactReportCallback;	//Create a system callback to manage collisions
-	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;		//Define the way to manage collision filtering
+			
 
 	sceneDesc.cudaContextManager = mCuda;							//Set the CUDA context manager, used by GRB.
 
@@ -144,11 +145,6 @@ void PhysxManager::init()
 
 	// Inicializaci�n de variables dependientes --------------------------------------
 	mMaterial = mPhysics->createMaterial(0.0f, 0.0f, 0.0f);
-
-	/*PxRigidStatic* groundPlane = PxCreatePlane(*mPhysics, PxPlane(0, 1, 0, 0), *mMaterial);
-	mScene->addActor(*groundPlane);*/
-
-	//testBALL = createBall();
 	StartCounter();
 }
 
@@ -156,7 +152,7 @@ void PhysxManager::init()
 // t = time passed since last call in ms
 void PhysxManager::update(bool interactive, double t)
 {
-	if (mPause/* && !gOneFrame*/)
+	if (mPause)
 		return;
 
 	// Actualiza las posiciones: Transform global --> PxTransform
@@ -192,7 +188,7 @@ void PhysxManager::close(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	//releaseScene();
+	
 	PX_RELEASE(mScene);
 	PX_RELEASE(mDispatcher);
 	PxCloseExtensions();
@@ -218,11 +214,11 @@ void PhysxManager::stepPhysics(bool interactive, double frameTime)
 {
 	PX_UNUSED(interactive);
 
-	mScene->simulate(frameTime/*1.0f / 60.0f*/);
+	mScene->simulate(frameTime);
 	mScene->fetchResults(true);
 }
 
-// TODO: �que pasa cuando esto se detecta?
+
 void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
@@ -236,7 +232,7 @@ void PhysxManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 		if (a != nullptr && b != nullptr) b->OnCollisionEnter(a);
 	}
 
-	//std::cout << "COLLIDERS COLLISION detected!\n";
+	
 }
 
 void PhysxManager::onTrigger(physx::PxActor* actor1, physx::PxActor* actor2)
@@ -326,8 +322,6 @@ void PhysxManager::setGlobalToPhysxTR(Entidad& e, PxRigidActor& body)
 	Transform* tr = e.getComponent<Transform>();
 	PxTransform bodyTR = globalToPhysxTR(*tr);
 	body.setGlobalPose(bodyTR);
-	/*body.getGlobalPose().p = bodyTR.p;
-	body.getGlobalPose().q = bodyTR.q;*/
 }
 
 // Realiza la conversi�n de datos: PxTransform --> Transform global
@@ -337,8 +331,6 @@ void PhysxManager::setPhysxToGlobalTR(Entidad& e, PxRigidActor& body)
 	Transform* tr = e.getComponent<Transform>();
 	tr->setPosition(auxTR.getPosition());
 	tr->setRotation(auxTR.getRotation());
-	//std::cout << auxTR.getPosition() << "\n";
-	//std::cout << tr->getPosition() << "\n";
 }
 
 // ---------------- FACTORY --------------------------------------------------
@@ -441,7 +433,6 @@ void PhysxManager::createStackBoxes(const PxTransform& t, PxU32 size, PxReal hal
 		for (PxU32 j = 0; j < size - i; j++)
 		{
 			//Esta linea sobra, pero es un ejemplo de Dynamic con solo transform:
-			//PxRigidDynamic* body = gPhysics->createRigidDynamic(t.transform(localTm));
 			PxTransform localTm(PxVec3(PxReal(j * 2) - PxReal(size - i), PxReal(i * 2 + 1), 0) * halfExtent);
 			PxRigidDynamic* body = createDynamic(t.transform(localTm), shape);
 			PxRigidBodyExt::updateMassAndInertia(*body, 10.0f);
@@ -469,14 +460,13 @@ void PhysxManager::debugTime()
 
 void PhysxManager::debugBall()
 {
-	// GetLastTime() 
+	 
 	// Comienza con una media de 15.05ms si se resetea con CounterLast = CounterStart,
 	// pero su uso real es llevar el tiempo real de la app activa.
 	if (GetLastTime() - GlobalTimer > 1.0) {
 		PxVec3 v = testBALL->getGlobalPose().p;
 		std::cout << "PhyBALL position : ";
 		std::cout << "( " << v.x << " , " << v.y << " , " << v.z << " )" << std::endl;
-		//debugTime();
 		GlobalTimer = GetLastTime();
 	}
 }
@@ -489,23 +479,21 @@ void PhysxManager::debugBuddy(Entidad* e)
 		PxTransform tr = body->getBody()->getGlobalPose();
 		std::cout << "Position RB = " << tr.p << std::endl;
 		std::cout << "Orientation RB = " << tr.q << std::endl;
-		//debugTime();
 		GlobalTimer = GetLastTime();
 	}
 }
 
-MOTOR_API void PhysxManager::debugBody(PxRigidDynamic* rd)
+void PhysxManager::debugBody(PxRigidDynamic* rd)
 {
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		PxTransform tr = rd->getGlobalPose();
 		std::cout << "Position RB = " << tr.p << std::endl;
 		std::cout << "Orientation RB = " << tr.q << std::endl;
-		//debugTime();
 		GlobalTimer = GetLastTime();
 	}
 }
 
-MOTOR_API void PhysxManager::debugAllBodies()
+void PhysxManager::debugAllBodies()
 {
 	if (GetLastTime() - GlobalTimer > 2.0) {
 		auto it = em().getAllEntidades().begin();
@@ -524,8 +512,7 @@ MOTOR_API void PhysxManager::debugAllBodies()
 
 ////----
 float stepTime = 0.0f;
-//#define FIXED_STEP
-//
+
 void PhysxManager::runPhysX()
 {
 	double t = GetCounter();
