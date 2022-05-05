@@ -17,7 +17,7 @@ int main()
     
     // Inicia el Motor
     try {
-        std::cout << "PRIMER TRY\n";
+        std::cout << "NEW MOTOR\n";
         m = new Motor();
     }
     catch (const char* error) {
@@ -28,7 +28,7 @@ int main()
     
     // Intenta iniciar los sistemas principales
     try {
-        std::cout << "SEGUNDO TRY\n";
+        std::cout << "MOTOR INIT SISTEMS\n";
         m->initSystems();
     }
     catch (const char* error) {
@@ -40,6 +40,7 @@ int main()
 
     // Pone en marcha el bucle principal del Motor
     try {
+        std::cout << "MOTOR START MAIN LOOP\n";
         m->mainLoop();
     }
     catch (const char* error) {

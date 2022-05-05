@@ -1,7 +1,6 @@
 #include "pch.h" // use stdafx.h in Visual Studio 2017 and earlier
 #include <utility>
 #include <limits.h>
-
 #include "Motor.h"
 #include <Windows.h>
 #include "LuaReader.h"
@@ -56,7 +55,7 @@ Motor::~Motor()
 	if (Singleton<FMODAudioManager>::instance() != nullptr) delete Singleton<FMODAudioManager>::instance();
 	if (Singleton<EntidadManager>::instance() != nullptr) delete Singleton<EntidadManager>::instance();
 	if (Singleton<LoadResources>::instance() != nullptr) delete Singleton<LoadResources>::instance();
-	
+	//if (Singleton<PhysxManager>::instance() != nullptr) delete Singleton<PhysxManager>::instance();
 }
 
 void Motor::initSystems()

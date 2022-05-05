@@ -63,8 +63,8 @@ void ContactReportCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 	
 	while (count--)
 	{
-#if _DEBUG
 		const PxTriggerPair& current = *pairs++;
+#if _DEBUG
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 			if (debugCom) printf("Shape is entering trigger volume\n");
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_LOST)

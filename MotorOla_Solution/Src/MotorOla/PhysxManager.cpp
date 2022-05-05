@@ -3,7 +3,6 @@
 
 #include <windows.h> // LARGE_INTEGER ...
 
-
 #define PVD_HOST "127.0.0.1"	//Set this to the IP address of the system running the PhysX Visual Debugger that you want to connect to.
 #define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 
@@ -186,8 +185,7 @@ void PhysxManager::close(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	
-	PX_RELEASE(mScene);
+	if (mScene != NULL) PX_RELEASE(mScene);
 	PX_RELEASE(mDispatcher);
 	PxCloseExtensions();
 	PX_RELEASE(mPhysics);
