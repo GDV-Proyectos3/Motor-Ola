@@ -13,6 +13,8 @@
 #include <SDL_video.h>
 #include <SDL_syswm.h>
 
+#include "InputManager.h"
+
 std::unique_ptr<OgreManager> Singleton<OgreManager>::instance_ = nullptr;
 
 
@@ -121,7 +123,7 @@ void OgreManager::createRoot()
 
 void OgreManager::shutdown()
 {
-	
+	ih().refresh();
 
 	// Borra la ventana
 	if (_window.render != nullptr)
@@ -140,9 +142,13 @@ void OgreManager::shutdown()
 
 	if (_window.native != nullptr)
 	{
+		
 		SDL_DestroyWindow(_window.native);
 		_window.native = nullptr;
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
+			//SDL_Quit();
+		
+		
 	}
 }
 
