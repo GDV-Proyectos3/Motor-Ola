@@ -29,7 +29,6 @@
 #include "ComponenteRegistro.h"
 #include "Transform.h"
 #include "Mesh.h"
-#include "Movible.h"
 #include "AudioSource.h"
 #include "Collider.h"
 #include "RigidBody.h"
