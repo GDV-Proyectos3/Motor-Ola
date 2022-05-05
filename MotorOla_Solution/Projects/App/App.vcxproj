@@ -29,9 +29,6 @@
       <Project>{f6af22f4-46d3-4e02-bb0b-57f45f00230a}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Src\App\checkML.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

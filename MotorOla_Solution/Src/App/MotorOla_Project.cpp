@@ -49,7 +49,5 @@ int main()
         m = nullptr;
     }
 
-    system("pause");
-
     return hayError;
 }
