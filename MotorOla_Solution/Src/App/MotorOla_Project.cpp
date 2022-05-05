@@ -3,8 +3,9 @@
 
 int main()
 {
-    std::cout << "APLICACION INICIADA\n";
     
+    std::cout << "APLICACION INICIADA\n";
+
     bool hayError = false;      
     Motor* m = nullptr;
     
